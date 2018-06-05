@@ -1,0 +1,53 @@
+\chapter{INTRODUCCIÓN}
+
+\section{Problemática}
+
+Actualmente, diversos métodos de explotación son utilizados en minería para la extracción de minerales. Los más utilizados en minería subterránea en el Perú son variaciones del método de Corte y Relleno Ascendente como Descendente \cite{Cruz2012}. La presente tesis se enfoca en el método de Corte y Relleno Ascendente, ya que es el más utilizado en el Perú. 
+
+En el método de Corte y Relleno Ascendente el mineral es arrancado por franjas horizontales y/o verticales empezando por la parte inferior de un tajo y avanzando verticalmente. Cuando se ha extraído la franja completa, se rellena el volumen correspondiente con material estéril (relleno), que sirve de piso de trabajo a los obreros y al mismo tiempo permite sostener las paredes y el techo \cite{MunozDelPino2012}. Asimismo, se utiliza grandes máquinas que construyen socavones subterráneos por donde se va a extraer los minerales. 
+
+La construcción de socavones subterráneos es de gran importancia para la minería subterránea, debido a que por medio de esta construcción se extrae los minerales de la mena (roca mineralizada). Estas construcciones son de diversos tamaños  en las diferentes unidades mineras del Perú, que dependen del tamaño de las máquinas que van a ingresar para la extracción del mineral. Durante el proceso de construcción pueden ocurrir diferentes riesgos (desprendimiento de rocas, emisión de gases, etc.) que ponen en peligro la vida de los trabajadores. Para evitar los riesgos dentro de la minería subterránea, se necesita supervisar la zona de construcción y a la par obtener una representación geométrica visual de toda la excavación. En la minería subterránea, para la supervisión y la generación del mapa topográfico los especialistas encargados son el topógrafo y el geomecánico. Se dará énfasis a la función del topógrafo. 
+
+La función del topógrafo es observar la estructura de los socavones, luego medir las dimensiones del área y con los datos obtenidos generar el mapa topográfico. Los socavones subterráneos son ambientes demasiados oscuros, esto hace que existan  limitaciones en la visión humana, por ende los topógrafos realizan un mapa del ambiente bastante impreciso. Estos especialistas actualmente utilizan teodolitos para medir el área del socavón, pero estas herramientas de medición son controladas manualmente, por ende las mediciones no son exactas. El tiempo que le toma a cada topógrafo en realizar todo su trabajo es aproximadamente entre 3 a 4 horas, y posterior a esto el tiempo que se demora para la generación del mapa topográfico es entre dos a tres días. Debido a la ineficiencia en el proceso de la generación del mapa topográfico, hace que se retrase la producción de extracción de minerales dentro de la mina subterráneo, ya que los ingenieros mineros necesitan calcular el volumen de extracción de la beta mineralizada.
+
+
+
+\section{Justificación}
+
+
+%La propuesta de este trabajo de tesis se centra en desarrollar un robot aéreo autónomo \cite{Lopez2016} para inspeccionar los socavones subterráneos en la mina. Donde se elige un sensor láser para añadirlo al robot aéreo y así poder realizar el vuelo autónomo y el mapa tridimensional del socavón subterráneo.
+
+%Para la inspección de socavones se elige un robot aéreo debido a que brinda muchas ventajas como:
+%\begin{itemize}
+%\item[•]\textit{Reducción de costos}: Un robot aéreo no necesita de carriles especiales o caminos previamente adaptados para poder ingresar al área que se desea generar el mapa topográfico.
+%\item[•]\textit{Reducción de tiempos}: No se necesita ir a una pista de aterrizaje para poner en funcionamiento al robot aéreo, ya que puede funcionar en cualquier parte.
+%\item[•]\textit{Zonas de difícil acceso}: Debido a sus dimensiones, maniobrabilidad y a su naturaleza, un robot aéreo puede adentrarse con facilidad en zonas accidentadas, como por ejemplo: grutas, túneles o chimeneas.
+%\item[•]\textit{Adaptabilidad de aplicaciones}: Un robot aéreo tiene la posibilidad de adaptarse a diferentes aplicaciones como servicios de vigilancia, mapeos de terreno a tajo abierto, control de incendios, control de infraestructuras eólicas, etc. 
+%\item[•]\textit{Reducción de riesgos laborales}: Un robot aéreo autónomo no necesita ser tripulado, por lo tanto puede adentrarse en zonas peligrosas o potencialmente peligrosas evitando el acceso riesgoso de personas. 
+%\end{itemize}
+
+%Este robot aéreo utilizará técnicas de SLAM (\textit{Simultaneous Localization And Mapping}) para realizar un mapa del interior del socavón y generar su propia trayectoria dentro del socavón, evitando colisionar con las paredes o los obstáculos del camino de manera autónoma. Se tomará la información del sensor LIDAR (\textit{Light Detection and Ranging}) para generar el mapa topográfico.
+
+%Se elige el sensor LIDAR, ya que emite impulsos rápidos de luz láser, hasta 150.000 impulsos por segundo, sobre una superficie. Este instrumento mide la cantidad de tiempo necesario para que cada pulso pueda recuperarse, y a partir de esto calcula la distancia entre el objeto y el instrumento con una alta precisión. Como utiliza luz láser, el sensor no necesita de iluminación externa para realizar las mediciones, lo cual es perfecto para los socavones de minería subterránea ya que en estas zonas no hay una buena iluminación.
+
+La propuesta de este trabajo de tesis se centra en desarrollar un algoritmo de autonomía para la navegación de un robot móvil, para que este se pueda desplazar de forma autónoma dentro del socavón subterráneo. Donde se elige un sensor láser el cual se añade al robot móvil para la navegación y a su vez el mapa tridimensional del socavón subterráneo.
+
+El robot móvil utilizará técnicas de SLAM (\textit{Simultaneous Localization and Mapping}) para realizar un mapa del interior del socavón y también para poder estimar la posición de este dentro de dicho ambiente. Con respecto al sistema de navegación se implementará un algoritmo basado en Campos Potenciales para que el robot pueda generar su propia trayectoria dentro del socavón, evitando colisionar con las paredes o los obstáculos del camino por donde va de manera autónoma. Se tomará la información del sensor LIDAR (\textit{Light Detection and Ranging}) para generar el mapa topográfico en dos dimensiones (2D).
+
+Se elige el sensor LIDAR, ya que emite impulsos rápidos de luz láser, hasta 4000 impulsos por segundo, sobre una superficie. Este instrumento mide la cantidad de tiempo necesario para que cada pulso pueda recuperarse, y a partir de esto calcula la distancia entre el objeto y el instrumento con una alta precisión. Como utiliza luz láser, el sensor no necesita de iluminación externa para realizar las mediciones, lo cual es perfecto para los socavones de minería subterránea ya que en estas zonas no hay una buena iluminación. 
+
+Para realizar el mapa en tres dimensiones (3D), se diseñará un sistema mecánico el cual permitirá mover el sensor láser en el eje $Z$, obteniendo los datos en las tres coordenadas del sistema de referencia del láser. Posteriormente, estos datos serán procesados utilizando un algoritmo de ICP (\textit{Iterative Closest Point}) para así obtener una nube de puntos. Luego de este proceso, se utilizará un software para poder visualizar los datos y así obtener el mapa tridimensional del socavón subterráneo.
+ 
+\section{Objetivos}
+
+\subsection{General}
+Desarrollar un algoritmo para la navegación autónoma de un robot móvil para inspeccionar los socavones subterráneos en la mina basado en un sistema de sensado láser. 
+\\
+\subsection{Específicos}
+\begin{itemize}
+\item[•]Diseñar e implementar el algoritmo de campos potenciales para un robot móvil.
+\item[•]Diseñar e implementar un controlador para la posición y orientación del robot móvil.
+\item[•]Implementar el método SLAM con el sensor LIDAR.
+\item[•]Configurar la interface del usuario en el sistema operativo ROS (\textit{Robot Operating System}) para la visualización del entorno donde se desplaza el robot móvil.
+\end{itemize}
+

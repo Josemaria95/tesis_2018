@@ -1,0 +1,72 @@
+%% ----------------------------------------------------------------
+%% tesis.tex -- MAIN FILE (the one that you compile with LaTeX)
+%% ----------------------------------------------------------------
+
+\documentclass[a4paper, 12pt, oneside]{JMtesis}
+
+% Location of the graphics files (set up for graphics to be in PDF format)
+\graphicspath{figures/}
+
+% Include any extra LaTeX packages required
+\usepackage[square, numbers, comma, sort&compress]{natbib}
+\usepackage{verbatim}  %
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{esvect}
+%\usepackage{subfig}
+\hypersetup{urlcolor=blue, colorlinks=true}
+\usepackage{multirow}
+\newcommand{\grad}{$^{\circ}$}
+% For Spanish
+\usepackage[utf8]{inputenc}
+
+%% ============================================================================
+\begin{document}
+
+\frontmatter
+\department{Ingeniería Electrónica}
+\degree{Ingeniero Electrónico}
+\title {Desarrollo de un algoritmo de autonom\'ia para la navegaci\'on de un robot m\'ovil}
+\author{Jos\'e Mar\'ia Muñoz Huam\'an}
+\authorid{201210145}
+\supervisor{Oscar E. Ramos Ponce, PhD.}
+\date{2 de mayo 2018}
+
+\maketitle
+\setstretch{1.5}
+
+%\input{headers/aprobacion}
+%\input{headers/dedicatoria}
+%\input{headers/agradecimientos}
+
+\tableofcontents
+%\listoftables
+%\listoffigures
+
+\addtocontents{toc}{\vspace{1.5em}}
+
+%% ============================================================================
+\mainmatter
+\pagestyle{fancy}
+
+%\input{chapters/intro}
+\input{chapters/capitulo1}
+\input{chapters/capitulo2}
+%\input{chapters/capitulo3}
+%\input{chapters/conclusiones}
+%\input{chapters/recomendaciones}
+
+%% ============================================================================
+% \appendix
+% \input{appendices/apendiceA}
+% \addtocontents{toc}{\vspace{2em}}
+% \backmatter
+
+%% ============================================================================
+
+\renewcommand{\bibname}{\large\bf{REFERENCIAS BIBLIOGR\'AFICAS}}
+\bibliographystyle{IEEEtran} % Use the IEEEtran style
+\bibliography{data}   % The references are in "referencias.bib"
+
+\end{document}
+%% ----------------------------------------------------------------
