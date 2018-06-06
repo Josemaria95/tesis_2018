@@ -243,7 +243,7 @@
       {\Large \textbf{Carrera de \deptname }\par}
       \vfill
       \vspace{0.5cm}
-      \includegraphics[height=2.34cm]{logo-utec.png}\\
+      \includegraphics[height=2.34cm]{images/logo-utec.png}\\
       \vfill
       {\LARGE \bf \@title \par}
       \vspace{0.5cm}
