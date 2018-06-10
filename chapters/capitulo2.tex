@@ -321,9 +321,9 @@ Exploring Random Trees}.
 
 \subsection{Mapa de Ruta Probabil\'istico (\textit{Probabilistic Roadmap})}
 
-Una de las alternativas para la planificaci\'on de las rutas frente a 
-obst\'aculos, donde las posiciones no se conocen con certeza, es la 
-planificaci\'on del mapa de ruta probabil\'istico (PRM). Las PRM son una 
+La planificaci\'on del mapa de ruta probabil\'istico (PRM) es una de las 
+alternativas para la planificaci\'on de las rutas frente a los  
+obst\'aculos, donde las posiciones no se conocen con certeza. El PRM es una 
 t\'ecnica popular para la planificaci\'on de caminos en espacios de alta 
 dimensi\'on \cite{guibas1999probabilistic}. Este algoritmo es aplicable 
 en muchas situaciones, incluida la planificaci\'on del movimiento del 
@@ -339,36 +339,34 @@ construir el gr\'afico del \textit{roadmap} o trazar una ruta. El enfoque
 de este trabajo es que el robot inicialmente no sabe donde est\'an 
 ubicados los obst\'aculos.
 
-Al muestrear valores aleatorios para cada grado de libertad del agente 
-para crear una configuraci\'on completa (posici\'on), un planificador 
-de PRM es capaz de \textit{explorar} todo el espacio de configuraci\'on 
-(espacio $C$) para un agente determinado. No todas las configuraciones 
-en el espacio ser\'an utilizables debido a obst\'aculos o auto-colisiones, por 
-lo que el espacio n-dimensional se divide conceptualmente en dos \'areas 
-no contiguas llamadas $C_{free}$ y $C_{obst}$ para configuraciones libres 
-y obstruidas, respectivamente. Se construye un gr\'afico PRM en la fase 
-preprocesamiento del planificador utilizando un algoritmo de muestreo 
-que genera aleatoramiente configuraciones para el agente y luego acepta 
-o rechaza las posiciones generadas. La estrategia m\'as simple es 
-rechazar todas las posiciones que se cruzan con $C_{obst}$. 
+El algoritmo comienza con muestrear valores aleatorios para cada grado de 
+libertad del robot para s\'i poder crear una configuraci\'on completa 
+(posici\'on), el planificador de PRM es capaz de \textit{explorar} todo 
+el espacio de configuraci\'on (espacio $C$). No todas las configuraciones 
+en el espacio ser\'an utilizables debido a obst\'aculos o auto-colisiones, 
+por lo que el espacio n-dimensional se divide conceptualmente en dos \'areas 
+no contiguas llamadas $C_{free}$ y $C_{obst}$ para configuraciones libres y 
+obstruidas, respectivamente. En la fase de preprocesamiento se empieza a 
+contruir un gr\'afico PRM usando el algoritmo de muestreo que genera 
+aleatoramiente configuraciones para el robot y luego valida las 
+posiciones generadas. Lo m\'as simple y com\'un que se hace es rechazar 
+todas las posiciones que se cruzan con $C_{obst}$. 
 
 El gr\'afico se completa tomando cada v\'ertice muestreado e intentando 
-crear $k$ bordes a los v\'ertices vecinos comprobando una ruta libre 
-de colisiones entre los dos v\'ertices. En la fase de consulta de 
-PRM, un gr\'afico completado se puede buscar r\'apidamente para las 
+crear $n$ bordes a los v\'ertices vecinos verificando si se encuentra una 
+ruta libre de colisiones entre los dos v\'ertices. En la fase de consulta 
+de PRM, un gr\'afico completado se puede buscar r\'apidamente para las 
 rutas entre dos posiciones arbitrarias utilizando algoritmos de 
 b\'usqueda de gr\'aficos est\'andar.
 
 Para modelar obst\'aculos inciertos se asume que se tiene distribuciones 
-de probabilidad sobre las posiciones de los v\'ertices de obst\'aculo. Se 
+de probabilidad sobre las posiciones de los v\'ertices de los obst\'aculo. Se 
 genera un gr\'afico PRM por adelantado en el que algunos bordes pueden 
-intersectar los obst\'aculos inciertos. Luego construimos un plan de 
+intersectar los obst\'aculos inciertos. Luego se construye un plan de 
 ruta que atraviesa el gr\'afico de manera \'optima, dado el hecho de 
-que las observaciones se realizar\'an a medida que nos acerquemos a 
-los obst\'aculos que nos permitir\'a determinar qu\'e bordes est\'an 
-libres de obst\'aculos. En los dominios del mundo real, podemos determinar 
-las dependencias de los bordes y las probabilidades de observaci\'on 
-mediante el muestreo de posiciones de obst\'aculos desde sus distribuciones.
+que las observaciones se realizar\'an a medida que el robot se va acercando a 
+los obst\'aculos que permitir\'a determinar qu\'e bordes est\'an 
+libres de obst\'aculos.
 
 \subsection{Exploraci\'on R\'apida Del \'Arbol Aleatorio}
 
