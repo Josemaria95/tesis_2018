@@ -104,11 +104,31 @@ donde la dependencia de $D$ en $q$ ha sido omitida para mayor claridad. Los esca
 
 \section{Movimiento basados en mapas topol\'ogicos (\textit{Roadmap})}
 
-Un \textit{roadmap} es una clase de mapas topol\'ogicos que representan el espacio libre en entornos \cite{choset2005principles}. Los nodos y bordes de un \textit{roadmap} tienen un significado f\'isico. Por ejemplo, un nodo de \textit{roadmap} corresponde a una ubicaci\'on espec\'ifica y un borde corresponde a una ruta entre ubicaciones vecinas.
+Los robots usan \textit{roadmaps} de la misma manera que las personas usan las carreteras, lo que le permite ir del inicio hasta la meta. El robot primero encuentra una ruta libre de colisiones en el mapa, atravesando este hasta que se encuentra muy cerca de la meta. En este proceso, el robot va construyendo toda la trayectoria que debe seguir para llegar al punto deseado. 
 
-Los robots usan \textit{roadmaps} de la misma manera que las personas usan los sistemas de carreteras. En lugar de planear todos los caminos laterales posibles hacia un destino, las personas generalmente planean su camino a una red de carreteras. Lo que lleva a la persona desde cerca del inicio hasta cerca de la meta.
+Un \textit{roadmap} es una clase de mapa topol\'ogico que representa el espacio libre en entornos \cite{choset2005RoadMap} donde los nodos y bordes tienen un significado f\'isico. Un nodo de \textit{roadmap} corresponde a una ubicaci\'on espec\'ifica y un borde corresponde a una ruta entre ubicaciones vecinas. La forma en que el robot pueda explorar un entorno desconocido es por medio de los datos del sensor que le permitir\'a construir un mapa de ruta.
 
-Del mismo modo, utilizando un \textit{roadmap}, el robot puede construir una ruta entre dos puntos en un componente conectado del espacio libre del robot encontrando primero una ruta libre de colisiones en el \textit{roadmap}, atravesando el \textit{roadmap} hasta muy pr\'oximo de la meta y luego construyendo una ruta libre de colisiones desde un punto en el \textit{roadmap} hacia la meta. Si el robot conoce el \textit{roadmap}, entonces conoce el entorno. De modo que una forma en que un robot puede explorar un entorno desconocido es confiar en los datos del sensor para construir un \textit{roadmap}.
+\subsection{Espacio de configuraci\'on}
+
+Un problema en la planificaci\'on de movimiento es producir un movimiento continuo que conecta un punto de inicio y un punto de meta, mientras se evita la colisi\'on con obst\'aculos conocidos. La trayectoria que el robot describe se representa en un espacio de configuraci\'on. Una configuraci\'on describe la posici\'on del robot, y el espacio de configuraci\'on ($C$) es el conjunto de todas las posibles configuraciones. Por ejemplo, si el robot tiene un \'unico punto en un espacio de dos dimensiones, espacio de trabajo, entonces el espacio de configuraci\'on es un plano y la configuraci\'on se representa como $(x,y)$.
+
+Dentro de la planificaci\'on de movimiento basados en \textit{roadmaps}, se utiliza con frecuencia el t\'ermino espacio libre. Un espacio libre ($C_{free}$) es el conjunto de configuraciones que evita la colisi\'on con obst\'aculos. Calcular la forma del espacio libre es dif\'icil, sin embargo, es mucho m\'as sencillo probar si una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
+
+\subsection{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph})}
+
+El planeamiento del camino del robot en situaciones pr\'acticas, es preferible encontrar no solo un camino sino un buen camino. El buen camino depende del robot, cuanto m\'as larga sea la ruta, m\'as tiempo le llevar\'a al robot alcanzar la posici\'on deseada. Para un robot m\'ovil en una f\'abrica, esto significa que puede transportar menos bienes por unidad de tiempo, lo que resulta en una p\'erdida de productividad. Tambi\'en existen problemas con respecto a como se mueven los robots. Por ejemplo, hay robots que se mueven en l\'inea recta y para poder moverse a los lados necesitan rotar en su propio eje. En esta secci\'on se obvia este aspecto, pero se enfoca en mostrar c\'omo se calcula la ruta euclidiana m\'as corta (Figura \ref{f:shortPath}) para un robot utilizando un mapa de visibilidad gr\'afica.
+
+\begin{figure}%[h]
+\centering \footnotesize
+ {\includegraphics[width=0.60\linewidth]{images/short_path.png}}
+ \captionsetup{font=footnotesize}
+ \caption{Representaci\'on gr\'afica del camino m\'as corto dentro de un ambiente con obst\'aculos.}
+\label{f:shortPath}
+\end{figure}
+
+En la geometr\'ia computacional y la planificaci\'on del movimiento del robot, un mapa de visibilidad es un mapa de ubicaciones intervisibles, generalmente para un conjunto de puntos y obst\'aculos en un plano euclideano \cite{wikiVisibilityGraph}. Las caracter\'isticas que definen un mapa de visibilidad son sus nodos que comparten un borde si se encuentran a la vista el uno del otro, y que todos los puntos en el espacio libre del robot se encuentren dentro de la l\'inea de visi\'on de al menos un nodo en el mapa de visibilidad. 
+
+
 
 \section{Movimiento basado en muestreo aleatorio}
 
