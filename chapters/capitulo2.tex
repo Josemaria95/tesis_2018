@@ -102,13 +102,13 @@ donde $Q^* \in \mathbb R$ es una constante que le permite al robot ignorar los o
 \end{equation}
 donde la dependencia de $D$ en $q$ ha sido omitida para mayor claridad. Los escalares utilizados para este campo generalmente se determinan por ensayo y error \cite{choset2005principles}.
 
-\section{Movimiento basados en mapas topol\'ogicos (\textit{Roadmap})}
+\section{Movimiento Basados En Mapas Topol\'ogicos (\textit{Roadmap})}
 
 Los robots usan \textit{roadmaps} de la misma manera que las personas usan las carreteras, lo que le permite ir del inicio hasta la meta. El robot primero encuentra una ruta libre de colisiones en el mapa, atravesando este hasta que se encuentra muy cerca de la meta. En este proceso, el robot va construyendo toda la trayectoria que debe seguir para llegar al punto deseado. 
 
 Un \textit{roadmap} es una clase de mapa topol\'ogico que representa el espacio libre en entornos \cite{choset2005RoadMap} donde los nodos y bordes tienen un significado f\'isico. Un nodo de \textit{roadmap} corresponde a una ubicaci\'on espec\'ifica y un borde corresponde a una ruta entre ubicaciones vecinas. La forma en que el robot pueda explorar un entorno desconocido es por medio de los datos del sensor que le permitir\'a construir un mapa de ruta.
 
-\subsection{Espacio de configuraci\'on}
+\subsection{Espacio De Configuraci\'on}
 
 Un problema en la planificaci\'on de movimiento es producir un movimiento continuo que conecta un punto de inicio y un punto de meta, mientras se evita la colisi\'on con obst\'aculos conocidos. La trayectoria que el robot describe se representa en un espacio de configuraci\'on. Una configuraci\'on describe la posici\'on del robot, y el espacio de configuraci\'on ($C$) es el conjunto de todas las posibles configuraciones. Por ejemplo, si el robot tiene un \'unico punto en un espacio de dos dimensiones, espacio de trabajo, entonces el espacio de configuraci\'on es un plano y la configuraci\'on se representa como $(x,y)$.
 
@@ -116,21 +116,53 @@ Dentro de la planificaci\'on de movimiento basados en \textit{roadmaps}, se util
 
 \subsection{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph})}
 
-El planeamiento del camino del robot en situaciones pr\'acticas, es preferible encontrar no solo un camino sino un buen camino. El buen camino depende del robot, cuanto m\'as larga sea la ruta, m\'as tiempo le llevar\'a al robot alcanzar la posici\'on deseada. Para un robot m\'ovil en una f\'abrica, esto significa que puede transportar menos bienes por unidad de tiempo, lo que resulta en una p\'erdida de productividad. Tambi\'en existen problemas con respecto a como se mueven los robots. Por ejemplo, hay robots que se mueven en l\'inea recta y para poder moverse a los lados necesitan rotar en su propio eje. En esta secci\'on se obvia este aspecto, pero se enfoca en mostrar c\'omo se calcula la ruta euclidiana m\'as corta (Figura \ref{f:shortPath}) para un robot utilizando un mapa de visibilidad gr\'afica.
+El planeamiento del camino del robot en situaciones pr\'acticas, es preferible encontrar no solo un camino sino un buen camino. El buen camino depende del robot, cuanto m\'as larga sea la ruta, m\'as tiempo le llevar\'a al robot alcanzar la posici\'on deseada. Para un robot m\'ovil en una f\'abrica, esto significa que puede transportar menos bienes por unidad de tiempo, lo que resulta en una p\'erdida de productividad. Tambi\'en existen problemas con respecto a como se mueven los robots. Por ejemplo, hay robots que se mueven en l\'inea recta y para poder moverse a los lados necesitan rotar en su propio eje. En esta secci\'on se obvia este aspecto, pero se enfoca en mostrar c\'omo se calcula la ruta m\'as corta para un robot utilizando un mapa de visibilidad gr\'afica.
 
-\begin{figure}%[h]
-\centering \footnotesize
- {\includegraphics[width=0.60\linewidth]{images/short_path.png}}
- \captionsetup{font=footnotesize}
- \caption{Representaci\'on gr\'afica del camino m\'as corto dentro de un ambiente con obst\'aculos.}
-\label{f:shortPath}
-\end{figure}
+%\begin{figure}%[h]
+%\centering \footnotesize
+% {\includegraphics[width=0.60\linewidth]{images/short_path.png}}
+% \captionsetup{font=footnotesize}
+% \caption{Representaci\'on gr\'afica del camino m\'as corto dentro de un ambiente con obst\'aculos.}
+%\label{f:shortPath}
+%\end{figure}
 
 En la geometr\'ia computacional y la planificaci\'on del movimiento del robot, un mapa de visibilidad es un mapa de ubicaciones intervisibles, generalmente para un conjunto de puntos y obst\'aculos en un plano euclideano \cite{wikiVisibilityGraph}. Las caracter\'isticas que definen un mapa de visibilidad son sus nodos que comparten un borde si se encuentran a la vista el uno del otro, y que todos los puntos en el espacio libre del robot se encuentren dentro de la l\'inea de visi\'on de al menos un nodo en el mapa de visibilidad. 
 
+El gr\'afico de visibilidad est\'andar se define en un espacio de configuraci\'on poligonal bidimensional (Figura \ref{f:mapPolygonal}). Los nodos $v_{i}$ del gr\'afico de visibilidad incluyen la ubicaci\'on de inicio, la ubicaci\'on del objetivo y todos los v\'ertices de los obst\'aculos del espacio de configuraci\'on. Los bordes del gr\'afico $e_{ij}$ son segmentos de l\'inea recta que conectan dos nodos de l\'inea de vista $v_{i}$ y $v_{j}$.
 
+\begin{figure}%[h]
+\centering \footnotesize
+ {\includegraphics[width=0.60\linewidth]{images/map_polygonal.png}}
+ \captionsetup{font=footnotesize}
+ \caption{Espacio de configuraci\'on con un punto de inicio y otro punto de llegada a la posici\'on deseada.}
+\label{f:mapPolygonal}
+\end{figure}
 
-\section{Movimiento basado en muestreo aleatorio}
+\begin{figure}%[h]
+\centering \footnotesize
+ {\includegraphics[width=0.60\linewidth]{images/shortPath_visibilityGraph.png}}
+ \captionsetup{font=footnotesize}
+ \caption{Los obst\'aculos son representado por s\'olidos pol\'igonos. Las l\'ineas continuas delinean los bordes de la visibilidad gr\'afica para los tres obst\'aculos y las l\'ineas entrecortadas representan el camino m\'as corto entre el punto de inicio y el punto de meta.}
+\label{f:shortVG}
+\end{figure}
+
+A partir de la figura \ref{f:mapPolygonal} se considera la inclusi\'on de los nodos y bordes en el espacio libre y que los bordes de los obst\'aculos poligonales tambi\'en sirven como bordes en el gr\'afico de visibilidad. Utilizando distancia euclidiana se puede buscar la ruta m\'as corta como se aprecia en la figura \ref{f:shortVG}.
+
+\section{Movimiento Basado en Muestreo Aleatorio}
+
+Las planificaci\'on de movimientos basados en muestreo, como los m\'etodos de mapa de ruta probabil\'ista (\textit{Probabilistic Roadmap}) o aquellos basados en los \'arboles aleatorios de exploraci\'on r\'apida (\textit{Rapidly Exploring Random Trees}) est\'an dando buenos resultados en la planificaci\'on de movimientos de robots con muchos grados de libertad. Con estos enfoques, se han propuesto varias estrategias para predisponer el muestreo hacia las regiones m\'as prometedoras, mejorando con esto la eficiencia y permitiendo la soluci\'on de problemas dif\'iciles de planificaci\'on de movimientos \cite{elbanhawi2014sampling}. El \'exito de estos planificadores en la soluci\'on de problemas desafiantes se puede explicar por el hecho de que no se requiere ninguna representaci\'on expl\'icita del espacio de configuraci\'on libre. En esta secci\'on se explicar\'a los m\'etodos \textit{Probabilistic Roadmap} y \textit{Rapidly Exploring Random Trees}.
+
+\subsection{Mapa de Ruta Probabil\'istico (\textit{Probabilistic Roadmap})}
+
+Una de las alternativas para la planificaci\'on de las rutas frente a obst\'aculos, donde las posiciones no se conocen con certeza, es la planificaci\'on del mapa de ruta probabil\'istico (PRM). Las PRM son una t\'ecnica popular para la planificaci\'on de caminos en espacios de alta dimensi\'on \cite{guibas1999probabilistic}. Este algoritmo es aplicable en muchas situaciones, incluida la planificaci\'on del movimiento del robot y la planificaci\'on de las rutas de las personas. Las PRM generan un gr\'afico aleatorio con v\'ertices que representan las posiciones del robot y los bordes representan el movimiento desde una posici\'on a otra posici\'on. Seguido a esto se busca,en este gr\'afico, una ruta desde el punto de inicio hacia el objetivo. El \'exito de este algoritmo se debe a que reducen la b\'usqueda de gr\'aficos. Sin embargo, la mayor\'ia de los enfoques de PRM se basan en la suposici\'on de que el planificador conoce las ubicaciones de todos los obst\'aculos en el entorno antes de construir el gr\'afico del \textit{roadmap} o trazar una ruta.El enfoque de este trabajo es que el robot inicialmente no sabe donde est\'an ubicados los obst\'aculos.
+
+Al muestrear valores aleatorios para cada grado de libertad del agente para crear una configuraci\'on completa (posici\'on), un planificador de PRM es capaz de \textit{explorar} todo el espacio de configuraci\'on (espacio $C$) para un agente determinado. No todas las configuraciones en el espacio ser\'an utilizables debido a obst\'aculos o auto-colisiones, por lo que el espacio n-dimensional se divide conceptualmente en dos \'areas no contiguas llamadas $C_{free}$ y $C_{obst}$ para configuraciones libres y obstruidas, respectivamente. Se construye un gr\'afico PRM en la fase preprocesamiento del planificador utilizando un algoritmo de muestreo que genera aleatoramiente configuraciones para el agente y luego acepta o rechaza las posiciones generadas. La estrategia m\'as simple es rechazar todas las posiciones que se cruzan con $C_{obst}$. 
+
+El gr\'afico se completa tomando cada v\'ertice muestreado e intentando crear $k$ bordes a los v\'ertices vecinos comprobando una ruta libre de colisiones entre los dos v\'ertices. En la fase de consulta de PRM, un gr\'afico completado se puede buscar r\'apidamente para las rutas entre dos posiciones arbitrarias utilizando algoritmos de b\'usqueda de gr\'aficos est\'andar.
+
+Para modelar obst\'aculos inciertos se asume que se tiene distribuciones de probabilidad sobre las posiciones de los v\'ertices de obst\'aculo. Se genera un gr\'afico PRM por adelantado en el que algunos bordes pueden intersectar los obst\'aculos inciertos. Luego construimos un plan de ruta que atraviesa el gr\'afico de manera \'optima, dado el hecho de que las observaciones se realizar\'an a medida que nos acerquemos a los obst\'aculos que nos permitir\'a determinar qu\'e bordes est\'an libres de obst\'aculos. En los dominios del mundo real, podemos determinar las dependencias de los bordes y las probabilidades de observaci\'on mediante el muestreo de posiciones de obst\'aculos desde sus distribuciones.
+
+\subsection{Exploraci\'on R\'apida Del \'Arbol Aleatorio}
 
 %\section{Navegación del Robot Móvil}
 
