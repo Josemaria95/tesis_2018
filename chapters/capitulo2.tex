@@ -359,7 +359,7 @@ de PRM, un gr\'afico completado se puede buscar r\'apidamente para las
 rutas entre dos posiciones arbitrarias utilizando algoritmos de 
 b\'usqueda de gr\'aficos est\'andar.
 
-Para modelar obst\'aculos inciertos se asume que se tiene distribuciones 
+Para modelar los obst\'aculos inciertos se asume que se tiene distribuciones 
 de probabilidad sobre las posiciones de los v\'ertices de los obst\'aculo. Se 
 genera un gr\'afico PRM por adelantado en el que algunos bordes pueden 
 intersectar los obst\'aculos inciertos. Luego se construye un plan de 
@@ -368,32 +368,8 @@ que las observaciones se realizar\'an a medida que el robot se va acercando a
 los obst\'aculos que permitir\'a determinar qu\'e bordes est\'an 
 libres de obst\'aculos.
 
-\subsection{Exploraci\'on R\'apida Del \'Arbol Aleatorio}
+\subsection{Exploraci\'on R\'apida Del \'Arbol Aleatorio (\textit{Rapidly Exploring Random Trees})}
 
-%\section{Navegación del Robot Móvil}
-
-%Un robot es un sistema autónomo que puede percibir su entorno y actuar para poder alcanzar sus objetivos. Un robot móvil dentro de un entorno no se encuentra en una ubicación específica, ya que este tiene la capacidad de moverse en su entorno. La principal característica que define a un robot autónomo es la capacidad de actuar sobre la base de sus propias decisiones, y no a través del control de un ser humano \cite{mataric2007robotics}.
-
-%La navegación se define como el proceso o la actividad de determinar con exactitud la posición de uno mismo, planificar y seguir una ruta. En robótica, la navegación se refiere a la forma en que un robot encuentra su camino en el entorno, es una necesidad y requisito común para casi todos los robots móviles.
-
-%La navegación de robots es un campo bastante extenso y se puede dividir en subcategorías para una mejor comprensión de los problemas. Leonard and Durrant-Whyte \cite{leonard1991mobile}, describen brevemente el problema general de la navegación de los robots móviles en tres simples preguntas, cada una refiriendose a una subcategoría:
-%\begin{itemize}
-%\item[•] \textbf{``¿Dónde estoy?"}\\
-%Esta pregunta constituye el problema de localización que se puede expresar como: Un robot se encuentra en una posición desconocida en un entorno para el que tiene un mapa. ``Observa" su posición y, basándose en estas observaciones, debe inferir el lugar o conjunto de lugares en el mapa donde podría ubicarse.
-%\item[•] \textbf{``¿A dónde voy?"}\\
-%El problema de mapeo consiste en que un robot se encuentra en un entorno desconocido para el cual no tiene un mapa, y al navegar a través de él se habilita la creación de una representación de mapa. El robot debe identificar las características especiales en los puntos de referencia del entorno para reconocer dónde se encuentran los obstáculos.
-%\item[•] \textbf{``¿Cómo llego hasta ahí?"}\\
-%El problema de la planificación de la ruta es una preocupación general por encontrar rutas que conecten diferentes ubicaciones en un entorno con objetivos específicos y limitaciones.
-%\end{itemize}
-
-%La navegación actualmente es un problema difícil y complejo, con muchas soluciones y enfoques diferentes. En \cite{leonard1991mobile} se menciona que el problema no es el proceso de navegación, sino la adquisición de la información y la correlación o correspondencia automática de esa información con algún mapa de navegación, eso hace que el problema de la navegación autónoma sea difícil.
-%Un helicóptero es un vehículo volador que utiliza motores de giro rápido para empujar el aire hacia abajo, creando así una fuerza de empuje manteniendo el helicóptero en alto. Los helicóptero convencionales tienen dos rotores. Éstos se pueden disponer como dos rotores coplanares que proporcionan el empuje ascendente, pero que giran en direcciones opuestas (para equilibrar los pares ejercidos sobre el cuerpo del helicóptero)\cite{Gerig2008}.
-
-%Un quadcopter es un helicóptero que tiene cuatro motores con espacios equitativos, por lo general están posicionados en las esquinas de un cuerpo cuadrado. Este tiene 6 grados de libertad (3 de translación y 3 de rotación) y cuatro entradas para la velocidad de los motores.En esta sección de la tesis se explica sobre las ecuaciones matemáticas correspondientes al modelo dinámico del quadcopter. Este modelo esta basado en la teoría de Euler-Lagrange \cite{Bouabdallah2007} y Newton-Euler \cite{Luukkonen2011}, para esta tesis se utilizará la teoría de Newton-Euler.
-
-%\subsection{Campos Potenciales}
-
-%\subsection{Campo Potencial de Atracción}
 
 %\section{Robótica Probabilística}
 
