@@ -370,6 +370,43 @@ libres de obst\'aculos.
 
 \subsection{Exploraci\'on R\'apida Del \'Arbol Aleatorio (\textit{Rapidly Exploring Random Trees})}
 
+\section{Movimiento basado en Mapa de Red (\textit{GridMap})}
+
+La navegaci\'on basada en mapas de red es bastante natural para las personas 
+porque usar un mapa es la forma m\'as conveniente de describir un entorno. 
+Sin embargo, el uso de los mapas requiere de un buen proceso cognitivo para 
+poder interpretar el mapa y establecer la correspondencia con el mundo real.
+
+Para la navegaci\'on basada en mapas de red se pueden usar dos fuentes de 
+informaci\'on. El primero es la fuente idiot\'etica, que proporciona 
+informaci\'on interna sobre el movimiento del robot. El segundo es la 
+fuente alot\'etica, que proporciona informaci\'on externa sobre el 
+ambiente. La informaci\'on idiot\'etica se refiere a la odometr\'ia 
+del robot y la informaci\'on alot\'etica se refiere a alg\'un 
+sensor externo que permita al robot tener una perspectiva del 
+entorno donde se encuentra.
+
+Dadas las fuentes de informaci\'on como la odometr\'ia y la de un 
+sensor externo, hay muchas formas de poder integrarlas en una 
+representaci\'on \'util para la navegaci\'on de los robots. Los 
+modelos correspondientes se separan en dos categor\'ias recurriendo 
+a mapas m\'etricos, las posiciones de algunos objetos, principalmente 
+los obst\'aculos que el robot puede encontrar, se almacenan en un 
+marco de referencia com\'un.
+
+La exploraci\'on con estos mapas de red consiste en que el robot 
+empieza en un punto preparado para poder tomar cualquier ruta y 
+realizar varios viajes. Entonces el robot empieza a recibir tareas 
+de un nodo central para que pueda desplazarse en diferentes puntos 
+del mapa. El mapa se categoriza en tres tipos diferentes: 
+\textit{un obst\'aculo} (probabilidad de ocupaci\'on por encima de 
+un umbral), \textit{limpio} (probabilidad de ocupaci\'on nulo) y 
+\textit{desconocido} (nunca se detect\'o nada). De esta forma se 
+empieza a construir el mapa y cuando el robot recibe este mapa que 
+se actualiza constantemente, empieza a tener una mejor percepci\'on 
+del ambiente donde se encuentra.
+
+
 
 %\section{Robótica Probabilística}
 
