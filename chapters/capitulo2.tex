@@ -204,7 +204,7 @@ donde la dependencia de $D$ en $q$ ha sido omitida para mayor claridad. Los
 escalares utilizados para este campo generalmente se determinan por ensayo 
 y error \cite{choset2005principles}.
 
-\section{Movimiento Basados En Mapas Topol\'ogicos (\textit{Roadmap})}
+\subsection{Movimiento Basados En Mapas Topol\'ogicos (\textit{Roadmap})}
 
 Los robots usan \textit{roadmaps} de la misma manera que las personas usan 
 las carreteras, lo que le permite ir del inicio hasta la meta. El robot 
@@ -219,7 +219,7 @@ una ubicaci\'on espec\'ifica y un borde corresponde a una ruta entre ubicaciones
 vecinas. La forma en que el robot pueda explorar un entorno desconocido es por 
 medio de los datos del sensor que le permitir\'a construir un mapa de ruta.
 
-\subsection{Espacio De Configuraci\'on}
+\subsubsection{Espacio De Configuraci\'on}
 
 Un problema en la planificaci\'on de movimiento es producir un movimiento 
 continuo que conecta un punto de inicio y un punto de meta, mientras se evita 
@@ -237,7 +237,7 @@ es el conjunto de configuraciones que evita la colisi\'on con obst\'aculos. Calc
 la forma del espacio libre es dif\'icil, sin embargo, es mucho m\'as sencillo 
 probar si una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
 
-\subsection{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph})}
+\subsubsection{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph})}
 
 El planeamiento del camino del robot en situaciones pr\'acticas, es preferible 
 encontrar no solo un camino sino un buen camino. El buen camino depende del 
@@ -302,7 +302,7 @@ poligonales tambi\'en sirven como bordes en el gr\'afico de
 visibilidad. Utilizando distancia euclidiana se puede buscar la ruta m\'as 
 corta como se aprecia en la figura \ref{f:shortVG}.
 
-\section{Movimiento Basado en Muestreo Aleatorio}
+\subsection{Movimiento Basado en Muestreo Aleatorio}
 
 Las planificaci\'on de movimientos basados en muestreo, como los m\'etodos 
 de mapa de ruta probabil\'ista (\textit{Probabilistic Roadmap}) o aquellos 
@@ -319,7 +319,7 @@ expl\'icita del espacio de configuraci\'on libre. En esta secci\'on se
 explicar\'a los m\'etodos \textit{Probabilistic Roadmap} y \textit{Rapidly 
 Exploring Random Trees}.
 
-\subsection{Mapa de Ruta Probabil\'istico (\textit{Probabilistic Roadmap})}
+\subsubsection{Mapa de Ruta Probabil\'istico (\textit{Probabilistic Roadmap})}
 
 La planificaci\'on del mapa de ruta probabil\'istico (PRM) es una de las 
 alternativas para la planificaci\'on de las rutas frente a los  
@@ -368,9 +368,9 @@ que las observaciones se realizar\'an a medida que el robot se va acercando a
 los obst\'aculos que permitir\'a determinar qu\'e bordes est\'an 
 libres de obst\'aculos.
 
-\subsection{Exploraci\'on R\'apida Del \'Arbol Aleatorio (\textit{Rapidly Exploring Random Trees})}
+\subsubsection{Exploraci\'on R\'apida Del \'Arbol Aleatorio (\textit{Rapidly Exploring Random Trees})}
 
-\section{Movimiento basado en Mapa de Red (\textit{GridMap})}
+\subsubsection{Movimiento basado en Mapa de Red (\textit{GridMap})}
 
 La navegaci\'on basada en mapas de red es bastante natural para las personas 
 porque usar un mapa es la forma m\'as conveniente de describir un entorno. 
@@ -406,6 +406,148 @@ empieza a construir el mapa y cuando el robot recibe este mapa que
 se actualiza constantemente, empieza a tener una mejor percepci\'on 
 del ambiente donde se encuentra.
 
+
+\section{Localizaci\'on}
+La navegaci\'on es una de las tareas con mayor exigencia para un robot 
+m\'ovil. Para realizar una buena navegaci\'on se necesita de cuatro 
+componentes b\'asicos los cuales son: (1) percepci\'on, el robot debe extraer 
+e interpretar los datos de sus sensores para estimar su entorno; (2) localizaci\'on, 
+el robot debe determinar su posici\'on en el entorno; 
+(3) cognici\'on, el robot debe tener la capacidad de decidir c\'omo 
+actuar para lograr su objetivo; y (4) control de movimiento, el 
+robot debe modular sus velocidades para lograr una trayectoria deseada. De los cuatro 
+componentes descritos, la localizaci\'on ha recibido la mayor atenci\'on 
+de investigaci\'on en la \'ultima d\'ecada y, como resultado, se han logrado
+avances significativos. %En esta secci\'on se explicar\'a sobre las metodolog\'ias 
+%de localizaci\'on.
+
+El problema en la localizaci\'on es estimar la posici\'on del robot en 
+relaci\'on con el mapa del entorno. Cuando un robot se mueve en un entorno 
+conocido y comienza en una ubicaci\'on conocida, se puede estimar su posici\'on 
+local por medio de la odometr\'ia. Pero esta estimaci\'on de la posici\'on del robot
+con el tiempo comienza a volverse menos confiable debido a las incertidumbre,
+por ende el robot no tiene una posici\'on absoluta establecida. Con el fin de reducir 
+la incertidumbre, el robot tiene que recuperar su posici\'on absoluta localiz\'andose 
+en relaci\'on con el mapa. Para ello, el robot debe tener sensores que le permitan 
+hacer observaciones del entorno y relacionar estas observaciones con un mapa 
+del mundo real. En esta secci\'on se explicar\'a sobre las metodolog\'ias 
+de localizaci\'on.
+
+\subsection{Modelo de movimiento y medici\'on}
+
+Un modelo de movimiento probabil\'istico define la transici\'on de la posici\'on 
+en dos etapas de tiempo consecutivas $t-1$ y $t$, despu\'es de que se ha llevado 
+a cabo una acci\'on de control $u_{t}$. Existen dos modelos de movimiento 
+probabil\'istico complementarios que son el modelo de movimiento de velocidad y 
+el modelo de movimiento de la odometr\'ia. El modelo de movimiento de velocidad 
+asume que un robot es controlado a trav\'es de dos velocidades que son la 
+velocidad lineal ($v_{t}$) y la velocidad angular ($\omega_{t}$).
+
+\begin{equation}
+\label{eqn:modelMotion}
+u_{t} = \begin{pmatrix}
+v_{t} \\
+\omega_{t}
+\end{pmatrix}
+\end{equation}
+
+Un modelo probabil\'istico de medici\'on describe la relaci\'on entre 
+la posici\'on del mundo real y la lectura del sensor 
+(\textit{observaci\'on}). Bas\'andose en la estimaci\'on de la posici\'on 
+del mundo real, se genera un \textit{belief} sobre las posibles mediciones. Un 
+\textit{belief} es el conocimiento del robot sobre el entorno. El ruido en 
+las mediciones del sensor se modela expl\'icitamente, inherente a la 
+incertidumbre de los sensores del robot. Para expresae el proceso de 
+generaci\'on de mediciones, se requiere una especificaci\'on del entorno. Un
+mapa ($m$) del entorno es una lista de objetos y ubicaciones:
+\begin{align}
+m =\{m_{1}, m_{2}, \ldots, m_{N}\}
+\end{align}
+donde $N$ es el total de n\'umeros de objetos en el ambiente. Los mapas 
+suelen ser mapas basados en caracter\'isticas o mapas basados en la 
+ubicaci\'on. Los mapas basados en ubicación son volumétricos y ofrecen 
+una etiqueta para cualquier ubicación y los mapas basados en características 
+son más populares debido a que la representación hace más fácil ajustar la 
+posición de los objetos.
+
+\subsection{Filtros de Kalman}
+
+El filtro de Kalman se basa en la suposición de que el sistema es lineal y 
+tanto el modelo de movimiento como el modelo de medición se ven afectados por 
+el ruido gaussiano. El \textit{belief} en el tiempo $t$ está representada por 
+una distribución gaussiana multivariable definida por su media ($\mu_{t}$) y la 
+covarianza ($\Sigma_{t}$).
+
+Un modelo de transici\'on de estado es definido como:
+\begin{equation}
+\label{eqn:transicion_estado}
+p(x_{t}\mid x_{0:t-1}, z_{1:t-1}, u_{1:t}) = p(x_{t}\mid x_{t-1}, u_{t})
+\end{equation}
+donde $p(x_{t}\mid x_{t-1}, u_{t})$ es llamada probabilidad de transición 
+de estado y especifica cómo evoluciona el estado ambiental a lo largo 
+del tiempo en función del control del robot $u_{t}$.
+
+Un modelo de medici\'on del sensor es definido como:
+\begin{equation}
+\label{eqn:modelo_medicion}
+p(z_{t}\mid x_{0:t}, z_{1:t-1}, u_{1:t}) = p (z_{t}\mid x_{t})
+\end{equation}
+donde $p(z_{t}\mid x_{t})$ is llamado probabilidad de medición y especifica 
+cómo se generan las mediciones a partir del estado del ambiente $x_{t}$.
+
+El filtro de Kalman asume que el sistema es lineal: la transición de estado 
+$A$ (\ref{eqn:transicion_estado}), el modelo de movimiento $B$ (\ref{eqn:modelMotion})  
+y el modelo del sensor $C$ (\ref{eqn:modelo_medicion}) son funciones lineales únicamente 
+dependiendo del estado $x$ o del comando de control ($u$), más un modelo 
+de ruido gaussiano ($Q$):
+\begin{equation}
+\label{eqn: Kalman Filter}
+\begin{matrix}
+\textrm{\textbf{Predicción}}\\
+\overline{\mu}_{t} &= &A_{t}\mu_{t-1} + B_{t} u_{t} &\textrm{estimación de la media a-priori}\\
+\overline{\Sigma}_{t} &= &A_{t}\Sigma_{t-1} A_{t}^{T} + R_{t} &\textrm{estimación de la covarianza a-priori}\\
+\textrm{\textbf{Actualización}}\\
+K_{t} &= &\overline{\Sigma}_{t}C_{t}^{T}(C_{t}\overline{\Sigma}_{t}C_{t}^{T} + Q_{t})^{-1} &\textrm{Ganancia de Kalman}\\
+\mu_{t} &= &\overline{\mu}_{t} + K_{t}(z_{t} - C_{t}\overline{\mu}_{t}) &\textrm{actualización estimación de estado (a posteriori)}\\
+\Sigma_{t} &= &(I - K_{t}C_{t})\overline{\Sigma}_{t} &\textrm{actualización estimación de la covarianza (a posteriori)}\\
+\end{matrix}
+\end{equation}
+
+El filtro de Kalman representa el \textit{belief} $bel(x_{t})$ en el tiempo 
+$t$ por la media $\mu_{t}$ y la covarianza $\Sigma_{t}$. Cuando se recibe una 
+medición, se predice una nueva creencia $bel(x_{t})$ basada en el \textit{belief} 
+anterior $bel(x_{t-1})$, los datos de control $u_{t}$ y tanto el modelo de transición 
+de estado como el modelo de movimiento. Este \textit{belief} predecida describe 
+el estado más probable $\overline{\mu}_{t}$ en el tiempo $t$ y la covarianza 
+$\overline{\Sigma}_{t}$. La medición todavía no está incluida, porque es 
+un \textit{belief} que se predice. El paso de la actualización cambia el 
+\textit{belief} predecido ($\overline{\mu}_{t},\overline{\Sigma}_{t}$) en 
+el \textit{belief} deseado ($\mu_{t},\Sigma_{t}$), incorporando la medición 
+$z_{t}$. La ganancia de Kalman $K_{t}$ especifica el grado que la medición se 
+incorpora en la nueva estimación del estado. El concepto clave utilizado para filtración 
+de kalman es la innovación, que es la diferencia entre la medición real $z_{t}$ y la 
+medición esperada $C_{t}\overline{\mu}_{t}$, que se deriva del estado predecido. Una 
+medida $z_{t}$ que está lejos de la medida predecida, es menos fiable, por lo tanto 
+es menos probable que se incorpore en la nueva estimación del estado.
+
+El filtro de Kalman estándar requiere un sistema lineal, que no es suficiente para 
+describir muchos problemas de la vida real. Por lo tanto, se han propuesto 
+variaciones del algoritmo original que pueden hacer frente a diferentes niveles de 
+no-linealidad. Estas variaciones se aproximan a los modelos de movimiento y medición 
+de forma que tiendan a ser lineales.
+
+
+\subsection{Filtros de Part\'iculas}
+
+\subsection{Filtros de Informaci\'on}
+
+\section{Mapeo y Localizaci\'on Simult\'anea (\textit{SLAM})}
+
+\subsection{SLAM basado en filtros de Kalman}
+
+\subsection{FAST SLAM}
+
+\subsection{Grid SLAM}
 
 
 %\section{Robótica Probabilística}
