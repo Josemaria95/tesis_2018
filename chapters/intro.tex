@@ -1,10 +1,96 @@
 \intro{
+Actualmente, diversos métodos de explotación son utilizados en la minería 
+subterránea para la extracción de minerales. Los más utilizados en el Perú 
+son variaciones del método de corte y relleno ascendente como descendente. La 
+presente tesis se enfoca en el método de corte y relleno ascendente, ya que es el 
+más utilizado en el Perú \cite{Cruz2012}. 
 
+En el método de corte y relleno ascendente el mineral es arrancado por franjas 
+horizontales y/o verticales empezando por la parte inferior de un tajo y avanzando 
+verticalmente. Cuando se ha extraído la franja completa, se rellena el volumen 
+correspondiente con material estéril (relleno), que sirve de piso de trabajo a 
+los obreros y al mismo tiempo permite sostener las paredes y el 
+techo \cite{MunozDelPino2012}. Asimismo, se utiliza grandes máquinas que construyen 
+socavones subterráneos por donde se va a extraer los minerales. 
 
+La construcción de socavones subterráneos es de gran importancia para la minería 
+subterránea, debido a que por medio de esta construcción se extrae los minerales 
+de la mena (roca mineralizada). Estas construcciones son de diversos tamaños  en 
+las diferentes unidades mineras del Perú, que dependen del tamaño de las máquinas
+que van a ingresar para la extracción del mineral. Durante el proceso de construcción
+pueden ocurrir diferentes riesgos (desprendimiento de rocas, emisión de gases, etc.) 
+que ponen en peligro la vida de los trabajadores. Para evitar los riesgos dentro de 
+la minería subterránea, se necesita supervisar la zona de construcción y a la par 
+obtener una representación geométrica visual de toda la excavación. En la minería 
+subterránea, para la supervisión y la generación del mapa topográfico los 
+especialistas encargados son el topógrafo y el geomecánico. Se dará énfasis a 
+la función del topógrafo. 
 
-  
-  
-
-
+La función del topógrafo es observar la estructura de los socavones, luego medir 
+las dimensiones del área y con los datos obtenidos generar el mapa topográfico. Los 
+socavones subterráneos son ambientes demasiados oscuros, esto hace que existan 
+limitaciones en la visión humana, por ende los topógrafos realizan un mapa del 
+ambiente bastante impreciso. Estos especialistas actualmente utilizan teodolitos 
+para medir el área del socavón, pero estas herramientas de medición son 
+controladas manualmente, por ende las mediciones no son exactas. El tiempo 
+que le toma a cada topógrafo en realizar todo su trabajo es aproximadamente entre 
+3 a 4 horas, y posterior a esto el tiempo que se demora para la generación del mapa 
+topográfico es entre dos a tres días. Debido a la ineficiencia en el proceso de la 
+generación del mapa topográfico, hace que se retrase la producción de extracción 
+de minerales dentro de la mina subterránea, ya que los ingenieros mineros 
+necesitan calcular el volumen de extracción de la beta mineralizada.
 }
+
+\section{Justificación}
+
+Debido al problema descrito anteriormente, la propuesta de este trabajo de tesis 
+se centra en desarrollar un algoritmo de autonomía para la navegaci\'on de un robot 
+m\'ovil dentro del socav\'on subterr\'aneo. Donde se elige un sensor l\'aser el 
+cual es añadido al robot para su desplazamiento de manera aut\'onoma y a su vez 
+construya el mapa tridimensional del socavón subterr\'aneo.
+
+El robot m\'ovil utilizar\'a t\'ecnicas de SLAM (\textit{Simultaneous Localization 
+and Mapping}) para realizar un mapa del interior del socav\'on y a su vez poder 
+estimar la posici\'on de este dentro de dicho ambiente. Con respecto al sistema 
+de navegaci\'on se implementar\'a un algoritmo basado en campos potenciales el 
+cual va a permitir que el robot pueda generar su propia trayectoria, evitando 
+colisionar con las paredes o los obst\'aculos del camino por donde se va a 
+desplazar. Se tomar\'a la informaci\'on del sensor LIDAR (\textit{Light 
+Detection and Ranging}) para generar el mapa topogr\'afico en dos dimensiones.
+
+Se elige el sensor LIDAR, ya que emite impulsos r\'apidos de luz l\'aser, hasta 
+4000 impulsos por segundo, sobre una superficie. Este instrumento mide la 
+cantidad de tiempo necesario para que cada pulso pueda recuperarse, y a partir 
+de esto calcula la distancia entre el objeto y el instrumento con una alta 
+precisi\'on. Como utiliza luz l\'aser, el sensor no necesita de iluminaci\'on 
+externa para realizar las mediciones, lo cual es perfecto para los socavones 
+de miner\'ia subterránea ya que en estas zonas no hay una buena iluminaci\'on. 
+
+Para realizar el mapa en tres dimensiones, se diseñar\'a un sistema mec\'anico 
+que permitir\'a que el sensor l\'aser pueda tomar mediciones en diferentes 
+alturas, obteniendo los datos en las tres coordenadas del sistema de 
+referencia. Posteriormente, estos datos serán procesados utilizando un 
+algoritmo de ICP (\textit{Iterative Closest Point}) para as\'i obtener una 
+nube de puntos. Finalmente, se utilizar\'a un software para poder visualizar 
+el mapa tridimensional del socavón subterr\'aneo.
+
+\section{Alcances y limitaciones}
+
+Para realizar el mapa topogr\'afico se debe considerar que el t\'unel subterr\'aneo 
+tiene un terreno bastante accidentado y el robot m\'ovil donde fue implementado el 
+algoritmo no tiene el diseño mec\'anico correspondiente para este tipo de ambiente. Por 
+tal motivo el presente trabajo ser\'a capaz de moverse por un t\'unel con una superficie 
+bastante recta sin cambios bruscos en la pendiente. Otra dificultad a considerar es la 
+dimensi\'on de los socavones que var\'ian seg\'un el tama\~no de la beta mineralizada, por 
+ende el trabajo de tesis ser\'a capaz de mapear el t\'unel que no exceda los 16 metros de 
+ancho debido al rango de alcance que tiene el sensor lidar. 
+
+Finalmente, el algoritmo de autonom\'ia puede usarse para cualquier robot m\'ovil (terrestre 
+o a\'ereo) considerando que el modelo din\'amico y cinem\'atico de estos ya se encuentran 
+previamente implementados. Para el caso del robot m\'ovil a\'ereo se debe tener en cuenta 
+que no debe haber variaciones bruscas en la altura, se debe mantener un vuelo estable.
+
+\section{Organizaci\'on de la tesis}
+
+
 

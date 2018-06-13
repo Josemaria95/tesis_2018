@@ -1,30 +1,148 @@
-\chapter{Implementación}
-En el capítulo anterior se explicó la teoría necesaria para entender las propiedades físicas de un quadcopter así como el algoritmo SLAM para explicar como se lleva acabo la autonomía en los robots móviles. Si bien cada caso del proceso total podría ser implementarse desde cero, se ha optado por hacer uso de las librerías especializados en robótica que se encuentra en ROS.
+\chapter{Metodolog\'ia}
 
-En esta sección se explicará sobre el sistema operativo para robots (ROS), luego se describirá los componentes del quadcopter que se va a utilizar para este proyecto, posteriormente se explicará sobre el sensor láser y el controlador de vuelo Pixhawk. Finalmente se explicará sobre el software que se realizó para realizar la autonomía del quadcopter y los mapas tridimensionales.
+En el cap\'itulo anterior se explic\'o sobre las metodolog\'ias recientes que se 
+utilizan para que un robot pueda ser aut\'onomo y gener\'e un mapa 
+del entorno donde se encuentre. En este trabajo de tesis se propone 
+el movimiento aut\'onomo basado en campos potenciales y en leyes de control 
+polar para el movimiento de un robot m\'ovil, de modo que sea capaz de alcanzar 
+un objetivo que vuelva a planificar continuamente su camino sin colisiones. El 
+algoritmo desarrollado puede ser implementado desde una computadora en tiempo 
+real (\textit{online}) o tambi\'en puede ser implementado por medio de un 
+microcontrolador (\textit{onboard}). En este cap\'itulo se explicar\'a 
+,con detalles, los m\'etodos que fueron implementados en este trabajo.
 
-\section{Robot Operating System (ROS)}
-ROS es un framework que se usa ampliamente en robótica. Lo que busca este sistema operativo de código abierto es hacer una pieza de software que pueda funcionar en otros robots con solo pequeños cambios en el código. Lo que obtenemos con esta idea es la capacidad de crear funcionalidades que se pueden compartir y usar en otros robots, por lo que no necesitamos volver a reinventar la rueda.
+\section{Prototipo a Utilizar}
+\begin{figure}%[h]
+\centering \footnotesize
+{\includegraphics[width=0.40\linewidth]{images/kobuki.jpg}}
+\captionsetup{font=footnotesize}
+\caption{Robot m\'ovil no hol\'onomico donde se implement\'o el algoritmo de autonom\'ia}
+\label{fig:kobuki}
+\end{figure}
+\subsection{Descripci\'on del Robot M\'ovil}
 
-ROS fue desarrollado originalmente en el 2007 por el laboratorio de Inteligencia Artificial de Stanford (\textit{SAIL}) en apoyo del proyecto Stanford AI Robot \cite{rosHistory}. A partir del 2008, el desarrollo continúa principalmente en Willow Garage, un instituto de Investigación de Robótica, con más de veinte instituciones colaborando dentro de un modelo de desarrollo federado.
+\subsection{Sistema de Percepci\'on en 2D}
+Es un sensor l\'aser que se basa en el  principio de rango de triangulaci\'on 
+láser \cite{amann2001laser} y adopta el hardware de adquisici\'on y 
+procesamiento de visi\'on de alta velocidad desarrollado por \textit{SLAMTEC}. El 
+sensor utiliza un l\'aser infrarrojo de baja potencia como su fuente de luz y lo 
+maneja utilizando un pulso modulado. Este sensor gira a 360 \grad ~y llega a 
+una distancia m\'axima de 8 metros. Trabaja a una frecuencia de 10 Hz y 
+tiene una tasa de medici\'on de 4000 muestras por segundo. El hardware del 
+RPLIDAR A2 se puede ver en la figura \ref{f:lidar}, el cual tiene un 
+convertidor de protocolo UART a mini USB.
+\begin{figure}%[h]
+\centering \footnotesize
+ {\includegraphics[width=0.60\linewidth]{images/rplidar.JPG}}
+ \captionsetup{font=footnotesize}
+ \caption{Sensor láser RPLIDAR A2.}
+ \label{f:lidar}
+\end{figure}
 
-Muchas instituciones de investigación han comenzado a desarrollarse en ROS, agregando hardware y compartiendo su código. Los sensores y actuadores utilizados en la robótica también se han adaptado para su uso en ROS. Gracias a esto, las empresas están creando sensores más baratos y más potentes. Arduino es un buen ejemplo de esto, ya que al usar una placa electrónica barata puede agregar una gran cantidad de sensores como codificadores, sensores de luz, temperatura, y así sucesivamente \cite{rosIntroduction}.
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+Item & Unidad & M\'inimo & T\'ipico & M\'aximo\\
+\hline \hline
+Rango de distancia & m & 0.15 & - & 8 \\ \hline
+Rango angular & grados & - & 0 - 360 & - \\ \hline
+Resoluci\'on de la distancia & mm & - & menor a 0.5 & - \\ \hline
+Duraci\'on de muestra & ms & - & 0.25 & - \\ \hline
+Resoluci\'on angular & grados & 0.45 & 0.9 & 1.35 \\ \hline
+Fecuencia de muestreo & Hz & 2000 & 4000 & 4100 \\ \hline
+Frecuencia de escaneo & Hz & 5 & 10 & 15 \\ \hline
+\end{tabular}
+\caption{Pruebas de Medici\'on.}
+\label{tbl:medicion}
+\end{center}
+\end{table}
 
-ROS proporciona las instalaciones del sistema operativo estándar, como la abstracción de hardware, el control de dispositivos de bajo nivel, la implementación de funcionalidades de uso común, el paso de mensajes entre procesos y la gestión de paquetes. Esta tesis es desarollada con librerías de ROS.
+La tabla \ref{tbl:medicion} muestra el rendimiento de medici\'on \cite{Slamtec} 
+que tiene el sensor l\'aser considerando varias pruebas por cada item. Este 
+sensor tiene una interfaz de comunicaci\'on (UART) el cual esta dividido por 
+pines y colores de cables esto se muestra en la tabla \ref{tbl:comunicacion}. Por 
+medio de este protocolo se controla el motor (PWM) y los datos que el sensor 
+env\'ia a una PC o microcontrolador. El RPLIDAR A2 env\'ia los datos despu\'es de 
+recibir una solicitud de un sistema host, una vez que el sensor reciba esta 
+solicitud enviar\'a los datos del escaneo de forma continua al sistema host.
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+Color & Nombre de la se\~nal & Tipo & M\'inimo & T\'ipico & M\'aximo \\ 
+\hline \hline
+Rojo & VCC & Potencia & 4.9V & 5V & 5.5V \\ \hline
+Amarillo & Tx & Salida & 0V & 3.3V & 3.5V \\ \hline
+Verde & Rx & Entrada & 0V & 3.3V & 3.5V \\ \hline
+Negro & GND & Potencia & 0V & 0V & 0V \\ \hline
+Azul & MOTOCTL & Entrada & 0V & 3.3V & 5V \\ \hline
+\end{tabular}
+\caption{Interfaz de comunicaci\'on del sensor l\'aser.}
+\label{tbl:comunicacion}
+\end{center}
+\end{table}
 
-\section{Hardware usado}
-En esta sección se explicará los componentes que se utilizó para realizar el proyecto. Se comenzará describiendo el quadcopter, posteriormente el sensor láser que fue utilizado, el microcontrolador donde fue implementado el algoritmo SLAM y finalmente del controlador de vuelo Pixhawk.
+\subsection{Sistema de Percepci\'on en 3D}
 
-\subsection{Fantom}
-Fantom es el quadcopter que fue desarrollado en el laboratorio de robótica de la Universidad de Ingeniería y Tecnología - UTEC, en el año 2015 (Figura \ref{f:fantom}). Este drone fue construído de forma experimental utilizando los motores del DJI Phantom 2; tiene un peso de aproximadamente 1100 gramos (incluyendo batería) y puede cargar 1000 gramos más según las características de sus motores y las pruebas realizadas en el laboratorio. Fantom fue construído para fines aplicativos orientado a métodos de control no lineal.Este drone esta compuesto por:
+\subsection{Prototipo Final}
 
-\begin{itemize}
-\item[•] Quadcopter Frame fibra de vidrio de 480 mm.
-\item[•] Multi-Rotor Lipo 4S de 4000 mAh.
-\item[•] Multi-Rotor ESC 4S ~ 6S de 20 A.
-\item[•] Motores Brushless 960KV.
-\item[•] Controlador de vuelo Pixhawk.
-\end{itemize}
+
+\section{Movimiento del Robot y Mapeo}
+
+\subsection{Control de Bajo Nivel}
+
+\subsection{Generaci\'on de Trayectoria basado en Campos Potenciales}
+
+\subsection{SLAM basado en Filtros de Part\'iculas}
+
+\section{Implementaci\'on del sistema}
+
+\subsection{Sistema Operativo del Robot (ROS)}
+ROS es un framework que se usa ampliamente en rob\'otica. Lo que busca 
+este sistema operativo de código abierto es hacer una pieza de software 
+que pueda funcionar en otros robots con solo pequeños cambios en el 
+c\'odigo. Lo que obtenemos con esta idea es la capacidad de crear 
+funcionalidades que se pueden compartir y usar en otros robots, por 
+lo que no necesitamos volver a reinventar la rueda.
+
+ROS fue desarrollado originalmente en el 2007 por el laboratorio de 
+Inteligencia Artificial de Stanford (\textit{SAIL}) en apoyo del proyecto 
+Stanford AI Robot \cite{rosHistory}. A partir del 2008, el desarrollo 
+contin\'ua principalmente en Willow Garage, un instituto de Investigaci\'on 
+de Rob\'otica, con m\'as de veinte instituciones colaborando dentro de un 
+modelo de desarrollo federado.
+
+Muchas instituciones de investigaci\'on han comenzado a desarrollarse en 
+ROS, agregando hardware y compartiendo su c\'odigo. Los sensores y actuadores 
+utilizados en la rob\'otica tambi\'en se han adaptado para su uso en ROS. Gracias 
+a esto, las empresas est\'an creando sensores m\'as baratos y m\'as potentes. Arduino 
+es un buen ejemplo de esto, ya que al usar una placa electr\'onica barata puede 
+agregar una gran cantidad de sensores como codificadores, sensores de luz, 
+temperatura, y as\'i sucesivamente \cite{rosIntroduction}.
+
+ROS proporciona las instalaciones del sistema operativo est\'andar, como 
+la abstracci\'on de hardware, el control de dispositivos de bajo nivel, la 
+implementaci\'on de funcionalidades de uso com\'un, el paso de mensajes entre 
+procesos y la gesti\'on de paquetes. %Esta tesis es desarollada con librer\'ias 
+%de ROS.
+
+\subsection{Arquitectura del Sistema}
+
+
+%\section{Hardware usado}
+%En esta sección se explicará los componentes que se utilizó para realizar el proyecto. Se comenzará describiendo el quadcopter, posteriormente el sensor láser que fue utilizado, el microcontrolador donde fue implementado el algoritmo SLAM y finalmente del controlador de vuelo Pixhawk.
+
+%\subsection{Fantom}
+%Fantom es el quadcopter que fue desarrollado en el laboratorio de robótica de la Universidad de Ingeniería y Tecnología - UTEC, en el año 2015 (Figura \ref{f:fantom}). Este drone fue construído de forma experimental utilizando los motores del DJI Phantom 2; tiene un peso de aproximadamente 1100 gramos (incluyendo batería) y puede cargar 1000 gramos más según las características de sus motores y las pruebas realizadas en el laboratorio. Fantom fue construído para fines aplicativos orientado a métodos de control no lineal.Este drone esta compuesto por:
+
+%\begin{itemize}
+%\item[•] Quadcopter Frame fibra de vidrio de 480 mm.
+%\item[•] Multi-Rotor Lipo 4S de 4000 mAh.
+%\item[•] Multi-Rotor ESC 4S ~ 6S de 20 A.
+%\item[•] Motores Brushless 960KV.
+%\item[•] Controlador de vuelo Pixhawk.
+%\end{itemize}
 %\begin{figure}[htb]
 %\centering
 %\subfloat[Original Image]{\includegraphics[width=40mm]{frame.jpg}}
@@ -35,79 +153,33 @@ Fantom es el quadcopter que fue desarrollado en el laboratorio de robótica de l
 %\subfloat[Morphologically closed image]{\includegraphics[width=40mm]{pixhawk.jpg}}
 %\caption{Image processing steps for a 3D real scene} \label{f:cup}
 %\end{figure}
-\begin{figure}
-\centering
-\includegraphics[scale=0.1]{fantom.jpg}
-\caption{Quadcopter Fantom.}
-\label{f:fantom}
-\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[scale=0.1]{fantom.jpg}
+%\caption{Quadcopter Fantom.}
+%\label{f:fantom}
+%\end{figure}
 
-\subsection{RPLIDAR A2}
-Es un sensor láser que se basa en el  principio de rango de triangulación láser \cite{amann2001laser} y adopta el hardware de adquisición y procesamiento de visión de alta velocidad desarrollado por \textit{SLAMTEC}. El sensor utiliza un láser infrarrojo de baja potencia como su fuente de luz y lo maneja utilizando un pulso modulado.Este sensor gira a 360 \grad ~y llega a una distancia máxima de 8 metros. Trabaja a una frecuencia de 10 Hz y tiene una tasa de medición de 4000 muestras por segundo. El hardware del RPLIDAR A2 se puede ver en la figura \ref{f:lidar}, el cual tiene un convertidor de protocolo UART a mini USB.
-\begin{figure}
-\centering
-\includegraphics[scale=0.1]{rplidar.JPG}
-\caption{Sensor láser RPLIDAR A2.}
-\label{f:lidar}
-\end{figure}
+%\subsection{RPLIDAR A2}
 
+%\subsection{Sensor IMU}
+%El controlador de vuelo consta de un sensor IMU (acelerómetro, giroscopio y magnetómetro). InvenSense MPU6000 es el sensor IMU y ST Micro L3GD20H + LSM303D o InvenSense ICM2076 actúan como sensores de respaldo \cite{pixhawkIMU}. El primer conjunto de sensores se coloca en la placa primaria de la FCU mientras que el tercer conjunto se coloca en la placa aislada de las vibraciones. Las lecturas de estos diferentes conjuntos de sensores se colocan en buses separados. Son responsables de proporcionar la medición inercial necesaria para maniobrar el quadcopter. Las lecturas del giroscopio que indican la rotación de las aeronaves sobre sus propios ejes son necesarias para un vuelo estable, utilizado internamente por el controlador PID. Las lecturas del acelerómetro proporcionan las fuerzas de aceleración y aceleración en los 3 ejes, ayudan en el control de la posición de la aeronave. Esta información se puede utilizar para la estimación de la posición, pero se sabe que es propensa a errores. El magnetómetro o la brújula es responsable de proporcionar información sobre el campo magnético de la tierra e inferir el norte magnético.
 
-\begin{table}[htbp]
-\begin{center}
-\begin{tabular}{|l|c|c|c|c|}
-\hline
-Item & Unidad & Mínimo & Típico & Máximo\\
-\hline \hline
-Rango de distancia & m & 0.15 & - & 8 \\ \hline
-Rango angular & grados & - & 0 - 360 & - \\ \hline
-Resolución de la distancia & mm & - & menor a 0.5 & - \\ \hline
-Duración de muestra & ms & - & 0.25 & - \\ \hline
-Resolución angular & grados & 0.45 & 0.9 & 1.35 \\ \hline
-Fecuencia de muestreo & Hz & 2000 & 4000 & 4100 \\ \hline
-Frecuencia de escaneo & Hz & 5 & 10 & 15 \\ \hline
-\end{tabular}
-\caption{Pruebas de Medición.}
-\label{tbl:medicion}
-\end{center}
-\end{table}
-
-La tabla \ref{tbl:medicion} muestra el rendimiento de medición \cite{Slamtec} que tiene el sensor láser considerando varias pruebas por cada item. Este sensor tiene una interfaz de comunicación (UART) el cual esta dividido por pines y colores de cables esto se muestra en la tabla \ref{tbl:comunicacion}. Por medio de este protocolo se controla el motor (PWM) y los datos que el sensor envía a una PC o microcontrolador. El RPLIDAR A2 envía los datos después de recibir una solicitud de un sistema host, una vez que el sensor reciba esta solicitud enviará los datos del escaneo de forma continua al sistema host.
-
-\begin{table}[htbp]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-Color & Nombre de la señal & Tipo & Mínimo & Tipico & Máximo \\ 
-\hline \hline
-Rojo & VCC & Potencia & 4.9V & 5V & 5.5V \\ \hline
-Amarillo & Tx & Salida & 0V & 3.3V & 3.5V \\ \hline
-Verde & Rx & Entrada & 0V & 3.3V & 3.5V \\ \hline
-Negro & GND & Potencia & 0V & 0V & 0V \\ \hline
-Azul & MOTOCTL & Entrada & 0V & 3.3V & 5V \\ \hline
-\end{tabular}
-\caption{Interfaz de comunicación del sensor láser.}
-\label{tbl:comunicacion}
-\end{center}
-\end{table}
-
-\subsection{Sensor IMU}
-El controlador de vuelo consta de un sensor IMU (acelerómetro, giroscopio y magnetómetro). InvenSense MPU6000 es el sensor IMU y ST Micro L3GD20H + LSM303D o InvenSense ICM2076 actúan como sensores de respaldo \cite{pixhawkIMU}. El primer conjunto de sensores se coloca en la placa primaria de la FCU mientras que el tercer conjunto se coloca en la placa aislada de las vibraciones. Las lecturas de estos diferentes conjuntos de sensores se colocan en buses separados. Son responsables de proporcionar la medición inercial necesaria para maniobrar el quadcopter. Las lecturas del giroscopio que indican la rotación de las aeronaves sobre sus propios ejes son necesarias para un vuelo estable, utilizado internamente por el controlador PID. Las lecturas del acelerómetro proporcionan las fuerzas de aceleración y aceleración en los 3 ejes, ayudan en el control de la posición de la aeronave. Esta información se puede utilizar para la estimación de la posición, pero se sabe que es propensa a errores. El magnetómetro o la brújula es responsable de proporcionar información sobre el campo magnético de la tierra e inferir el norte magnético.
-
-\subsection{Sensor Barométrico}
-El controlador de vuelo consta de 2 sensores barométricos MS5611 redundantes. Mide la presión del aire y, en teoría, se puede utilizar para predecir la altitud, pero necesita una recalibración frecuente.
+%\subsection{Sensor Barométrico}
+%El controlador de vuelo consta de 2 sensores barométricos MS5611 redundantes. Mide la presión del aire y, en teoría, se puede utilizar para predecir la altitud, pero necesita una recalibración frecuente.
  
-\subsection{Controlador de Vuelo}
-Pixhawk \cite{PixhawkHome}, fabricado por Proficnc es la unidad de controlador de vuelo a bordo del quadcopter que vamos a utilizar en este proyecto (Figura \ref{f:pixhawk}). La función de este dispositivo es leer los datos de entrada de los sensores (láser e IMU), realizar cálculos y, como resultado, manipular la velocidad de los motores para ejecutar las manibras necesarias. Es un piloto automático de código abierto donde los desarrolladores se encargan de compartir en los repositorios de Ardupilot \cite{Ardupilot}. Para mejorar las lecturas del sensor IMU, el Pixhawk viene con 3 sistemas IMU redundantes, que están aislados entre sí, y también están amortiguados para evitar que las vibraciones del vuelo corrompan los datos.
+%\subsection{Controlador de Vuelo}
+%Pixhawk \cite{PixhawkHome}, fabricado por Proficnc es la unidad de controlador de vuelo a bordo del quadcopter que vamos a utilizar en este proyecto (Figura \ref{f:pixhawk}). La función de este dispositivo es leer los datos de entrada de los sensores (láser e IMU), realizar cálculos y, como resultado, manipular la velocidad de los motores para ejecutar las manibras necesarias. Es un piloto automático de código abierto donde los desarrolladores se encargan de compartir en los repositorios de Ardupilot \cite{Ardupilot}. Para mejorar las lecturas del sensor IMU, el Pixhawk viene con 3 sistemas IMU redundantes, que están aislados entre sí, y también están amortiguados para evitar que las vibraciones del vuelo corrompan los datos.
 
-El Pixhawk viene con un IMU desacoplado y FMU (unidad de gestión de vuelo) para reducir la interferencia a los sensores. Tiene un núcleo ARM Cortex M4 de 32 bits con FPU que opera a una frecuencia de 168 Mhz, 256 KB RAM, memoria flash de 2 MB y un coprocesador a prueba de fallos de 32 bits (REFERENCIAR DATASHEET). Los sensores a bordo se discute a detalle en las subsecciones 3.2.3 y 3.2.4.
-El Pixhawk viene con un solo suministro independiente de 5V para el controlador de vuelo y sus periféricos. También proporciona protección contra sobre voltaje, protección contra sobrecorriente y protección térmica. La FMU y la IO (entradas y salidas) funcionan a 3.3V y 6.6V. Se puede alimentar a través de USB o a través de los 2 conectores. Para las operaciones IO, viene con un puerto I2C, 2 puertos CAN, 5 puertos UART, un puerto SPI y un puerto RSSI (PWM o Voltaje).
+%El Pixhawk viene con un IMU desacoplado y FMU (unidad de gestión de vuelo) para reducir la interferencia a los sensores. Tiene un núcleo ARM Cortex M4 de 32 bits con FPU que opera a una frecuencia de 168 Mhz, 256 KB RAM, memoria flash de 2 MB y un coprocesador a prueba de fallos de 32 bits (REFERENCIAR DATASHEET). Los sensores a bordo se discute a detalle en las subsecciones 3.2.3 y 3.2.4.
+%El Pixhawk viene con un solo suministro independiente de 5V para el controlador de vuelo y sus periféricos. También proporciona protección contra sobre voltaje, protección contra sobrecorriente y protección térmica. La FMU y la IO (entradas y salidas) funcionan a 3.3V y 6.6V. Se puede alimentar a través de USB o a través de los 2 conectores. Para las operaciones IO, viene con un puerto I2C, 2 puertos CAN, 5 puertos UART, un puerto SPI y un puerto RSSI (PWM o Voltaje).
 
-\begin{figure}
-\centering
-\includegraphics[scale=0.4]{pixhawk.jpg}
-\caption{Controlador de Vuelo Pixhawk}
-\label{f:pixhawk}
-\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[scale=0.4]{pixhawk.jpg}
+%\caption{Controlador de Vuelo Pixhawk}
+%\label{f:pixhawk}
+%\end{figure}
 
 %\section{Arquitectura de Solución}
 %\subsection{Arquitectura del Sistema}
