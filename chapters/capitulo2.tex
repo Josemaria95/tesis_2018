@@ -55,7 +55,7 @@ luz LED, sensores sonar, una cámara HD y emplea la técnica de SLAM para poder
 desplazarse por todo el socavón sin la necesidad de utilizar un GPS \cite{Solutions2016}. 
 
 
-\section{Control de Robots m\'oviles}
+\section{Control de Robots M\'oviles}
 
 La generaci\'on de movimiento del robot m\'ovil necesita de un control cinem\'atico 
 adecuado. El objetivo de un controlador cinem\'atico es seguir una trayectoria descrita 
@@ -86,9 +86,10 @@ difundido en el mundo industrial, cuya forma m\'as conocida es:
 %\label{eqn:pid}
 u(t) = K_c e(t) + \frac{K_c}{T_i} \int e(t)dt + K_c T_d \frac{de(t)}{dt} = P(t) + I(t) + D(t)
 \end{align*}
-donde $K_c$ es la ganancia proporcional, $T_i$ es el tiempo integral y $T_d$ es 
-el tiempo derivativo. Este algoritmo posee muchas variaciones, dependiendo de 
-la aplicaci\'on el controlador en cuesti\'on puede trabajar como P, PI, PD o PID.
+donde $K_c$ es la ganancia proporcional, $T_i$ es el tiempo integral, $T_d$ es 
+el tiempo derivativo y $e(t)$ es el error entre la posici\'on actual y la posici\'on deseada
+del robot. Este algoritmo posee muchas variaciones, dependiendo de la aplicaci\'on el controlador 
+en cuesti\'on puede trabajar como P, PI, PD o PID.
 
 \subsection{Control Cinem\'atico Polar}
 
@@ -139,8 +140,25 @@ humano \cite{mataric2007robotics}.
 La navegaci\'on se define como el proceso o la actividad de determinar con exactitud 
 la posici\'on de uno mismo, planificar y seguir una ruta. En rob\'otica, la navegaci\'on 
 se refiere a la forma en que un robot encuentra su camino en el entorno, es una necesidad 
-y requisito com\'un para casi todos los robots m\'oviles. Esta secci\'on explica los 
-m\'etodos que son empleados en la navegaci\'on aut\'onoma.
+y requisito com\'un para casi todos los robots m\'oviles. %Esta secci\'on explica los 
+%m\'etodos que son empleados en la navegaci\'on aut\'onoma.
+
+Un problema en la planificaci\'on de movimiento es producir un movimiento 
+continuo que conecta un punto de inicio y un punto de meta, mientras se evita 
+la colisi\'on con obst\'aculos conocidos. La trayectoria que el robot describe 
+se representa en un espacio de configuraci\'on. Una configuraci\'on describe 
+la posici\'on del robot, y el espacio de configuraci\'on ($C$) es el conjunto 
+de todas las posibles configuraciones. Por ejemplo, si el robot tiene 
+un \'unico punto en un espacio de dos dimensiones, espacio de trabajo, entonces 
+el espacio de configuraci\'on es un plano y la configuraci\'on se representa 
+como $(x,y)$.
+
+Dentro de los m\'etodos de planificaci\'on de movimiento, se utiliza con frecuencia 
+el t\'ermino espacio libre. Un espacio libre ($C_{free}$) es el conjunto de 
+configuraciones que evita la colisi\'on con obst\'aculos. Calcular la forma 
+del espacio libre es dif\'icil, sin embargo, es mucho m\'as sencillo probar si 
+una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
+
 
 \subsection{Campos Potenciales}
 La funci\'on potencial m\'as simple es el potencial atractivo y repulsivo. La 
@@ -219,23 +237,23 @@ una ubicaci\'on espec\'ifica y un borde corresponde a una ruta entre ubicaciones
 vecinas. La forma en que el robot pueda explorar un entorno desconocido es por 
 medio de los datos del sensor que le permitir\'a construir un mapa de ruta.
 
-\subsubsection{Espacio De Configuraci\'on}
+%\subsubsection{Espacio De Configuraci\'on}
 
-Un problema en la planificaci\'on de movimiento es producir un movimiento 
-continuo que conecta un punto de inicio y un punto de meta, mientras se evita 
-la colisi\'on con obst\'aculos conocidos. La trayectoria que el robot describe 
-se representa en un espacio de configuraci\'on. Una configuraci\'on describe 
-la posici\'on del robot, y el espacio de configuraci\'on ($C$) es el conjunto 
-de todas las posibles configuraciones. Por ejemplo, si el robot tiene 
-un \'unico punto en un espacio de dos dimensiones, espacio de trabajo, entonces 
-el espacio de configuraci\'on es un plano y la configuraci\'on se representa 
-como $(x,y)$.
+%Un problema en la planificaci\'on de movimiento es producir un movimiento 
+%continuo que conecta un punto de inicio y un punto de meta, mientras se evita 
+%la colisi\'on con obst\'aculos conocidos. La trayectoria que el robot describe 
+%se representa en un espacio de configuraci\'on. Una configuraci\'on describe 
+%la posici\'on del robot, y el espacio de configuraci\'on ($C$) es el conjunto 
+%de todas las posibles configuraciones. Por ejemplo, si el robot tiene 
+%un \'unico punto en un espacio de dos dimensiones, espacio de trabajo, entonces 
+%el espacio de configuraci\'on es un plano y la configuraci\'on se representa 
+%como $(x,y)$.
 
-Dentro de la planificaci\'on de movimiento basados en \textit{roadmaps}, se 
-utiliza con frecuencia el t\'ermino espacio libre. Un espacio libre ($C_{free}$) 
-es el conjunto de configuraciones que evita la colisi\'on con obst\'aculos. Calcular 
-la forma del espacio libre es dif\'icil, sin embargo, es mucho m\'as sencillo 
-probar si una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
+%Dentro de la planificaci\'on de movimiento basados en \textit{roadmaps}, se 
+%utiliza con frecuencia el t\'ermino espacio libre. Un espacio libre ($C_{free}$) 
+%es el conjunto de configuraciones que evita la colisi\'on con obst\'aculos. Calcular 
+%la forma del espacio libre es dif\'icil, sin embargo, es mucho m\'as sencillo 
+%probar si una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
 
 \subsubsection{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph})}
 
@@ -352,23 +370,43 @@ aleatoramiente configuraciones para el robot y luego valida las
 posiciones generadas. Lo m\'as simple y com\'un que se hace es rechazar 
 todas las posiciones que se cruzan con $C_{obst}$. 
 
-El gr\'afico se completa tomando cada v\'ertice muestreado e intentando 
-crear $n$ bordes a los v\'ertices vecinos verificando si se encuentra una 
-ruta libre de colisiones entre los dos v\'ertices. En la fase de consulta 
-de PRM, un gr\'afico completado se puede buscar r\'apidamente para las 
-rutas entre dos posiciones arbitrarias utilizando algoritmos de 
-b\'usqueda de gr\'aficos est\'andar.
+%El gr\'afico se completa tomando cada v\'ertice muestreado e intentando 
+%crear $n$ bordes a los v\'ertices vecinos verificando si se encuentra una 
+%ruta libre de colisiones entre los dos v\'ertices. En la fase de consulta 
+%de PRM, un gr\'afico completado se puede buscar r\'apidamente para las 
+%rutas entre dos posiciones arbitrarias utilizando algoritmos de 
+%b\'usqueda de gr\'aficos est\'andar.
 
-Para modelar los obst\'aculos inciertos se asume que se tiene distribuciones 
-de probabilidad sobre las posiciones de los v\'ertices de los obst\'aculo. Se 
-genera un gr\'afico PRM por adelantado en el que algunos bordes pueden 
-intersectar los obst\'aculos inciertos. Luego se construye un plan de 
-ruta que atraviesa el gr\'afico de manera \'optima, dado el hecho de 
-que las observaciones se realizar\'an a medida que el robot se va acercando a 
-los obst\'aculos que permitir\'a determinar qu\'e bordes est\'an 
-libres de obst\'aculos.
+%Para modelar los obst\'aculos inciertos se asume que se tiene distribuciones 
+%de probabilidad sobre las posiciones de los v\'ertices de los obst\'aculo. Se 
+%genera un gr\'afico PRM por adelantado en el que algunos bordes pueden 
+%intersectar los obst\'aculos inciertos. Luego se construye un plan de 
+%ruta que atraviesa el gr\'afico de manera \'optima, dado el hecho de 
+%que las observaciones se realizar\'an a medida que el robot se va acercando a 
+%los obst\'aculos que permitir\'a determinar qu\'e bordes est\'an 
+%libres de obst\'aculos.
 
-\subsubsection{Exploraci\'on R\'apida Del \'Arbol Aleatorio (\textit{Rapidly Exploring Random Trees})}
+\subsubsection{\'Arbol Aleatorio de Exploraci\'on R\'apida (\textit{Rapidly Exploring Random Trees})}
+
+Un \'arbol aleatorio de exploraci\'on r\'apida (RRT) es un algoritmo que 
+esta dise\~nado para buscar de manera eficiente espacios no 
+convexos de gran dimensi\'on. Los RRT se construyen de forma 
+incremental de una manera que reduce r\'apidamente la distancia esperada 
+de un punto elegido al azar. Los RRT son particularmente adecuados 
+para problemas de planificaci\'on de ruta que involucran obst\'aculos
+y restricciones diferenciales (no holon\'omicas o kinodin\'amicas).
+
+Un RRT hace crecer un \'arbol enraizado en la configuraci\'on inicial 
+utilizando muestras aleatorias del espacio de b\'usqueda. A medida
+que se extrae cada muestra, se intenta establecer una conexi\'on entre 
+ella y el estado m\'as cercano en el \'arbol. Si la conexi\'on es factible
+(pasa completamente a trav\'es del espacio libre y obedece
+a cualquier restricci\'on), esto resulta en la adici\'on del nuevo estado al 
+\'arbol. Con un muestreo uniforme del espacio de b\'usqueda, la probabilidad de 
+expandir un estado existente es proporcional al tama\~no de su regi\'on de Voronoi. Como 
+las regiones m\'as grandes de Voronoi pertenecen a los estados en la frontera
+de la b\'usqueda, esto significa que el \'arbol se expande preferentemente hacia 
+grandes \'areas no buscadas. 
 
 \subsubsection{Movimiento basado en Mapa de Red (\textit{GridMap})}
 
@@ -479,19 +517,19 @@ una distribución gaussiana multivariable definida por su media ($\mu_{t}$) y la
 covarianza ($\Sigma_{t}$).
 
 Un modelo de transici\'on de estado es definido como:
-\begin{equation}
+\begin{align}
 \label{eqn:transicion_estado}
 p(x_{t}\mid x_{0:t-1}, z_{1:t-1}, u_{1:t}) = p(x_{t}\mid x_{t-1}, u_{t})
-\end{equation}
+\end{align}
 donde $p(x_{t}\mid x_{t-1}, u_{t})$ es llamada probabilidad de transición 
-de estado y especifica cómo evoluciona el estado ambiental a lo largo 
+de estado y especifica cómo evoluciona el estado del entorno a lo largo 
 del tiempo en función del control del robot $u_{t}$.
 
 Un modelo de medici\'on del sensor es definido como:
-\begin{equation}
+\begin{align}
 \label{eqn:modelo_medicion}
 p(z_{t}\mid x_{0:t}, z_{1:t-1}, u_{1:t}) = p (z_{t}\mid x_{t})
-\end{equation}
+\end{align}
 donde $p(z_{t}\mid x_{t})$ is llamado probabilidad de medición y especifica 
 cómo se generan las mediciones a partir del estado del ambiente $x_{t}$.
 
@@ -500,7 +538,7 @@ $A$ (\ref{eqn:transicion_estado}), el modelo de movimiento $B$ (\ref{eqn:modelMo
 y el modelo del sensor $C$ (\ref{eqn:modelo_medicion}) son funciones lineales únicamente 
 dependiendo del estado $x$ o del comando de control ($u$), más un modelo 
 de ruido gaussiano ($Q$):
-\begin{equation}
+\begin{equation*}
 \label{eqn: Kalman Filter}
 \begin{matrix}
 \textrm{\textbf{Predicción}}\\
@@ -511,23 +549,18 @@ K_{t} &= &\overline{\Sigma}_{t}C_{t}^{T}(C_{t}\overline{\Sigma}_{t}C_{t}^{T} + Q
 \mu_{t} &= &\overline{\mu}_{t} + K_{t}(z_{t} - C_{t}\overline{\mu}_{t}) &\textrm{actualización estimación de estado (a posteriori)}\\
 \Sigma_{t} &= &(I - K_{t}C_{t})\overline{\Sigma}_{t} &\textrm{actualización estimación de la covarianza (a posteriori)}\\
 \end{matrix}
-\end{equation}
+\end{equation*}
 
-El filtro de Kalman representa el \textit{belief} $bel(x_{t})$ en el tiempo 
-$t$ por la media $\mu_{t}$ y la covarianza $\Sigma_{t}$. Cuando se recibe una 
-medición, se predice una nueva creencia $bel(x_{t})$ basada en el \textit{belief} 
-anterior $bel(x_{t-1})$, los datos de control $u_{t}$ y tanto el modelo de transición 
-de estado como el modelo de movimiento. Este \textit{belief} predecida describe 
-el estado más probable $\overline{\mu}_{t}$ en el tiempo $t$ y la covarianza 
-$\overline{\Sigma}_{t}$. La medición todavía no está incluida, porque es 
-un \textit{belief} que se predice. El paso de la actualización cambia el 
-\textit{belief} predecido ($\overline{\mu}_{t},\overline{\Sigma}_{t}$) en 
-el \textit{belief} deseado ($\mu_{t},\Sigma_{t}$), incorporando la medición 
-$z_{t}$. La ganancia de Kalman $K_{t}$ especifica el grado que la medición se 
-incorpora en la nueva estimación del estado. El concepto clave utilizado para filtración 
-de kalman es la innovación, que es la diferencia entre la medición real $z_{t}$ y la 
-medición esperada $C_{t}\overline{\mu}_{t}$, que se deriva del estado predecido. Una 
-medida $z_{t}$ que está lejos de la medida predecida, es menos fiable, por lo tanto 
+Cuando se realiza una medici\'onn, se hace una predicci\'on de un \textit{belief} 
+($bel(x_{t})$),\\ basado en el \textit{belief} anterior $bel(x_{t-1})$, tambi\'en de los 
+datos de control ($u_{t}$) y del modelo de transición de estado. Este nuevo \textit{belief}
+describe el estado más probable ($\overline{\mu}_{t}$) en el tiempo ($t$) y la covarianza 
+($\overline{\Sigma}_{t}$). En la etapa de la actualización, el \textit{belief} que fue predecido 
+cambia, incorporando la medici\'on ($z_{t}$). La ganancia de Kalman ($K_{t}$) especifica el
+grado que la medici\'on se incorpora en la nueva estimación del estado. El concepto principal 
+del filtro de kalman es la innovaci\'on, que significa la diferencia entre la medici\'on 
+real y la medici\'on esperada ($C_{t}\overline{\mu}_{t}$), que se deriva del estado que fue 
+predecido. Una medida que está lejos de la medida predecida, es menos confiable, por lo tanto 
 es menos probable que se incorpore en la nueva estimación del estado.
 
 El filtro de Kalman estándar requiere un sistema lineal, que no es suficiente para 
@@ -538,17 +571,107 @@ de forma que tiendan a ser lineales.
 
 
 \subsection{Filtros de Part\'iculas}
+El filtro de part\'iculas es una implementaci\'on alternativa no param\'etrica, 
+al igual que los filtros de histograma, los filtros de part\'iculas se aproximan 
+al estado posterior por un n\'umero finito de par\'ametros. Sin embargo, 
+difieren en la forma en que se generan estos par\'ametros, y en los que 
+muestrean el espacio de estado. La idea del filtro de part\'iculas es 
+representar el \textit{belief} predecido ($x_{t}$), mediante un conjunto 
+de muestras aleatorias de estado. En lugar de representar la distribuci\'on 
+mediante una forma param\'etrica (la funci\'on exponencial que define 
+la densidad de una distribuci\'on normal), los filtros de part\'iculas 
+representan una distribuci\'on por un conjunto de muestras extra\'idas 
+de esta distribuci\'on. Tal representaci\'on es aproximada, pero no 
+es param\'etrica, por lo tanto se puede representar un espacio de 
+distribuciones mucho m\'as amplio que los gaussianos.
+
 
 \subsection{Filtros de Informaci\'on}
+El filtro de informaci\'on (IF) representa el \textit{belief} por medio de un 
+gaussiano. Por lo tanto, el filtro de informaci\'on est\'andar est\'a sujeto a las 
+mismas suposiciones subyacentes al filtro de Kalman (KF). La diferencia entre 
+el KF y el IF surge de la forma que se representa el \textit{belief} gaussiano. Mientras 
+que en la familia de algoritmos de filtro de Kalman, los gaussianos est\'an 
+representados por sus momentos (media, covarianza), en cambio los filtros de 
+informaci\'on representan gaussianos en su representaci\'on can\'onica, que 
+est\'a compuesta por una matriz de informaci\'on y un vector de 
+informaci\'on. La diferencia en la representaci\'on conduce a diferentes ecuaciones
+de actualizaci\'on. En particular, lo que es computacionalmente complejo en 
+una representaci\'on resulta ser simple en la otra y viceversa. Las 
+representaciones can\'onicas y de momentos a menudo se consideran duales 
+entre s\'i, y as\'i son el IF y el KF.
 
 \section{Mapeo y Localizaci\'on Simult\'anea (\textit{SLAM})}
+Un problema mucho m\'as dif\'icil de la localizaci\'on es cuando no conoces 
+el mapa del ambiente. En este caso, la informaci\'on del sensor del robot 
+se utiliza para recuperar la trayectoria del robot y construir un mapa 
+del entorno. Este problema se llama mapeo y localizaci\'on simult\'anea 
+(\textit{SLAM}). Una soluci\'on a este problema har\'ia que un robot 
+sea totalmente aut\'onomo. \textit{SLAM} es un problema dif\'icil porque tanto el 
+camino estimado como el mapa construido son afectados por el ruido. Ambos 
+se vuelven cada vez m\'as inexactos durante el viaje. Sin embargo, cuando 
+se revisa un lugar que ha sido mapeado, se puede reducir la incertidumbre.
+Este proceso se denomina cierre de bucle. Adem\'as, se puede optimizar el 
+mapa despu\'es de que se detecta un evento de cierre de bucle. En esta secci\'on se 
+explicar\'a los m\'etodos de \textit{SLAM} m\'as utilizados actualmente.
 
-\subsection{SLAM basado en filtros de Kalman}
+\subsection{EKF SLAM}
+El \textit{SLAM} basado en el filtro extendido de kalman es el algoritmo m\'as antiguo y el m\'as influyente. El
+algoritmo \textit{EKF-SLAM} aplica el \textit{EKF} al \textit{SLAM} usando la asociaci\'on de datos de m\'axima 
+verosimilitud. Al hacerlo, \textit{EKF-SLAM} est\'a sujeto a una serie de aproximaciones y suposiciones
+limitantes:
+\begin{itemize}
+	\item[•] \textit{\textbf{Mapas basados en funciones:}} Los mapas, en el \textit{EKF}, se componen de puntos
+	de referencia. Por razones de computaci\'on, el n\'umero de puntos de referencia es generalmente
+	peque\~no (por ejemplo, m\'as peque\~no que 1000). Adem\'as, el enfoque de \textit{EKF} tiende a
+	funcionar bien cuanto menos ambiguos son los hitos. Por esta raz\'on, \textit{EKF-SLAM} requiere una
+	ingenier\'ia significativa de los detectores de funciones, a veces utilizando balizas
+	artificiales o puntos de referencia como caracter\'isticas.
+	\item[•] \textit{\textbf{Ruido Gaussiano:}} Como cualquier algoritmo \textit{EKF}, \textit{EKF-SLAM} 
+	hace una suposici\'on de ruido Gaussiano para el movimiento del robot y la percepci\'on. La
+	cantidad de incertidumbre en la parte de la predicci\'on debe ser relativamente
+	peque\~na, ya que de lo contrario la linealizaci\'on en \textit{EKF} tiende a introducir 
+	errores intolerables.
+	\item[•] \textit{\textbf{Mediciones positivas:}} El algoritmo \textit{EKF-SLAM}, al igual 
+	que el localizador \textit{EKF}, solo puede procesar avistamientos positivos de hitos. No
+	puede procesar informaci\'on negativa que surge de la ausencia de puntos de referencia en 
+	las mediciones de un sensor. Esta es una consecuencia directa de la representaci\'on
+	de \textit{belief} gaussiano.
+\end{itemize}
 
-\subsection{FAST SLAM}
+\subsection{FastSLAM}
+FastSLAM descompone el problema SLAM en un problema de localizaci\'on 
+de robot, y una colecci\'on de problemas de estimaci\'on de puntos 
+de referencia (\textit{landmarks}) que est\'an condicionados a la 
+estimaci\'on de la posici\'on del robot. Como se se\~nala en 
+\cite{murphy2000bayesian}, esta representaci\'on factorizada es 
+exacta, debido a las independencias condicionales naturales en el 
+problema SLAM. FastSLAM usa un filtro de part\'iculas modificado 
+para estimar el camino predecido sobre el robot. Cada part\'icula 
+posee filtros de Kalman que estiman las ubicaciones de los puntos 
+de referencia condicionadas en la estimaci\'on de la ruta. La 
+implementaci\'on de este algoritmo requiere tiempo.
 
-\subsection{Grid SLAM}
-
+\subsection{GraphSLAM}
+SLAM basado en gr\'aficos construye un problema de estimaci\'on 
+simplificado al extraer las mediciones del sensor sin ser 
+procesadas. Estas medidas se reemplazan por los bordes en el gr\'afico 
+que luego se pueden ver como "medidas virtuales". M\'as detalladamente, 
+un borde entre dos nodos se etiqueta con una distribuci\'on de 
+probabilidad sobre las ubicaciones relativas de las dos posturas, 
+condicionadas a sus mediciones mutuas. En general, el modelo de observaci\'on 
+$p(z_{t}| x_{t},  m_{t})$ es multimodal y, por lo tanto, el supuesto 
+gaussiano no se cumple. Esto significa que una \'unica observaci\'on 
+$z_{t}$ puede dar como resultado m\'ultiples aristas potenciales que 
+conectan diferentes posiciones en el gr\'afico y la conectividad del 
+gr\'afico necesita ser descrita como una distribuci\'on de probabilidad. 
+Dirigirse directamente a esta multimodalidad en el proceso de estimaci\'on 
+llevar\'ia a una explosi\'on combinatoria de la complejidad. Como resultado 
+de eso, la mayor\'ia de los enfoques pr\'acticos restringen la 
+estimaci\'on a la topolog\'ia m\'as probable. Por lo tanto, se 
+necesita determinar la restricci\'on m\'as probable resultante de 
+una observaci\'on. Esta decisi\'on depende de la distribuci\'on de 
+probabilidad sobre las posiciones del robot.
 
 %\section{Robótica Probabilística}
 
@@ -671,7 +794,8 @@ de forma que tiendan a ser lineales.
 
 %Cuando un robot se mueve en un entorno conocido y comienza en una ubicación conocida, puede realizar un seguimiento de su ubicación mediante la integración de estimaciones de posición local (por ejemplo, odometría). Debido a la incertidumbre de estas estimaciones locales, la incertidumbre de la ubicación absoluta del robot aumenta con el tiempo. Con el fin de reducir la incertidumbre, el robot tiene que recuperar su posición absoluta localizándose en relación con un mapa. Para ello, el robot utiliza sus sensores para hacer observaciones de su entorno y relaciona estas observaciones con un mapa del medio ambiente.
 
-%Un enfoque probabilístico de la localización utiliza el \textit{belief} para representar la localización global estimada. De nuevo, actualizar la posición del robot implica dos pasos. El primer paso se denomina actualización de predicción. El robot utiliza su estado en el tiempo $t-1$ y los datos del control $u_{t}$ para predecir su estado en el instante $t$. Este paso de predicción aumenta la incertidumbre sobre el estado del robot. El segundo paso se llama actualización de la percepción. En este paso, el robot utiliza la información de sus sensores para corregir la posición estimada durante la fase de predicción, reduciendo la incertidumbre sobre el estado del robot. 
+%Un enfoque probabilístico de la localización utiliza el \textit{belief} para representar la localización global estimada. De nuevo, actualizar la posición del robot implica dos pasos. El primer paso se denomina actualización de predicción. El robot utiliza su estado en el tiempo $t-1$ y los datos del control $u_{t}$ para predecir su estado en el instante $t$. Este paso de predicción aumenta la incertidumbre sobre el estado del robot. El segundo paso se llama actualización de la percepción. En este paso, el robot utiliza la información de sus sensores para corregir la posición estimada durante la fase de predicción, reduciendo la incertidumbre sobre el estado del robot.
+
 %\subsection{Mapeo y Localización simultánea (SLAM)}
 %Un problema mucho más difícil de la localización es cuando no conoces el mapa del ambiente. En este caso, la información del sensor del robot se utiliza para recuperar la trayectoria del robot y construir un mapa del entorno.
 %Este problema se llama Mapeo y Localización simultánea (\textit{SLAM}). Una solución a este problema haría  un robot auténticamente autónomo. \textit{SLAM} es un problema difícil porque tanto el camino estimado como el mapa construido son afectados por el ruido. Ambos se vuelven cada vez más inexactos durante el viaje. Sin embargo, cuando se revisa un lugar que ha sido mapeado, se puede reducir la incertidumbre.
