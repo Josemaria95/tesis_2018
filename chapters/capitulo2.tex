@@ -56,7 +56,19 @@ desplazarse por todo el socavón sin la necesidad de utilizar un GPS \cite{Solut
 
 
 \section{Control de Robots M\'oviles}
-
+\begin{figure}%[ht!]
+  \centering \footnotesize
+  %\subfloat[Attractive Force]{\includegraphics[width=0.16\textwidth]{images/lidar_3D.jpeg}}
+  %~\subfloat[Repulsive Force]{\includegraphics[width=0.16\textwidth]{images/kbki_lidar3D.jpeg}} 
+  \includegraphics[width=0.35\textwidth]{images/omnidirecional.jpg}
+  \includegraphics[width=0.35\textwidth]{images/kobuki.jpg}
+  \\ $\qquad\qquad$ a. Sistema mecánico $\qquad\qquad$  b. Implementado en el Kobuki
+  %\subfloat[Navigation Force]{\includegraphics[width=0.16\textwidth]{images/nav_force.png}}
+  % \subfloat[Attractive Force]{\includegraphics[width = 150mm]{attr_force.png}}
+  \captionsetup{font=footnotesize}
+  \caption{Tests for the Potential Field Algorithm: (right) Sistema mecánico, (left) Implementado en el Kobuki} 
+  \label{f:omnidirectional}
+\end{figure}
 La generaci\'on de movimiento del robot m\'ovil necesita de un control cinem\'atico 
 adecuado. El objetivo de un controlador cinem\'atico es seguir una trayectoria descrita 
 por su posici\'on o perfil de velocidad como una funci\'on del tiempo. Esto se hace 
@@ -71,6 +83,18 @@ el modelo cinem\'atico que relaciona la velocidad de las ruedas con la velocidad
 lineal y angular del robot en su propio marco de referencia. Luego utilizar las 
 leyes de control que permite un suave movimiento en la trayectoria del robot. Esta 
 secci\'on explica los controladores utilizados en los robots m\'oviles.
+
+Para el control de movimiento de los robots móviles, se debe tener en consideración 
+la clasificación de estos a través de la locomoción de sus ruedas. Esto se divide 
+en dos: (1) robot holon\'omico y (2) robot no-holon\'omico. El robot holon\'omico 
+no tiene ninguna restricci\'on, con respecto a la velocidad, en la posici\'on y 
+la orientaci\'on. El robot se puede mover instant\'aneamente en cualquier direcci\'on 
+del espacio, sin necesidad de rotar previamente. La mayor\'ia de estos robots 
+m\'oviles son omnidireccionales, como se puede ver en la figura 
+\ref{f:omnidirectional}. En cambio un robot no-holonomico tiene una restricci\'on 
+en su velocidad, no existe un trayectoria que dependa solamente de la posici\'on y 
+orientaci\'on. Por ende, este robot no se puede mover instant\'aneamente en cada 
+direcci\'on del espacio. 
 
 \subsection{Control Cinem\'atico PID}
 
@@ -171,7 +195,8 @@ potencial se puede construir como la suma de potenciales atractivos y repulsivos
 \label{eqn:potetialField}
 U(q) = U_{att}(q) + U_{rep}(q).
 \end{align}
-\subsubsection{Campo Potencial Atractivo}
+%\subsubsection{Campo Potencial Atractivo}
+\paragraph{Campo Potencial Atractivo}
 Este campo conduce al robot hacia la posici\'on de la meta, suponiendo que 
 hay una pelota determinada alrededor de este objetivo. Es decir, cualquier 
 posici\'on dentro de esta bola se considerar\'a que satisface el objetivo 
@@ -192,7 +217,8 @@ campo vectorial que siempre apunta a la posici\'on de objetivo deseada como:
 \nabla U_{att}(q)=\zeta(q-q_{goal}).
 \end{align}
 
-\subsubsection{Campo Potencial Repulsivo}
+%\subsubsection{Campo Potencial Repulsivo}
+\paragraph{Campo Potencial Repulsivo}
 Un potencial repulsivo mantiene al robot alejado de los obst\'aculos. La 
 fuerza de la fuerza de repulsi\'on depende de la proximidad del robot al 
 obst\'aculo. Cuanto m\'as cerca est\'e el robot de un obst\'aculo, m\'as 
@@ -256,6 +282,7 @@ medio de los datos del sensor que le permitir\'a construir un mapa de ruta.
 %probar si una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
 
 \subsubsection{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph})}
+%\paragraph{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph})}
 
 El planeamiento del camino del robot en situaciones pr\'acticas, es preferible 
 encontrar no solo un camino sino un buen camino. El buen camino depende del 
@@ -337,7 +364,8 @@ expl\'icita del espacio de configuraci\'on libre. En esta secci\'on se
 explicar\'a los m\'etodos \textit{Probabilistic Roadmap} y \textit{Rapidly 
 Exploring Random Trees}.
 
-\subsubsection{Mapa de Ruta Probabil\'istico (\textit{Probabilistic Roadmap})}
+%\subsubsection{Mapa de Ruta Probabil\'istico (\textit{Probabilistic Roadmap})}
+\paragraph{Mapa de Ruta Probabil\'istico (\textit{Probabilistic Roadmap})}
 
 La planificaci\'on del mapa de ruta probabil\'istico (PRM) es una de las 
 alternativas para la planificaci\'on de las rutas frente a los  
@@ -386,63 +414,52 @@ todas las posiciones que se cruzan con $C_{obst}$.
 %los obst\'aculos que permitir\'a determinar qu\'e bordes est\'an 
 %libres de obst\'aculos.
 
-\subsubsection{\'Arbol Aleatorio de Exploraci\'on R\'apida (\textit{Rapidly Exploring Random Trees})}
+%\subsubsection{\'Arbol Aleatorio de Exploraci\'on R\'apida (\textit{Rapidly Exploring Random Trees})}
+\paragraph{\'Arbol Aleatorio de Exploraci\'on R\'apida (\textit{Rapidly Exploring Random Trees})}
 
-Un \'arbol aleatorio de exploraci\'on r\'apida (RRT) es un algoritmo que 
-esta dise\~nado para buscar de manera eficiente espacios no 
-convexos de gran dimensi\'on. Los RRT se construyen de forma 
-incremental de una manera que reduce r\'apidamente la distancia esperada 
-de un punto elegido al azar. Los RRT son particularmente adecuados 
-para problemas de planificaci\'on de ruta que involucran obst\'aculos
-y restricciones diferenciales (no holon\'omicas o kinodin\'amicas).
+Un \'arbol aleatorio de exploraci\'on r\'apida (RRT) es un algoritmo que esta dise\~nado para 
+buscar de manera eficiente espacios no convexos de gran dimensi\'on. Los RRT se construyen de 
+forma incremental de una manera que reduce r\'apidamente la distancia esperada de un punto elegido 
+al azar. Los RRT son particularmente adecuados para problemas de planificaci\'on de ruta que 
+involucran obst\'aculos y restricciones diferenciales (no holon\'omicas o kinodin\'amicas).
 
-Un RRT hace crecer un \'arbol enraizado en la configuraci\'on inicial 
-utilizando muestras aleatorias del espacio de b\'usqueda. A medida
-que se extrae cada muestra, se intenta establecer una conexi\'on entre 
-ella y el estado m\'as cercano en el \'arbol. Si la conexi\'on es factible
-(pasa completamente a trav\'es del espacio libre y obedece
-a cualquier restricci\'on), esto resulta en la adici\'on del nuevo estado al 
-\'arbol. Con un muestreo uniforme del espacio de b\'usqueda, la probabilidad de 
-expandir un estado existente es proporcional al tama\~no de su regi\'on de Voronoi. Como 
-las regiones m\'as grandes de Voronoi pertenecen a los estados en la frontera
-de la b\'usqueda, esto significa que el \'arbol se expande preferentemente hacia 
-grandes \'areas no buscadas. 
+Un RRT hace crecer un \'arbol enraizado en la configuraci\'on inicial utilizando muestras aleatorias 
+del espacio de b\'usqueda. A medida que se extrae cada muestra, se intenta establecer una conexi\'on 
+entre ella y el estado m\'as cercano en el \'arbol. Si la conexi\'on es factible (pasa completamente 
+a trav\'es del espacio libre y obedece a cualquier restricci\'on), esto resulta en la adici\'on del 
+nuevo estado al \'arbol. Con un muestreo uniforme del espacio de b\'usqueda, la probabilidad de expandir 
+un estado existente es proporcional al tama\~no de su regi\'on de Voronoi. Como las regiones m\'as 
+grandes de Voronoi pertenecen a los estados en la frontera de la b\'usqueda, esto significa que el 
+\'arbol se expande preferentemente hacia grandes \'areas no buscadas. 
 
-\subsubsection{Movimiento basado en Mapa de Red (\textit{GridMap})}
+%\subsubsection{Movimiento basado en Mapa de Red (\textit{GridMap})}
+\paragraph{Movimiento basado en Mapa de Red (\textit{GridMap})}
 
-La navegaci\'on basada en mapas de red es bastante natural para las personas 
-porque usar un mapa es la forma m\'as conveniente de describir un entorno. 
-Sin embargo, el uso de los mapas requiere de un buen proceso cognitivo para 
-poder interpretar el mapa y establecer la correspondencia con el mundo real.
+La navegaci\'on basada en mapas de red es bastante natural para las personas porque usar un mapa es 
+la forma m\'as conveniente de describir un entorno. Sin embargo, el uso de los mapas requiere de 
+un buen proceso cognitivo para poder interpretar el mapa y establecer la correspondencia con el 
+mundo real.
 
-Para la navegaci\'on basada en mapas de red se pueden usar dos fuentes de 
-informaci\'on. El primero es la fuente idiot\'etica, que proporciona 
-informaci\'on interna sobre el movimiento del robot. El segundo es la 
-fuente alot\'etica, que proporciona informaci\'on externa sobre el 
-ambiente. La informaci\'on idiot\'etica se refiere a la odometr\'ia 
-del robot y la informaci\'on alot\'etica se refiere a alg\'un 
-sensor externo que permita al robot tener una perspectiva del 
-entorno donde se encuentra.
+Para la navegaci\'on basada en mapas de red se pueden usar dos fuentes de informaci\'on. El primero 
+es la fuente idiot\'etica, que proporciona informaci\'on interna sobre el movimiento del robot. El 
+segundo es la fuente alot\'etica, que proporciona informaci\'on externa sobre el ambiente. La 
+informaci\'on idiot\'etica se refiere a la odometr\'ia del robot y la informaci\'on alot\'etica 
+se refiere a alg\'un sensor externo que permita al robot tener una perspectiva del entorno donde 
+se encuentra.
 
-Dadas las fuentes de informaci\'on como la odometr\'ia y la de un 
-sensor externo, hay muchas formas de poder integrarlas en una 
-representaci\'on \'util para la navegaci\'on de los robots. Los 
-modelos correspondientes se separan en dos categor\'ias recurriendo 
-a mapas m\'etricos, las posiciones de algunos objetos, principalmente 
-los obst\'aculos que el robot puede encontrar, se almacenan en un 
+Dadas las fuentes de informaci\'on como la odometr\'ia y la de un sensor externo, hay muchas formas 
+de poder integrarlas en una representaci\'on \'util para la navegaci\'on de los robots. Los 
+modelos correspondientes se separan en dos categor\'ias recurriendo a mapas m\'etricos, las posiciones 
+de algunos objetos, principalmente los obst\'aculos que el robot puede encontrar, se almacenan en un 
 marco de referencia com\'un.
 
-La exploraci\'on con estos mapas de red consiste en que el robot 
-empieza en un punto preparado para poder tomar cualquier ruta y 
-realizar varios viajes. Entonces el robot empieza a recibir tareas 
-de un nodo central para que pueda desplazarse en diferentes puntos 
-del mapa. El mapa se categoriza en tres tipos diferentes: 
-\textit{un obst\'aculo} (probabilidad de ocupaci\'on por encima de 
-un umbral), \textit{limpio} (probabilidad de ocupaci\'on nulo) y 
-\textit{desconocido} (nunca se detect\'o nada). De esta forma se 
-empieza a construir el mapa y cuando el robot recibe este mapa que 
-se actualiza constantemente, empieza a tener una mejor percepci\'on 
-del ambiente donde se encuentra.
+La exploraci\'on con estos mapas de red consiste en que el robot empieza en un punto preparado para 
+poder tomar cualquier ruta y realizar varios viajes. Entonces el robot empieza a recibir tareas 
+de un nodo central para que pueda desplazarse en diferentes puntos del mapa. El mapa se categoriza 
+en tres tipos diferentes: \textit{un obst\'aculo} (probabilidad de ocupaci\'on por encima de un umbral), 
+\textit{limpio} (probabilidad de ocupaci\'on nulo) y \textit{desconocido} (nunca se detect\'o nada). De 
+esta forma se empieza a construir el mapa y cuando el robot recibe este mapa que se actualiza 
+constantemente, empieza a tener una mejor percepci\'on del ambiente donde se encuentra.
 
 
 \section{Localizaci\'on}
@@ -474,8 +491,8 @@ de localizaci\'on.
 \subsection{Modelo de movimiento y medici\'on}
 
 Un modelo de movimiento probabil\'istico define la transici\'on de la posici\'on 
-en dos etapas de tiempo consecutivas $t-1$ y $t$, despu\'es de que se ha llevado 
-a cabo una acci\'on de control $u_{t}$. Existen dos modelos de movimiento 
+en dos etapas de tiempo consecutivas ($t-1$ y $t$), despu\'es de que se ha llevado 
+a cabo una acci\'on de control ($u_{t}$). Existen dos modelos de movimiento 
 probabil\'istico complementarios que son el modelo de movimiento de velocidad y 
 el modelo de movimiento de la odometr\'ia. El modelo de movimiento de velocidad 
 asume que un robot es controlado a trav\'es de dos velocidades que son la 
@@ -489,49 +506,44 @@ v_{t} \\
 \end{pmatrix}
 \end{equation}
 
-Un modelo probabil\'istico de medici\'on describe la relaci\'on entre 
-la posici\'on del mundo real y la lectura del sensor 
-(\textit{observaci\'on}). Bas\'andose en la estimaci\'on de la posici\'on 
-del mundo real, se genera un \textit{belief} sobre las posibles mediciones. Un 
-\textit{belief} es el conocimiento del robot sobre el entorno. El ruido en 
-las mediciones del sensor se modela expl\'icitamente, inherente a la 
-incertidumbre de los sensores del robot. Para expresae el proceso de 
-generaci\'on de mediciones, se requiere una especificaci\'on del entorno. Un
-mapa ($m$) del entorno es una lista de objetos y ubicaciones:
+Un modelo probabil\'istico de medici\'on describe la relaci\'on entre la posici\'on del 
+mundo real y la lectura del sensor (\textit{observaci\'on}). Bas\'andose en la 
+estimaci\'on de la posici\'on del mundo real, se genera un \textit{belief} sobre las 
+posibles mediciones. Un \textit{belief} es el conocimiento del robot sobre el entorno. El 
+ruido en las mediciones del sensor se modela expl\'icitamente, inherente a la incertidumbre 
+de los sensores del robot. Para expresae el proceso de generaci\'on de mediciones, se requiere 
+una especificaci\'on del entorno. Un mapa ($m$) del entorno es una lista de objetos y ubicaciones:
 \begin{align}
 m =\{m_{1}, m_{2}, \ldots, m_{N}\}
 \end{align}
-donde $N$ es el total de n\'umeros de objetos en el ambiente. Los mapas 
-suelen ser mapas basados en caracter\'isticas o mapas basados en la 
-ubicaci\'on. Los mapas basados en ubicación son volumétricos y ofrecen 
-una etiqueta para cualquier ubicación y los mapas basados en características 
-son más populares debido a que la representación hace más fácil ajustar la 
+donde $N$ es el total de n\'umeros de objetos en el ambiente. Los mapas suelen ser mapas 
+basados en caracter\'isticas o mapas basados en la ubicaci\'on. Los mapas basados en 
+ubicación son volumétricos y ofrecen una etiqueta para cualquier ubicación y los mapas basados 
+en características son más populares debido a que la representación hace más fácil ajustar la 
 posición de los objetos.
 
 \subsection{Filtros de Kalman}
-
-El filtro de Kalman se basa en la suposición de que el sistema es lineal y 
-tanto el modelo de movimiento como el modelo de medición se ven afectados por 
-el ruido gaussiano. El \textit{belief} en el tiempo $t$ está representada por 
-una distribución gaussiana multivariable definida por su media ($\mu_{t}$) y la 
-covarianza ($\Sigma_{t}$).
+El filtro de Kalman se basa en la suposición de que el sistema es lineal y tanto el modelo de 
+movimiento como el modelo de medición se ven afectados por el ruido gaussiano. El \textit{belief} 
+en el tiempo $t$ está representada por una distribución gaussiana multivariable definida por 
+su media ($\mu_{t}$) y la covarianza ($\Sigma_{t}$).
 
 Un modelo de transici\'on de estado es definido como:
 \begin{align}
 \label{eqn:transicion_estado}
 p(x_{t}\mid x_{0:t-1}, z_{1:t-1}, u_{1:t}) = p(x_{t}\mid x_{t-1}, u_{t})
 \end{align}
-donde $p(x_{t}\mid x_{t-1}, u_{t})$ es llamada probabilidad de transición 
-de estado y especifica cómo evoluciona el estado del entorno a lo largo 
-del tiempo en función del control del robot $u_{t}$.
+donde $p(x_{t}\mid x_{t-1}, u_{t})$ es llamada probabilidad de transición de estado y 
+especifica cómo evoluciona el estado del entorno a lo largo del tiempo en función del 
+control del robot $u_{t}$.
 
 Un modelo de medici\'on del sensor es definido como:
 \begin{align}
 \label{eqn:modelo_medicion}
 p(z_{t}\mid x_{0:t}, z_{1:t-1}, u_{1:t}) = p (z_{t}\mid x_{t})
 \end{align}
-donde $p(z_{t}\mid x_{t})$ is llamado probabilidad de medición y especifica 
-cómo se generan las mediciones a partir del estado del ambiente $x_{t}$.
+donde $p(z_{t}\mid x_{t})$ is llamado probabilidad de medición y especifica cómo se generan 
+las mediciones a partir del estado del ambiente $x_{t}$.
 
 El filtro de Kalman asume que el sistema es lineal: la transición de estado 
 $A$ (\ref{eqn:transicion_estado}), el modelo de movimiento $B$ (\ref{eqn:modelMotion})  
@@ -571,49 +583,41 @@ de forma que tiendan a ser lineales.
 
 
 \subsection{Filtros de Part\'iculas}
-El filtro de part\'iculas es una implementaci\'on alternativa no param\'etrica, 
-al igual que los filtros de histograma, los filtros de part\'iculas se aproximan 
-al estado posterior por un n\'umero finito de par\'ametros. Sin embargo, 
-difieren en la forma en que se generan estos par\'ametros, y en los que 
-muestrean el espacio de estado. La idea del filtro de part\'iculas es 
-representar el \textit{belief} predecido ($x_{t}$), mediante un conjunto 
-de muestras aleatorias de estado. En lugar de representar la distribuci\'on 
-mediante una forma param\'etrica (la funci\'on exponencial que define 
-la densidad de una distribuci\'on normal), los filtros de part\'iculas 
-representan una distribuci\'on por un conjunto de muestras extra\'idas 
-de esta distribuci\'on. Tal representaci\'on es aproximada, pero no 
-es param\'etrica, por lo tanto se puede representar un espacio de 
-distribuciones mucho m\'as amplio que los gaussianos.
+El filtro de part\'iculas es una implementaci\'on alternativa no param\'etrica, al igual 
+que los filtros de histograma, los filtros de part\'iculas se aproximan al estado posterior 
+por un n\'umero finito de par\'ametros. Sin embargo, difieren en la forma en que se generan 
+estos par\'ametros, y en los que muestrean el espacio de estado. La idea del filtro de 
+part\'iculas es representar el \textit{belief} predecido ($x_{t}$), mediante un conjunto de 
+muestras aleatorias de estado. En lugar de representar la distribuci\'on mediante una forma 
+param\'etrica (la funci\'on exponencial que define la densidad de una distribuci\'on normal), 
+los filtros de part\'iculas representan una distribuci\'on por un conjunto de muestras extra\'idas 
+de esta distribuci\'on. Tal representaci\'on es aproximada, pero no es param\'etrica, por 
+lo tanto se puede representar un espacio de distribuciones mucho m\'as amplio que los gaussianos.
 
 
 \subsection{Filtros de Informaci\'on}
-El filtro de informaci\'on (IF) representa el \textit{belief} por medio de un 
-gaussiano. Por lo tanto, el filtro de informaci\'on est\'andar est\'a sujeto a las 
-mismas suposiciones subyacentes al filtro de Kalman (KF). La diferencia entre 
-el KF y el IF surge de la forma que se representa el \textit{belief} gaussiano. Mientras 
-que en la familia de algoritmos de filtro de Kalman, los gaussianos est\'an 
-representados por sus momentos (media, covarianza), en cambio los filtros de 
-informaci\'on representan gaussianos en su representaci\'on can\'onica, que 
-est\'a compuesta por una matriz de informaci\'on y un vector de 
-informaci\'on. La diferencia en la representaci\'on conduce a diferentes ecuaciones
-de actualizaci\'on. En particular, lo que es computacionalmente complejo en 
-una representaci\'on resulta ser simple en la otra y viceversa. Las 
-representaciones can\'onicas y de momentos a menudo se consideran duales 
-entre s\'i, y as\'i son el IF y el KF.
+El filtro de informaci\'on (IF) representa el \textit{belief} por medio de un gaussiano. Por lo 
+tanto, el filtro de informaci\'on est\'andar est\'a sujeto a las mismas suposiciones subyacentes 
+al filtro de Kalman (KF). La diferencia entre el KF y el IF surge de la forma que se representa 
+el \textit{belief} gaussiano. Mientras que en la familia de algoritmos de filtro de Kalman, los 
+gaussianos est\'an representados por sus momentos (media, covarianza), en cambio los filtros de 
+informaci\'on representan gaussianos en su representaci\'on can\'onica, que est\'a compuesta por 
+una matriz de informaci\'on y un vector de informaci\'on. La diferencia en la representaci\'on 
+conduce a diferentes ecuaciones de actualizaci\'on. En particular, lo que es computacionalmente 
+complejo en una representaci\'on resulta ser simple en la otra y viceversa. Las representaciones 
+can\'onicas y de momentos a menudo se consideran duales entre s\'i, y as\'i son el IF y el KF.
 
 \section{Mapeo y Localizaci\'on Simult\'anea (\textit{SLAM})}
-Un problema mucho m\'as dif\'icil de la localizaci\'on es cuando no conoces 
-el mapa del ambiente. En este caso, la informaci\'on del sensor del robot 
-se utiliza para recuperar la trayectoria del robot y construir un mapa 
-del entorno. Este problema se llama mapeo y localizaci\'on simult\'anea 
-(\textit{SLAM}). Una soluci\'on a este problema har\'ia que un robot 
-sea totalmente aut\'onomo. \textit{SLAM} es un problema dif\'icil porque tanto el 
-camino estimado como el mapa construido son afectados por el ruido. Ambos 
-se vuelven cada vez m\'as inexactos durante el viaje. Sin embargo, cuando 
-se revisa un lugar que ha sido mapeado, se puede reducir la incertidumbre.
-Este proceso se denomina cierre de bucle. Adem\'as, se puede optimizar el 
-mapa despu\'es de que se detecta un evento de cierre de bucle. En esta secci\'on se 
-explicar\'a los m\'etodos de \textit{SLAM} m\'as utilizados actualmente.
+Un problema mucho m\'as dif\'icil de la localizaci\'on es cuando no conoces el mapa del ambiente. En 
+este caso, la informaci\'on del sensor del robot se utiliza para recuperar la trayectoria del robot 
+y construir un mapa del entorno. Este problema se llama mapeo y localizaci\'on simult\'anea 
+(\textit{SLAM}). Una soluci\'on a este problema har\'ia que un robot sea totalmente 
+aut\'onomo. \textit{SLAM} es un problema dif\'icil porque tanto el camino estimado como el mapa 
+construido son afectados por el ruido. Ambos se vuelven cada vez m\'as inexactos durante el viaje. Sin 
+embargo, cuando se revisa un lugar que ha sido mapeado, se puede reducir la incertidumbre. Este proceso 
+se denomina cierre de bucle. Adem\'as, se puede optimizar el mapa despu\'es de que se detecta un evento 
+de cierre de bucle. En esta secci\'on se explicar\'a los m\'etodos de \textit{SLAM} m\'as utilizados 
+actualmente.
 
 \subsection{EKF SLAM}
 El \textit{SLAM} basado en el filtro extendido de kalman es el algoritmo m\'as antiguo y el m\'as influyente. El
@@ -640,37 +644,28 @@ limitantes:
 \end{itemize}
 
 \subsection{FastSLAM}
-FastSLAM descompone el problema SLAM en un problema de localizaci\'on 
-de robot, y una colecci\'on de problemas de estimaci\'on de puntos 
-de referencia (\textit{landmarks}) que est\'an condicionados a la 
-estimaci\'on de la posici\'on del robot. Como se se\~nala en 
-\cite{murphy2000bayesian}, esta representaci\'on factorizada es 
-exacta, debido a las independencias condicionales naturales en el 
-problema SLAM. FastSLAM usa un filtro de part\'iculas modificado 
-para estimar el camino predecido sobre el robot. Cada part\'icula 
-posee filtros de Kalman que estiman las ubicaciones de los puntos 
-de referencia condicionadas en la estimaci\'on de la ruta. La 
-implementaci\'on de este algoritmo requiere tiempo.
+FastSLAM descompone el problema SLAM en un problema de localizaci\'on de robot, y una colecci\'on 
+de problemas de estimaci\'on de puntos de referencia (\textit{landmarks}) que est\'an condicionados 
+a la estimaci\'on de la posici\'on del robot. Como se se\~nala en \cite{murphy2000bayesian}, esta 
+representaci\'on factorizada es exacta, debido a las independencias condicionales naturales en el 
+problema SLAM. FastSLAM usa un filtro de part\'iculas modificado para estimar el camino predecido 
+sobre el robot. Cada part\'icula posee filtros de Kalman que estiman las ubicaciones de los puntos 
+de referencia condicionadas en la estimaci\'on de la ruta. La implementaci\'on de este algoritmo 
+requiere tiempo.
 
 \subsection{GraphSLAM}
-SLAM basado en gr\'aficos construye un problema de estimaci\'on 
-simplificado al extraer las mediciones del sensor sin ser 
-procesadas. Estas medidas se reemplazan por los bordes en el gr\'afico 
-que luego se pueden ver como "medidas virtuales". M\'as detalladamente, 
-un borde entre dos nodos se etiqueta con una distribuci\'on de 
-probabilidad sobre las ubicaciones relativas de las dos posturas, 
-condicionadas a sus mediciones mutuas. En general, el modelo de observaci\'on 
-$p(z_{t}| x_{t},  m_{t})$ es multimodal y, por lo tanto, el supuesto 
-gaussiano no se cumple. Esto significa que una \'unica observaci\'on 
-$z_{t}$ puede dar como resultado m\'ultiples aristas potenciales que 
-conectan diferentes posiciones en el gr\'afico y la conectividad del 
-gr\'afico necesita ser descrita como una distribuci\'on de probabilidad. 
-Dirigirse directamente a esta multimodalidad en el proceso de estimaci\'on 
-llevar\'ia a una explosi\'on combinatoria de la complejidad. Como resultado 
-de eso, la mayor\'ia de los enfoques pr\'acticos restringen la 
-estimaci\'on a la topolog\'ia m\'as probable. Por lo tanto, se 
-necesita determinar la restricci\'on m\'as probable resultante de 
-una observaci\'on. Esta decisi\'on depende de la distribuci\'on de 
+SLAM basado en gr\'aficos construye un problema de estimaci\'on simplificado al extraer las mediciones 
+del sensor sin ser procesadas. Estas medidas se reemplazan por los bordes en el gr\'afico que luego 
+se pueden ver como "medidas virtuales". M\'as detalladamente, un borde entre dos nodos se etiqueta 
+con una distribuci\'on de probabilidad sobre las ubicaciones relativas de las dos posturas, 
+condicionadas a sus mediciones mutuas. En general, el modelo de observaci\'on $p(z_{t}| x_{t},  
+m_{t})$ es multimodal y, por lo tanto, el supuesto gaussiano no se cumple. Esto significa que una 
+\'unica observaci\'on $z_{t}$ puede dar como resultado m\'ultiples aristas potenciales que 
+conectan diferentes posiciones en el gr\'afico y la conectividad del gr\'afico necesita ser descrita 
+como una distribuci\'on de probabilidad. 
+Dirigirse directamente a esta multimodalidad en el proceso de estimaci\'on llevar\'ia a una explosi\'on combinatoria de la complejidad. Como resultado de eso, la mayor\'ia de los enfoques pr\'acticos restringen 
+la estimaci\'on a la topolog\'ia m\'as probable. Por lo tanto, se necesita determinar la restricci\'on 
+m\'as probable resultante de una observaci\'on. Esta decisi\'on depende de la distribuci\'on de 
 probabilidad sobre las posiciones del robot.
 
 %\section{Robótica Probabilística}

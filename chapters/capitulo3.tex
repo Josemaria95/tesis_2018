@@ -1,25 +1,102 @@
 \chapter{Metodolog\'ia}
 
 En el cap\'itulo anterior se explic\'o sobre las metodolog\'ias recientes que se 
-utilizan para que un robot pueda ser aut\'onomo y gener\'e un mapa 
+utilizan para que un robot pueda ser aut\'onomo y genere un mapa 
 del entorno donde se encuentre. En este trabajo de tesis se propone 
 el movimiento aut\'onomo basado en campos potenciales y en leyes de control 
 polar para el movimiento de un robot m\'ovil, de modo que sea capaz de alcanzar 
 un objetivo que vuelva a planificar continuamente su camino sin colisiones. El 
 algoritmo desarrollado puede ser implementado desde una computadora en tiempo 
 real (\textit{online}) o tambi\'en puede ser implementado por medio de un 
-microcontrolador (\textit{onboard}). En este cap\'itulo se explicar\'a 
-,con detalles, los m\'etodos que fueron implementados en este trabajo.
+microcontrolador (\textit{onboard}).En este cap\'itulo se explicar\'a,con detalles, 
+los m\'etodos que fueron implementados en este trabajo.
 
 \section{Prototipo a Utilizar}
+En esta secci\'on se explicar\'a cada uno de los componentes que tuvo que 
+ser utilizados para realizar la autonom\'ia y el mapeo de este trabajo de 
+tesis. Para realizar la autonom\'ia se utiliz\'o un robot m\'ovil diferencial 
+terrestre, y as\'i tambi\'en para mapear el entorno por donde el robot se 
+desplaza se utiliz\'o un sensor Lidar.
+
+\subsection{Descripci\'on del Robot M\'ovil}
+% \begin{figure}%[h]
+% \centering \footnotesize
+% {\includegraphics[width=0.40\linewidth]{images/omnidirecional.jpg}}
+% \captionsetup{font=footnotesize}
+% \caption{Robot m\'ovil hol\'onomico omnidireccional}
+% \label{fig:omnidirectional}
+% \end{figure}
+% \begin{figure}%[h]
+% \centering \footnotesize
+% {\includegraphics[width=0.40\linewidth]{images/kobuki.jpg}}
+% \captionsetup{font=footnotesize}
+% \caption{Robot m\'ovil no-hol\'onomico utilizado para implementar el 
+% algoritmo de autonom\'ia}
+% \label{fig:kobuki}
+% \end{figure}
+% Una forma de clasificar a los robots m\'oviles es a trav\'es de la locomoci\'on 
+% de sus ruedas, esto se divide en dos: (1) robot holon\'omico y (2) robot 
+% no-holon\'omico. El robot holon\'omico no tiene ninguna restricci\'on, con 
+% respecto a la velocidad, en la posici\'on y la orientaci\'on. El robot se puede 
+% mover instant\'aneamente en cualquier direcci\'on del espacio, sin necesidad de 
+% rotar previamente. La mayor\'ia de estos robots m\'oviles son omnidireccionales, 
+% como se puede ver en la figura \ref{fig:omnidirectional}. En cambio un robot 
+% no-holonomico tiene una restricci\'on en su velocidad, no existe un trayectoria 
+% que dependa solamente de la posici\'on y orientaci\'on. Por ende, este robot no 
+% se puede mover instant\'aneamente en cada direcci\'on del espacio.
+
+Para este trabajo se hizo uso del robot m\'ovil no-holon\'omico,Kobuki, como 
+se observa en la figura \ref{fig:kobuki}, el cual esta configurado para poder 
+trabajar con ROS (\textit{Robot Operating System}) con una velocidad de 
+translaci\'on de 70 $cm/s$, una velocidad de rotaci\'on de 180 $grados/s$, 
+una posibilidad de carga de hasta 5 $kg$, un tiempo de operaci\'on de 3 
+horas \cite{aboutKobuki}. 
+
+\subsection{Cinem\'atica de Robot M\'ovil Diferencial}
 \begin{figure}%[h]
 \centering \footnotesize
-{\includegraphics[width=0.40\linewidth]{images/kobuki.jpg}}
+{\includegraphics[width=0.40\linewidth]{images/kinematic_model.png}}
 \captionsetup{font=footnotesize}
-\caption{Robot m\'ovil no hol\'onomico donde se implement\'o el algoritmo de autonom\'ia}
-\label{fig:kobuki}
+\caption{Representaci\'on gr\'afica de un robot m\'ovil diferencial. Donde 
+$b$ es la distancia de su centro de masa hacia sus ruedas, el radio de cada 
+rueda es representado por $r$. Finalmente $\dot{\varphi_{l}}$ y 
+$\dot{\varphi_{r}}$ son las velocidades de la rueda derecha y rueda izquierda 
+correspondientemente.}
+\label{fig:RMkinematic}
 \end{figure}
-\subsection{Descripci\'on del Robot M\'ovil}
+Para realizar el modelo del cinem\'atico del robot diferencial se debe tener 
+en cuenta algunas consideraciones sobre el comportamiento de este. Se asume 
+que el robot se desplaza en una superficie plana idealmente sin rozamiento, 
+tambi\'en se toman los ejes de las ruedas como perpendiculares al suelo
+por donde se desplaza y finalmente que solo existe un punto de contacto entre 
+la rueda y el suelo.
+
+El robot se considera como un cuerpo r\'igido sin partes flexibles, pero se 
+deben tener en cuenta las restricciones no-holon\'omicas. Es decir, el robot 
+puede desplazarse hacia atr\'as o hacia adelante, pero no puede trasladarse 
+hacia los lados. Para poder realizar estos movimientos, se debe realizar un 
+movimiento en partes.
+
+El modelo cinem\'atico del robot necesita conocer las dimensiones del robot. Las 
+medidas que se necesitan son la distancia entre las ruedas y el radio de las 
+mismas. La distancia entre las ruedas ser\'a representada como $2b$ y el radio de 
+las ruedas como $r$. Tambi\'en se debe considerar que el robot tiene dos ruedas 
+convencionales fijas y el sistema de referencia del robot se encuentra entre 
+ambas ruedas, como se aprecia en la figura \ref{fig:RMkinematic}.
+
+Para calcular la cinem\'atica del robot m\'ovil se debe usar las restricciones 
+de las ruedas convencionales. Las restricciones de cada rueda fija son:
+%\begin{equation*}
+%\[-\text{sin}(\alpha + \beta) & \text{cos}(\alpha + \beta) & \text{lcos}(\beta)\] 
+%{R}^R_{I} {I}^\dot{\xi} - r\dot{\varphi} &= 0 \\
+%\[\text{cos}(\alpha + \beta) & \text{sin}(\alpha + \beta) & \text{lsin}(\beta)\]
+%{R}^R_{I} {I}^\dot{\xi} &= 0
+%\end{equation}
+donde ${R}^R_{I}$ es la matriz de rotaci\'on que lleva el sistema de coordenadas del 
+robot $(X_{R},Y_{R})$ al sistema inercial $(X_{I},Y_{I})$ y $\dot{\xi}$ 
+es el vector que contiene los valores de las velocidades lineales y angular 
+del robot.
+
 
 \subsection{Sistema de Percepci\'on en 2D}
 Es un sensor l\'aser que se basa en el  principio de rango de triangulaci\'on 
@@ -84,9 +161,51 @@ Azul & MOTOCTL & Entrada & 0V & 3.3V & 5V \\ \hline
 \end{table}
 
 \subsection{Sistema de Percepci\'on en 3D}
+\begin{figure}%[ht!]
+  \centering \footnotesize
+  %\subfloat[Attractive Force]{\includegraphics[width=0.16\textwidth]{images/lidar_3D.jpeg}}
+  %~\subfloat[Repulsive Force]{\includegraphics[width=0.16\textwidth]{images/kbki_lidar3D.jpeg}} 
+  \includegraphics[width=0.40\textwidth]{images/lidar_3D.jpeg}
+  \includegraphics[width=0.35\textwidth]{images/kbki_lidar3D.jpeg}
+  \\ $\qquad\qquad$ a. Sistema mecánico $\qquad\qquad$  b. Implementado en el Kobuki
+  %\subfloat[Navigation Force]{\includegraphics[width=0.16\textwidth]{images/nav_force.png}}
+  % \subfloat[Attractive Force]{\includegraphics[width = 150mm]{attr_force.png}}
+  \captionsetup{font=footnotesize}
+  \caption{Tests for the Potential Field Algorithm: (right) Sistema mecánico, (left) Implementado en el Kobuki} 
+  \label{f:apf}
+\end{figure}
 
+% \begin{figure}%[h]
+% \centering \footnotesize
+% {\includegraphics[width=0.40\linewidth]{images/lidar_3D.jpeg}}
+% \captionsetup{font=footnotesize}
+% \caption{Representaci\'on gr\'afica de un robot m\'ovil diferencial. Donde 
+% $b$ es la distancia de su centro de masa hacia sus ruedas, el radio de cada 
+% rueda es representado por $r$. Finalmente $\dot{\varphi_{l}}$ y 
+% $\dot{\varphi_{r}}$ son las velocidades de la rueda derecha y rueda izquierda 
+% correspondientemente.}
+% \label{fig:lidar3D}
+% \end{figure}
+% \begin{figure}%[h]
+% \centering \footnotesize
+% {\includegraphics[width=0.40\linewidth]{images/kbki_lidar3D.jpeg}}
+% \captionsetup{font=footnotesize}
+% \caption{Representaci\'on gr\'afica de un robot m\'ovil diferencial. Donde 
+% $b$ es la distancia de su centro de masa hacia sus ruedas, el radio de cada 
+% rueda es representado por $r$. Finalmente $\dot{\varphi_{l}}$ y 
+% $\dot{\varphi_{r}}$ son las velocidades de la rueda derecha y rueda izquierda 
+% correspondientemente.}
+% \label{fig:Kbkilidar3D}
+% \end{figure}
 \subsection{Prototipo Final}
-
+Para realizar las pruebas y obtener los resultados experimentales se tuvo que probar
+el algoritmo en un robot real de accionamiento diferencial llamado Kobuki, el cual estuvo 
+alimentado con un sensor Lidar. Este sensor esta acoplado a un sistema mec\'anico, el cual
+permite al robot poder mapear en dos y tres dimensiones el entorno donde se encuentre. El 
+controlador integrado de este robot se hizo usando una computadora Raspberry Pi3, lo que le
+permiti\'o al robot alcanzar la autonom\'ia. En esta secci\'on se describir\'a detalladamente
+la cinem\'atica diferencial del Kobuki, el sistema del sensor l\'aser y el sistema mec\'anico 
+para generar los mapas en tres dimensiones.
 
 \section{Movimiento del Robot y Mapeo}
 
