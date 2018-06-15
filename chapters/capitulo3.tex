@@ -8,7 +8,7 @@ polar para el movimiento de un robot m\'ovil, de modo que sea capaz de alcanzar
 un objetivo que vuelva a planificar continuamente su camino sin colisiones. El 
 algoritmo desarrollado puede ser implementado desde una computadora en tiempo 
 real (\textit{online}) o tambi\'en puede ser implementado por medio de un 
-microcontrolador (\textit{onboard}).En este cap\'itulo se explicar\'a,con detalles, 
+microcontrolador (\textit{onboard}). En este cap\'itulo se explicar\'a, con detalles, 
 los m\'etodos que fueron implementados en este trabajo.
 
 \section{Prototipo a Utilizar}
@@ -45,12 +45,11 @@ desplaza se utiliz\'o un sensor Lidar.
 % que dependa solamente de la posici\'on y orientaci\'on. Por ende, este robot no 
 % se puede mover instant\'aneamente en cada direcci\'on del espacio.
 
-Para este trabajo se hizo uso del robot m\'ovil no-holon\'omico,Kobuki, como 
-se observa en la figura \ref{fig:kobuki}, el cual esta configurado para poder 
-trabajar con ROS (\textit{Robot Operating System}) con una velocidad de 
-translaci\'on de 70 $cm/s$, una velocidad de rotaci\'on de 180 $grados/s$, 
-una posibilidad de carga de hasta 5 $kg$, un tiempo de operaci\'on de 3 
-horas \cite{aboutKobuki}. 
+%Para este trabajo se hizo uso del robot m\'ovil no-holon\'omico, Kobuki (figura \ref{fig:kobuki})
+%el cual esta configurado para poder trabajar con ROS (\textit{Robot Operating System}) 
+%con una velocidad de translaci\'on de 70 $cm/s$, una velocidad de rotaci\'on de 180 
+%$grados/s$, una posibilidad de carga de hasta 5 $kg$, un tiempo de operaci\'on de 3 
+%horas \cite{aboutKobuki}. 
 
 \subsection{Cinem\'atica de Robot M\'ovil Diferencial}
 \begin{figure}%[h]
@@ -71,31 +70,36 @@ tambi\'en se toman los ejes de las ruedas como perpendiculares al suelo
 por donde se desplaza y finalmente que solo existe un punto de contacto entre 
 la rueda y el suelo.
 
-El robot se considera como un cuerpo r\'igido sin partes flexibles, pero se 
-deben tener en cuenta las restricciones no-holon\'omicas. Es decir, el robot 
-puede desplazarse hacia atr\'as o hacia adelante, pero no puede trasladarse 
-hacia los lados. Para poder realizar estos movimientos, se debe realizar un 
-movimiento en partes.
+%El robot se considera como un cuerpo r\'igido sin partes flexibles, pero se 
+%deben tener en cuenta las restricciones no-holon\'omicas. Es decir, el robot 
+%puede desplazarse hacia atr\'as o hacia adelante, pero no puede trasladarse 
+%hacia los lados. Para poder realizar estos movimientos, se debe realizar un 
+%movimiento en partes.
 
 El modelo cinem\'atico del robot necesita conocer las dimensiones del robot. Las 
 medidas que se necesitan son la distancia entre las ruedas y el radio de las 
 mismas. La distancia entre las ruedas ser\'a representada como $2b$ y el radio de 
 las ruedas como $r$. Tambi\'en se debe considerar que el robot tiene dos ruedas 
 convencionales fijas y el sistema de referencia del robot se encuentra entre 
-ambas ruedas, como se aprecia en la figura \ref{fig:RMkinematic}.
+ambas ruedas, como se ve en la figura \ref{fig:RMkinematic}.
 
-Para calcular la cinem\'atica del robot m\'ovil se debe usar las restricciones 
-de las ruedas convencionales. Las restricciones de cada rueda fija son:
+\begin{align*}
+\dot{x}^{R} &= \frac{r}{2}(\dot{\varphi_{r}} + \dot{\varphi_{l}}) \\
+\dot{\theta} &= \frac{r}{2b}(\dot{\varphi_{r}} + \dot{\varphi_{l}})
+\end{align*}
+
+%Para calcular la cinem\'atica del robot m\'ovil se debe usar las restricciones 
+%de las ruedas convencionales. Las restricciones de cada rueda fija son:
 %\begin{equation*}
 %\[-\text{sin}(\alpha + \beta) & \text{cos}(\alpha + \beta) & \text{lcos}(\beta)\] 
 %{R}^R_{I} {I}^\dot{\xi} - r\dot{\varphi} &= 0 \\
 %\[\text{cos}(\alpha + \beta) & \text{sin}(\alpha + \beta) & \text{lsin}(\beta)\]
 %{R}^R_{I} {I}^\dot{\xi} &= 0
 %\end{equation}
-donde ${R}^R_{I}$ es la matriz de rotaci\'on que lleva el sistema de coordenadas del 
-robot $(X_{R},Y_{R})$ al sistema inercial $(X_{I},Y_{I})$ y $\dot{\xi}$ 
-es el vector que contiene los valores de las velocidades lineales y angular 
-del robot.
+%donde ${R}^R_{I}$ es la matriz de rotaci\'on que lleva el sistema de coordenadas del 
+%robot $(X_{R},Y_{R})$ al sistema inercial $(X_{I},Y_{I})$ y $\dot{\xi}$ 
+%es el vector que contiene los valores de las velocidades lineales y angular 
+%del robot.
 
 
 \subsection{Sistema de Percepci\'on en 2D}

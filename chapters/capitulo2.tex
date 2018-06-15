@@ -60,14 +60,14 @@ desplazarse por todo el socavón sin la necesidad de utilizar un GPS \cite{Solut
   \centering \footnotesize
   %\subfloat[Attractive Force]{\includegraphics[width=0.16\textwidth]{images/lidar_3D.jpeg}}
   %~\subfloat[Repulsive Force]{\includegraphics[width=0.16\textwidth]{images/kbki_lidar3D.jpeg}} 
-  \includegraphics[width=0.35\textwidth]{images/omnidirecional.jpg}
-  \includegraphics[width=0.35\textwidth]{images/kobuki.jpg}
-  \\ $\qquad\qquad$ a. Sistema mecánico $\qquad\qquad$  b. Implementado en el Kobuki
+  \includegraphics[width=0.35\textwidth]{images/omnidirecional.jpg}~~~~~~~~~~~~~~
+  \includegraphics[width=0.40\textwidth]{images/RM_noHolonomic.jpg}
+  \\ a. Robot móvil omnidireccional $\qquad\qquad\qquad$  b. Robot móvil diferencial
   %\subfloat[Navigation Force]{\includegraphics[width=0.16\textwidth]{images/nav_force.png}}
   % \subfloat[Attractive Force]{\includegraphics[width = 150mm]{attr_force.png}}
   \captionsetup{font=footnotesize}
-  \caption{Tests for the Potential Field Algorithm: (right) Sistema mecánico, (left) Implementado en el Kobuki} 
-  \label{f:omnidirectional}
+  \caption{Sistemas holonómicos} 
+  \label{f:sLocomocion}
 \end{figure}
 La generaci\'on de movimiento del robot m\'ovil necesita de un control cinem\'atico 
 adecuado. El objetivo de un controlador cinem\'atico es seguir una trayectoria descrita 
@@ -91,10 +91,11 @@ no tiene ninguna restricci\'on, con respecto a la velocidad, en la posici\'on y
 la orientaci\'on. El robot se puede mover instant\'aneamente en cualquier direcci\'on 
 del espacio, sin necesidad de rotar previamente. La mayor\'ia de estos robots 
 m\'oviles son omnidireccionales, como se puede ver en la figura 
-\ref{f:omnidirectional}. En cambio un robot no-holonomico tiene una restricci\'on 
+\ref{f:sLocomocion}(a). En cambio un robot no-holonomico tiene una restricci\'on 
 en su velocidad, no existe un trayectoria que dependa solamente de la posici\'on y 
 orientaci\'on. Por ende, este robot no se puede mover instant\'aneamente en cada 
-direcci\'on del espacio. 
+direcci\'on del espacio. Este tipo de robot se puede apreciar en la 
+figura \ref{f:sLocomocion}(b).
 
 \subsection{Control Cinem\'atico PID}
 
