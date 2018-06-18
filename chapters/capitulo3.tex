@@ -18,7 +18,7 @@ tesis. Para realizar la autonom\'ia se utiliz\'o un robot m\'ovil diferencial
 terrestre, y as\'i tambi\'en para mapear el entorno por donde el robot se 
 desplaza se utiliz\'o un sensor Lidar.
 
-\subsection{Descripci\'on del Robot M\'ovil}
+%\subsection{Descripci\'on del Robot M\'ovil}
 % \begin{figure}%[h]
 % \centering \footnotesize
 % {\includegraphics[width=0.40\linewidth]{images/omnidirecional.jpg}}
@@ -83,11 +83,34 @@ las ruedas como $r$. Tambi\'en se debe considerar que el robot tiene dos ruedas
 convencionales fijas y el sistema de referencia del robot se encuentra entre 
 ambas ruedas, como se ve en la figura \ref{fig:RMkinematic}.
 
+Teniendo en consideración las restricciones de las ruedas convencionales se halla la cinemática 
+directa del robot móvil. La cinemática directa consiste en:
 \begin{align*}
 \dot{x}^{R} &= \frac{r}{2}(\dot{\varphi_{r}} + \dot{\varphi_{l}}) \\
 \dot{\theta} &= \frac{r}{2b}(\dot{\varphi_{r}} + \dot{\varphi_{l}})
 \end{align*}
-
+donde $\dot{x}^{R}$ es la velocidad lineal y $\dot{\theta}$ es la velocidad angular. Estas 
+velocidades del robot móvil se hallan a 
+través de las velocidades de cada rueda del robot. Por otro lado la cinemática inversa 
+como dice su nombre es todo lo contrario a la cinemática directa. Este consiste en:
+\begin{align*}
+\dot{\varphi_{r}} &= \frac{1}{r}(\dot{x}^{R} + b\dot{\theta}) \\
+\dot{\varphi_{l}} &= \frac{1}{r}(\dot{x}^{R} - b\dot{\theta})
+\end{align*}
+donde se halla las velocidades de las ruedas a partir de la velocidad lineal y velocidad
+angular del robot móvil.
+\begin{figure}%[h]
+ \centering \footnotesize
+ {\includegraphics[width=0.35\linewidth]{images/kobuki.jpg}}
+ \captionsetup{font=footnotesize}
+ \caption{Robot m\'ovil utilizado para la implementación del algoritmo 
+ de autonom\'ia}
+ \label{fig:kobuki}
+ \end{figure}
+Para este trabajo se hizo uso del robot m\'ovil no-holon\'omico, Kobuki (figura \ref{fig:kobuki})
+el cual trabaja con una velocidad de translaci\'on de 70 $cm/s$ y una velocidad de rotaci\'on 
+de 180 $grados/s$. Tiene una posibilidad de carga de hasta 5 $kg$ y un tiempo de operaci\'on 
+de 3 horas \cite{aboutKobuki}.
 %Para calcular la cinem\'atica del robot m\'ovil se debe usar las restricciones 
 %de las ruedas convencionales. Las restricciones de cada rueda fija son:
 %\begin{equation*}
@@ -103,15 +126,28 @@ ambas ruedas, como se ve en la figura \ref{fig:RMkinematic}.
 
 
 \subsection{Sistema de Percepci\'on en 2D}
-Es un sensor l\'aser que se basa en el  principio de rango de triangulaci\'on 
-láser \cite{amann2001laser} y adopta el hardware de adquisici\'on y 
-procesamiento de visi\'on de alta velocidad desarrollado por \textit{SLAMTEC}. El 
-sensor utiliza un l\'aser infrarrojo de baja potencia como su fuente de luz y lo 
-maneja utilizando un pulso modulado. Este sensor gira a 360 \grad ~y llega a 
-una distancia m\'axima de 8 metros. Trabaja a una frecuencia de 10 Hz y 
-tiene una tasa de medici\'on de 4000 muestras por segundo. El hardware del 
-RPLIDAR A2 se puede ver en la figura \ref{f:lidar}, el cual tiene un 
-convertidor de protocolo UART a mini USB.
+Para generar el mapa de un entorno, se necesita medir distancias del ambiente y así
+generar el mapa. En este trabajo se utiliza un sensor lidar RPLidar A2 el cual se basa en 
+el principio de rango de triangulación láser \cite{amann2001laser} y ha sido desarrollado 
+por la empresa \textit{SLAMTEC}.
+
+El sensor lidar es un sensor que no necesita tener una luz externa para poder obtener las
+medidas de las distancias. Este sensor tiene un láser infrarrojo de baja potencia el cual
+es controlado por medio de un pulso modulado. Este sensor puede girar en 360\grad ~y tiene
+un rango de alcance máximo de 8 metros. Trabaja a una frecuencia de 10Hz teniendo una tasa 
+de medición de 4000 muestras por segundo. La transmisión de datos de este sensor es por 
+medio de un protocolo UART. El sensor es mostrado en la figura \ref{f:lidar}.
+
+
+%Es un sensor l\'aser que se basa en el  principio de rango de triangulaci\'on 
+%láser \cite{amann2001laser} y adopta el hardware de adquisici\'on y 
+%procesamiento de visi\'on de alta velocidad desarrollado por \textit{SLAMTEC}. El 
+%sensor utiliza un l\'aser infrarrojo de baja potencia como su fuente de luz y lo 
+%maneja utilizando un pulso modulado. Este sensor gira a 360 \grad ~y llega a 
+%una distancia m\'axima de 8 metros. Trabaja a una frecuencia de 10 Hz y 
+%tiene una tasa de medici\'on de 4000 muestras por segundo. El hardware del 
+%RPLIDAR A2 se puede ver en la figura \ref{f:lidar}, el cual tiene un 
+%convertidor de protocolo UART a mini USB.
 \begin{figure}%[h]
 \centering \footnotesize
  {\includegraphics[width=0.60\linewidth]{images/rplidar.JPG}}
@@ -139,14 +175,21 @@ Frecuencia de escaneo & Hz & 5 & 10 & 15 \\ \hline
 \end{center}
 \end{table}
 
-La tabla \ref{tbl:medicion} muestra el rendimiento de medici\'on \cite{Slamtec} 
-que tiene el sensor l\'aser considerando varias pruebas por cada item. Este 
-sensor tiene una interfaz de comunicaci\'on (UART) el cual esta dividido por 
-pines y colores de cables esto se muestra en la tabla \ref{tbl:comunicacion}. Por 
-medio de este protocolo se controla el motor (PWM) y los datos que el sensor 
-env\'ia a una PC o microcontrolador. El RPLIDAR A2 env\'ia los datos despu\'es de 
-recibir una solicitud de un sistema host, una vez que el sensor reciba esta 
-solicitud enviar\'a los datos del escaneo de forma continua al sistema host.
+La tabla \ref{tbl:medicion} muestra el rendimiento de medici\'on del 
+sensor l\'aser \cite{Slamtec} considerando varias pruebas por cada item. Los items más 
+importantes de esta tabla son: (1) Rango de distancia, el sensor toma mediciones en el
+rango mostrado, cuando la distancia es menor a 0.15 $mts$ no considera la medición, lo 
+mismo sucede cuando la medición es mayor a 8 $mts$. (2) Resolución de la distancia, el 
+sensor tiene un error menor a 0.5 $mm$ en sus mediciones, esto permite construir un mapa 
+con las dimensiones reales del entorno. (3) Resolución angular, este sensor tiene una 
+resolución de 1\grad~ esto quiere decir que por cada grado que gira el lidar esta 
+realizando una medición, por lo tanto el sensor mide 360 veces por cada rotación.
+
+Para el envío de los datos a la PC o el microcontrolador, el sensor trabaja con un protocolo
+de comunicación UART. Este protocolo se especifíca en la tabla \ref{tbl:comunicacion} y 
+por medio de este se obtiene las distancias que mide el sensor. Para realizar el mapa en 
+dos dimensiones, estas distancias tienen que convertirse en posiciones dentro del plano 
+cartesiano por medio de una conversión de coordenas polares a coordenadas cartesianas.
 \begin{table}[htbp]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -171,36 +214,24 @@ Azul & MOTOCTL & Entrada & 0V & 3.3V & 5V \\ \hline
   %~\subfloat[Repulsive Force]{\includegraphics[width=0.16\textwidth]{images/kbki_lidar3D.jpeg}} 
   \includegraphics[width=0.40\textwidth]{images/lidar_3D.jpeg}
   \includegraphics[width=0.35\textwidth]{images/kbki_lidar3D.jpeg}
-  \\ $\qquad\qquad$ a. Sistema mecánico $\qquad\qquad$  b. Implementado en el Kobuki
+  \\ $\qquad\qquad$ a. Sistema mecánico  $\qquad\qquad\qquad$  b. Sistema mecánico encima del Kobuki
   %\subfloat[Navigation Force]{\includegraphics[width=0.16\textwidth]{images/nav_force.png}}
   % \subfloat[Attractive Force]{\includegraphics[width = 150mm]{attr_force.png}}
   \captionsetup{font=footnotesize}
-  \caption{Tests for the Potential Field Algorithm: (right) Sistema mecánico, (left) Implementado en el Kobuki} 
-  \label{f:apf}
+  \caption{Sistema mec\'anico para el mapeo en tres dimensiones.}
+  \label{f:lidar3D}
 \end{figure}
-
-% \begin{figure}%[h]
-% \centering \footnotesize
-% {\includegraphics[width=0.40\linewidth]{images/lidar_3D.jpeg}}
-% \captionsetup{font=footnotesize}
-% \caption{Representaci\'on gr\'afica de un robot m\'ovil diferencial. Donde 
-% $b$ es la distancia de su centro de masa hacia sus ruedas, el radio de cada 
-% rueda es representado por $r$. Finalmente $\dot{\varphi_{l}}$ y 
-% $\dot{\varphi_{r}}$ son las velocidades de la rueda derecha y rueda izquierda 
-% correspondientemente.}
-% \label{fig:lidar3D}
-% \end{figure}
-% \begin{figure}%[h]
-% \centering \footnotesize
-% {\includegraphics[width=0.40\linewidth]{images/kbki_lidar3D.jpeg}}
-% \captionsetup{font=footnotesize}
-% \caption{Representaci\'on gr\'afica de un robot m\'ovil diferencial. Donde 
-% $b$ es la distancia de su centro de masa hacia sus ruedas, el radio de cada 
-% rueda es representado por $r$. Finalmente $\dot{\varphi_{l}}$ y 
-% $\dot{\varphi_{r}}$ son las velocidades de la rueda derecha y rueda izquierda 
-% correspondientemente.}
-% \label{fig:Kbkilidar3D}
-% \end{figure}
+El sensor lidar permite construir mapas en dos dimensiones ya que este va midiendo 
+distancias mientras va rotando en 360\grad ~, pero para el alcance de este proyecto de 
+tesis se necesita que el robot pueda mapear el entorno en tres dimensiones. Para este
+objetivo se realizó un diseño mecánico, como se muestra en la figura \ref{f:lidar3D} (a). Este
+diseño permite que el sensor lidar pueda tener un ángulo de medición de $\pm$ 15\grad. El sistema
+mecánico consiste en una base que esta acoplada al sensor lidar, esta base se encuentra unida
+a un eje junto a un servomotor. El servomotor esta programado para que se mueva en un rango de
+$\pm$ 15\grad~ permitiendo que el sensor pueda tomar medidas en el eje $Z$. Finalmente, para construir
+el mapa en tres dimensiones se obtiene las coordenadas $X,Y$ y el ángulo del servomotor a través de 
+una matriz de rotación obtienes los valores en $X,Y,Z$. Este sistema mecánico se acoplo al robot Kobuki
+como se puede ver en la figura \ref{f:lidar3D} (b).
 \subsection{Prototipo Final}
 Para realizar las pruebas y obtener los resultados experimentales se tuvo que probar
 el algoritmo en un robot real de accionamiento diferencial llamado Kobuki, el cual estuvo 
@@ -216,7 +247,20 @@ para generar los mapas en tres dimensiones.
 \subsection{Control de Bajo Nivel}
 
 \subsection{Generaci\'on de Trayectoria basado en Campos Potenciales}
-
+\begin{figure}%[ht!]
+  \centering \footnotesize
+  %\subfloat[Attractive Force]{\includegraphics[width=0.16\textwidth]{images/lidar_3D.jpeg}}
+  %~\subfloat[Repulsive Force]{\includegraphics[width=0.16\textwidth]{images/kbki_lidar3D.jpeg}} 
+  \includegraphics[width=0.40\textwidth]{images/f_attrac.png}
+  \includegraphics[width=0.41\textwidth]{images/f_reps.png}
+  \\ $\qquad\qquad$ a. Sistema mecánico  $\qquad\qquad\qquad$  b. Sistema mecánico encima del Kobuki
+  \includegraphics[width=0.40\textwidth]{images/f_nav.png}
+  %\subfloat[Navigation Force]{\includegraphics[width=0.16\textwidth]{images/nav_force.png}}
+  % \subfloat[Attractive Force]{\includegraphics[width = 150mm]{attr_force.png}}
+  \captionsetup{font=footnotesize}
+  \caption{Sistema mec\'anico para el mapeo en tres dimensiones.}
+  %\label{f:lidar3D}
+\end{figure}
 \subsection{SLAM basado en Filtros de Part\'iculas}
 
 \section{Implementaci\'on del sistema}
