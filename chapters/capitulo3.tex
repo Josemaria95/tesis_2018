@@ -230,17 +230,16 @@ mecánico consiste en una base que esta acoplada al sensor lidar, esta base se e
 a un eje junto a un servomotor. El servomotor esta programado para que se mueva en un rango de
 $\pm$ 15\grad~ permitiendo que el sensor pueda tomar medidas en el eje $Z$. Finalmente, para construir
 el mapa en tres dimensiones se obtiene las coordenadas $X,Y$ y el ángulo del servomotor a través de 
-una matriz de rotación obtienes los valores en $X,Y,Z$. Este sistema mecánico se acoplo al robot Kobuki
+una matriz de rotación obtienes los valores en $X,Y,Z$. Este sistema mecánico se acopla al robot Kobuki
 como se puede ver en la figura \ref{f:lidar3D} (b).
+
 \subsection{Prototipo Final}
 Para realizar las pruebas y obtener los resultados experimentales se tuvo que probar
 el algoritmo en un robot real de accionamiento diferencial llamado Kobuki, el cual estuvo 
-alimentado con un sensor Lidar. Este sensor esta acoplado a un sistema mec\'anico, el cual
+alimentado con un sensor lidar. Este sensor esta acoplado a un sistema mec\'anico, el cual
 permite al robot poder mapear en dos y tres dimensiones el entorno donde se encuentre. El 
 controlador integrado de este robot se hizo usando una computadora Raspberry Pi3, lo que le
-permiti\'o al robot alcanzar la autonom\'ia. En esta secci\'on se describir\'a detalladamente
-la cinem\'atica diferencial del Kobuki, el sistema del sensor l\'aser y el sistema mec\'anico 
-para generar los mapas en tres dimensiones.
+permiti\'o al robot alcanzar la autonom\'ia. El robot se puede ver en la figura 
 
 \section{Movimiento del Robot y Mapeo}
 
@@ -264,92 +263,50 @@ para generar los mapas en tres dimensiones.
 \subsection{SLAM basado en Filtros de Part\'iculas}
 
 \section{Implementaci\'on del sistema}
+El proyecto se desarrolló en el sistema operativo Linux, utilizando ROS 
+(\textit{Robotic Operating System}), con el lenguaje de programación Python, ya que 
+se puede utilizar la libreríarospy, que permite interactuar con ROS. La facilidad de
+poder conectar el kobuki a ROS permite una mejor implementación de los
+algoritmos desarrollados.
 
 \subsection{Sistema Operativo del Robot (ROS)}
-ROS es un framework que se usa ampliamente en rob\'otica. Lo que busca 
-este sistema operativo de código abierto es hacer una pieza de software 
-que pueda funcionar en otros robots con solo pequeños cambios en el 
-c\'odigo. Lo que obtenemos con esta idea es la capacidad de crear 
-funcionalidades que se pueden compartir y usar en otros robots, por 
-lo que no necesitamos volver a reinventar la rueda.
+ROS, es un sistema para controlar los componentes robóticos desde una PC. Un sistema 
+ROS es similar a un grafo, se compone de un número de nodos independientes, cada uno 
+de los cuales se comunica con los otros utilizando un modelo de publicación y subscripción 
+de mensajes. Contiene una colección de herramientas, librerías y modelos que permite 
+simplificar la creación de nuevos algoritmos para los comportamientos complejos de un 
+robot. Por ejemplo, un driver puede ser implementado como un nodo mientras publica los datos 
+como un mensaje, y esos mensajes pueden ser leídos por otros nodos, como sistemas de alto nivel.
 
-ROS fue desarrollado originalmente en el 2007 por el laboratorio de 
-Inteligencia Artificial de Stanford (\textit{SAIL}) en apoyo del proyecto 
-Stanford AI Robot \cite{rosHistory}. A partir del 2008, el desarrollo 
-contin\'ua principalmente en Willow Garage, un instituto de Investigaci\'on 
-de Rob\'otica, con m\'as de veinte instituciones colaborando dentro de un 
-modelo de desarrollo federado.
+%ROS es un framework que se usa ampliamente en rob\'otica. Lo que busca 
+%este sistema operativo de código abierto es hacer una pieza de software 
+%que pueda funcionar en otros robots con solo pequeños cambios en el 
+%c\'odigo. Lo que obtenemos con esta idea es la capacidad de crear 
+%funcionalidades que se pueden compartir y usar en otros robots, por 
+%lo que no necesitamos volver a reinventar la rueda.
 
-Muchas instituciones de investigaci\'on han comenzado a desarrollarse en 
-ROS, agregando hardware y compartiendo su c\'odigo. Los sensores y actuadores 
-utilizados en la rob\'otica tambi\'en se han adaptado para su uso en ROS. Gracias 
-a esto, las empresas est\'an creando sensores m\'as baratos y m\'as potentes. Arduino 
-es un buen ejemplo de esto, ya que al usar una placa electr\'onica barata puede 
-agregar una gran cantidad de sensores como codificadores, sensores de luz, 
-temperatura, y as\'i sucesivamente \cite{rosIntroduction}.
+%ROS fue desarrollado originalmente en el 2007 por el laboratorio de 
+%Inteligencia Artificial de Stanford (\textit{SAIL}) en apoyo del proyecto 
+%Stanford AI Robot \cite{rosHistory}. A partir del 2008, el desarrollo 
+%contin\'ua principalmente en Willow Garage, un instituto de Investigaci\'on 
+%de Rob\'otica, con m\'as de veinte instituciones colaborando dentro de un 
+%modelo de desarrollo federado.
 
-ROS proporciona las instalaciones del sistema operativo est\'andar, como 
-la abstracci\'on de hardware, el control de dispositivos de bajo nivel, la 
-implementaci\'on de funcionalidades de uso com\'un, el paso de mensajes entre 
-procesos y la gesti\'on de paquetes. %Esta tesis es desarollada con librer\'ias 
+%Muchas instituciones de investigaci\'on han comenzado a desarrollarse en 
+%ROS, agregando hardware y compartiendo su c\'odigo. Los sensores y actuadores 
+%utilizados en la rob\'otica tambi\'en se han adaptado para su uso en ROS. Gracias 
+%a esto, las empresas est\'an creando sensores m\'as baratos y m\'as potentes. Arduino 
+%es un buen ejemplo de esto, ya que al usar una placa electr\'onica barata puede 
+%agregar una gran cantidad de sensores como codificadores, sensores de luz, 
+%temperatura, y as\'i sucesivamente \cite{rosIntroduction}.
+
+%ROS proporciona las instalaciones del sistema operativo est\'andar, como 
+%la abstracci\'on de hardware, el control de dispositivos de bajo nivel, la 
+%implementaci\'on de funcionalidades de uso com\'un, el paso de mensajes entre 
+%procesos y la gesti\'on de paquetes. %Esta tesis es desarollada con librer\'ias 
 %de ROS.
 
 \subsection{Arquitectura del Sistema}
 
-
-%\section{Hardware usado}
-%En esta sección se explicará los componentes que se utilizó para realizar el proyecto. Se comenzará describiendo el quadcopter, posteriormente el sensor láser que fue utilizado, el microcontrolador donde fue implementado el algoritmo SLAM y finalmente del controlador de vuelo Pixhawk.
-
-%\subsection{Fantom}
-%Fantom es el quadcopter que fue desarrollado en el laboratorio de robótica de la Universidad de Ingeniería y Tecnología - UTEC, en el año 2015 (Figura \ref{f:fantom}). Este drone fue construído de forma experimental utilizando los motores del DJI Phantom 2; tiene un peso de aproximadamente 1100 gramos (incluyendo batería) y puede cargar 1000 gramos más según las características de sus motores y las pruebas realizadas en el laboratorio. Fantom fue construído para fines aplicativos orientado a métodos de control no lineal.Este drone esta compuesto por:
-
-%\begin{itemize}
-%\item[•] Quadcopter Frame fibra de vidrio de 480 mm.
-%\item[•] Multi-Rotor Lipo 4S de 4000 mAh.
-%\item[•] Multi-Rotor ESC 4S ~ 6S de 20 A.
-%\item[•] Motores Brushless 960KV.
-%\item[•] Controlador de vuelo Pixhawk.
-%\end{itemize}
-%\begin{figure}[htb]
-%\centering
-%\subfloat[Original Image]{\includegraphics[width=40mm]{frame.jpg}}
-%~\subfloat[Edges using Canny]{\includegraphics[width=40mm]{bateria.jpg}}\\
-%~\subfloat[Dilate Image]{\includegraphics[width=40mm]{dilation_taza.jpg}}
-%\subfloat[Morphologically closed image]{\includegraphics[width=40mm]{ESC.jpg}}
-%~\subfloat[Skeletonized image]{\includegraphics[width=40mm]{motor.jpg}}
-%\subfloat[Morphologically closed image]{\includegraphics[width=40mm]{pixhawk.jpg}}
-%\caption{Image processing steps for a 3D real scene} \label{f:cup}
-%\end{figure}
-%\begin{figure}
-%\centering
-%\includegraphics[scale=0.1]{fantom.jpg}
-%\caption{Quadcopter Fantom.}
-%\label{f:fantom}
-%\end{figure}
-
-%\subsection{RPLIDAR A2}
-
-%\subsection{Sensor IMU}
-%El controlador de vuelo consta de un sensor IMU (acelerómetro, giroscopio y magnetómetro). InvenSense MPU6000 es el sensor IMU y ST Micro L3GD20H + LSM303D o InvenSense ICM2076 actúan como sensores de respaldo \cite{pixhawkIMU}. El primer conjunto de sensores se coloca en la placa primaria de la FCU mientras que el tercer conjunto se coloca en la placa aislada de las vibraciones. Las lecturas de estos diferentes conjuntos de sensores se colocan en buses separados. Son responsables de proporcionar la medición inercial necesaria para maniobrar el quadcopter. Las lecturas del giroscopio que indican la rotación de las aeronaves sobre sus propios ejes son necesarias para un vuelo estable, utilizado internamente por el controlador PID. Las lecturas del acelerómetro proporcionan las fuerzas de aceleración y aceleración en los 3 ejes, ayudan en el control de la posición de la aeronave. Esta información se puede utilizar para la estimación de la posición, pero se sabe que es propensa a errores. El magnetómetro o la brújula es responsable de proporcionar información sobre el campo magnético de la tierra e inferir el norte magnético.
-
-%\subsection{Sensor Barométrico}
-%El controlador de vuelo consta de 2 sensores barométricos MS5611 redundantes. Mide la presión del aire y, en teoría, se puede utilizar para predecir la altitud, pero necesita una recalibración frecuente.
- 
-%\subsection{Controlador de Vuelo}
-%Pixhawk \cite{PixhawkHome}, fabricado por Proficnc es la unidad de controlador de vuelo a bordo del quadcopter que vamos a utilizar en este proyecto (Figura \ref{f:pixhawk}). La función de este dispositivo es leer los datos de entrada de los sensores (láser e IMU), realizar cálculos y, como resultado, manipular la velocidad de los motores para ejecutar las manibras necesarias. Es un piloto automático de código abierto donde los desarrolladores se encargan de compartir en los repositorios de Ardupilot \cite{Ardupilot}. Para mejorar las lecturas del sensor IMU, el Pixhawk viene con 3 sistemas IMU redundantes, que están aislados entre sí, y también están amortiguados para evitar que las vibraciones del vuelo corrompan los datos.
-
-%El Pixhawk viene con un IMU desacoplado y FMU (unidad de gestión de vuelo) para reducir la interferencia a los sensores. Tiene un núcleo ARM Cortex M4 de 32 bits con FPU que opera a una frecuencia de 168 Mhz, 256 KB RAM, memoria flash de 2 MB y un coprocesador a prueba de fallos de 32 bits (REFERENCIAR DATASHEET). Los sensores a bordo se discute a detalle en las subsecciones 3.2.3 y 3.2.4.
-%El Pixhawk viene con un solo suministro independiente de 5V para el controlador de vuelo y sus periféricos. También proporciona protección contra sobre voltaje, protección contra sobrecorriente y protección térmica. La FMU y la IO (entradas y salidas) funcionan a 3.3V y 6.6V. Se puede alimentar a través de USB o a través de los 2 conectores. Para las operaciones IO, viene con un puerto I2C, 2 puertos CAN, 5 puertos UART, un puerto SPI y un puerto RSSI (PWM o Voltaje).
-
-%\begin{figure}
-%\centering
-%\includegraphics[scale=0.4]{pixhawk.jpg}
-%\caption{Controlador de Vuelo Pixhawk}
-%\label{f:pixhawk}
-%\end{figure}
-
-%\section{Arquitectura de Solución}
-%\subsection{Arquitectura del Sistema}
-%\subsection{HectorSlam}
-%\subsection{Mavros}
+s
 
