@@ -234,49 +234,107 @@ una matriz de rotación obtienes los valores en $X,Y,Z$. Este sistema mecánico 
 como se puede ver en la figura \ref{f:lidar3D} (b).
 
 \subsection{Prototipo Final}
-Para realizar las pruebas y obtener los resultados experimentales se tuvo que probar
-el algoritmo en un robot real de accionamiento diferencial llamado Kobuki, el cual estuvo 
-alimentado con un sensor lidar. Este sensor esta acoplado a un sistema mec\'anico, el cual
-permite al robot poder mapear en dos y tres dimensiones el entorno donde se encuentre. El 
-controlador integrado de este robot se hizo usando una computadora Raspberry Pi3, lo que le
-permiti\'o al robot alcanzar la autonom\'ia. El robot se puede ver en la figura 
+El prototipo final de este trabajo, permite que el robot pueda generar un mapa en tres dimensiones 
+mientras se va moviendo generando su propia trayectoria. La figura (COLOCAR FIGURA) muestra el 
+prototipo. Este prototipo consiste en un sistema mecánico que permite generar un mapa en dos 
+dimensiones y también en tres dimensiones del entorno. Usando el robot diferencial Kobuki 
+conectado a un sensor lidar el robot puede realizar la autonomía.
 
-\section{Movimiento del Robot y Mapeo}
+%\section{Movimiento del Robot y Mapeo}
 
-\subsection{Control de Bajo Nivel}
+%\subsection{Control de Bajo Nivel}
 
-\subsection{Generaci\'on de Trayectoria basado en Campos Potenciales}
+\section{Generaci\'on de Trayectoria basado en Campos Potenciales}
+\label{sec:autonomia}
 \begin{figure}%[ht!]
   \centering \footnotesize
   %\subfloat[Attractive Force]{\includegraphics[width=0.16\textwidth]{images/lidar_3D.jpeg}}
   %~\subfloat[Repulsive Force]{\includegraphics[width=0.16\textwidth]{images/kbki_lidar3D.jpeg}} 
-  \includegraphics[width=0.40\textwidth]{images/f_attrac.png}
-  \includegraphics[width=0.41\textwidth]{images/f_reps.png}
-  \\ $\qquad\qquad$ a. Sistema mecánico  $\qquad\qquad\qquad$  b. Sistema mecánico encima del Kobuki
-  \includegraphics[width=0.40\textwidth]{images/f_nav.png}
+  \includegraphics[width=0.40\textwidth]{images/attr_force.png}
+  \includegraphics[width=0.40\textwidth]{images/rep_force.png}
+  \\ $\qquad$ a. Fuerzas de atracción  $\qquad\qquad\qquad$  b. Fuerzas de repulsión
+  \includegraphics[width=0.40\textwidth]{images/nav_force.png}
+  \\ $\qquad$ c. Fuerzas de navegación
   %\subfloat[Navigation Force]{\includegraphics[width=0.16\textwidth]{images/nav_force.png}}
   % \subfloat[Attractive Force]{\includegraphics[width = 150mm]{attr_force.png}}
   \captionsetup{font=footnotesize}
-  \caption{Sistema mec\'anico para el mapeo en tres dimensiones.}
+  \caption{Pruebas para el algoritmo de campo potencial artificial.}
   %\label{f:lidar3D}
+  \label{f:APF}
 \end{figure}
-\subsection{SLAM basado en Filtros de Part\'iculas}
+Para hacer que el robot se mueva a su objetivo final sin toparse con obstáculos, se 
+tomó el siguiente enfoque. Primero, un objetivo final deseado $q_{g} =(x_{g}, y_{g}, 
+\theta_{g})$ que describe la posición y la orientación se específica en términos del 
+marco inercial. Entonces, los datos locales actuales del entorno se obtienen por medio 
+de un sensor como un lidar, que fue usado en los experimentos, pero se puede usar cualquier 
+otro sensor de profundidad. Estos datos proporcionan las posiciones de los obstáculos que 
+se encuentran en el campo de visión del robot, y se utilizan como posiciones de obstáculos 
+que definen el campo de repulsión.
+
+Usando el campo potencial definido por el objetivo y los datos detectados, se toma un paso 
+en la posición actual. Este paso da un pequeño incremento en la dirección del campo total 
+en la posición actual. Este paso da un pequeño incremento en la dirección y define la 
+posición deseada que debe seguir el controlador polar. A medida que el robot se mueve, esta 
+posición deseada también cambia según el campo potencial, guiando el movimiento hacia la meta 
+y evitando los obstáculos. Tenga en cuenta que a medida que el robot se mueve, continúa 
+escaneando y actualizando su mapa de obstáculos y, por lo tanto, actualizando todo el campo 
+potencial compuesto por las partes atractivas y repulsivas.
+
+Las fuerzas proporcionadas por el campo de potencial artificial se descompusieron en 
+magnitud y dirección que conducen continuamente al robot. Para mostrar cómo funciona el 
+enfoque, se realizó una prueba fuera del robot, en la PC, que utiliza obstáculos 
+colocados artificialmente y una posición deseada. La figura \ref{f:APF} (a) muestra el campo 
+de atracción y las fuerzas que guían hacia la posición deseada. El robot simulado se 
+encuentra inicialmente en la esquina superior izquierda $q_{0} = (2,18)$ y se mueve hacia 
+la meta $q_{goal} = (10,4)$ guiada por el campo. Los puntos blancos muestran la ruta que debe 
+seguir el robot y que luego guiará al controlador. Un campo repulsivo puro se muestra en 
+\ref{f:APF} (b), donde se agregaron tres obstáculos en diferentes posiciones del espacio de 
+trabajo. Cada obstáculo se proyecta como un círculo rojo debido a su gran magnitud dentro de 
+su campo potencial, donde las fuerzas apuntan hacia afuera en cada obstáculo. La fuerza de 
+navegación total compuesta por la superposición de las fuerzas de atracción y repulsión se 
+muestra en la Figura \ref{f:APF} (c).
+
+%\subsection{SLAM basado en Filtros de Part\'iculas}
 
 \section{Implementaci\'on del sistema}
-El proyecto se desarrolló en el sistema operativo Linux, utilizando ROS 
-(\textit{Robotic Operating System}), con el lenguaje de programación Python, ya que 
-se puede utilizar la libreríarospy, que permite interactuar con ROS. La facilidad de
-poder conectar el kobuki a ROS permite una mejor implementación de los
-algoritmos desarrollados.
+
+La metodología propuesta fue probada en un robot móvil Kobuki real, que es un robot de 
+accionamiento diferencial, y un RPlidar conectado a él. La interfaz entre ambos elementos 
+se realizó utilizando un Raspberry Pi3, con ROS (Robot Operating System) previamente instalado.
+El algoritmo fue implementado en el lenguaje Python, usando la librería rospy. Usando este sistema 
+operativo, también es posible transmitir en línea los datos adquiridos a una computadora 
+externa. 
 
 \subsection{Sistema Operativo del Robot (ROS)}
-ROS, es un sistema para controlar los componentes robóticos desde una PC. Un sistema 
-ROS es similar a un grafo, se compone de un número de nodos independientes, cada uno 
-de los cuales se comunica con los otros utilizando un modelo de publicación y subscripción 
-de mensajes. Contiene una colección de herramientas, librerías y modelos que permite 
-simplificar la creación de nuevos algoritmos para los comportamientos complejos de un 
-robot. Por ejemplo, un driver puede ser implementado como un nodo mientras publica los datos 
-como un mensaje, y esos mensajes pueden ser leídos por otros nodos, como sistemas de alto nivel.
+ROS es un framework que se usa ampliamente en rob\'otica. Lo que busca este sistema 
+operativo de código abierto es hacer una parte del software que pueda funcionar en 
+otros robots con solo pequeños cambios en el código. Lo que se obtiene con esta idea 
+es la capacidad de crear funcionalidades que se puedan compartir y usar en otros robots, por 
+lo que ya no se necesita volver a reinventar la rueda.
+
+Muchas instituciones de investigaci\'on han comenzado a desarrollarse en 
+ROS, agregando hardware y compartiendo su c\'odigo. Los sensores y actuadores 
+utilizados en la rob\'otica tambi\'en se han adaptado para su uso en ROS. Gracias 
+a esto, las empresas est\'an creando sensores m\'as baratos y m\'as potentes. Arduino 
+es un buen ejemplo de esto, ya que al usar una placa electr\'onica barata puede 
+agregar una gran cantidad de sensores como codificadores, sensores de luz, 
+temperatura, y as\'i sucesivamente \cite{rosIntroduction}.
+
+ROS provee paquetes que pueden ser utilizados para construir modelos 3D y comunicarse 
+con estos modelos. El formato URDF (\textit{Unified Robot Description Format}) permite 
+definir modelos de robots así como los sensores y el ambiente de trabajo. Sin embargo, solo 
+aquellos robots que tienen eslabones rígidos conectados mediante articulaciones pueden ser 
+descritos mediante modelos URDF.
+
+Un modelo URDF puede representar la descripción cinemática y dinámica de un robot, su 
+representación visual, y el modelo de colisión. El URDF esta conformado por lo siguiente: 
+(1) \textbf{link}, representa un solo eslabón del robot y permite especificar sus propiedades, 
+como tamaño, forma y color. (2) \textbf{joint}, esta etiqueta representa las articulaciones del 
+robot, se puede especificar la cinemática y dinámica de la articulación, así como establecer 
+los límites del movimiento articular y de su velocidad. (3) \textbf{robot}, esta etiqueta 
+engloba todo el modelo del robot, dentro de esta etiqueta se define el nombre del robot, los 
+eslabones y las articulaciones del robot. (4) \textbf{gazebo}, en esta etiqueta se incluye 
+parámetros de simulación para el simulador \textit{Gazebo}.
 
 %ROS es un framework que se usa ampliamente en rob\'otica. Lo que busca 
 %este sistema operativo de código abierto es hacer una pieza de software 
@@ -306,7 +364,6 @@ como un mensaje, y esos mensajes pueden ser leídos por otros nodos, como sistem
 %procesos y la gesti\'on de paquetes. %Esta tesis es desarollada con librer\'ias 
 %de ROS.
 
-\subsection{Arquitectura del Sistema}
+%\subsection{Arquitectura del Sistema}
 
-s
 
