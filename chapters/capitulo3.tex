@@ -101,7 +101,8 @@ donde se halla las velocidades de las ruedas a partir de la velocidad lineal y v
 angular del robot móvil.
 \begin{figure}%[h]
  \centering \footnotesize
- {\includegraphics[width=0.35\linewidth]{images/kobuki.jpg}}
+ %{\includegraphics[width=0.35\linewidth]{images/kobuki.jpg}}
+ {\includegraphics[width=0.35\linewidth]{images/turtlebot.jpg}}
  \captionsetup{font=footnotesize}
  \caption{Robot m\'ovil utilizado para la implementación del algoritmo 
  de autonom\'ia}
@@ -149,29 +150,29 @@ medio de un protocolo UART. El sensor es mostrado en la figura \ref{f:lidar}.
 %RPLIDAR A2 se puede ver en la figura \ref{f:lidar}, el cual tiene un 
 %convertidor de protocolo UART a mini USB.
 \begin{figure}%[h]
-\centering \footnotesize
- {\includegraphics[width=0.60\linewidth]{images/rplidar.JPG}}
- \captionsetup{font=footnotesize}
- \caption{Sensor láser RPLIDAR A2.}
- \label{f:lidar}
+	\centering \footnotesize
+ 	{\includegraphics[width=0.60\linewidth]{images/rplidar.JPG}}
+ 	\captionsetup{font=footnotesize}
+ 	\caption{Sensor láser RPLIDAR A2.}
+ 	\label{f:lidar}
 \end{figure}
 
 \begin{table}[htbp]
 \begin{center}
 \begin{tabular}{|l|c|c|c|c|}
-\hline
-Item & Unidad & M\'inimo & T\'ipico & M\'aximo\\
-\hline \hline
-Rango de distancia & m & 0.15 & - & 8 \\ \hline
-Rango angular & grados & - & 0 - 360 & - \\ \hline
-Resoluci\'on de la distancia & mm & - & menor a 0.5 & - \\ \hline
-Duraci\'on de muestra & ms & - & 0.25 & - \\ \hline
-Resoluci\'on angular & grados & 0.45 & 0.9 & 1.35 \\ \hline
-Fecuencia de muestreo & Hz & 2000 & 4000 & 4100 \\ \hline
-Frecuencia de escaneo & Hz & 5 & 10 & 15 \\ \hline
+	\hline
+	Item & Unidad & M\'inimo & T\'ipico & M\'aximo\\
+	\hline \hline
+	Rango de distancia & m & 0.15 & - & 8 \\ \hline
+	Rango angular & grados & - & 0 - 360 & - \\ \hline
+	Resoluci\'on de la distancia & mm & - & menor a 0.5 & - \\ \hline
+	Duraci\'on de muestra & ms & - & 0.25 & - \\ \hline
+	Resoluci\'on angular & grados & 0.45 & 0.9 & 1.35 \\ \hline
+	Fecuencia de muestreo & Hz & 2000 & 4000 & 4100 \\ \hline
+	Frecuencia de escaneo & Hz & 5 & 10 & 15 \\ \hline
 \end{tabular}
-\caption{Pruebas de Medici\'on.}
-\label{tbl:medicion}
+	\caption{Pruebas de Medici\'on.}
+	\label{tbl:medicion}
 \end{center}
 \end{table}
 
@@ -185,60 +186,121 @@ con las dimensiones reales del entorno. (3) Resolución angular, este sensor tie
 resolución de 1\grad~ esto quiere decir que por cada grado que gira el lidar esta 
 realizando una medición, por lo tanto el sensor mide 360 veces por cada rotación.
 
+\begin{figure}
+	\centering \footnotesize
+	\includegraphics[width=0.40\linewidth]{images/frame_laser.png}
+	\captionsetup{font=footnotesize}
+	\caption{Sistema de referencia del sensor lidar}
+	\label{fig:FrameLidar}
+\end{figure}
+
 Para el envío de los datos a la PC o el microcontrolador, el sensor trabaja con un protocolo
 de comunicación UART. Este protocolo se especifíca en la tabla \ref{tbl:comunicacion} y 
 por medio de este se obtiene las distancias que mide el sensor. Para realizar el mapa en 
-dos dimensiones, estas distancias tienen que convertirse en posiciones dentro del plano 
-cartesiano por medio de una conversión de coordenas polares a coordenadas cartesianas.
+dos dimensiones se tiene que tomar en consideración el sistema de referencia del sensor 
+lidar. En la figura \ref{fig:FrameLidar} se puede ver que el cable de alimentación y comunicación 
+indica la dirección del eje $X$ y al lado derecho esta el eje $Y$. Teniendo en consideración el sistema 
+de referencia del sensor se puede obtener las distancias del entorno donde se esta midiendo y a partir
+de una conversión de coordenadas polares a coordenadas cartesianas se puede estimar las posiciones 
+de los objetos dentro del ambiente de trabajo.
+
 \begin{table}[htbp]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
-\hline
-Color & Nombre de la se\~nal & Tipo & M\'inimo & T\'ipico & M\'aximo \\ 
-\hline \hline
-Rojo & VCC & Potencia & 4.9V & 5V & 5.5V \\ \hline
-Amarillo & Tx & Salida & 0V & 3.3V & 3.5V \\ \hline
-Verde & Rx & Entrada & 0V & 3.3V & 3.5V \\ \hline
-Negro & GND & Potencia & 0V & 0V & 0V \\ \hline
-Azul & MOTOCTL & Entrada & 0V & 3.3V & 5V \\ \hline
+	\hline
+	Color & Nombre de la se\~nal & Tipo & M\'inimo & T\'ipico & M\'aximo \\ 
+	\hline \hline
+	Rojo & VCC & Potencia & 4.9V & 5V & 5.5V \\ \hline
+	Amarillo & Tx & Salida & 0V & 3.3V & 3.5V \\ \hline
+	Verde & Rx & Entrada & 0V & 3.3V & 3.5V \\ \hline
+	Negro & GND & Potencia & 0V & 0V & 0V \\ \hline
+	Azul & MOTOCTL & Entrada & 0V & 3.3V & 5V \\ \hline
 \end{tabular}
-\caption{Interfaz de comunicaci\'on del sensor l\'aser.}
-\label{tbl:comunicacion}
+	\caption{Interfaz de comunicaci\'on del sensor l\'aser.}
+	\label{tbl:comunicacion}
 \end{center}
 \end{table}
 
 \subsection{Sistema de Percepci\'on en 3D}
 \begin{figure}%[ht!]
-  \centering \footnotesize
-  %\subfloat[Attractive Force]{\includegraphics[width=0.16\textwidth]{images/lidar_3D.jpeg}}
-  %~\subfloat[Repulsive Force]{\includegraphics[width=0.16\textwidth]{images/kbki_lidar3D.jpeg}} 
-  \includegraphics[width=0.40\textwidth]{images/lidar_3D.jpeg}
-  \includegraphics[width=0.35\textwidth]{images/kbki_lidar3D.jpeg}
-  \\ $\qquad\qquad$ a. Sistema mecánico  $\qquad\qquad\qquad$  b. Sistema mecánico encima del Kobuki
-  %\subfloat[Navigation Force]{\includegraphics[width=0.16\textwidth]{images/nav_force.png}}
-  % \subfloat[Attractive Force]{\includegraphics[width = 150mm]{attr_force.png}}
-  \captionsetup{font=footnotesize}
-  \caption{Sistema mec\'anico para el mapeo en tres dimensiones.}
-  \label{f:lidar3D}
+  	\centering \footnotesize
+  %\includegraphics[width=0.40\textwidth]{images/lidar_3D.jpeg}
+  %\includegraphics[width=0.35\textwidth]{images/kbki_lidar3D.jpeg}
+  	\includegraphics[width=0.40\textwidth]{images/lidar_3d.png}
+  	\includegraphics[width=0.40\textwidth]{images/lidar_wKbki.png}
+  	\\ $\qquad\qquad$ a. Sistema mecánico  $\qquad\qquad\qquad$  b. Sistema mecánico encima del Kobuki
+  	\captionsetup{font=footnotesize}
+  	\caption{Sistema mec\'anico para el mapeo en tres dimensiones.}
+  	\label{f:lidar3D}
 \end{figure}
+
 El sensor lidar permite construir mapas en dos dimensiones ya que este va midiendo 
 distancias mientras va rotando en 360\grad ~, pero para el alcance de este proyecto de 
 tesis se necesita que el robot pueda mapear el entorno en tres dimensiones. Para este
 objetivo se realizó un diseño mecánico, como se muestra en la figura \ref{f:lidar3D} (a). Este
-diseño permite que el sensor lidar pueda tener un ángulo de medición de $\pm$ 15\grad. El sistema
-mecánico consiste en una base que esta acoplada al sensor lidar, esta base se encuentra unida
-a un eje junto a un servomotor. El servomotor esta programado para que se mueva en un rango de
-$\pm$ 15\grad~ permitiendo que el sensor pueda tomar medidas en el eje $Z$. Finalmente, para construir
-el mapa en tres dimensiones se obtiene las coordenadas $X,Y$ y el ángulo del servomotor a través de 
-una matriz de rotación obtienes los valores en $X,Y,Z$. Este sistema mecánico se acopla al robot Kobuki
-como se puede ver en la figura \ref{f:lidar3D} (b).
+diseño permite que el sensor lidar pueda tener un ángulo de medición de $\pm$ 15\grad en el 
+eje $Z$. El sistema mecánico consiste en una base donde el sensor lidar se encuentra acoplada, 
+y a su vez este esta unido a un servomotor por medio de un eje. El servomotor esta programado para 
+que se mueva en un rango de $\pm$ 15\grad~ para que el sensor pueda tomar medidas 
+en el eje $Z$. 
+
+\begin{figure}%[ht!]
+	\centering \footnotesize
+	\includegraphics[width=0.40\textwidth]{images/lidar_ref.png}~~~~~~~~~~~~
+	\includegraphics[width=0.40\textwidth]{images/lidar_giro.png}
+	\\ a. Sistemas de referencia del sistema mecánico ~~~ b. Rotación y Translación 
+	del S.M.
+	\captionsetup{font=footnotesize}
+  	\caption{Representación de la rotación y traslación del sistema mecánico}
+  	\label{f:Rot3D}
+\end{figure}
+
+El sistema mecánico esta compuesto por dos sistemas de referencia, el primero es el sistema 
+del servomotor y el segundo el sistema del sensor lidar (figura \ref{f:Rot3D} a). Este sistema
+genera dos tipos de movimiento uno de rotación y el otro de traslación los cuales son considerados
+en la generación del mapa en tres dimensiones (figura \ref{f:Rot3D} b). Para construir el mapa en 
+tres dimensiones se debe considerar las distancias que mide el lidar el ángulo que rota el 
+servomotor, para esto primero se debe convertir los puntos del lidar en dos dimensiones 
+($x,y$). Las ecuaciones para la conversión son:
+\begin{align*}
+	x &= rcos(\theta_{L}) \\
+	y &= rsen(\theta_{L})
+\end{align*}
+donde $r$ es la distancia medida por el sensor y $\theta_{L}$ es el ángulo que gira el sensor 
+mientras va midiendo.
+
+Para llevar la nube de puntos al sistema de referencia del servomotor se utiliza una matriz 
+homogénea que contiene las componentes de rotación y traslación del sistema mecánico. La transformación
+homogénea esta representada como:
+\begin{align*}
+	T_{L}^{M} &= R_{y}(\phi_{M}) T_{z}(d) \\
+\end{align*}
+%\begin{align}
+%	\tilde{p}^{M} = T_{L}^{M} \tilde{p}^{L}
+%	\label{eqn:MatrizHomogenea}
+%\end{align}
+donde $\phi_{M}$ es el ángulo que rota el servomotor y $d$ es la distancia que hay entre el sistema de 
+referencia del servomotor y el sistema de referencia del sensor lidar, como se puede ver en la 
+figura \ref{f:Rot3D} a. La representación de la posición y orientación de la nube de puntos es representada
+como:
+\begin{align}
+	\tilde{p}^{M} = T_{L}^{M} \tilde{p}^{L}
+	\label{eqn:MatrizHomogenea}
+\end{align}
 
 \subsection{Prototipo Final}
+\begin{figure}%[ht!]
+	\centering \footnotesize
+	\includegraphics[width=0.40\textwidth]{images/kbkiReal3D.jpg}
+	\captionsetup{font=footnotesize}
+	\caption{Prototipo final del robot móvil para realizar mapeos en 3D}
+	\label{fig:ProtoFinal}
+\end{figure}
 El prototipo final de este trabajo, permite que el robot pueda generar un mapa en tres dimensiones 
-mientras se va moviendo generando su propia trayectoria. La figura (COLOCAR FIGURA) muestra el 
-prototipo. Este prototipo consiste en un sistema mecánico que permite generar un mapa en dos 
-dimensiones y también en tres dimensiones del entorno. Usando el robot diferencial Kobuki 
-conectado a un sensor lidar el robot puede realizar la autonomía.
+mientras genera su propia trayectoria. La figura \ref{fig:ProtoFinal} muestra el prototipo. Utilizando
+un robot diferencial Kobuki conectado al sensor lidar se puede desplazar de forma autónoma
+dentro del entorno. El sistema mecánico descrito hace que se genere el mapa en tres dimensiones
+y también en dos dimensiones, el cual sirve para que el robot pueda localizarse dentro del ambiente.
 
 %\section{Movimiento del Robot y Mapeo}
 
@@ -247,20 +309,20 @@ conectado a un sensor lidar el robot puede realizar la autonomía.
 \section{Generaci\'on de Trayectoria basado en Campos Potenciales}
 \label{sec:autonomia}
 \begin{figure}%[ht!]
-  \centering \footnotesize
+  	\centering \footnotesize
   %\subfloat[Attractive Force]{\includegraphics[width=0.16\textwidth]{images/lidar_3D.jpeg}}
   %~\subfloat[Repulsive Force]{\includegraphics[width=0.16\textwidth]{images/kbki_lidar3D.jpeg}} 
-  \includegraphics[width=0.40\textwidth]{images/attr_force.png}
-  \includegraphics[width=0.40\textwidth]{images/rep_force.png}
-  \\ $\qquad$ a. Fuerzas de atracción  $\qquad\qquad\qquad$  b. Fuerzas de repulsión
-  \includegraphics[width=0.40\textwidth]{images/nav_force.png}
-  \\ $\qquad$ c. Fuerzas de navegación
+  	\includegraphics[width=0.40\textwidth]{images/attr_force.png}
+  	\includegraphics[width=0.40\textwidth]{images/rep_force.png}
+  	\\ $\qquad$ a. Fuerzas de atracción  $\qquad\qquad\qquad$  b. Fuerzas de repulsión
+  	\includegraphics[width=0.45\textwidth]{images/nav_force.png}
+  	\\ $\qquad$ c. Fuerzas de navegación
   %\subfloat[Navigation Force]{\includegraphics[width=0.16\textwidth]{images/nav_force.png}}
   % \subfloat[Attractive Force]{\includegraphics[width = 150mm]{attr_force.png}}
-  \captionsetup{font=footnotesize}
-  \caption{Pruebas para el algoritmo de campo potencial artificial.}
+  	\captionsetup{font=footnotesize}
+  	\caption{Pruebas para el algoritmo de campo potencial artificial.}
   %\label{f:lidar3D}
-  \label{f:APF}
+  	\label{f:APF}
 \end{figure}
 Para hacer que el robot se mueva a su objetivo final sin toparse con obstáculos, se 
 tomó el siguiente enfoque. Primero, un objetivo final deseado $q_{g} =(x_{g}, y_{g}, 
@@ -364,6 +426,44 @@ parámetros de simulación para el simulador \textit{Gazebo}.
 %procesos y la gesti\'on de paquetes. %Esta tesis es desarollada con librer\'ias 
 %de ROS.
 
-%\subsection{Arquitectura del Sistema}
+\subsection{Arquitectura del Sistema}
+
+\begin{figure}%[ht!]
+	\centering \footnotesize
+	\includegraphics[width=1.1\textwidth]{images/estruct_auto.png}
+	\captionsetup{font=footnotesize}
+	\caption{Arquitectura del control del sistema para la autonomía}
+	\label{fig:ArqSist}
+\end{figure}
+ 
+Para que el robot se localicé dentro de un ambiente desconocido, se utiliza el bloque del SLAM. 
+Este algoritmo tiene como entradas los datos del sensor lidar y de la odometría del robot 
+($x_{medido},y_{medido},\theta_{medido}$). El SLAM con los datos mencionados utilza filtros de 
+partículas y puede corregir la posición del robot dentro del ambiente desconocido. El 
+bloque de SLAM tiene como salidas el mapa en dos dimensiones del lugar y la localización del robot 
+corregido ($x_{corregido},y_{corregido},\theta_{corregido}$). El mapa en dos dimensiones permite
+visualizar el entorno, en tiempo real, que se esta explorando.
+
+El bloque del campo potencial más control polar es la representación del algoritmo utilizado
+para la generación de trayectoria. Este algoritmo tiene como entradas los datos del sensor 
+lidar, la localización corregida del robot y la posición deseada. El algoritmo trabaja de forma 
+iterativa, tomando en consideración los obstáculos y la posición deseada. Para la exlporación del 
+robot dentro del ambiente desconocido, se toma posiciones deseadas de forma aleatoria que son
+entradas del algoritmo y a través de los campos potenciales el robot puede llegar hacia la posición 
+deseada. En el caso de que el robot mientras se va moviendo el sensor lidar detecte un obstáculo, 
+este enviará las posiciones del obstáculo y el algoritmo evitará que el robot se choque y a su vez
+pide una nueva posición deseada para que pueda crear una nueva trayectoria y seguir explorando el 
+ambiente. El controlador polar es utilizado para que el robot pueda moverse de forma suave en las 
+curvas que se forman al generar su propia trayectoria.
+
+Finalmente, el algoritmo de la generación de trayectoria tiene como salida la velocidad lineal y 
+velocidad angular que debe tener el robot para desplazarse dentro del ambiente que esta explorando. Todo 
+el sistema de navegación autónoma para el robot móvil se hace de forma iterativa hasta que el robot 
+termine de mapear todo el ambiente, una vez culminado el robot regresa hacia su posición inicial. El 
+sistema de navegación se puede ver en la figura \ref{fig:ArqSist}.
+
+
+
+
 
 
