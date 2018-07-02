@@ -393,9 +393,9 @@
 
 
 \titleformat{\section}
-  {\normalfont \bf}{\thesection}{1em}{}
+  {\normalfont \bf}{\thesection}{1em}{\thesection. }
 \titleformat{\subsection}
-  {\normalfont \bf}{\thesubsection}{1em}{}
+  {\normalfont \bf}{\thesubsection}{1em}{\thesubsection. }
 
 
 % \renewcommand\backmatter{
