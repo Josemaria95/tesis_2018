@@ -129,8 +129,8 @@ en cuesti\'on puede trabajar como P, PI, PD o PID.
 
 Una forma alternativa de obtener un control suave de posici\'on y orientaci\'on 
 para un robot es a trav\'es de una ley lineal de control por realimentaci\'on 
-de estados basada en coordenadas polares. Como muestra la Figura ~\ref{f:controlPolar}, 
-las coordenadas polares asociadas con el robot son:
+de estados basada en coordenadas polares \cite{chwa2004sliding}. Como muestra la 
+Figura ~\ref{f:controlPolar},las coordenadas polares asociadas con el robot son:
 \begin{align*}
 \rho &= \sqrt[]{(x_{d} - x)^2 + (y_{d} - y)^2} \\
 \alpha &= \text{atan2}(y_{d} - y, x_{d} - x) - \theta \\
@@ -138,10 +138,10 @@ las coordenadas polares asociadas con el robot son:
 \end{align*}
 donde $\rho$ representa la distancia desde el robot a la posici\'on de la 
 meta, $\alpha$ y $\beta$ son \'angulos que se utilizan para el error de 
-orientaci\'on. La pose actual del robot es $\x=(x,y,\theta)$, y su pose 
-deseada es $(x_{d},y_{d},\theta_{d})$. En base a estas variables polares, la 
-ley de control que define las velocidades lineales y angulares para lograr 
-la pose deseada es 
+orientaci\'on. La posición y orientación actual del robot es $\x=(x,y,\theta)$, y 
+su posición y orientación deseada es $(x_{d},y_{d},\theta_{d})$. En base a estas 
+variables polares, la ley de control que define las velocidades lineales y angulares 
+para lograr la posición y orientación deseada es 
 \begin{align}
 \label{eqn:v}
 v &= k_{\rho}\rho \\
@@ -182,15 +182,16 @@ Dentro de los m\'etodos de planificaci\'on de movimiento, se utiliza con frecuen
 el t\'ermino espacio libre. Un espacio libre ($C_{free}$) es el conjunto de 
 configuraciones que evita la colisi\'on con obst\'aculos. Calcular la forma 
 del espacio libre es dif\'icil, sin embargo, es mucho m\'as sencillo probar si 
-una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
+una configuraci\'on determinada se encuentra dentro de $C_{free}$. Los métodos
+para la navegación del robot móvil pueden clasificarse como:
 
 
 \subsection{Campos Potenciales}
-La funci\'on potencial m\'as simple es el potencial atractivo y repulsivo. La 
-intuici\'on detr\'as de los campos potenciales es directa: el objetivo atrae al 
-robot mientras los obst\'aculos lo repelen. La suma de estos efectos atrae al 
-robot hacia la meta mientras lo desvía de los obst\'aculos. La funci\'on 
-potencial se puede construir como la suma de potenciales atractivos y repulsivos
+La funci\'on potencial m\'as simple es el potencial atractivo y 
+repulsivo \cite{koren1991potential}. La intuici\'on detr\'as de los campos potenciales 
+es directa: el objetivo atrae al robot mientras los obst\'aculos lo repelen. La suma de 
+estos efectos atrae al robot hacia la meta mientras lo desvía de los obst\'aculos. La 
+funci\'on potencial se puede construir como la suma de potenciales atractivos y repulsivos
 %Un campo potencial genera un campo de fuerzas que impulsa al robot hacia la meta evitando obst\'aculos.Esta fuerza tiene dos componentes, un campo de potencial atractivo y un campo de potencial de repulsi\'on
 \begin{align}
 \label{eqn:potetialField}
@@ -199,11 +200,11 @@ U(q) = U_{att}(q) + U_{rep}(q).
 %\subsubsection{Campo Potencial Atractivo}
 \paragraph{Campo Potencial Atractivo}
 Este campo conduce al robot hacia la posici\'on de la meta, suponiendo que 
-hay una pelota determinada alrededor de este objetivo. Es decir, cualquier 
-posici\'on dentro de esta bola se considerar\'a que satisface el objetivo 
+hay una pelota determinada alrededor de este objetivo \cite{koren1991potential}. Es 
+decir, cualquier posici\'on dentro de esta bola se considerar\'a que satisface el objetivo 
 del algoritmo de planificaci\'on. Considere una energ\'ia potencial escalar 
 que depende de la distancia entre la posici\'on actual del robot $\q=(x,y)$ y 
-su posici\'on de objetivo $\text{qgoal}=(\text{xgoal},\text{ygoal})$
+su posici\'on objetivo $\text{qgoal}=(\text{xgoal},\text{ygoal})$
 \begin{align}
 \label{eqn:pot_attr}
 U_{att}(q) = \frac{1}{2}\zeta d^{2} (q,q_{goal})
@@ -212,7 +213,7 @@ donde $d(a,b)$ es una medida m\'etrica entre dos puntos, y $\zeta$ es un
 par\'ametro de ajuste que escala el efecto del potencial atractivo. En este 
 caso, usamos la distancia euclidiana como una m\'etrica ya que proporciona 
 buenos resultados experimentales. El gradiente de este campo proporciona un 
-campo vectorial que siempre apunta a la posici\'on de objetivo deseada como:
+campo vectorial que siempre apunta a la posici\'on deseada como:
 \begin{align}
 \label{eqn:gradient_att}
 \nabla U_{att}(q)=\zeta(q-q_{goal}).
@@ -220,9 +221,9 @@ campo vectorial que siempre apunta a la posici\'on de objetivo deseada como:
 
 %\subsubsection{Campo Potencial Repulsivo}
 \paragraph{Campo Potencial Repulsivo}
-Un potencial repulsivo mantiene al robot alejado de los obst\'aculos. La 
-fuerza de la fuerza de repulsi\'on depende de la proximidad del robot al 
-obst\'aculo. Cuanto m\'as cerca est\'e el robot de un obst\'aculo, m\'as 
+Un potencial repulsivo mantiene al robot alejado de los obst\'aculos 
+\cite{koren1991potential}. La fuerza de la fuerza de repulsi\'on depende de la proximidad 
+del robot al obst\'aculo. Cuanto m\'as cerca est\'e el robot de un obst\'aculo, m\'as 
 fuerte ser\'a la fuerza de repulsi\'on. Por lo tanto, el potencial 
 repulsivo generalmente se define en t\'erminos de distancia al obst\'aculo 
 m\'as cercano $D(q)$ como 
@@ -258,11 +259,11 @@ hasta que se encuentra muy cerca de la meta. En este proceso, el robot va
 construyendo toda la trayectoria que debe seguir para llegar al punto deseado. 
 
 Un \textit{roadmap} es una clase de mapa topol\'ogico que representa el 
-espacio libre en entornos \cite{choset2005RoadMap} donde los nodos y bordes 
-tienen un significado f\'isico. Un nodo de \textit{roadmap} corresponde a 
-una ubicaci\'on espec\'ifica y un borde corresponde a una ruta entre ubicaciones 
-vecinas. La forma en que el robot pueda explorar un entorno desconocido es por 
-medio de los datos del sensor que le permitir\'a construir un mapa de ruta.
+espacio libre en entornos donde los nodos y bordes tienen un significado 
+f\'isico \cite{choset2005RoadMap}. Un nodo de \textit{roadmap} corresponde a una 
+ubicaci\'on espec\'ifica y un borde corresponde a una ruta entre ubicaciones vecinas. La 
+forma en que el robot pueda explorar un entorno desconocido es por medio de los datos del 
+sensor que le permitir\'a construir un mapa de ruta.
 
 %\subsubsection{Espacio De Configuraci\'on}
 
@@ -419,10 +420,10 @@ todas las posiciones que se cruzan con $C_{obst}$.
 \paragraph{\'Arbol Aleatorio de Exploraci\'on R\'apida (\textit{Rapidly Exploring Random Trees})}
 
 Un \'arbol aleatorio de exploraci\'on r\'apida (RRT) es un algoritmo que esta dise\~nado para 
-buscar de manera eficiente espacios no convexos de gran dimensi\'on. Los RRT se construyen de 
-forma incremental de una manera que reduce r\'apidamente la distancia esperada de un punto elegido 
-al azar. Los RRT son particularmente adecuados para problemas de planificaci\'on de ruta que 
-involucran obst\'aculos y restricciones diferenciales (no holon\'omicas o kinodin\'amicas).
+buscar de manera eficiente espacios no convexos de gran dimensi\'on \cite{bry2011rapidly}. Los 
+RRT se construyen de forma incremental de una manera que reduce r\'apidamente la distancia esperada 
+de un punto elegido al azar. Los RRT son particularmente adecuados para problemas de planificaci\'on 
+de ruta que involucran obst\'aculos y restricciones diferenciales (no holon\'omicas o kinodin\'amicas).
 
 Un RRT hace crecer un \'arbol enraizado en la configuraci\'on inicial utilizando muestras aleatorias 
 del espacio de b\'usqueda. A medida que se extrae cada muestra, se intenta establecer una conexi\'on 
@@ -446,7 +447,7 @@ es la fuente idiot\'etica, que proporciona informaci\'on interna sobre el movimi
 segundo es la fuente alot\'etica, que proporciona informaci\'on externa sobre el ambiente. La 
 informaci\'on idiot\'etica se refiere a la odometr\'ia del robot y la informaci\'on alot\'etica 
 se refiere a alg\'un sensor externo que permita al robot tener una perspectiva del entorno donde 
-se encuentra.
+se encuentra \cite{thrun2003learning}.
 
 Dadas las fuentes de informaci\'on como la odometr\'ia y la de un sensor externo, hay muchas formas 
 de poder integrarlas en una representaci\'on \'util para la navegaci\'on de los robots. Los 
@@ -478,8 +479,8 @@ avances significativos. %En esta secci\'on se explicar\'a sobre las metodolog\'i
 %de localizaci\'on.
 
 El problema en la localizaci\'on es estimar la posici\'on del robot en 
-relaci\'on con el mapa del entorno. Cuando un robot se mueve en un entorno 
-conocido y comienza en una ubicaci\'on conocida, se puede estimar su posici\'on 
+relaci\'on con el mapa del entorno \cite{dellaert1999monte}. Cuando un robot se 
+mueve en un entorno conocido y comienza en una ubicaci\'on conocida, se puede estimar su posici\'on 
 local por medio de la odometr\'ia. Pero esta estimaci\'on de la posici\'on del robot
 con el tiempo comienza a volverse menos confiable debido a las incertidumbre,
 por ende el robot no tiene una posici\'on absoluta establecida. Con el fin de reducir 
@@ -525,9 +526,9 @@ posición de los objetos.
 
 \subsection{Filtros de Kalman}
 El filtro de Kalman se basa en la suposición de que el sistema es lineal y tanto el modelo de 
-movimiento como el modelo de medición se ven afectados por el ruido gaussiano. El \textit{belief} 
-en el tiempo $t$ está representada por una distribución gaussiana multivariable definida por 
-su media ($\mu_{t}$) y la covarianza ($\Sigma_{t}$).
+movimiento como el modelo de medición se ven afectados por el ruido gaussiano 
+\cite{jetto1999development}. El \textit{belief} en el tiempo $t$ está representada por una 
+distribución gaussiana multivariable definida por su media ($\mu_{t}$) y la covarianza ($\Sigma_{t}$).
 
 Un modelo de transici\'on de estado es definido como:
 \begin{align}
@@ -555,14 +556,18 @@ de ruido gaussiano ($Q$):
 \label{eqn: Kalman Filter}
 \begin{matrix}
 \textrm{\textbf{Predicción}}\\
-\overline{\mu}_{t} &= &A_{t}\mu_{t-1} + B_{t} u_{t} &\textrm{estimación de la media a-priori}\\
-\overline{\Sigma}_{t} &= &A_{t}\Sigma_{t-1} A_{t}^{T} + R_{t} &\textrm{estimación de la covarianza a-priori}\\
+\overline{\mu}_{t} &= &A_{t}\mu_{t-1} + B_{t} u_{t} &\textrm{a}\\
+\overline{\Sigma}_{t} &= &A_{t}\Sigma_{t-1} A_{t}^{T} + R_{t} &\textrm{b}\\
 \textrm{\textbf{Actualización}}\\
-K_{t} &= &\overline{\Sigma}_{t}C_{t}^{T}(C_{t}\overline{\Sigma}_{t}C_{t}^{T} + Q_{t})^{-1} &\textrm{Ganancia de Kalman}\\
-\mu_{t} &= &\overline{\mu}_{t} + K_{t}(z_{t} - C_{t}\overline{\mu}_{t}) &\textrm{actualización estimación de estado (a posteriori)}\\
-\Sigma_{t} &= &(I - K_{t}C_{t})\overline{\Sigma}_{t} &\textrm{actualización estimación de la covarianza (a posteriori)}\\
+K_{t} &= &\overline{\Sigma}_{t}C_{t}^{T}(C_{t}\overline{\Sigma}_{t}C_{t}^{T} + Q_{t})^{-1} &\textrm{c}\\
+\mu_{t} &= &\overline{\mu}_{t} + K_{t}(z_{t} - C_{t}\overline{\mu}_{t}) &\textrm{d}\\
+\Sigma_{t} &= &(I - K_{t}C_{t})\overline{\Sigma}_{t} &\textrm{e}\\
 \end{matrix}
 \end{equation*}
+
+donde (a) estimación de la media a-priori, (b) estimación de la covarianza a-priori, 
+(c) Ganancia de Kalman, (d) actualización estimación de estado (a posteriori) y (e) actualización 
+estimación de la covarianza (a posteriori).
 
 Cuando se realiza una medici\'onn, se hace una predicci\'on de un \textit{belief} 
 ($bel(x_{t})$),\\ basado en el \textit{belief} anterior $bel(x_{t-1})$, tambi\'en de los 
@@ -586,33 +591,35 @@ de forma que tiendan a ser lineales.
 \subsection{Filtros de Part\'iculas}
 El filtro de part\'iculas es una implementaci\'on alternativa no param\'etrica, al igual 
 que los filtros de histograma, los filtros de part\'iculas se aproximan al estado posterior 
-por un n\'umero finito de par\'ametros. Sin embargo, difieren en la forma en que se generan 
-estos par\'ametros, y en los que muestrean el espacio de estado. La idea del filtro de 
-part\'iculas es representar el \textit{belief} predecido ($x_{t}$), mediante un conjunto de 
-muestras aleatorias de estado. En lugar de representar la distribuci\'on mediante una forma 
-param\'etrica (la funci\'on exponencial que define la densidad de una distribuci\'on normal), 
-los filtros de part\'iculas representan una distribuci\'on por un conjunto de muestras extra\'idas 
-de esta distribuci\'on. Tal representaci\'on es aproximada, pero no es param\'etrica, por 
-lo tanto se puede representar un espacio de distribuciones mucho m\'as amplio que los gaussianos.
+por un n\'umero finito de par\'ametros \cite{arulampalam2002tutorial}. Sin embargo, difieren 
+en la forma en que se generan estos par\'ametros, y en los que muestrean el espacio de 
+estado. La idea del filtro de part\'iculas es representar el \textit{belief} predecido ($x_{t}$), 
+mediante un conjunto de muestras aleatorias de estado. En lugar de representar la distribuci\'on 
+mediante una forma param\'etrica (la funci\'on exponencial que define la densidad de una 
+distribuci\'on normal), los filtros de part\'iculas representan una distribuci\'on por un 
+conjunto de muestras extra\'idas de esta distribuci\'on. Tal representaci\'on es aproximada, pero 
+no es param\'etrica, por lo tanto se puede representar un espacio de distribuciones mucho m\'as 
+amplio que los gaussianos.
 
 
 \subsection{Filtros de Informaci\'on}
 El filtro de informaci\'on (IF) representa el \textit{belief} por medio de un gaussiano. Por lo 
 tanto, el filtro de informaci\'on est\'andar est\'a sujeto a las mismas suposiciones subyacentes 
-al filtro de Kalman (KF). La diferencia entre el KF y el IF surge de la forma que se representa 
-el \textit{belief} gaussiano. Mientras que en la familia de algoritmos de filtro de Kalman, los 
-gaussianos est\'an representados por sus momentos (media, covarianza), en cambio los filtros de 
-informaci\'on representan gaussianos en su representaci\'on can\'onica, que est\'a compuesta por 
-una matriz de informaci\'on y un vector de informaci\'on. La diferencia en la representaci\'on 
-conduce a diferentes ecuaciones de actualizaci\'on. En particular, lo que es computacionalmente 
-complejo en una representaci\'on resulta ser simple en la otra y viceversa. Las representaciones 
-can\'onicas y de momentos a menudo se consideran duales entre s\'i, y as\'i son el IF y el KF.
+al filtro de Kalman (KF) \cite{thrun2005multi}. La diferencia entre el KF y el IF surge de la 
+forma que se representa el \textit{belief} gaussiano. Mientras que en la familia de algoritmos 
+de filtro de Kalman, los gaussianos est\'an representados por sus momentos (media, covarianza), en 
+cambio los filtros de informaci\'on representan gaussianos en su representaci\'on can\'onica, que 
+est\'a compuesta por una matriz de informaci\'on y un vector de informaci\'on. La diferencia en la 
+representaci\'on conduce a diferentes ecuaciones de actualizaci\'on. En particular, lo que es 
+computacionalmente complejo en una representaci\'on resulta ser simple en la otra y viceversa. Las 
+representaciones can\'onicas y de momentos a menudo se consideran duales entre s\'i, y as\'i son el 
+IF y el KF.
 
 \section{Mapeo y Localizaci\'on Simult\'anea (\textit{SLAM})}
 Un problema mucho m\'as dif\'icil de la localizaci\'on es cuando no conoces el mapa del ambiente. En 
 este caso, la informaci\'on del sensor del robot se utiliza para recuperar la trayectoria del robot 
 y construir un mapa del entorno. Este problema se llama mapeo y localizaci\'on simult\'anea 
-(\textit{SLAM}). Una soluci\'on a este problema har\'ia que un robot sea totalmente 
+(\textit{SLAM}) \cite{Thrun2005}. Una soluci\'on a este problema har\'ia que un robot sea totalmente 
 aut\'onomo. \textit{SLAM} es un problema dif\'icil porque tanto el camino estimado como el mapa 
 construido son afectados por el ruido. Ambos se vuelven cada vez m\'as inexactos durante el viaje. Sin 
 embargo, cuando se revisa un lugar que ha sido mapeado, se puede reducir la incertidumbre. Este proceso 
@@ -651,8 +658,8 @@ a la estimaci\'on de la posici\'on del robot. Como se se\~nala en \cite{murphy20
 representaci\'on factorizada es exacta, debido a las independencias condicionales naturales en el 
 problema SLAM. FastSLAM usa un filtro de part\'iculas modificado para estimar el camino predecido 
 sobre el robot. Cada part\'icula posee filtros de Kalman que estiman las ubicaciones de los puntos 
-de referencia condicionadas en la estimaci\'on de la ruta. La implementaci\'on de este algoritmo 
-requiere tiempo.
+de referencia condicionadas en la estimaci\'on de la ruta \cite{montemerlo2007fastslam}. La 
+implementaci\'on de este algoritmo requiere tiempo.
 
 \subsection{GraphSLAM}
 SLAM basado en gr\'aficos construye un problema de estimaci\'on simplificado al extraer las mediciones 
@@ -664,10 +671,12 @@ m_{t})$ es multimodal y, por lo tanto, el supuesto gaussiano no se cumple. Esto 
 \'unica observaci\'on $z_{t}$ puede dar como resultado m\'ultiples aristas potenciales que 
 conectan diferentes posiciones en el gr\'afico y la conectividad del gr\'afico necesita ser descrita 
 como una distribuci\'on de probabilidad. 
-Dirigirse directamente a esta multimodalidad en el proceso de estimaci\'on llevar\'ia a una explosi\'on combinatoria de la complejidad. Como resultado de eso, la mayor\'ia de los enfoques pr\'acticos restringen 
+Dirigirse directamente a esta multimodalidad en el proceso de estimaci\'on llevar\'ia a una explosi\'on 
+combinatoria de la complejidad. Como resultado de eso, la mayor\'ia de los enfoques pr\'acticos restringen 
 la estimaci\'on a la topolog\'ia m\'as probable. Por lo tanto, se necesita determinar la restricci\'on 
 m\'as probable resultante de una observaci\'on. Esta decisi\'on depende de la distribuci\'on de 
-probabilidad sobre las posiciones del robot.
+probabilidad sobre las posiciones del robot. El resumen descrito esta basado en el paper 
+\cite{grisetti2010tutorial}.
 
 %\section{Robótica Probabilística}
 

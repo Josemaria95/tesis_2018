@@ -86,16 +86,16 @@ ambas ruedas, como se ve en la figura \ref{fig:RMkinematic}.
 Teniendo en consideración las restricciones de las ruedas convencionales se halla la cinemática 
 directa del robot móvil. La cinemática directa consiste en:
 \begin{align*}
-\dot{x}^{R} &= \frac{r}{2}(\dot{\varphi_{r}} + \dot{\varphi_{l}}) \\
-\dot{\theta} &= \frac{r}{2b}(\dot{\varphi_{r}} + \dot{\varphi_{l}})
+v &= \frac{r}{2}(\dot{\varphi_{r}} + \dot{\varphi_{l}}) \\
+\omega &= \frac{r}{2b}(\dot{\varphi_{r}} + \dot{\varphi_{l}})
 \end{align*}
-donde $\dot{x}^{R}$ es la velocidad lineal y $\dot{\theta}$ es la velocidad angular. Estas 
+donde $v$ es la velocidad lineal y $\omega$ es la velocidad angular. Estas 
 velocidades del robot móvil se hallan a 
 través de las velocidades de cada rueda del robot. Por otro lado la cinemática inversa 
 como dice su nombre es todo lo contrario a la cinemática directa. Este consiste en:
 \begin{align*}
-\dot{\varphi_{r}} &= \frac{1}{r}(\dot{x}^{R} + b\dot{\theta}) \\
-\dot{\varphi_{l}} &= \frac{1}{r}(\dot{x}^{R} - b\dot{\theta})
+\dot{\varphi_{r}} &= \frac{1}{r}(v + b\omega) \\
+\dot{\varphi_{l}} &= \frac{1}{r}(v - b\omega)
 \end{align*}
 donde se halla las velocidades de las ruedas a partir de la velocidad lineal y velocidad
 angular del robot móvil.
@@ -228,7 +228,7 @@ de los objetos dentro del ambiente de trabajo.
   %\includegraphics[width=0.35\textwidth]{images/kbki_lidar3D.jpeg}
   	\includegraphics[width=0.40\textwidth]{images/lidar_3d.png}
   	\includegraphics[width=0.40\textwidth]{images/lidar_wKbki.png}
-  	\\ $\qquad\qquad$ a. Sistema mecánico  $\qquad\qquad\qquad$  b. Sistema mecánico encima del Kobuki
+  	\\ $\qquad\qquad$ a. Sistema mecánico  $\qquad\qquad\qquad$  b. Sistema mecánico sobre el Kobuki
   	\captionsetup{font=footnotesize}
   	\caption{Sistema mec\'anico para el mapeo en tres dimensiones.}
   	\label{f:lidar3D}
@@ -248,8 +248,7 @@ en el eje $Z$.
 	\centering \footnotesize
 	\includegraphics[width=0.40\textwidth]{images/lidar_ref.png}~~~~~~~~~~~~
 	\includegraphics[width=0.40\textwidth]{images/lidar_giro.png}
-	\\ a. Sistemas de referencia del sistema mecánico ~~~ b. Rotación y Translación 
-	del S.M.
+	\\ a. Sistemas de referencia ~~$\qquad\qquad\qquad$~~ b. Rotación y traslación 
 	\captionsetup{font=footnotesize}
   	\caption{Representación de la rotación y traslación del sistema mecánico}
   	\label{f:Rot3D}
@@ -281,12 +280,19 @@ homogénea esta representada como:
 %\end{align}
 donde $\phi_{M}$ es el ángulo que rota el servomotor y $d$ es la distancia que hay entre el sistema de 
 referencia del servomotor y el sistema de referencia del sensor lidar, como se puede ver en la 
-figura \ref{f:Rot3D} a. La representación de la posición y orientación de la nube de puntos es representada
-como:
+figura \ref{f:Rot3D} a. $T_{L}^{M}$ es la matriz de transformación homogénea del sistema mécanico. Esta 
+matriz tiene una matriz de rotación ($R_{y}(\phi_{M})$) originado por el servomotor en el eje $Y$ y una
+matriz de traslación ($T_{Z}(d)$) en el eje $Z$ originado por eje que une el servomotor con el sensor 
+lidar.La posición y orientación de la nube de puntos es representada como:
 \begin{align}
-	\tilde{p}^{M} = T_{L}^{M} \tilde{p}^{L}
+	\tilde{p}^{L} = T_{L}^{M} \tilde{p}^{M}
 	\label{eqn:MatrizHomogenea}
 \end{align}
+donde $\tilde{p}^{L}$ es la coordenada homogénea con respecto al sistema de referencia del sensor
+lidar, $T_{L}^{M}$ es la matriz homogénea descrita anteriormente y $\tilde{p}^{M}$ es la coordenada 
+homogénea con respecto al sistema de referencia del servomotor. La multiplicación de estas matrices
+ayuda a poder encontrar los puntos en los ejes ($X,Y,Z$) y formar la nube de puntos en el plano 
+cartesiano.
 
 \subsection{Prototipo Final}
 \begin{figure}%[ht!]
@@ -430,7 +436,7 @@ parámetros de simulación para el simulador \textit{Gazebo}.
 
 \begin{figure}%[ht!]
 	\centering \footnotesize
-	\includegraphics[width=1.1\textwidth]{images/estruct_auto.png}
+	\includegraphics[width=1.0\textwidth]{images/estruct_auto.png}
 	\captionsetup{font=footnotesize}
 	\caption{Arquitectura del control del sistema para la autonomía}
 	\label{fig:ArqSist}

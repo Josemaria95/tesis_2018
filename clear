@@ -1,0 +1,7 @@
+rm -r *.out
+rm -r *.blg
+rm -r *.aux
+rm -r *.bbl
+rm -r *.log
+rm -r *.toc
+rm -r *.pdf
