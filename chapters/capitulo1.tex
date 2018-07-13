@@ -80,19 +80,22 @@ el mapa tridimensional del socavón subterr\'aneo.
 
 \section{Alcances y limitaciones}
 
-Para realizar el mapa topogr\'afico se debe considerar que el t\'unel subterr\'aneo 
-tiene un terreno bastante accidentado y el robot m\'ovil donde fue implementado el 
-algoritmo no tiene el diseño mec\'anico correspondiente para este tipo de ambiente. Por 
-tal motivo el presente trabajo ser\'a capaz de moverse por un t\'unel con una superficie 
-bastante recta sin cambios bruscos en la pendiente. Otra dificultad a considerar es la 
-dimensi\'on de los socavones que var\'ian seg\'un el tama\~no de la beta mineralizada, por 
-ende el trabajo de tesis ser\'a capaz de mapear el t\'unel que no exceda los 16 metros de 
-ancho debido al rango de alcance que tiene el sensor lidar. 
+Los mapas topográficos son realizados dentro de un túnel subterráneo, este ambiente 
+tiene un terreno bastante accidentado lleno de rocas y charcos de agua. Se debe 
+considerar que el robot móvil donde el algoritmo fue implementado no tiene el 
+diseño mecánico adecuado para este entorno. Por ende la tesis será capaz de 
+moverse a través de una superficie plana sin cambios bruscos.
 
-Finalmente, el algoritmo de autonom\'ia puede usarse para cualquier robot m\'ovil (terrestre 
-o a\'ereo) considerando que el modelo din\'amico y cinem\'atico de estos ya se encuentran 
-previamente implementados. Para el caso del robot m\'ovil a\'ereo se debe tener en cuenta 
-que no debe haber variaciones bruscas en la altura, se debe mantener un vuelo estable.
+Las dimensiones del túnel subterráneo es otra dificultad a considerar. Los túneles
+varían según el tamaño de la beta mineralizada y según el proceso de explotación. Por 
+tal motivo, la tesis será capaz de realizar mediciones dentro de un túnel 
+que no exceda los 16 metros de diámetro que tiene como rango el sensor lidar.
+
+Finalmente, el algoritmo de autonom\'ia puede usarse para cualquier robot 
+m\'ovil (terrestre o a\'ereo) considerando que el modelo din\'amico y cinem\'atico 
+de estos fueron previamente implementados. Para la implementación del algoritmo 
+de autonomía en un robot aéreo, se debe considerar que el robot debe volar a una 
+altura constante y a su vez mantener un vuelo estable.
 
 \section{Organizaci\'on de la tesis}
 

@@ -221,7 +221,9 @@ de los objetos dentro del ambiente de trabajo.
 \end{center}
 \end{table}
 
+
 \subsection{Sistema de Percepci\'on en 3D}
+\label{sec:SistP3D}
 \begin{figure}%[ht!]
   	\centering \footnotesize
   %\includegraphics[width=0.40\textwidth]{images/lidar_3D.jpeg}
@@ -306,7 +308,7 @@ El prototipo final de este trabajo, permite que el robot pueda generar un mapa e
 mientras genera su propia trayectoria. La figura \ref{fig:ProtoFinal} muestra el prototipo. Utilizando
 un robot diferencial Kobuki conectado al sensor lidar se puede desplazar de forma autónoma
 dentro del entorno. El sistema mecánico descrito hace que se genere el mapa en tres dimensiones
-y también en dos dimensiones, el cual sirve para que el robot pueda localizarse dentro del ambiente.
+y también en dos dimensiones, el cual permitirá que el robot pueda localizarse dentro del ambiente.
 
 %\section{Movimiento del Robot y Mapeo}
 
@@ -331,7 +333,7 @@ y también en dos dimensiones, el cual sirve para que el robot pueda localizarse
   	\label{f:APF}
 \end{figure}
 Para hacer que el robot se mueva a su objetivo final sin toparse con obstáculos, se 
-tomó el siguiente enfoque. Primero, un objetivo final deseado $q_{g} =(x_{g}, y_{g}, 
+toma el siguiente enfoque. Primero, un objetivo final deseado $q_{g} =(x_{g}, y_{g}, 
 \theta_{g})$ que describe la posición y la orientación se específica en términos del 
 marco inercial. Entonces, los datos locales actuales del entorno se obtienen por medio 
 de un sensor como un lidar, que fue usado en los experimentos, pero se puede usar cualquier 
@@ -339,39 +341,66 @@ otro sensor de profundidad. Estos datos proporcionan las posiciones de los obst�
 se encuentran en el campo de visión del robot, y se utilizan como posiciones de obstáculos 
 que definen el campo de repulsión.
 
-Usando el campo potencial definido por el objetivo y los datos detectados, se toma un paso 
-en la posición actual. Este paso da un pequeño incremento en la dirección del campo total 
+Usando el campo potencial definido por la posición deseada y los datos detectados, se toma un paso 
 en la posición actual. Este paso da un pequeño incremento en la dirección y define la 
 posición deseada que debe seguir el controlador polar. A medida que el robot se mueve, esta 
 posición deseada también cambia según el campo potencial, guiando el movimiento hacia la meta 
-y evitando los obstáculos. Tenga en cuenta que a medida que el robot se mueve, continúa 
-escaneando y actualizando su mapa de obstáculos y, por lo tanto, actualizando todo el campo 
-potencial compuesto por las partes atractivas y repulsivas.
+y evitando los obstáculos. A medida que el robot se mueve, continúa escaneando y actualizando 
+su mapa de obstáculos y, por lo tanto, actualizando todo el campo potencial compuesto por las 
+partes atractivas y repulsivas.
 
-Las fuerzas proporcionadas por el campo de potencial artificial se descompusieron en 
+Las fuerzas proporcionadas por el campo de potencial artificial se descomponen en 
 magnitud y dirección que conducen continuamente al robot. Para mostrar cómo funciona el 
-enfoque, se realizó una prueba fuera del robot, en la PC, que utiliza obstáculos 
+enfoque, se realiza una prueba en la computadora, que utiliza obstáculos 
 colocados artificialmente y una posición deseada. La figura \ref{f:APF} (a) muestra el campo 
 de atracción y las fuerzas que guían hacia la posición deseada. El robot simulado se 
 encuentra inicialmente en la esquina superior izquierda $q_{0} = (2,18)$ y se mueve hacia 
-la meta $q_{goal} = (10,4)$ guiada por el campo. Los puntos blancos muestran la ruta que debe 
+la meta $q_{goal} = (10,4)$ guiado por el campo. Los puntos blancos muestran la ruta que debe 
 seguir el robot y que luego guiará al controlador. Un campo repulsivo puro se muestra en 
 \ref{f:APF} (b), donde se agregaron tres obstáculos en diferentes posiciones del espacio de 
 trabajo. Cada obstáculo se proyecta como un círculo rojo debido a su gran magnitud dentro de 
 su campo potencial, donde las fuerzas apuntan hacia afuera en cada obstáculo. La fuerza de 
 navegación total compuesta por la superposición de las fuerzas de atracción y repulsión se 
-muestra en la Figura \ref{f:APF} (c).
+muestra en la figura \ref{f:APF} (c).
 
-%\subsection{SLAM basado en Filtros de Part\'iculas}
+\section{SLAM basado en Filtros de Part\'iculas}
+
+Los filtros de partículas es un método que fue introducido en años recientes como un medio 
+eficaz para resolver el problema de la localización y mapeo simultáneo 
+\cite{nummiaro2003adaptive}. Para este trabajo de tesis se utilizo un paquete de código 
+abierto llamado \textit{gmapping}, este paquete de \textit{ROS} (\textit{Robot Operating System}) 
+emplea una técnica llamada \textit{Rao-Blackwellized} basado en filtros de partículas 
+\cite{grisetti2007improved}.
+
+El filtro de partículas \textit{Rao-Blackwellized} consiste en que cada partícula 
+lleva la información de un mapa del entorno. El cual se enfoca en calcular la 
+probabilidad del mapa no solo utilizando la odometría del robot, sino también incluye las 
+mediciones que hace un sensor, en este caso un sensor lidar que se encuentra encima del 
+robot. Estas informaciones enviadas al algoritmo hace que la incertidumbre sobre la 
+posición y orientación del robot disminuya. 
+
+Uno de los principales problemas de la técnica \textit{Rao-Blackwellized} es la cantidad 
+de partículas requeridas para construir un mapa preciso. Este efecto es conocido como el 
+problema del agotamiento de partículas. Por tal motivo el paquete \textit{gmapping} propone 
+dos pasos para solucionar este problema. El primero consiste en calcular la probabilidad 
+alrededor de la posición y orientación del robot dependiendo de la cantidad de partículas 
+obtenidas mediante los datos del sensor láser. Como fue mencionado anteriormente al tener 
+la información del sensor láser y la odometría se puede obtener un mapa corregido y más 
+preciso, además el error de estimación de la posición del robot disminuye con el tiempo y 
+se requiere menos partículas para representar las futuras posiciones del robot dentro del 
+entorno. El segundo paso consiste en un remuestreo adaptativo el cual permite un remuestreo 
+cada vez que es necesario, manteniendo una cantidad razonable de partículas. Con este paso 
+el paquete \textit{gmapping} reduce el problema del agotamiento de partículas.
+
 
 \section{Implementaci\'on del sistema}
 
 La metodología propuesta fue probada en un robot móvil Kobuki real, que es un robot de 
-accionamiento diferencial, y un RPlidar conectado a él. La interfaz entre ambos elementos 
-se realizó utilizando un Raspberry Pi3, con ROS (Robot Operating System) previamente instalado.
-El algoritmo fue implementado en el lenguaje Python, usando la librería rospy. Usando este sistema 
-operativo, también es posible transmitir en línea los datos adquiridos a una computadora 
-externa. 
+accionamiento diferencial, y un \textit{RPlidar} conectado a él. La interfaz entre ambos elementos 
+se realizó utilizando un \textit{Raspberry Pi3}, con \textit{ROS} previamente instalado.
+El algoritmo fue implementado en el lenguaje \textit{Python}, usando la librería 
+\textit{rospy}. Usando este sistema operativo, también es posible transmitir en línea los 
+datos adquiridos a una computadora externa. 
 
 \subsection{Sistema Operativo del Robot (ROS)}
 ROS es un framework que se usa ampliamente en rob\'otica. Lo que busca este sistema 
@@ -432,13 +461,13 @@ parámetros de simulación para el simulador \textit{Gazebo}.
 %procesos y la gesti\'on de paquetes. %Esta tesis es desarollada con librer\'ias 
 %de ROS.
 
-\subsection{Arquitectura del Sistema}
+\subsection{Arquitectura del Sistema de Autonomía del Robot Móvil}
 
 \begin{figure}%[ht!]
 	\centering \footnotesize
-	\includegraphics[width=1.0\textwidth]{images/estruct_auto.png}
+	\includegraphics[width=0.9\textwidth]{images/estruct_auto.png}
 	\captionsetup{font=footnotesize}
-	\caption{Arquitectura del control del sistema para la autonomía}
+	\caption{Arquitectura de control del sistema para la autonomía de un robot móvil}
 	\label{fig:ArqSist}
 \end{figure}
  
@@ -469,7 +498,45 @@ termine de mapear todo el ambiente, una vez culminado el robot regresa hacia su 
 sistema de navegación se puede ver en la figura \ref{fig:ArqSist}.
 
 
+\subsection{Arquitectura del Sistema de Mapeo en Tres Dimensiones}
 
+\begin{figure}%[ht!]
+	\centering \footnotesize
+	\includegraphics[width=0.9\textwidth]{images/estructura_3d.png}
+	\captionsetup{font=footnotesize}
+	\caption{Arquitectura del sistema de mapeo en 3D con un robot móvil}
+	\label{fig:Sist3D}
+\end{figure}
 
+En esta parte del trabajo de tesis se muestra la estructura del sistema para realizar el
+mapa en tres dimensiones. La estructura se muestra en la figura \ref{fig:Sist3D}. Este 
+proceso comienza con las medidas que genera el sensor lidar, estas mediciones tienen
+que ser convertidas en posiciones dentro de las coordenadas cartesianas en dos dimensiones
+($X_{L}, Y_{L}$). La conversión a coordenadas polares permite conocer las posiciones de los 
+obstáculos dentro de un ambiente y asimismo conocer las dimensiones del entorno que se esta 
+explorando.
 
+Para obtener la nube de puntos, se necesita los ángulos de rotación del servomotor. El 
+servomotor hace rotar el sistema mecánico descrito y explicado en la sección 
+\ref{sec:SistP3D}. El sistema mecánico implementado tiene un movimiento de rotación y otro 
+de traslación. El sistema de referencia del sensor lidar debe interactuar con respecto al 
+sistema de referencia del servomotor. Por tal motivo se utiliza una matriz de transformación 
+homogénea, la cual esta compuesta por una matriz de rotación en el eje $Y_{S}$ del servomotor 
+y una matriz de traslación con un desplazamiento en el eje $Z_{S}$ del servomotor. El
+servomotor hace que el sensor lidar tenga un ángulo de abertura de 30\grad~ que permite
+hacer mediciones en el eje $Z$. El resultado de la multiplicación de las posiciones 
+($X_{L}, Y_{L}$) del sensor lidar con la matriz de transformación homogénea es
+una nube de puntos ($X_{M}, Y_{M}, Z_{M}$) del mapa del entorno.
 
+El robot explora el entorno y a su vez va realizando el mapa en tres dimensiones de las zonas
+exploradas. El mapa debe tener correlación con la trayectoria que realiza el movimiento del 
+robot, para esto se debe sumar los valores de la odometría del robot móvil. La odometría del 
+robot es la estimación de la posición y orientación del robot mientras este se encuentra 
+navegando dentro de un ambiente. La odometría esta compuesta por tres valores ($X_{R}, Y_{R}, 
+\theta_{R}$). Para que el mapa pueda tener las posiciones con mayor precisión se suma los 
+valores de ($X_{R}, Y_{R}$) del robot a la nube de puntos del mapa tridimensional. Otra
+consideración en la construcción del mapa es la rotación del robot móvil al momento de 
+realizar giros en su propio eje $Z_{R}$. Para este caso se utiliza el valor del ángulo 
+de rotación ($\theta_{R}$) en una matriz de rotación del eje $Z$. Finalmente la nueva nube 
+de puntos multiplicado con la matriz de rotación en el eje $Z_{R}$ del robot, genera el mapa 
+en tres dimensiones de la zona explorada.

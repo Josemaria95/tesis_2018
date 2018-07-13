@@ -556,12 +556,12 @@ de ruido gaussiano ($Q$):
 \label{eqn: Kalman Filter}
 \begin{matrix}
 \textrm{\textbf{Predicción}}\\
-\overline{\mu}_{t} &= &A_{t}\mu_{t-1} + B_{t} u_{t} &\textrm{a}\\
-\overline{\Sigma}_{t} &= &A_{t}\Sigma_{t-1} A_{t}^{T} + R_{t} &\textrm{b}\\
+\overline{\mu}_{t} &= &A_{t}\mu_{t-1} + B_{t} u_{t} &\textrm{(a)}\\
+\overline{\Sigma}_{t} &= &A_{t}\Sigma_{t-1} A_{t}^{T} + R_{t} &\textrm{(b)}\\
 \textrm{\textbf{Actualización}}\\
-K_{t} &= &\overline{\Sigma}_{t}C_{t}^{T}(C_{t}\overline{\Sigma}_{t}C_{t}^{T} + Q_{t})^{-1} &\textrm{c}\\
-\mu_{t} &= &\overline{\mu}_{t} + K_{t}(z_{t} - C_{t}\overline{\mu}_{t}) &\textrm{d}\\
-\Sigma_{t} &= &(I - K_{t}C_{t})\overline{\Sigma}_{t} &\textrm{e}\\
+K_{t} &= &\overline{\Sigma}_{t}C_{t}^{T}(C_{t}\overline{\Sigma}_{t}C_{t}^{T} + Q_{t})^{-1} &\textrm{(c)}\\
+\mu_{t} &= &\overline{\mu}_{t} + K_{t}(z_{t} - C_{t}\overline{\mu}_{t}) &\textrm{(d)}\\
+\Sigma_{t} &= &(I - K_{t}C_{t})\overline{\Sigma}_{t} &\textrm{(e)}\\
 \end{matrix}
 \end{equation*}
 
