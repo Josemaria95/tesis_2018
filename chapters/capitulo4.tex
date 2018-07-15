@@ -191,6 +191,7 @@ estática y empezar a realizar mediciones mientras el lidar giraba en 360\grad~ 
 servomotor rotaba en un ángulo de abertura de $\pm$ 15\grad~.
 
 \subsection{Mapa en tres dimensiones de una caja}
+\label{sec:MapaCaja}
 \begin{figure}
   \centering \footnotesize
   \includegraphics[width=0.70\textwidth]{images/dimensiones_caja.png}
@@ -222,8 +223,8 @@ datos son almacenados para ser procesadas posteriormente.
   \includegraphics[width=0.40\textwidth]{images/caja3D_8.png}
   \includegraphics[width=0.50\textwidth]{images/caja3D_9.png}
   \captionsetup{font=footnotesize}
-  \caption{Mapa en tres dimensiones de una caja. El crecimiento de la caja es de sentido 
-  horario.}
+  \caption{Mapa en tres dimensiones de una caja. El crecimiento del mapa tridimensional 
+  de la caja va en sentido horario.}
   \label{fig:Caja3D}
 \end{figure}
 
@@ -318,6 +319,25 @@ $\bar{u} = -0.26$ y una desviación estándar de $\sigma = 0.007$.
   \label{fig:pasadizoEsan}
 \end{figure}
 
+Se realizo la segunda prueba dentro de un pasadizo, como se muestra en la figura 
+\ref{fig:pasadizoEsan}. En esta figura se resalta la zona donde se realizó las pruebas 
+con unas líneas rojas.Para esta prueba se coloco el sistema mecánico en el medio del 
+rectángulo que forman las columnas del pasadizo, una vez colocado el sensor lidar con 
+el servomotor se empezó a realizar las mediciones dentro del entorno por 70 segundos. Los 
+datos del motor y del sensor fueron almacenados de forma remota en una computadora. 
+
+Los resultados obtenidos del mapa tridimensional se muestra en la figura \ref{fig:pasadizo3D}, 
+donde el crecimiento del mapa va en sentido horario. Las figuras muestran las paredes y las 
+columnas del pasadizo, debido a que el sensor lidar tiene un alcance máximo de 8 metros la 
+figura muestra otras zonas del pasadizo fuera de la sección mostrada en la figura 
+\ref{fig:pasadizoEsan}. La estructura del pasadizo tiene una simetría con respecto a las 
+paredes, ya que se puede ver que las columnas están posicionadas en el mismo lugar en 
+ambos lados. Esto también se puede apreciar en el mapa 3D del pasadizo. En la nube de puntos 
+obtenido en la prueba anterior, se notó una pequeña inclinación en las paredes de la caja 
+pero en el caso de esta nube de puntos se nota las paredes bastante rectas sin ninguna 
+inclinación. Esto es debido al rango mínimo permitido que tiene el sensor lidar (15 cm), 
+el sensor lidar al mapear un lugar con dimensiones más grandes obtiene un mejor resultado en 
+sus mediciones.
 \begin{figure}
   \centering \footnotesize
   \includegraphics[width=0.49\textwidth]{images/pasadizo_8.png}
@@ -329,9 +349,9 @@ $\bar{u} = -0.26$ y una desviación estándar de $\sigma = 0.007$.
   \includegraphics[width=0.49\textwidth]{images/pasadizo_2.png}
   \includegraphics[width=0.49\textwidth]{images/pasadizo_1.png}
   \captionsetup{font=footnotesize}
-  \caption{Mapa en tres dimensiones de una caja. El crecimiento de la caja es de 
-  sentido horario.}
-  \label{fig:Caja3D}
+  \caption{Mapa en tres dimensiones de un pasadizo. El crecimiento del mapa tridimensional 
+  pasadizo va en sentido horario.}
+  \label{fig:pasadizo3D}
 \end{figure}
 
 \section{Resultado del mapa 3D mientras el robot se mueve}
@@ -339,10 +359,15 @@ $\bar{u} = -0.26$ y una desviación estándar de $\sigma = 0.007$.
   \centering \footnotesize
   \includegraphics[width=0.80\textwidth]{images/prueba_cajas.JPG}
   \captionsetup{font=footnotesize}
-  \caption{Pasadizo de un centro de estudio}
-  \label{fig:pasadizoEsan}
+  \caption{Túnel construido por cajas de cartón, para probar el algoritmo
+  de mapeo tridimensional mientras el robot se mueve.}
+  \label{fig:tunel201}
 \end{figure}
-
+En esta sección se explica los resultados que se obtuvo al realizar el mapa en tres
+dimensiones mientras el robot Kobuki se desplaza sobre un entorno. Para esta prueba se utilizó 
+como prototipo de túnel dos cajas unidas, el cual se muestra en la figura \ref{fig:tunel201}. 
+El túnel prototipo tiene 194 cm de largo, la entrada del túnel tiene un ancho de 69 cm y en la 
+mitad de este tiene un ancho de 92 cm. 
 \begin{figure}
   \centering \footnotesize
   %\includegraphics[width=0.12\textwidth]{images/3DMOV_1.png}
@@ -355,7 +380,52 @@ $\bar{u} = -0.26$ y una desviación estándar de $\sigma = 0.007$.
   \includegraphics[width=0.45\textwidth]{images/3DMOV_8.png}
   \captionsetup{font=footnotesize}
   \caption{Mapa en tres dimensiones de una caja. El crecimiento de la caja es de sentido horario.}
-  \label{fig:Caja3D}
+  \label{fig:tunel2013D}
+\end{figure}
+El Kobuki, el sensor lidar y el servomotor fueron controlados desde una Raspberry Pi3. Todo 
+el sistema fue ejecutado por medio de una computadora y la información fue recibida en tiempo 
+real de forma remota. La prueba consistió en hacer que el robot se pueda desplazar en línea 
+recta hasta que encuentre un obstáculo que no le permita seguir moviéndose, una vez sucedido 
+esto el robot regresa a su posición inicial. Los resultados obtenidos se muestran en la figura
+\ref{fig:tunel2013D},como se aprecia el mapa tiene la forma del túnel con los anchos correspondientes 
+para cada caja. En la sección \ref{sec:MapaCaja} se describió y explicó el motivo por el cual dos 
+de las paredes del modelo tridimensional de la caja tiene la forma de dos triángulos pegados en 
+un vértice. En este mapa se puede ver que las paredes laterales tienen una suave forma ondeada 
+y es debido a lo explicado anteriormente, mientras el robot avanza se van formando triángulos 
+en las paredes y los puntos ciegos que tiene el sistema mecánico se van rellenando de puntos 
+mientras el robot se desplaza. La prueba duro 120 segundos donde el robot tuvo que desplazarse 
+a una velocidad de $0.01 m/s$ para tener una mejor resolución del mapa en tres dimensiones. La 
+velocidad del robot depende de la cantidad de mediciones que hace el sensor lidar mientras 
+realiza una vuelta y la velocidad a la que el servomotor hace que rote el sistema mecánico.
+
+\begin{figure}
+  \centering \footnotesize
+  \includegraphics[width=0.70\textwidth]{images/slam2d.png}
+  \captionsetup{font=footnotesize}
+  \caption{Mapa en dos dimensiones del túnel prototipo construido.}
+  \label{fig:SLAM201}
 \end{figure}
 
-\section{Resultado del movimiento aleatorio del robot con SLAM}
+El robot móvil mientras construye el mapa en tres dimensiones, tiene como información una nube 
+de puntos lo cual no es brinda la información suficiente para conocer los obstáculos o 
+dimensiones dentro de un entorno desconocido. Por tal motivo, el algoritmo implementado permite 
+que el robot móvil mientras va explorando y asu vez construyendo el mapa en tres dimensiones 
+pueda conocer las posiciones precisas de los obstáculos que se encuentran en el ambiente y así 
+poder generar su propia trayectoria.
+
+Para generar el mapa en dos dimensiones se hizó lo siguiente, cuando el servomotor llega al ángulo
+0\grad~ en ese instante de tiempo se envía los valores de las mediciones que hace el sensor lidar.El
+envió de los datos se hace a través de un tópico creado hacia el paquete de ROS \textit{gmapping}, 
+con el cual se puede construir un mapa en dos dimensiones bastante preciso. El procesamiento del 
+mapa en dos dimensiones es en una computadora que se conecta al controlador Raspberry Pi3 de forma 
+remota y recibe los datos del sensor lidar. En la figura \ref{fig:SLAM201} se muestra el mapa en 
+dos dimensiones del túnel prototipo. Este mapa preciso brinda la suficiente información al robot  
+móvil para que pueda conocer el entorno que esta explorando. Como se puede ver en la imagen, el 
+mapa indica al robot móvil que zonas le falta explorar, que zonas ha explorado y donde se 
+encuentran los obstáculos. Cuando el robot se encuentre en una situación como la imagen mostrada, 
+donde los obstáculos impiden que pueda seguir avanzando, en ese momento el robot simplemente regresa 
+por la trayectoria que genero llegando a la posición donde inicio.
+ 
+
+
+%\section{Resultado del movimiento aleatorio del robot con SLAM}
