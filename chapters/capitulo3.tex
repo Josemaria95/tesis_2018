@@ -83,8 +83,8 @@ las ruedas como $r$. Tambi\'en se debe considerar que el robot tiene dos ruedas
 convencionales fijas y el sistema de referencia del robot se encuentra entre 
 ambas ruedas, como se ve en la figura \ref{fig:RMkinematic}.
 
-Teniendo en consideración las restricciones de las ruedas convencionales se halla la cinemática 
-directa del robot móvil. La cinemática directa consiste en:
+Teniendo en consideración las restricciones de las ruedas convencionales se halla la 
+cinemática directa del robot móvil. La cinemática directa consiste en:
 \begin{align*}
 v &= \frac{r}{2}(\dot{\varphi_{r}} + \dot{\varphi_{l}}) \\
 \omega &= \frac{r}{2b}(\dot{\varphi_{r}} + \dot{\varphi_{l}})
@@ -199,10 +199,10 @@ de comunicación UART. Este protocolo se especifíca en la tabla \ref{tbl:comuni
 por medio de este se obtiene las distancias que mide el sensor. Para realizar el mapa en 
 dos dimensiones se tiene que tomar en consideración el sistema de referencia del sensor 
 lidar. En la figura \ref{fig:FrameLidar} se puede ver que el cable de alimentación y comunicación 
-indica la dirección del eje $X$ y al lado derecho esta el eje $Y$. Teniendo en consideración el sistema 
-de referencia del sensor se puede obtener las distancias del entorno donde se esta midiendo y a partir
-de una conversión de coordenadas polares a coordenadas cartesianas se puede estimar las posiciones 
-de los objetos dentro del ambiente de trabajo.
+indica la dirección del eje $X$ y al lado derecho esta el eje $Y$. Teniendo en consideración 
+el sistema de referencia del sensor se puede obtener las distancias del entorno donde se esta 
+midiendo y a partir de una conversión de coordenadas polares a coordenadas cartesianas se puede 
+estimar las posiciones de los objetos dentro del ambiente de trabajo.
 
 \begin{table}[htbp]
 \begin{center}
@@ -226,8 +226,10 @@ de los objetos dentro del ambiente de trabajo.
 \label{sec:SistP3D}
 \begin{figure}[ht!]
      \begin{center}
-        \subfigure[Sistema mecánico]{\label{fig:etiquetaB}\includegraphics[width=.45\textwidth]{images/lidar_3d.png}}
-        \subfigure[Sistema mecánico sobre el Kobuki]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/lidar_wKbki.png}}
+        \subfigure[Sistema mecánico]{\label{fig:etiquetaB}\includegraphics
+        [width=.45\textwidth]{images/lidar_3d.png}}
+        \subfigure[Sistema mecánico sobre el Kobuki]{\label{fig:etiquetaC}\includegraphics
+        [width=.45\textwidth]{images/lidar_wKbki.png}}
     \end{center}
   \captionsetup{font=footnotesize}
     \caption{\label{f:lidar3D}Sistema mec\'anico para el mapeo en tres dimensiones.}
