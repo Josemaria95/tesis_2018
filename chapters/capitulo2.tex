@@ -56,19 +56,27 @@ desplazarse por todo el socavón sin la necesidad de utilizar un GPS \cite{Solut
 
 
 \section{Control de Robots M\'oviles}
-\begin{figure}%[ht!]
-  \centering \footnotesize
+\begin{figure}[ht!]
+     \begin{center}
+        \subfigure[Robot móvil omnidireccional]{\label{fig:etiquetaB}\includegraphics[width=.40\textwidth]{images/omnidirecional.jpg}}
+        \subfigure[Robot móvil diferencial]{\label{fig:etiquetaC}\includegraphics[width=.50\textwidth]{images/RM_noHolonomic.jpg}}
+    \end{center}
+  \captionsetup{font=footnotesize}
+    \caption{\label{f:sLocomocion}Sistemas holonómicos}
+\end{figure}
+%\begin{figure}%[ht!]
+%  \centering \footnotesize
   %\subfloat[Attractive Force]{\includegraphics[width=0.16\textwidth]{images/lidar_3D.jpeg}}
   %~\subfloat[Repulsive Force]{\includegraphics[width=0.16\textwidth]{images/kbki_lidar3D.jpeg}} 
-  \includegraphics[width=0.35\textwidth]{images/omnidirecional.jpg}~~~~~~~~~~~~~~
-  \includegraphics[width=0.40\textwidth]{images/RM_noHolonomic.jpg}
-  \\ a. Robot móvil omnidireccional $\qquad\qquad\qquad$  b. Robot móvil diferencial
+%  \includegraphics[width=0.35\textwidth]{images/omnidirecional.jpg}~~~~~~~~~~~~~~
+%  \includegraphics[width=0.40\textwidth]{images/RM_noHolonomic.jpg}
+%  \\ a. Robot móvil omnidireccional $\qquad\qquad\qquad$  b. Robot móvil diferencial
   %\subfloat[Navigation Force]{\includegraphics[width=0.16\textwidth]{images/nav_force.png}}
   % \subfloat[Attractive Force]{\includegraphics[width = 150mm]{attr_force.png}}
-  \captionsetup{font=footnotesize}
-  \caption{Sistemas holonómicos} 
-  \label{f:sLocomocion}
-\end{figure}
+%  \captionsetup{font=footnotesize}
+%  \caption{Sistemas holonómicos} 
+%  \label{f:sLocomocion}
+%\end{figure}
 La generaci\'on de movimiento del robot m\'ovil necesita de un control cinem\'atico 
 adecuado. El objetivo de un controlador cinem\'atico es seguir una trayectoria descrita 
 por su posici\'on o perfil de velocidad como una funci\'on del tiempo. Esto se hace 

@@ -224,17 +224,25 @@ de los objetos dentro del ambiente de trabajo.
 
 \subsection{Sistema de Percepci\'on en 3D}
 \label{sec:SistP3D}
-\begin{figure}%[ht!]
-  	\centering \footnotesize
+\begin{figure}[ht!]
+     \begin{center}
+        \subfigure[Sistema mecánico]{\label{fig:etiquetaB}\includegraphics[width=.45\textwidth]{images/lidar_3d.png}}
+        \subfigure[Sistema mecánico sobre el Kobuki]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/lidar_wKbki.png}}
+    \end{center}
+  \captionsetup{font=footnotesize}
+    \caption{\label{f:lidar3D}Sistema mec\'anico para el mapeo en tres dimensiones.}
+\end{figure}
+%\begin{figure}%[ht!]
+%  	\centering \footnotesize
   %\includegraphics[width=0.40\textwidth]{images/lidar_3D.jpeg}
   %\includegraphics[width=0.35\textwidth]{images/kbki_lidar3D.jpeg}
-  	\includegraphics[width=0.40\textwidth]{images/lidar_3d.png}
-  	\includegraphics[width=0.40\textwidth]{images/lidar_wKbki.png}
-  	\\ $\qquad\qquad$ a. Sistema mecánico  $\qquad\qquad\qquad$  b. Sistema mecánico sobre el Kobuki
-  	\captionsetup{font=footnotesize}
-  	\caption{Sistema mec\'anico para el mapeo en tres dimensiones.}
-  	\label{f:lidar3D}
-\end{figure}
+%  	\includegraphics[width=0.40\textwidth]{images/lidar_3d.png}
+%  	\includegraphics[width=0.40\textwidth]{images/lidar_wKbki.png}
+%  	\\ $\qquad\qquad$ a. Sistema mecánico  $\qquad\qquad\qquad$  b. Sistema mecánico sobre el Kobuki
+%  	\captionsetup{font=footnotesize}
+%  	\caption{Sistema mec\'anico para el mapeo en tres dimensiones.}
+%  	\label{f:lidar3D}
+%\end{figure}
 
 El sensor lidar permite construir mapas en dos dimensiones ya que este va midiendo 
 distancias mientras va rotando en 360\grad ~, pero para el alcance de este proyecto de 
@@ -246,15 +254,24 @@ y a su vez este esta unido a un servomotor por medio de un eje. El servomotor es
 que se mueva en un rango de $\pm$ 15\grad~ para que el sensor pueda tomar medidas 
 en el eje $Z$. 
 
-\begin{figure}%[ht!]
-	\centering \footnotesize
-	\includegraphics[width=0.40\textwidth]{images/lidar_ref.png}~~~~~~~~~~~~
-	\includegraphics[width=0.40\textwidth]{images/lidar_giro.png}
-	\\ a. Sistemas de referencia ~~$\qquad\qquad\qquad$~~ b. Rotación y traslación 
-	\captionsetup{font=footnotesize}
-  	\caption{Representación de la rotación y traslación del sistema mecánico}
-  	\label{f:Rot3D}
+\begin{figure}[ht!]
+     \begin{center}
+        \subfigure[Sistemas de referencia]{\label{fig:etiquetaB}\includegraphics[width=.47\textwidth]{images/lidar_ref.png}}
+        \subfigure[Rotación y traslación]{\label{fig:etiquetaC}\includegraphics[width=.50\textwidth]{images/lidar_giro.png}}
+    \end{center}
+  \captionsetup{font=footnotesize}
+    \caption{\label{f:Rot3D}Representación de la rotación y traslación del sistema mecánico}
 \end{figure}
+
+%\begin{figure}%[ht!]
+%	\centering \footnotesize
+%	\includegraphics[width=0.40\textwidth]{images/lidar_ref.png}~~~~~~~~~~~~
+%	\includegraphics[width=0.40\textwidth]{images/lidar_giro.png}
+%	\\ a. Sistemas de referencia ~~$\qquad\qquad\qquad$~~ b. Rotación y traslación 
+%	\captionsetup{font=footnotesize}
+%  	\caption{Representación de la rotación y traslación del sistema mecánico}
+%  	\label{f:Rot3D}
+%\end{figure}
 
 El sistema mecánico esta compuesto por dos sistemas de referencia, el primero es el sistema 
 del servomotor y el segundo el sistema del sensor lidar (figura \ref{f:Rot3D} a). Este sistema
@@ -316,22 +333,32 @@ y también en dos dimensiones, el cual permitirá que el robot pueda localizarse
 
 \section{Generaci\'on de Trayectoria basado en Campos Potenciales}
 \label{sec:autonomia}
-\begin{figure}%[ht!]
-  	\centering \footnotesize
+
+\begin{figure}[ht!]
+     \begin{center}
+        \subfigure[Fuerzas de atracción]{\label{fig:etiquetaB}\includegraphics[width=.49\textwidth]{images/attr_force.png}}
+        \subfigure[Fuerzas de repulsión]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/rep_force.png}}
+        \subfigure[Fuerzas de navegación]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/nav_force.png}}
+    \end{center}
+  \captionsetup{font=footnotesize}
+    \caption{\label{f:APF}Pruebas para el algoritmo de campo potencial artificial.}
+\end{figure}
+%\begin{figure}%[ht!]
+%  	\centering \footnotesize
   %\subfloat[Attractive Force]{\includegraphics[width=0.16\textwidth]{images/lidar_3D.jpeg}}
   %~\subfloat[Repulsive Force]{\includegraphics[width=0.16\textwidth]{images/kbki_lidar3D.jpeg}} 
-  	\includegraphics[width=0.40\textwidth]{images/attr_force.png}
-  	\includegraphics[width=0.40\textwidth]{images/rep_force.png}
-  	\\ $\qquad$ a. Fuerzas de atracción  $\qquad\qquad\qquad$  b. Fuerzas de repulsión
-  	\includegraphics[width=0.45\textwidth]{images/nav_force.png}
-  	\\ $\qquad$ c. Fuerzas de navegación
+%  	\includegraphics[width=0.40\textwidth]{images/attr_force.png}
+%  	\includegraphics[width=0.40\textwidth]{images/rep_force.png}
+%  	\\ $\qquad$ a. Fuerzas de atracción  $\qquad\qquad\qquad$  b. Fuerzas de repulsión
+%  	\includegraphics[width=0.45\textwidth]{images/nav_force.png}
+%  	\\ $\qquad$ c. Fuerzas de navegación
   %\subfloat[Navigation Force]{\includegraphics[width=0.16\textwidth]{images/nav_force.png}}
   % \subfloat[Attractive Force]{\includegraphics[width = 150mm]{attr_force.png}}
-  	\captionsetup{font=footnotesize}
-  	\caption{Pruebas para el algoritmo de campo potencial artificial.}
+%  	\captionsetup{font=footnotesize}
+%  	\caption{Pruebas para el algoritmo de campo potencial artificial.}
   %\label{f:lidar3D}
-  	\label{f:APF}
-\end{figure}
+%  	\label{f:APF}
+%\end{figure}
 Para hacer que el robot se mueva a su objetivo final sin toparse con obstáculos, se 
 toma el siguiente enfoque. Primero, un objetivo final deseado $q_{g} =(x_{g}, y_{g}, 
 \theta_{g})$ que describe la posición y la orientación se específica en términos del 
