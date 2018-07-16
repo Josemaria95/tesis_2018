@@ -542,7 +542,7 @@ poder generar su propia trayectoria.
 
 Para generar el mapa en dos dimensiones se hizó lo siguiente, cuando el servomotor llega al ángulo
 0\grad~ en ese instante de tiempo se envía los valores de las mediciones que hace el sensor lidar.El
-envió de los datos se hace a través de un tópico creado hacia el paquete de ROS \textit{gmapping}, 
+envió de los datos se hace a través de un tópico creado hacia el paquete de ROS,\textit{gmapping}, 
 con el cual se puede construir un mapa en dos dimensiones bastante preciso. El procesamiento del 
 mapa en dos dimensiones es en una computadora que se conecta al controlador Raspberry Pi3 de forma 
 remota y recibe los datos del sensor lidar. En la figura \ref{fig:SLAM201} se muestra el mapa en 
@@ -557,27 +557,52 @@ por la trayectoria que genero llegando a la posición donde inicio.
 
 \section{Resultado del movimiento aleatorio del robot con SLAM}
 
+En esta sección se explicará sobre la exploración del robot móvil dentro de un ambiente 
+desconocido. En la figura \ref{fig:random_Gazebo} se muestra las características del ambiente 
+donde el robot va a navegar. La prueba fue realizada en Gazebo, un simulador de ROS. El mapa 
+tiene dimensiones desconocidas para el robot, por ende el robot va a tener que desplazarse 
+según la información recibida por el sensor lidar y según el mapa del SLAM.
+
 \begin{figure}
   \centering \footnotesize
   \includegraphics[width=0.70\textwidth]{images/mapa_gazebo.png}
   \captionsetup{font=footnotesize}
-  \caption{Mapa en dos dimensiones del túnel prototipo construido.}
-  \label{fig:SLAM201}
+  \caption{Ambiente construido en el simulador Gazebo, para probar la navegación aleatoria del robot móvil.}
+  \label{fig:random_Gazebo}
 \end{figure}
-
-\begin{figure}
-  \centering \footnotesize
-  \includegraphics[width=0.70\textwidth]{images/random_2D.png}
+Para la exploración del robot móvil, se implementó una navegación aleatoria. Esta navegación 
+consiste en dar valores aleatorios, cada cierto tiempo, a la posición final del robot móvil. Para 
+navegación se utiliza el algoritmo de campos potenciales, este algoritmo necesita como entrada 
+un vector que contenga la posición deseada dentro del plano cartesiano ($X_{d}, Y_{d}$), y así 
+pueda generar una trayectoria para que el robot se desplacé hacia la posición deseada. Para 
+lograr esta randomización de posiciones se necesita de los valores que brinda el algoritmo 
+SLAM, como se mencionó anteriormente el mapa originado por \textit{gmapping} tiene tres colores 
+donde cada color tiene un significado de desconocido, espacio recorrido y obstáculos. Con 
+esta información el robot puede saber donde se encuentra con precisión los obstáculos, que 
+zonas ha recorrido y que lugares aún le falta recorrer. En la figura \ref{fig:random_2D} se 
+muestra el mapa descrito, el cual tiene las características del mapa construido , para la 
+prueba, en el simulador Gazebo (figura \ref{fig:random_Gazebo}). En esta figura se puede ver 
+unas líneas verdes que representa a las mediciones que hace el sensor lidar sobre las paredes 
+del entorno, las líneas negras representan a las paredes del ambiente, la zona de color plomo 
+claro es el ambiente recorrido por el robot y el sensor lidar. La zona de color verde es un 
+ambiente desconocido para el robot móvil. 
+\begin{figure}[ht!]
+     \begin{center}
+        \subfigure[Mapa en dos dimensiones obtenido con el algoritmo SLAM.]{\label{fig:random_2D}\includegraphics[width=.77\textwidth]{images/random_2D.png}}
+        \subfigure[Trayectoria descrita por el robot móvil.]{\label{fig:random_trajectory}\includegraphics[width=.99\textwidth]{images/random_tajectory.png}}
+    \end{center}
   \captionsetup{font=footnotesize}
-  \caption{Mapa en dos dimensiones del túnel prototipo construido.}
-  \label{fig:SLAM201}
-\end{figure}
+    \caption{\label{fig:Gazebo_explora}Resultados de la exploración del ambiente implementadas en el simulador Gazebo.}
+\end{figure} 
 
-\begin{figure}
-  \centering \footnotesize
-  \includegraphics[width=0.90\textwidth]{images/random_tajectory.png}
-  \captionsetup{font=footnotesize}
-  \caption{Mapa en dos dimensiones del túnel prototipo construido.}
-  \label{fig:SLAM201}
-\end{figure}
+La figura \ref{fig:random_trajectory} muestra la navegación aleatoria realizada por el 
+robot móvil dentro del ambiente. La línea azul representa la trayectoria que recorre el robot 
+móvil dentro del ambiente. Los puntos de color verde son las paredes del mapa. Cuando el robot 
+ingresa al ambiente recibe los datos del SLAM, en ese instante de tiempo, el algoritmo genera 
+un valor aleatorio como posición deseada y el algoritmo de campo potencial se encarga de 
+generar la trayectoria según las distancias del robot hacia la posición deseada y según la 
+distancia entre el robot con los obstáculos.
+
+
+
 

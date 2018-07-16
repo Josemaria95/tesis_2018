@@ -258,7 +258,7 @@ donde la dependencia de $D$ en $q$ ha sido omitida para mayor claridad. Los
 escalares utilizados para este campo generalmente se determinan por ensayo 
 y error \cite{choset2005principles}.
 
-\subsection{Movimiento Basados En Mapas Topol\'ogicos (\textit{Roadmap})}
+\subsection{Movimiento Basados En Mapas Topol\'ogicos} %(\textit{Roadmap})}
 
 Los robots usan \textit{roadmaps} de la misma manera que las personas usan 
 las carreteras, lo que le permite ir del inicio hasta la meta. El robot 
@@ -291,7 +291,7 @@ sensor que le permitir\'a construir un mapa de ruta.
 %la forma del espacio libre es dif\'icil, sin embargo, es mucho m\'as sencillo 
 %probar si una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
 
-\subsubsection{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph})}
+\subsubsection{Mapa de Visibilidad Gr\'afica} %(\textit{Visibility Graph})}
 %\paragraph{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph})}
 
 El planeamiento del camino del robot en situaciones pr\'acticas, es preferible 
@@ -375,7 +375,7 @@ explicar\'a los m\'etodos \textit{Probabilistic Roadmap} y \textit{Rapidly
 Exploring Random Trees}.
 
 %\subsubsection{Mapa de Ruta Probabil\'istico (\textit{Probabilistic Roadmap})}
-\paragraph{Mapa de Ruta Probabil\'istico (\textit{Probabilistic Roadmap})}
+\paragraph{Mapa de Ruta Probabil\'istico} %(\textit{Probabilistic Roadmap})}
 
 La planificaci\'on del mapa de ruta probabil\'istico (PRM) es una de las 
 alternativas para la planificaci\'on de las rutas frente a los  
@@ -425,7 +425,7 @@ todas las posiciones que se cruzan con $C_{obst}$.
 %libres de obst\'aculos.
 
 %\subsubsection{\'Arbol Aleatorio de Exploraci\'on R\'apida (\textit{Rapidly Exploring Random Trees})}
-\paragraph{\'Arbol Aleatorio de Exploraci\'on R\'apida (\textit{Rapidly Exploring Random Trees})}
+\paragraph{\'Arbol Aleatorio de Exploraci\'on R\'apida} %(\textit{Rapidly Exploring Random Trees})}
 
 Un \'arbol aleatorio de exploraci\'on r\'apida (RRT) es un algoritmo que esta dise\~nado para 
 buscar de manera eficiente espacios no convexos de gran dimensi\'on \cite{bry2011rapidly}. Los 
@@ -443,7 +443,7 @@ grandes de Voronoi pertenecen a los estados en la frontera de la b\'usqueda, est
 \'arbol se expande preferentemente hacia grandes \'areas no buscadas. 
 
 %\subsubsection{Movimiento basado en Mapa de Red (\textit{GridMap})}
-\paragraph{Movimiento basado en Mapa de Red (\textit{GridMap})}
+\paragraph{Movimiento basado en Mapa de Red} %(\textit{GridMap})}
 
 La navegaci\'on basada en mapas de red es bastante natural para las personas porque usar un mapa es 
 la forma m\'as conveniente de describir un entorno. Sin embargo, el uso de los mapas requiere de 
@@ -625,28 +625,29 @@ IF y el KF.
 
 \section{Mapeo y Localizaci\'on Simult\'anea (\textit{SLAM})}
 Un problema mucho m\'as dif\'icil de la localizaci\'on es cuando no conoces el mapa del ambiente. En 
-este caso, la informaci\'on del sensor del robot se utiliza para recuperar la trayectoria del robot 
-y construir un mapa del entorno. Este problema se llama mapeo y localizaci\'on simult\'anea 
+este caso, la informaci\'on del sensor del robot se utiliza para recuperar la trayectoria del 
+robot y construir un mapa del entorno. Este problema se llama mapeo y localizaci\'on simult\'anea 
 (\textit{SLAM}) \cite{Thrun2005}. Una soluci\'on a este problema har\'ia que un robot sea totalmente 
 aut\'onomo. \textit{SLAM} es un problema dif\'icil porque tanto el camino estimado como el mapa 
-construido son afectados por el ruido. Ambos se vuelven cada vez m\'as inexactos durante el viaje. Sin 
-embargo, cuando se revisa un lugar que ha sido mapeado, se puede reducir la incertidumbre. Este proceso 
-se denomina cierre de bucle. Adem\'as, se puede optimizar el mapa despu\'es de que se detecta un evento 
-de cierre de bucle. En esta secci\'on se explicar\'a los m\'etodos de \textit{SLAM} m\'as utilizados 
-actualmente.
+construido son afectados por el ruido. Ambos se vuelven cada vez m\'as inexactos durante el 
+viaje. Sin embargo, cuando se revisa un lugar que ha sido mapeado, se puede reducir la 
+incertidumbre. Este proceso se denomina cierre de bucle. Adem\'as, se puede optimizar el mapa 
+despu\'es de que se detecta un evento de cierre de bucle. En esta secci\'on se explicar\'a los 
+m\'etodos de \textit{SLAM} m\'as utilizados actualmente.
 
 \subsection{EKF SLAM}
-El \textit{SLAM} basado en el filtro extendido de kalman es el algoritmo m\'as antiguo y el m\'as influyente. El
-algoritmo \textit{EKF-SLAM} aplica el \textit{EKF} al \textit{SLAM} usando la asociaci\'on de datos de m\'axima 
-verosimilitud. Al hacerlo, \textit{EKF-SLAM} est\'a sujeto a una serie de aproximaciones y suposiciones
-limitantes:
+El \textit{SLAM} basado en el filtro extendido de kalman es el algoritmo m\'as antiguo y el m\'as 
+influyente. El algoritmo \textit{EKF-SLAM} aplica el \textit{EKF} al \textit{SLAM} usando la 
+asociaci\'on de datos de m\'axima verosimilitud. Al hacerlo, \textit{EKF-SLAM} est\'a sujeto 
+a una serie de aproximaciones y suposiciones limitantes:
 \begin{itemize}
-	\item[•] \textit{\textbf{Mapas basados en funciones:}} Los mapas, en el \textit{EKF}, se componen de puntos
-	de referencia. Por razones de computaci\'on, el n\'umero de puntos de referencia es generalmente
-	peque\~no (por ejemplo, m\'as peque\~no que 1000). Adem\'as, el enfoque de \textit{EKF} tiende a
-	funcionar bien cuanto menos ambiguos son los hitos. Por esta raz\'on, \textit{EKF-SLAM} requiere una
-	ingenier\'ia significativa de los detectores de funciones, a veces utilizando balizas
-	artificiales o puntos de referencia como caracter\'isticas.
+	\item[•] \textit{\textbf{Mapas basados en funciones:}} Los mapas, en el \textit{EKF}, se 
+  componen de puntos de referencia. Por razones de computaci\'on, el n\'umero de puntos de 
+  referencia es generalmente peque\~no (por ejemplo, m\'as peque\~no que 1000). Adem\'as, el 
+  enfoque de \textit{EKF} tiende a funcionar bien cuanto menos ambiguos son los hitos. Por 
+  esta raz\'on, \textit{EKF-SLAM} requiere una ingenier\'ia significativa de los detectores 
+  de funciones, a veces utilizando balizas artificiales o puntos de referencia como 
+  caracter\'isticas.
 	\item[•] \textit{\textbf{Ruido Gaussiano:}} Como cualquier algoritmo \textit{EKF}, \textit{EKF-SLAM} 
 	hace una suposici\'on de ruido Gaussiano para el movimiento del robot y la percepci\'on. La
 	cantidad de incertidumbre en la parte de la predicci\'on debe ser relativamente
@@ -660,31 +661,32 @@ limitantes:
 \end{itemize}
 
 \subsection{FastSLAM}
-FastSLAM descompone el problema SLAM en un problema de localizaci\'on de robot, y una colecci\'on 
-de problemas de estimaci\'on de puntos de referencia (\textit{landmarks}) que est\'an condicionados 
-a la estimaci\'on de la posici\'on del robot. Como se se\~nala en \cite{murphy2000bayesian}, esta 
-representaci\'on factorizada es exacta, debido a las independencias condicionales naturales en el 
-problema SLAM. FastSLAM usa un filtro de part\'iculas modificado para estimar el camino predecido 
-sobre el robot. Cada part\'icula posee filtros de Kalman que estiman las ubicaciones de los puntos 
-de referencia condicionadas en la estimaci\'on de la ruta \cite{montemerlo2007fastslam}. La 
-implementaci\'on de este algoritmo requiere tiempo.
+FastSLAM descompone el problema SLAM en un problema de localizaci\'on de robot, y una 
+colecci\'on de problemas de estimaci\'on de puntos de referencia (\textit{landmarks}) que 
+est\'an condicionados a la estimaci\'on de la posici\'on del robot. Como se se\~nala en 
+\cite{murphy2000bayesian}, esta representaci\'on factorizada es exacta, debido a las 
+independencias condicionales naturales en el problema SLAM. FastSLAM usa un filtro de 
+part\'iculas modificado para estimar el camino predecido sobre el robot. Cada part\'icula 
+posee filtros de Kalman que estiman las ubicaciones de los puntos de referencia condicionadas 
+en la estimaci\'on de la ruta \cite{montemerlo2007fastslam}. La implementaci\'on de este 
+algoritmo requiere tiempo.
 
 \subsection{GraphSLAM}
-SLAM basado en gr\'aficos construye un problema de estimaci\'on simplificado al extraer las mediciones 
-del sensor sin ser procesadas. Estas medidas se reemplazan por los bordes en el gr\'afico que luego 
-se pueden ver como "medidas virtuales". M\'as detalladamente, un borde entre dos nodos se etiqueta 
-con una distribuci\'on de probabilidad sobre las ubicaciones relativas de las dos posturas, 
-condicionadas a sus mediciones mutuas. En general, el modelo de observaci\'on $p(z_{t}| x_{t},  
-m_{t})$ es multimodal y, por lo tanto, el supuesto gaussiano no se cumple. Esto significa que una 
-\'unica observaci\'on $z_{t}$ puede dar como resultado m\'ultiples aristas potenciales que 
-conectan diferentes posiciones en el gr\'afico y la conectividad del gr\'afico necesita ser descrita 
-como una distribuci\'on de probabilidad. 
-Dirigirse directamente a esta multimodalidad en el proceso de estimaci\'on llevar\'ia a una explosi\'on 
-combinatoria de la complejidad. Como resultado de eso, la mayor\'ia de los enfoques pr\'acticos restringen 
-la estimaci\'on a la topolog\'ia m\'as probable. Por lo tanto, se necesita determinar la restricci\'on 
-m\'as probable resultante de una observaci\'on. Esta decisi\'on depende de la distribuci\'on de 
-probabilidad sobre las posiciones del robot. El resumen descrito esta basado en el paper 
-\cite{grisetti2010tutorial}.
+SLAM basado en gr\'aficos construye un problema de estimaci\'on simplificado al extraer 
+las mediciones del sensor sin ser procesadas. Estas medidas se reemplazan por los bordes en 
+el gr\'afico que luego se pueden ver como "medidas virtuales". M\'as detalladamente, un borde 
+entre dos nodos se etiqueta con una distribuci\'on de probabilidad sobre las ubicaciones 
+relativas de las dos posturas, condicionadas a sus mediciones mutuas. En general, el modelo 
+de observaci\'on $p(z_{t}| x_{t}, m_{t})$ es multimodal y, por lo tanto, el supuesto gaussiano 
+no se cumple. Esto significa que una \'unica observaci\'on $z_{t}$ puede dar como resultado 
+m\'ultiples aristas potenciales que conectan diferentes posiciones en el gr\'afico y la 
+conectividad del gr\'afico necesita ser descrita como una distribuci\'on de probabilidad. Dirigirse 
+directamente a esta multimodalidad en el proceso de estimaci\'on llevar\'ia a una explosi\'on 
+combinatoria de la complejidad. Como resultado de eso, la mayor\'ia de los enfoques pr\'acticos 
+restringen la estimaci\'on a la topolog\'ia m\'as probable. Por lo tanto, se necesita 
+determinar la restricci\'on m\'as probable resultante de una observaci\'on. Esta decisi\'on 
+depende de la distribuci\'on de probabilidad sobre las posiciones del robot. El resumen 
+descrito esta basado en el paper \cite{grisetti2010tutorial}.
 
 %\section{Robótica Probabilística}
 
