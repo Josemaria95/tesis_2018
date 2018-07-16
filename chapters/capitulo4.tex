@@ -542,7 +542,7 @@ poder generar su propia trayectoria.
 
 Para generar el mapa en dos dimensiones se hizó lo siguiente, cuando el servomotor llega al ángulo
 0\grad~ en ese instante de tiempo se envía los valores de las mediciones que hace el sensor lidar.El
-envió de los datos se hace a través de un tópico creado hacia el paquete de ROS,\textit{gmapping}, 
+envió de los datos se hace a través de un tópico creado hacia el paquete de ROS, \textit{gmapping}, 
 con el cual se puede construir un mapa en dos dimensiones bastante preciso. El procesamiento del 
 mapa en dos dimensiones es en una computadora que se conecta al controlador Raspberry Pi3 de forma 
 remota y recibe los datos del sensor lidar. En la figura \ref{fig:SLAM201} se muestra el mapa en 
@@ -553,7 +553,6 @@ encuentran los obstáculos. Cuando el robot se encuentre en una situación como 
 donde los obstáculos impiden que pueda seguir avanzando, en ese momento el robot simplemente regresa 
 por la trayectoria que genero llegando a la posición donde inicio.
  
-
 
 \section{Resultado del movimiento aleatorio del robot con SLAM}
 
@@ -595,14 +594,16 @@ ambiente desconocido para el robot móvil.
     \caption{\label{fig:Gazebo_explora}Resultados de la exploración del ambiente implementadas en el simulador Gazebo.}
 \end{figure} 
 
-La figura \ref{fig:random_trajectory} muestra la navegación aleatoria realizada por el 
-robot móvil dentro del ambiente. La línea azul representa la trayectoria que recorre el robot 
-móvil dentro del ambiente. Los puntos de color verde son las paredes del mapa. Cuando el robot 
-ingresa al ambiente recibe los datos del SLAM, en ese instante de tiempo, el algoritmo genera 
-un valor aleatorio como posición deseada y el algoritmo de campo potencial se encarga de 
-generar la trayectoria según las distancias del robot hacia la posición deseada y según la 
-distancia entre el robot con los obstáculos.
-
-
-
-
+La figura \ref{fig:random_trajectory} muestra la navegación aleatoria dentro del ambiente por el 
+robot móvil. Las líneas azules representan a la trayectoria recorrida por el robot 
+móvil dentro del entorno. Los puntos de color verde son las paredes del mapa, considerados
+como obstáculos. Cuando el robot ingresa al ambiente, el algoritmo de campos potenciales recibe 
+las posiciones de los obstáculos brindadas por el mapa del SLAM. En ese instante de tiempo, el 
+mapa creado por el \textit{gmapping} muestra los obstáculos, el lugar recorrido y la zona 
+no navegada por medio de valores. Con estos datos se genera una aleatoriedad en la posición final
+que necesita el robot móvil para generar su propia trayectoria. Las posiciones finales van a depender
+de la distancia que se encuentre el robot móvil con respecto a los obstacúlos del entorno. En la 
+figura se puede ver una trayectoria desuniforme debido a las posiciones aleatorias. Estos valores
+aleatorios tienen un incremento controlado para hacer que el robot tenga un avance continuo. Una
+vez que el robot tenga todo el ambiente mapeado y no encuentre un lugar por donde navegar debido
+a los obstáculos, el robot regresa a su posición inicial.
