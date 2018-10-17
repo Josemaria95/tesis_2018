@@ -238,7 +238,7 @@
     \begin{center}
       \setlength{\parskip}{0pt}
       \vspace{-0.5cm}
-      {\large \textbf{UNIVERSIDAD DE INGENIERÍA Y TECNOLOGÍA-UTEC}\par}
+      {\large \textbf{UNIVERSIDAD DE INGENIERÍA Y TECNOLOGÍA - UTEC}\par}
       \vspace{0.5cm}
       {\Large \textbf{Carrera de \deptname }\par}
       \vfill
