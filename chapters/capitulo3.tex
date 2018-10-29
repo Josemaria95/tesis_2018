@@ -1,22 +1,43 @@
 \chapter{Metodolog\'ia}
 
-En el cap\'itulo anterior se explic\'o sobre las metodolog\'ias recientes que se 
-utilizan para que un robot pueda ser aut\'onomo y genere un mapa 
-del entorno donde se encuentre. En este trabajo de tesis se propone 
-el movimiento aut\'onomo basado en campos potenciales y en leyes de control 
-polar para el movimiento de un robot m\'ovil, de modo que sea capaz de alcanzar 
-un objetivo que vuelva a planificar continuamente su camino sin colisiones. El 
-algoritmo desarrollado puede ser implementado desde una computadora en tiempo 
-real (\textit{online}) o tambi\'en puede ser implementado por medio de un 
-microcontrolador (\textit{onboard}). En este cap\'itulo se explicar\'a, con detalles, 
-los m\'etodos que fueron implementados en este trabajo.
+El capítulo anterior hace referencia a las metodologías recientes que son
+utilizados para la autonomía de un robot móvil y para la generación de
+un mapa bidimensional, dentro de un ambiente aún por conocer. En el presente
+trabajo de tesis se ha desarrollado un sistema de movimiento 
+autónomo, del robot móvil, basado en campos potenciales, leyes de control 
+polar y posiciones aleatorias dentro de un espacio de configuración. Este sistema
+permite lograr que el robot pueda explorar un ambiente desconocido de manera
+autónoma. Asimismo, también se ha desarrollado un sistema mecánico accionado 
+por un motor paso a paso, el cual permite que el robot mientras se va desplazando
+dentro de un entorno este pueda tomar mediciones en los tres ejes del plano
+cartesiano y así obtener una representación gráfica del lugar en tres 
+dimensiones. Estos sitemas pueden ser implementados desde una computadora en 
+tiempo real (\textit{online}) o también puede ser implementado por medio de 
+un microcontroladore (\textit{onboard}). En este capítulo se explicará, con 
+detalles, los métodos que fueron implementados para realizar el presente trabajo.
 
-\section{Prototipo a Utilizar}
-En esta secci\'on se explicar\'a cada uno de los componentes que tuvo que 
-ser utilizados para realizar la autonom\'ia y el mapeo de este trabajo de 
-tesis. Para realizar la autonom\'ia se utiliz\'o un robot m\'ovil diferencial 
-terrestre, y as\'i tambi\'en para mapear el entorno por donde el robot se 
-desplaza se utiliz\'o un sensor Lidar.
+%En el cap\'itulo anterior se explic\'o sobre las metodolog\'ias recientes que se 
+%utilizan para que un robot pueda ser aut\'onomo y genere un mapa 
+%del entorno donde se encuentre. En este trabajo de tesis se propone 
+%el movimiento aut\'onomo basado en campos potenciales y en leyes de control 
+%polar para el movimiento de un robot m\'ovil, de modo que sea capaz de alcanzar 
+%un objetivo que vuelva a planificar continuamente su camino sin colisiones. El 
+%algoritmo desarrollado puede ser implementado desde una computadora en tiempo 
+%real (\textit{online}) o tambi\'en puede ser implementado por medio de un 
+%microcontrolador (\textit{onboard}). En este cap\'itulo se explicar\'a, con detalles, 
+%los m\'etodos que fueron implementados en este trabajo.
+
+\section{Ejemplo de Aplicación}
+En esta sección se explica los componentes que fueron utilizados para construir
+el prototipo funcional. Estos componentes se utilizan para la navegación 
+autónoma del robot móvil y para tomar medidas en los tres ejes del plano
+cartesiano. Para la navegación se utilizó un robot móvil diferencial terrestre, y 
+para tomar medidas del entorno se utilizó un sensor lidar.
+%En esta secci\'on se explica cada uno de los componentes que tuvo que 
+%ser utilizados para realizar la autonom\'ia y el mapeo de este trabajo de 
+%tesis. Para realizar la autonom\'ia se utiliz\'o un robot m\'ovil diferencial 
+%terrestre, y as\'i tambi\'en para mapear el entorno por donde el robot se 
+%desplaza se utiliz\'o un sensor lidar.
 
 %\subsection{Descripci\'on del Robot M\'ovil}
 % \begin{figure}%[h]
@@ -63,11 +84,11 @@ $\dot{\varphi_{r}}$ son las velocidades de la rueda derecha y rueda izquierda
 correspondientemente.}
 \label{fig:RMkinematic}
 \end{figure}
-Para realizar el modelo del cinem\'atico del robot diferencial se debe tener 
+Para realizar el modelo cinemático del robot diferencial se debe tener 
 en cuenta algunas consideraciones sobre el comportamiento de este. Se asume 
 que el robot se desplaza en una superficie plana idealmente sin rozamiento, 
-tambi\'en se toman los ejes de las ruedas como perpendiculares al suelo
-por donde se desplaza y finalmente que solo existe un punto de contacto entre 
+también se toman los ejes de las ruedas como perpendiculares al suelo
+por donde se desplaza y que solo existe un punto de contacto entre 
 la rueda y el suelo.
 
 %El robot se considera como un cuerpo r\'igido sin partes flexibles, pero se 
@@ -76,26 +97,26 @@ la rueda y el suelo.
 %hacia los lados. Para poder realizar estos movimientos, se debe realizar un 
 %movimiento en partes.
 
-El modelo cinem\'atico del robot necesita conocer las dimensiones del robot. Las 
+El modelo cinemático del robot necesita conocer las dimensiones del robot. Las 
 medidas que se necesitan son la distancia entre las ruedas y el radio de las 
-mismas. La distancia entre las ruedas ser\'a representada como $2b$ y el radio de 
-las ruedas como $r$. Tambi\'en se debe considerar que el robot tiene dos ruedas 
+mismas. La distancia entre las ruedas es representada como $2b$ y el radio de 
+las ruedas como $r$. También se debe considerar que el robot tiene dos ruedas 
 convencionales fijas y el sistema de referencia del robot se encuentra entre 
-ambas ruedas, como se ve en la figura \ref{fig:RMkinematic}.
+ambas ruedas, como se ve en la Figura \ref{fig:RMkinematic}.
 
 Teniendo en consideración las restricciones de las ruedas convencionales se halla la 
 cinemática directa del robot móvil. La cinemática directa consiste en:
 \begin{align*}
-v &= \frac{r}{2}(\dot{\varphi_{r}} + \dot{\varphi_{l}}) \\
-\omega &= \frac{r}{2b}(\dot{\varphi_{r}} + \dot{\varphi_{l}})
+v &= \frac{r}{2}(\dot{\varphi_{r}} + \dot{\varphi_{l}}), \\
+\omega &= \frac{r}{2b}(\dot{\varphi_{r}} + \dot{\varphi_{l}}),
 \end{align*}
 donde $v$ es la velocidad lineal y $\omega$ es la velocidad angular. Estas 
 velocidades del robot móvil se hallan a 
 través de las velocidades de cada rueda del robot. Por otro lado la cinemática inversa 
 como dice su nombre es todo lo contrario a la cinemática directa. Este consiste en:
 \begin{align*}
-\dot{\varphi_{r}} &= \frac{1}{r}(v + b\omega) \\
-\dot{\varphi_{l}} &= \frac{1}{r}(v - b\omega)
+\dot{\varphi_{r}} &= \frac{1}{r}(v + b\omega), \\
+\dot{\varphi_{l}} &= \frac{1}{r}(v - b\omega),
 \end{align*}
 donde se halla las velocidades de las ruedas a partir de la velocidad lineal y velocidad
 angular del robot móvil.
@@ -104,14 +125,14 @@ angular del robot móvil.
  %{\includegraphics[width=0.35\linewidth]{images/kobuki.jpg}}
  {\includegraphics[width=0.35\linewidth]{images/turtlebot.jpg}}
  \captionsetup{font=footnotesize}
- \caption{Robot m\'ovil utilizado para la implementación del algoritmo 
- de autonom\'ia}
+ \caption{Representación gráfica del robot móvil diferencial utilizado para la implementación 
+ del algoritmo de autonomía.}
  \label{fig:kobuki}
  \end{figure}
-Para este trabajo se hizo uso del robot m\'ovil no-holon\'omico, Kobuki (figura \ref{fig:kobuki})
-el cual trabaja con una velocidad de translaci\'on de 70 $cm/s$ y una velocidad de rotaci\'on 
-de 180 $grados/s$. Tiene una posibilidad de carga de hasta 5 $kg$ y un tiempo de operaci\'on 
-de 3 horas \cite{aboutKobuki}.
+Para este trabajo se hizo uso del robot móvil no-holonómico, Kobuki (ver Figura 
+\ref{fig:kobuki}) el cual trabaja con una velocidad de translación de 70 $cm/s$ y una 
+velocidad de rotación de 180 $grados/s$. Tiene una posibilidad de carga de hasta 5 $kg$ y 
+un tiempo de operación de 3 horas \cite{aboutKobuki}.
 %Para calcular la cinem\'atica del robot m\'ovil se debe usar las restricciones 
 %de las ruedas convencionales. Las restricciones de cada rueda fija son:
 %\begin{equation*}

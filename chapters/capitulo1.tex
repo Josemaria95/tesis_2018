@@ -82,7 +82,7 @@ para realizar un mapa en dos dimensiones dentro del túnel subterráneo y asimis
 la posición del robot móvil dentro del ambiente mencionado. Se implementó un sistema de 
 navegación basado en campos potenciales. Este algoritmo permite al robot generar su 
 propia trayectoria, evitando colisionar con las paredes u obstáculos en el ambiente 
-donde comenzará a explorar. Se toma la información del sensor LIDAR (\textit{Light
+donde comenzará a explorar. Se toma la información del sensor lidar (\textit{Light
 Detection and Ranging}) para generar el mapa en dos dimensiones.
 %Debido al problema descrito anteriormente, la propuesta de este trabajo de tesis 
 %se centra en desarrollar un algoritmo de autonomía para la navegaci\'on de un robot 
@@ -99,7 +99,7 @@ Detection and Ranging}) para generar el mapa en dos dimensiones.
 %desplazar. Se tomar\'a la informaci\'on del sensor LIDAR (\textit{Light 
 %Detection and Ranging}) para generar el mapa topogr\'afico en dos dimensiones.
 
-Se elige el sensor LIDAR, ya que emite impulsos r\'apidos de luz l\'aser, hasta 
+Se elige el sensor lidar ya que emite impulsos r\'apidos de luz l\'aser hasta 
 4000 impulsos por segundo, sobre una superficie. Este instrumento mide la 
 cantidad de tiempo necesario para que cada pulso pueda recuperarse, y a partir 
 de esto calcula la distancia entre el objeto y el instrumento con una alta 
@@ -111,7 +111,7 @@ Finalmente, para construir el mapa en tres dimensiones se diseñó un sistema
 mecánico que permite rotar el sensor láser haciendo que este pueda tomar 
 medidas a diferentes alturas con su respectivo ángulo de inclinación. Los datos
 obtenidos son enviados a una matriz heterógenea, el cual nos genera los valores
-en los ejes $(X,Y,Z)$. El mapa tridimensional obtenido se puede visualizar en un 
+en los ejes $(\X,\y,\z)$. El mapa tridimensional obtenido se puede visualizar en un 
 software de fácil interacción.
 
 %Para realizar el mapa en tres dimensiones, se diseñar\'a un sistema mec\'anico 
@@ -133,14 +133,14 @@ Los túneles subterráneos son ambientes con el terreno bastante accidentado, ll
 rocas y charcos de agua. Para este trabajo de tesis no se considera el desarrollo de 
 un robot móvil para que se pueda desplazar en terrenos accidentados, como los túneles 
 subterráneos de la minería. El objetivo de la tesis es el desarrollo de un sistema 
-de exploración para un robot móvil. Este sistema puede ser implementado en un robot
-móvil (terrestre o aéreo), previamente implementado el módelo dinámico y cinemático. Para
-implementar el sistema de exploración en un robot móvil aéreo, se debe considerar una 
-altura constante de vuelo y un vuelo estable, sin cambios bruscos.
-
+de exploración para un robot móvil. 
+%Este sistema puede ser implementado en un robot móvil (terrestre o aéreo), previamente 
+%implementado el módelo dinámico y cinemático. Para implementar el sistema de exploración 
+%en un robot móvil aéreo, se debe considerar una altura constante de vuelo y un vuelo 
+%estable, sin cambios bruscos.
 
 Finalmente, el sistema de exploración se implementó en un robot móvil diferencial el 
-cual debe de desplazarse dentro de una superficie plana. Se utilizó un sensor LIDAR, con
+cual debe de desplazarse dentro de una superficie plana. Se utilizó un sensor lidar, con
 un rango máximo de medición de 6 metros. El prototipo en conjunto es capaz de realizar 
 mediciones dentro de un ambiente que no exceda los 12 metros de diámetro.
 
