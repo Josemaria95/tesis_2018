@@ -86,11 +86,13 @@ controlado por medio de un control remoto (radiofrecuencia).
 \section{Control de Robots M\'oviles}
 \begin{figure}[ht!]
      \begin{center}
-        \subfigure[Robot móvil omnidireccional \cite{Omniwheel2018}.]{\label{fig:etiquetaB}\includegraphics[width=.40\textwidth]{images/omnidirecional.jpg}}
-        \subfigure[Robot móvil diferencial \cite{NoHolonomic2018}.]{\label{fig:etiquetaC}\includegraphics[width=.50\textwidth]{images/RM_noHolonomic.jpg}}
+        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.40\textwidth]{images/omnidirecional.jpg}}
+        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.50\textwidth]{images/RM_noHolonomic.jpg}}
     \end{center}
   \captionsetup{font=footnotesize}
-    \caption{\label{f:sLocomocion}Sistemas holonómicos.}
+    \caption{\label{f:sLocomocion}Representación gráfica de los sistemas holonómicos en la robótica
+    móvil, donde en (a) se muestra el robot móvil omnidireccional \cite{Omniwheel2018} y en (b) se 
+    muestra el robot móvil diferencial \cite{NoHolonomic2018}.}
 \end{figure}
 %\begin{figure}%[ht!]
 %  \centering \footnotesize
@@ -123,7 +125,7 @@ los robots móviles, que existen actualmente.
 
 Para el control de movimiento de los robots móviles, se debe tener en consideración 
 la clasificación de estos a través de la locomoción de sus ruedas. Esto se divide 
-en dos: (1) robot holonómico y (2) robot no-holonómico. El robot holonómico 
+en dos: (i) robot holonómico y (ii) robot no-holonómico. El robot holonómico 
 no tiene ninguna restricción en la posición y la orientación, con respecto a la 
 velocidad. El robot se puede mover instantáneamente en cualquier dirección 
 del espacio, sin necesidad de rotar previamente. La mayoría de estos robots 
@@ -519,9 +521,9 @@ La exploraci\'on con estos mapas de red consiste en que el robot empieza en
 un punto preparado para poder tomar cualquier ruta y realizar varios 
 viajes. Entonces el robot empieza a recibir tareas de un nodo central para 
 que pueda desplazarse en diferentes puntos del mapa. El mapa se categoriza 
-en tres tipos diferentes: (1) un obst\'aculo (probabilidad de ocupaci\'on 
-por encima de un umbral), (2) limpio (probabilidad de ocupaci\'on nulo) y 
-(3) desconocido (nunca se detectó nada). De esta forma se empieza a 
+en tres tipos diferentes: (i) un obst\'aculo (probabilidad de ocupaci\'on 
+por encima de un umbral), (ii) limpio (probabilidad de ocupaci\'on nulo) y 
+(iii) desconocido (nunca se detectó nada). De esta forma se empieza a 
 construir el mapa y cuando el robot recibe este mapa que se actualiza 
 constantemente, empieza a tener una mejor percepci\'on del ambiente donde 
 se encuentra.
@@ -530,10 +532,10 @@ se encuentra.
 \section{Localizaci\'on}
 La navegaci\'on es una de las tareas con mayor exigencia para un robot 
 móvil. Para realizar una buena navegaci\'on se necesita de cuatro componentes 
-b\'asicos los cuales son: (1) percepci\'on, el robot debe extraer e interpretar 
-los datos de sus sensores para estimar su entorno; (2) localizaci\'on, el robot 
-debe determinar su posici\'on en el entorno; (3) cognici\'on, el robot debe tener 
-la capacidad de decidir c\'omo actuar para lograr su objetivo; y (4) control de 
+b\'asicos los cuales son: (i) percepci\'on, el robot debe extraer e interpretar 
+los datos de sus sensores para estimar su entorno; (ii) localizaci\'on, el robot 
+debe determinar su posici\'on en el entorno; (iii) cognici\'on, el robot debe tener 
+la capacidad de decidir c\'omo actuar para lograr su objetivo; y (iv) control de 
 movimiento, el robot debe modular sus velocidades para lograr una trayectoria 
 deseada. De los cuatro componentes descritos, la localizaci\'on ha recibido la 
 mayor atenci\'on de investigaci\'on en la \'ultima d\'ecada y, como resultado, se 

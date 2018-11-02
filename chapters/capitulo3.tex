@@ -126,7 +126,7 @@ angular del robot móvil.
  {\includegraphics[width=0.35\linewidth]{images/turtlebot.jpg}}
  \captionsetup{font=footnotesize}
  \caption{Representación gráfica del robot móvil diferencial utilizado para la implementación 
- del algoritmo de autonomía.}
+ del sistema de navegación aútonoma.}
  \label{fig:kobuki}
  \end{figure}
 Para este trabajo se hizo uso del robot móvil no-holonómico, Kobuki (ver Figura 
@@ -147,7 +147,15 @@ un tiempo de operación de 3 horas \cite{aboutKobuki}.
 %del robot.
 
 
-\subsection{Sistema de Percepci\'on en 2D}
+\subsection{Sistema de Percepción Bidimensional}
+\begin{figure}%[h]
+	\centering \footnotesize
+ 	{\includegraphics[width=0.60\linewidth]{images/rplidar.JPG}}
+ 	\captionsetup{font=footnotesize}
+ 	\caption{Sensor lidar RPLIDAR A2 \cite{sensorLidar}.}
+ 	\label{f:lidar}
+\end{figure}
+
 Para generar el mapa de un entorno, se necesita medir distancias del ambiente y así
 generar el mapa. En este trabajo se utiliza un sensor lidar RPLidar A2 el cual se basa en 
 el principio de rango de triangulación láser \cite{amann2001laser} y ha sido desarrollado 
@@ -156,9 +164,9 @@ por la empresa \textit{SLAMTEC}.
 El sensor lidar es un sensor que no necesita tener una luz externa para poder obtener las
 medidas de las distancias. Este sensor tiene un láser infrarrojo de baja potencia el cual
 es controlado por medio de un pulso modulado. Este sensor puede girar en 360\grad ~y tiene
-un rango de alcance máximo de 8 metros. Trabaja a una frecuencia de 10Hz teniendo una tasa 
+un rango de alcance máximo de 6 metros. Trabaja a una frecuencia de 10Hz teniendo una tasa 
 de medición de 4000 muestras por segundo. La transmisión de datos de este sensor es por 
-medio de un protocolo UART. El sensor es mostrado en la figura \ref{f:lidar}.
+medio de un protocolo UART. El sensor es mostrado en la Figura \ref{f:lidar}.
 
 
 %Es un sensor l\'aser que se basa en el  principio de rango de triangulaci\'on 
@@ -170,13 +178,7 @@ medio de un protocolo UART. El sensor es mostrado en la figura \ref{f:lidar}.
 %tiene una tasa de medici\'on de 4000 muestras por segundo. El hardware del 
 %RPLIDAR A2 se puede ver en la figura \ref{f:lidar}, el cual tiene un 
 %convertidor de protocolo UART a mini USB.
-\begin{figure}%[h]
-	\centering \footnotesize
- 	{\includegraphics[width=0.60\linewidth]{images/rplidar.JPG}}
- 	\captionsetup{font=footnotesize}
- 	\caption{Sensor láser RPLIDAR A2.}
- 	\label{f:lidar}
-\end{figure}
+
 
 \begin{table}[htbp]
 \begin{center}
@@ -184,7 +186,7 @@ medio de un protocolo UART. El sensor es mostrado en la figura \ref{f:lidar}.
 	\hline
 	Item & Unidad & M\'inimo & T\'ipico & M\'aximo\\
 	\hline \hline
-	Rango de distancia & m & 0.15 & - & 8 \\ \hline
+	Rango de distancia & m & 0.15 & - & 6 \\ \hline
 	Rango angular & grados & - & 0 - 360 & - \\ \hline
 	Resoluci\'on de la distancia & mm & - & menor a 0.5 & - \\ \hline
 	Duraci\'on de muestra & ms & - & 0.25 & - \\ \hline
@@ -192,44 +194,48 @@ medio de un protocolo UART. El sensor es mostrado en la figura \ref{f:lidar}.
 	Fecuencia de muestreo & Hz & 2000 & 4000 & 4100 \\ \hline
 	Frecuencia de escaneo & Hz & 5 & 10 & 15 \\ \hline
 \end{tabular}
-	\caption{Pruebas de Medici\'on.}
+	\caption{Pruebas de Medici\'on del sensor RPLidar A2.}
 	\label{tbl:medicion}
 \end{center}
 \end{table}
 
-La tabla \ref{tbl:medicion} muestra el rendimiento de medici\'on del 
-sensor l\'aser \cite{Slamtec} considerando varias pruebas por cada item. Los items más 
-importantes de esta tabla son: (1) Rango de distancia, el sensor toma mediciones en el
+La Tabla \ref{tbl:medicion} muestra el rendimiento de medici\'on del 
+sensor lidar \cite{Slamtec} considerando varias pruebas por cada variable. Las variables más 
+importantes de esta Tabla son: (i) Rango de distancia, el sensor toma mediciones en el
 rango mostrado, cuando la distancia es menor a 0.15 $mts$ no considera la medición, lo 
-mismo sucede cuando la medición es mayor a 8 $mts$. (2) Resolución de la distancia, el 
+mismo sucede cuando la medición es mayor a 8 $mts$. (ii) Resolución de la distancia, el 
 sensor tiene un error menor a 0.5 $mm$ en sus mediciones, esto permite construir un mapa 
-con las dimensiones reales del entorno. (3) Resolución angular, este sensor tiene una 
-resolución de 1\grad~ esto quiere decir que por cada grado que gira el lidar esta 
-realizando una medición, por lo tanto el sensor mide 360 veces por cada rotación.
+con las dimensiones reales del entorno.(iii) Resolución angular, este sensor tiene una 
+resolución de 1\grad~ esto quiere decir que por cada grado que gira el lidar esta realizando 
+una medición, por lo tanto el sensor mide 360 veces por cada rotación.
 
 \begin{figure}
 	\centering \footnotesize
 	\includegraphics[width=0.40\linewidth]{images/frame_laser.png}
 	\captionsetup{font=footnotesize}
-	\caption{Sistema de referencia del sensor lidar}
+	\caption{En esta figura el punto verde representa el sistema de referencia 
+	del sensor RPLidar A2, donde el eje $\mayusx$ va en el mismo sentido del cable 
+	de datos del sensor lidar.}
+	%\caption{Sistema de referencia del sensor RPLidar A2.}
 	\label{fig:FrameLidar}
 \end{figure}
 
-Para el envío de los datos a la PC o el microcontrolador, el sensor trabaja con un protocolo
-de comunicación UART. Este protocolo se especifíca en la tabla \ref{tbl:comunicacion} y 
-por medio de este se obtiene las distancias que mide el sensor. Para realizar el mapa en 
-dos dimensiones se tiene que tomar en consideración el sistema de referencia del sensor 
-lidar. En la figura \ref{fig:FrameLidar} se puede ver que el cable de alimentación y comunicación 
-indica la dirección del eje $X$ y al lado derecho esta el eje $Y$. Teniendo en consideración 
-el sistema de referencia del sensor se puede obtener las distancias del entorno donde se esta 
-midiendo y a partir de una conversión de coordenadas polares a coordenadas cartesianas se puede 
-estimar las posiciones de los objetos dentro del ambiente de trabajo.
+Para el envío de los datos a la computadora o al microcontrolador, el sensor trabaja con un 
+protocolo de comunicación UART. Este protocolo se especifíca en la Tabla \ref{tbl:comunicacion} y 
+por medio del protocolo se obtiene los datos de las distancias que mide el sensor. Para construir 
+el mapa en dos dimensiones se tiene que tomar en consideración el sistema de referencia del sensor 
+lidar. En la Figura \ref{fig:FrameLidar} se puede ver que el cable de comunicación 
+indica la dirección del eje $\mayusx$ y al lado derecho se encuentra posicionado el eje 
+$\mayusy$. Teniendo en consideración el sistema de referencia del sensor se puede obtener 
+las distancias del entorno que se esta midiendo y a partir de una conversión de coordenadas 
+polares a coordenadas cartesianas se estima las posiciones de los objetos que se encuentran dentro 
+del entorno de trabajo.
 
 \begin{table}[htbp]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
 	\hline
-	Color & Nombre de la se\~nal & Tipo & M\'inimo & T\'ipico & M\'aximo \\ 
+	Color & Nombre de la señal & Tipo & Mínimo & Típico & Máximo \\ 
 	\hline \hline
 	Rojo & VCC & Potencia & 4.9V & 5V & 5.5V \\ \hline
 	Amarillo & Tx & Salida & 0V & 3.3V & 3.5V \\ \hline
@@ -237,23 +243,23 @@ estimar las posiciones de los objetos dentro del ambiente de trabajo.
 	Negro & GND & Potencia & 0V & 0V & 0V \\ \hline
 	Azul & MOTOCTL & Entrada & 0V & 3.3V & 5V \\ \hline
 \end{tabular}
-	\caption{Interfaz de comunicaci\'on del sensor l\'aser.}
+	\caption{Interfaz de comunicación del sensor RPLidar A2.}
 	\label{tbl:comunicacion}
 \end{center}
 \end{table}
 
 
-\subsection{Sistema de Percepci\'on en 3D}
+\subsection{Sistema de Percepción Tridimensional}
 \label{sec:SistP3D}
 \begin{figure}[ht!]
      \begin{center}
-        \subfigure[Sistema mecánico]{\label{fig:etiquetaB}\includegraphics
-        [width=.45\textwidth]{images/lidar_3d.png}}
-        \subfigure[Sistema mecánico sobre el Kobuki]{\label{fig:etiquetaC}\includegraphics
-        [width=.45\textwidth]{images/lidar_wKbki.png}}
+        \subfigure[]{\label{fig:lidar3Da}\includegraphics[width=.45\textwidth]{images/lidar_3d.png}}
+        \subfigure[]{\label{fig:lidar3Db}\includegraphics[width=.45\textwidth]{images/lidar_wKbki.png}}
     \end{center}
   \captionsetup{font=footnotesize}
-    \caption{\label{f:lidar3D}Sistema mec\'anico para el mapeo en tres dimensiones.}
+    \caption{\label{f:lidar3D}Diseño del sistema mecánico, desarrollado en un programa CAD. En (a) se 
+    muestra el diseño en CAD del sistema mecánico y en (b) se muestra la forma en que va ser colocado 
+    el sistema mecánico en el robot móvil kobuki.}
 \end{figure}
 %\begin{figure}%[ht!]
 %  	\centering \footnotesize
@@ -270,7 +276,7 @@ estimar las posiciones de los objetos dentro del ambiente de trabajo.
 El sensor lidar permite construir mapas en dos dimensiones ya que este va midiendo 
 distancias mientras va rotando en 360\grad ~, pero para el alcance de este proyecto de 
 tesis se necesita que el robot pueda mapear el entorno en tres dimensiones. Para este
-objetivo se realizó un diseño mecánico, como se muestra en la figura \ref{f:lidar3D} (a). Este
+objetivo se realizó un diseño mecánico, como se muestra en la Figura \ref{f:lidar3D}a. Este
 diseño permite que el sensor lidar pueda tener un ángulo de medición de $\pm$ 15\grad en el 
 eje $Z$. El sistema mecánico consiste en una base donde el sensor lidar se encuentra acoplada, 
 y a su vez este esta unido a un servomotor por medio de un eje. El servomotor esta programado para 
@@ -279,11 +285,14 @@ en el eje $Z$.
 
 \begin{figure}[ht!]
      \begin{center}
-        \subfigure[Sistemas de referencia]{\label{fig:etiquetaB}\includegraphics[width=.47\textwidth]{images/lidar_ref.png}}
-        \subfigure[Rotación y traslación]{\label{fig:etiquetaC}\includegraphics[width=.50\textwidth]{images/lidar_giro.png}}
+        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.47\textwidth]{images/lidar_ref.png}}
+        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.50\textwidth]{images/lidar_giro.png}}
     \end{center}
   \captionsetup{font=footnotesize}
-    \caption{\label{f:Rot3D}Representación de la rotación y traslación del sistema mecánico}
+    \caption{\label{f:Rot3D}Representación gráfica de los movimientos de rotación y traslación 
+    del sistema mecánico, en (a) se muestra los sistemas de referencia del motor y del sensor 
+    lidar. En (b) se muestra el movimiento de rotación originado por el motor y el movimiento 
+    de traslación del sensor lidar, para tomar las mediciones en los tres ejes del plano cartesiano.}
 \end{figure}
 
 %\begin{figure}%[ht!]
@@ -297,9 +306,9 @@ en el eje $Z$.
 %\end{figure}
 
 El sistema mecánico esta compuesto por dos sistemas de referencia, el primero es el sistema 
-del servomotor y el segundo el sistema del sensor lidar (figura \ref{f:Rot3D} a). Este sistema
+del servomotor y el segundo el sistema del sensor lidar (ver Figura \ref{f:Rot3D}a). Este sistema
 genera dos tipos de movimiento uno de rotación y el otro de traslación los cuales son considerados
-en la generación del mapa en tres dimensiones (figura \ref{f:Rot3D} b). Para construir el mapa en 
+en la generación del mapa en tres dimensiones (ver Figura \ref{f:Rot3D}b). Para construir el mapa en 
 tres dimensiones se debe considerar las distancias que mide el lidar el ángulo que rota el 
 servomotor, para esto primero se debe convertir los puntos del lidar en dos dimensiones 
 ($x,y$). Las ecuaciones para la conversión son:
@@ -314,7 +323,7 @@ Para llevar la nube de puntos al sistema de referencia del servomotor se utiliza
 homogénea que contiene las componentes de rotación y traslación del sistema mecánico. La transformación
 homogénea esta representada como:
 \begin{align*}
-	T_{L}^{M} &= R_{y}(\phi_{M}) T_{z}(d) \\
+	T_{L}^{M} &= R_{y}(\phi_{M}) T_{z}(d), \\
 \end{align*}
 %\begin{align}
 %	\tilde{p}^{M} = T_{L}^{M} \tilde{p}^{L}
@@ -341,7 +350,7 @@ cartesiano.
 	\centering \footnotesize
 	\includegraphics[width=0.40\textwidth]{images/kbkiReal3D.jpg}
 	\captionsetup{font=footnotesize}
-	\caption{Prototipo final del robot móvil para realizar mapeos en 3D}
+	\caption{Esta figura muestra el prototipo utilizado donde fue }
 	\label{fig:ProtoFinal}
 \end{figure}
 El prototipo final de este trabajo, permite que el robot pueda generar un mapa en tres dimensiones 
