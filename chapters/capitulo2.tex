@@ -1,4 +1,11 @@
 \chapter{Marco Teórico}
+El presente capítulo muestra los trabajos de robótica que han sido aplicados en 
+la minería subterránea, en los últimos diez años. Luego se explica sobre las teorías
+que existen para la navegación autónoma de un robot móvil, para lograr esto se muestra
+los controladores de los robots móviles más utilizados en la actualidad. Asimismo, también
+se explica sobre los últimos algoritmos desarrollados para la generación de trayectoria de 
+los robots móviles. Finalmente, se explica los tipos de algoritmos SLAM que existen para 
+construir un mapa en dos dimensiones de un ambiente desconocido.
 
 \section{Rob\'otica en Miner\'ia}
 La minería actual ha llevado a que las compañías mineras busquen la eficiencia 
@@ -83,7 +90,7 @@ controlado por medio de un control remoto (radiofrecuencia).
 %desplazarse por todo el socavón sin la necesidad de utilizar un GPS \cite{Solutions2016}. 
 
 
-\section{Control de Robots M\'oviles}
+\section{Control de Robots Móviles}
 \begin{figure}[ht!]
      \begin{center}
         \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.40\textwidth]{images/omnidirecional.jpg}}
@@ -180,7 +187,8 @@ donde $\rho$ representa la distancia desde el robot a la posición deseada, $\al
 y $\beta$ son ángulos que se utilizan para el error de orientación. La posición y 
 orientación actual del robot es $\x=(x,y,\theta)$, y su posición y orientación deseada 
 es $(x_{d},y_{d},\theta_{d})$. En base a estas variables polares, la ley de control que 
-define las velocidades lineales y angulares para lograr la posición y orientación deseada es 
+define las velocidades lineales y angulares para lograr la posición y orientación deseada 
+es 
 \begin{align}
 \label{eqn:v}
 v &= k_{\rho}\rho \\
@@ -330,8 +338,8 @@ un método de \textit{roadmap}.
 %la forma del espacio libre es dif\'icil, sin embargo, es mucho m\'as sencillo 
 %probar si una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
 
-\subsubsection{Mapa de Visibilidad Gráfica} %(\textit{Visibility Graph})}
-%\paragraph{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph})}
+%\subsubsection{Mapa de Visibilidad Gráfica} %(\textit{Visibility Graph})}
+\paragraph{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph}):}
 
 El planeamiento del camino del robot en situaciones prácticas, es preferible 
 encontrar no solo un camino sino un buen camino. El buen camino depende del 
@@ -372,7 +380,8 @@ y $v_{j}$.
 
 \begin{figure}%[h]
 \centering \footnotesize
- {\includegraphics[width=0.60\linewidth]{images/map_polygonal.png}}
+ %{\includegraphics[width=0.60\linewidth]{images/map_polygonal.png}}
+ {\includegraphics[width=0.70\linewidth]{images/espacio_configuracion.eps}}
  \captionsetup{font=footnotesize}
  \caption{Espacio de configuración con un punto de inicio y otro punto 
  de llegada a la posición deseada.}
@@ -381,7 +390,8 @@ y $v_{j}$.
 
 \begin{figure}%[h]
 \centering \footnotesize
- {\includegraphics[width=0.60\linewidth]{images/shortPath_visibilityGraph.png}}
+ %{\includegraphics[width=0.60\linewidth]{images/shortPath_visibilityGraph.png}}
+ {\includegraphics[width=0.70\linewidth]{images/espacio_configuracion2.jpg}}
  \captionsetup{font=footnotesize}
  \caption{Los obstáculos son representado por sólidos polígonos. Las 
  líneas continuas delinean los bordes de la visibilidad gráfica para 

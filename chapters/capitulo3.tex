@@ -1,6 +1,6 @@
 \chapter{Metodolog\'ia}
 
-El capítulo anterior hace referencia a las metodologías recientes que son
+El capítulo anterior hace referencia a las teorías recientes que son
 utilizados para la autonomía de un robot móvil y para la generación de
 un mapa bidimensional, dentro de un ambiente aún por conocer. En el presente
 trabajo de tesis se ha desarrollado un sistema de movimiento 
@@ -13,7 +13,7 @@ dentro de un entorno este pueda tomar mediciones en los tres ejes del plano
 cartesiano y así obtener una representación gráfica del lugar en tres 
 dimensiones. Estos sitemas pueden ser implementados desde una computadora en 
 tiempo real (\textit{online}) o también puede ser implementado por medio de 
-un microcontroladore (\textit{onboard}). En este capítulo se explicará, con 
+un microcontrolador (\textit{onboard}). En este capítulo se explicará, con 
 detalles, los métodos que fueron implementados para realizar el presente trabajo.
 
 %En el cap\'itulo anterior se explic\'o sobre las metodolog\'ias recientes que se 
@@ -28,11 +28,11 @@ detalles, los métodos que fueron implementados para realizar el presente trabaj
 %los m\'etodos que fueron implementados en este trabajo.
 
 \section{Ejemplo de Aplicación}
-En esta sección se explica los componentes que fueron utilizados para construir
+En esta sección se explica sobre los componentes que fueron utilizados para construir
 el prototipo funcional. Estos componentes se utilizan para la navegación 
-autónoma del robot móvil y para tomar medidas en los tres ejes del plano
-cartesiano. Para la navegación se utilizó un robot móvil diferencial terrestre, y 
-para tomar medidas del entorno se utilizó un sensor lidar.
+autónoma del robot móvil, para construir el mapa en dos dimensiones y para tomar medidas 
+en los tres ejes del plano cartesiano. Para la navegación se utilizó un robot móvil 
+diferencial terrestre, y un sensor lidar para las mediciones del entorno.
 %En esta secci\'on se explica cada uno de los componentes que tuvo que 
 %ser utilizados para realizar la autonom\'ia y el mapeo de este trabajo de 
 %tesis. Para realizar la autonom\'ia se utiliz\'o un robot m\'ovil diferencial 
@@ -72,24 +72,30 @@ para tomar medidas del entorno se utilizó un sensor lidar.
 %$grados/s$, una posibilidad de carga de hasta 5 $kg$, un tiempo de operaci\'on de 3 
 %horas \cite{aboutKobuki}. 
 
-\subsection{Cinem\'atica de Robot M\'ovil Diferencial}
+\subsection{Cinemática de Robot Móvil Diferencial}
 \begin{figure}%[h]
 \centering \footnotesize
 {\includegraphics[width=0.40\linewidth]{images/kinematic_model.png}}
 \captionsetup{font=footnotesize}
-\caption{Representaci\'on gr\'afica de un robot m\'ovil diferencial. Donde 
+\caption{Representación gráfica de un robot móvil diferencial. Donde 
 $b$ es la distancia de su centro de masa hacia sus ruedas, el radio de cada 
 rueda es representado por $r$. Finalmente $\dot{\varphi_{l}}$ y 
 $\dot{\varphi_{r}}$ son las velocidades de la rueda derecha y rueda izquierda 
 correspondientemente.}
 \label{fig:RMkinematic}
 \end{figure}
-Para realizar el modelo cinemático del robot diferencial se debe tener 
-en cuenta algunas consideraciones sobre el comportamiento de este. Se asume 
-que el robot se desplaza en una superficie plana idealmente sin rozamiento, 
-también se toman los ejes de las ruedas como perpendiculares al suelo
-por donde se desplaza y que solo existe un punto de contacto entre 
-la rueda y el suelo.
+La realización del modelo cinemático, del robot móvil diferencial, debe 
+tener ciertas consideraciones con respecto a su comportamiento. Primero, 
+se debe asumir que el robot se desplaza dentro de una superficie plana 
+idealmente sin ningún tipo de rozamiento, y segundo se debe tomar los ejes
+de las ruedas de forma perpendicular al suelo, existiendo un solo punto 
+de contacto entre el suelo y la rueda.
+%Para realizar el modelo cinemático del robot diferencial se debe tener 
+%en cuenta algunas consideraciones sobre el comportamiento de este. Se asume 
+%que el robot se desplaza en una superficie plana idealmente sin rozamiento, 
+%también se toman los ejes de las ruedas como perpendiculares al suelo
+%por donde se desplaza y que solo existe un punto de contacto entre 
+%la rueda y el suelo.
 
 %El robot se considera como un cuerpo r\'igido sin partes flexibles, pero se 
 %deben tener en cuenta las restricciones no-holon\'omicas. Es decir, el robot 
@@ -97,12 +103,20 @@ la rueda y el suelo.
 %hacia los lados. Para poder realizar estos movimientos, se debe realizar un 
 %movimiento en partes.
 
-El modelo cinemático del robot necesita conocer las dimensiones del robot. Las 
-medidas que se necesitan son la distancia entre las ruedas y el radio de las 
-mismas. La distancia entre las ruedas es representada como $2b$ y el radio de 
-las ruedas como $r$. También se debe considerar que el robot tiene dos ruedas 
-convencionales fijas y el sistema de referencia del robot se encuentra entre 
-ambas ruedas, como se ve en la Figura \ref{fig:RMkinematic}.
+Para realizar las ecuaciones matemáticas del modelo cinemático del robot móvil, se
+necesita conocer las dimensiones de este. Las medidas requeridas son el radio de las 
+ruedas y la distancia entre cada una de ellas. El radio de las ruedas es representado
+con la variable $r$ y la distancia entre ruedas es representada como $2b$. Otro punto 
+a considerar es que el robot tiene dos ruedas convencionales fijas y el sistema de
+referencia de este se encuentra en medio de las ruedas traseras, como se puede ver en 
+la Figura \ref{fig:RMkinematic}.
+
+%El modelo cinemático del robot necesita conocer las dimensiones del robot. Las 
+%medidas que se necesitan son la distancia entre las ruedas y el radio de las 
+%mismas. La distancia entre las ruedas es representada como $2b$ y el radio de 
+%las ruedas como $r$. También se debe considerar que el robot tiene dos ruedas 
+%convencionales fijas y el sistema de referencia del robot se encuentra entre 
+%ambas ruedas, como se ve en la Figura \ref{fig:RMkinematic}.
 
 Teniendo en consideración las restricciones de las ruedas convencionales se halla la 
 cinemática directa del robot móvil. La cinemática directa consiste en:
@@ -111,9 +125,10 @@ v &= \frac{r}{2}(\dot{\varphi_{r}} + \dot{\varphi_{l}}), \\
 \omega &= \frac{r}{2b}(\dot{\varphi_{r}} + \dot{\varphi_{l}}),
 \end{align*}
 donde $v$ es la velocidad lineal y $\omega$ es la velocidad angular. Estas 
-velocidades del robot móvil se hallan a 
-través de las velocidades de cada rueda del robot. Por otro lado la cinemática inversa 
-como dice su nombre es todo lo contrario a la cinemática directa. Este consiste en:
+dos variables de velocidad se pueden hallar a través de las velocidades
+de cada una de las ruedas y las dimensiones del robot. Por otro lado la cinemática 
+inversa, como su mismo nombre lo menciona, es todo lo contrario a la
+cinemática directa y consiste en: 
 \begin{align*}
 \dot{\varphi_{r}} &= \frac{1}{r}(v + b\omega), \\
 \dot{\varphi_{l}} &= \frac{1}{r}(v - b\omega),
@@ -129,10 +144,13 @@ angular del robot móvil.
  del sistema de navegación aútonoma.}
  \label{fig:kobuki}
  \end{figure}
-Para este trabajo se hizo uso del robot móvil no-holonómico, Kobuki (ver Figura 
-\ref{fig:kobuki}) el cual trabaja con una velocidad de translación de 70 $cm/s$ y una 
-velocidad de rotación de 180 $grados/s$. Tiene una posibilidad de carga de hasta 5 $kg$ y 
-un tiempo de operación de 3 horas \cite{aboutKobuki}.
+
+Finalmente, para este trabajo de tesis se utilizó un robot móvil no-holonómico llamado Kobuki 
+(ver Figura \ref{fig:kobuki}). Este robot trabaja con una velocidad de translación de 70 $cm/s$ y 
+una velocidad de rotación de 180 $grados/s$. Tiene una posibilidad de carga de hasta 5 $kg$ y un 
+tiempo de operación de 3 horas \cite{aboutKobuki}. En este robot se implementó las ecuaciones 
+de la cinemática directa teniendo en consideración sus propias dimensiones y asimismo, haciendo
+uso de las librerías que existe dentro de los paquetes de desarrollo del robot Kobuki.
 %Para calcular la cinem\'atica del robot m\'ovil se debe usar las restricciones 
 %de las ruedas convencionales. Las restricciones de cada rueda fija son:
 %\begin{equation*}
@@ -156,12 +174,17 @@ un tiempo de operación de 3 horas \cite{aboutKobuki}.
  	\label{f:lidar}
 \end{figure}
 
-Para generar el mapa de un entorno, se necesita medir distancias del ambiente y así
-generar el mapa. En este trabajo se utiliza un sensor lidar RPLidar A2 el cual se basa en 
-el principio de rango de triangulación láser \cite{amann2001laser} y ha sido desarrollado 
-por la empresa \textit{SLAMTEC}.
+Para generar un mapa de dos dimensiones dentro de un entorno, se necesita realizar 
+mediciones dentro del ambiente. En este trabajo de tesis se utiliza un sensor lidar
+llamado RPLidar A2, el cual se basa en el principio de rango de triagulación láser
+\cite{amann2001laser}. Este sensor fue desarrollado por la empresa \textit{SLAMTEC}.
 
-El sensor lidar es un sensor que no necesita tener una luz externa para poder obtener las
+%Para generar el mapa de un entorno, se necesita medir distancias del ambiente y así
+%generar el mapa. En este trabajo se utiliza un sensor lidar, RPLidar A2, el cual se basa en 
+%el principio de rango de triangulación láser \cite{amann2001laser} y ha sido desarrollado 
+%por la empresa \textit{SLAMTEC}.
+
+El RPLidar A2 es un sensor que no necesita tener una luz externa para poder obtener las
 medidas de las distancias. Este sensor tiene un láser infrarrojo de baja potencia el cual
 es controlado por medio de un pulso modulado. Este sensor puede girar en 360\grad ~y tiene
 un rango de alcance máximo de 6 metros. Trabaja a una frecuencia de 10Hz teniendo una tasa 
@@ -199,15 +222,26 @@ medio de un protocolo UART. El sensor es mostrado en la Figura \ref{f:lidar}.
 \end{center}
 \end{table}
 
-La Tabla \ref{tbl:medicion} muestra el rendimiento de medici\'on del 
-sensor lidar \cite{Slamtec} considerando varias pruebas por cada variable. Las variables más 
-importantes de esta Tabla son: (i) Rango de distancia, el sensor toma mediciones en el
-rango mostrado, cuando la distancia es menor a 0.15 $mts$ no considera la medición, lo 
-mismo sucede cuando la medición es mayor a 8 $mts$. (ii) Resolución de la distancia, el 
-sensor tiene un error menor a 0.5 $mm$ en sus mediciones, esto permite construir un mapa 
-con las dimensiones reales del entorno.(iii) Resolución angular, este sensor tiene una 
-resolución de 1\grad~ esto quiere decir que por cada grado que gira el lidar esta realizando 
-una medición, por lo tanto el sensor mide 360 veces por cada rotación.
+En la Tabla \ref{tbl:medicion} se muestra el rendimiento de la medición del 
+sensor RPLidar A2 \cite{Slamtec}. En esta tabla se considera varias pruebas 
+por cada una de las variables. Las variables más importantes son: (i) 
+\textbf{Rango de distancia}, el sensor tiene un rango de medición entre $0.15 
+mts$ y $6 mts$, los valores menores a $0.15 mts$ y mayores a $6 mts$ son 
+considerados como valores no existentes. (ii) \textbf{Resolución de la 
+distancia}, el sensor tiene un error menor a 0.5 $mm$ en sus mediciones, esto 
+permite construir un mapa con las dimensiones reales del entorno. (iii) 
+\textbf{Resolución angular}, este sensor tiene una resolución de 1\grad~ esto 
+quiere decir que por cada grado que gira el sensor lidar este realiza una medición, 
+por lo tanto el sensor toma 360 mediciones por cada rotación.
+%La Tabla \ref{tbl:medicion} muestra el rendimiento de medición del 
+%sensor lidar \cite{Slamtec} considerando varias pruebas por cada variable. Las variables más 
+%importantes de esta Tabla son: (i) Rango de distancia, el sensor toma mediciones en el
+%rango mostrado, cuando la distancia es menor a 0.15 $mts$ no considera la medición, lo 
+%mismo sucede cuando la medición es mayor a 8 $mts$. (ii) Resolución de la distancia, el 
+%sensor tiene un error menor a 0.5 $mm$ en sus mediciones, esto permite construir un mapa 
+%con las dimensiones reales del entorno.(iii) Resolución angular, este sensor tiene una 
+%resolución de 1\grad~ esto quiere decir que por cada grado que gira el lidar esta realizando 
+%una medición, por lo tanto el sensor mide 360 veces por cada rotación.
 
 \begin{figure}
 	\centering \footnotesize
@@ -220,16 +254,26 @@ una medición, por lo tanto el sensor mide 360 veces por cada rotación.
 	\label{fig:FrameLidar}
 \end{figure}
 
-Para el envío de los datos a la computadora o al microcontrolador, el sensor trabaja con un 
-protocolo de comunicación UART. Este protocolo se especifíca en la Tabla \ref{tbl:comunicacion} y 
-por medio del protocolo se obtiene los datos de las distancias que mide el sensor. Para construir 
-el mapa en dos dimensiones se tiene que tomar en consideración el sistema de referencia del sensor 
-lidar. En la Figura \ref{fig:FrameLidar} se puede ver que el cable de comunicación 
-indica la dirección del eje $\mayusx$ y al lado derecho se encuentra posicionado el eje 
-$\mayusy$. Teniendo en consideración el sistema de referencia del sensor se puede obtener 
-las distancias del entorno que se esta midiendo y a partir de una conversión de coordenadas 
-polares a coordenadas cartesianas se estima las posiciones de los objetos que se encuentran dentro 
-del entorno de trabajo.
+Para envíar los datos, a la computadora o al microcontrolador, el sensor trabaja con un 
+protocolo de comunicación UART (\textit{Universal Asynchronous Receiver-Transmitter}). Este 
+protocolo se especifíca en la Tabla \ref{tbl:comunicacion}, y a través del protocolo se 
+obtiene las mediciones del sensor. Para la construcción del mapa en dos dimensiones se 
+debe considerar el sistema de referencia del sensor lidar. En la Figura \ref{fig:FrameLidar} 
+se muestra que el cable de comunicación indica la dirección y posición del eje $\mayusx$, al 
+lado derecho se muestra la dirección y posición del eje $\mayusy$. Teniendo en cuenta la 
+posición del sistema de referencia del sensor lidar, se puede comenzar a tomar los datos de 
+las mediciones que va realizando. El sensor lidar envía como datos la distancia de la medición y 
+el ángulo donde se tomo la medición. Estos datos obtenidos son tomados como coordenadas polares 
+los cuales son convertidos a coordenadas cartesianas, de esta forma estimamos las posiciones de 
+los objetos que se encuentran dentro de un ambiente.
+
+%Para construir el mapa en dos dimensiones se tiene que tomar en 
+%consideración el sistema de referencia del sensor lidar. En la Figura \ref{fig:FrameLidar} se 
+%puede ver que el cable de comunicación indica la dirección del eje $\mayusx$ y al lado derecho 
+%se encuentra posicionado el eje $\mayusy$. Teniendo en consideración el sistema de referencia 
+%del sensor se puede obtener las distancias del entorno que se esta midiendo y a partir de una 
+%conversión de coordenadas polares a coordenadas cartesianas se estima las posiciones de los objetos 
+%que se encuentran dentro del entorno de trabajo.
 
 \begin{table}[htbp]
 \begin{center}
@@ -255,11 +299,13 @@ del entorno de trabajo.
      \begin{center}
         \subfigure[]{\label{fig:lidar3Da}\includegraphics[width=.45\textwidth]{images/lidar_3d.png}}
         \subfigure[]{\label{fig:lidar3Db}\includegraphics[width=.45\textwidth]{images/lidar_wKbki.png}}
+        \subfigure[]{\label{fig:lidar3Dc}\includegraphics[width=.55\textwidth]{images/LIDAR_SIST.JPG}}
     \end{center}
   \captionsetup{font=footnotesize}
     \caption{\label{f:lidar3D}Diseño del sistema mecánico, desarrollado en un programa CAD. En (a) se 
-    muestra el diseño en CAD del sistema mecánico y en (b) se muestra la forma en que va ser colocado 
-    el sistema mecánico en el robot móvil kobuki.}
+    muestra el diseño en CAD del sistema mecánico, en (b) se muestra la forma en que va ser colocado 
+    el sistema mecánico en el robot móvil kobuki y en (c) se muestra el diseño mecánico manufacturado 
+    en aluminio, junto al sensor lidar y el motor paso a paso.}
 \end{figure}
 %\begin{figure}%[ht!]
 %  	\centering \footnotesize
@@ -273,55 +319,91 @@ del entorno de trabajo.
 %  	\label{f:lidar3D}
 %\end{figure}
 
-El sensor lidar permite construir mapas en dos dimensiones ya que este va midiendo 
-distancias mientras va rotando en 360\grad ~, pero para el alcance de este proyecto de 
-tesis se necesita que el robot pueda mapear el entorno en tres dimensiones. Para este
-objetivo se realizó un diseño mecánico, como se muestra en la Figura \ref{f:lidar3D}a. Este
-diseño permite que el sensor lidar pueda tener un ángulo de medición de $\pm$ 15\grad en el 
-eje $Z$. El sistema mecánico consiste en una base donde el sensor lidar se encuentra acoplada, 
-y a su vez este esta unido a un servomotor por medio de un eje. El servomotor esta programado para 
-que se mueva en un rango de $\pm$ 15\grad~ para que el sensor pueda tomar medidas 
-en el eje $Z$. 
+El sensor lidar es un sensor que permite construir mapas de dos dimensiones, como ya 
+fue mencionado, este sensor realiza mediciones mientras va rotando en 360 \grad~. Para 
+este trabajo de tesis se necesita desarrollar un sistema mecánico para que el robot 
+pueda realizar mediciones en los tres ejes del plano cartesiano mientras se va 
+desplazando. Por tal motivo, se realizó un diseño mecánico que es accionado por un motor
+paso a paso. Este diseño está compuesto por una base que soporta al sensor lidar, asimismo, 
+esta base tiene un eje en la parte inferior. Un extremo del eje de la base se encuentra 
+acoplado al eje del motor paso a paso, mientras que el otro extremo se encuentra unida 
+a un rodamiento que permite que la rotación del motor se realicé con el mínimo rozamiento. Este
+sistema mecánico fue diseñado con el software mecánico \textit{Inventor}, como se muestra
+en la Figura \ref{f:lidar3D}a.
+
+El sistema mecánico final fue manufacturado, en aluminio, con las características mencionadas
+anteriormente agregando un switch de autocalibración. Como se puede ver en la Figura 
+\ref{f:lidar3D}c, el switch se encuentra en la parte inferior del eje de la base. La idea 
+principal de este sistema de autocalibración es decirle al motor paso a paso en que posición 
+debe considerar el ángulo 0\grad~. Una vez que este switch es accionado, el sensor lidar se 
+coloca en la posición como se muestra en la Figura \ref{f:FrameSitemaMecanico}, a partir de esta 
+posición el sistema mecánico hace que el sensor lidar rote hacia atrás y hacia adelante teniendo 
+un ángulo de apertura desde $-88$\grad~ a $+88$\grad. El motor paso a paso tiene una resolución
+de 1\grad~. La rotación del motor en el rango de $\pm$ 88\grad~ hace que el sensor lidar pueda 
+tomar medidas en los tres ejes del plano cartesiano $(\mayusx,\mayusy,\mayusz)$.
+
+%este va realizando mediciones mientras va rotando 360\grad~
+%El sensor lidar permite construir mapas en dos dimensiones ya que este va midiendo 
+%distancias mientras va rotando en 360\grad ~, pero para el alcance de este proyecto de 
+%tesis se necesita que el robot pueda mapear el entorno en tres dimensiones. Para este
+%objetivo se realizó un diseño mecánico, como se muestra en la Figura \ref{f:lidar3D}a. Este
+%diseño permite que el sensor lidar pueda tener un ángulo de medición de $\pm$ 15\grad en el 
+%eje $Z$. El sistema mecánico consiste en una base donde el sensor lidar se encuentra acoplada, 
+%y a su vez este esta unido a un servomotor por medio de un eje. El servomotor esta programado para 
+%que se mueva en un rango de $\pm$ 15\grad~ para que el sensor pueda tomar medidas 
+%en el eje $Z$. 
+\begin{figure}[ht!]
+\centering \footnotesize
+ %{\includegraphics[width=0.60\linewidth]{images/shortPath_visibilityGraph.png}}
+ {\includegraphics[width=0.55\linewidth]{images/lidar_kbki.jpg}}
+ \captionsetup{font=footnotesize}
+ \caption{Representación gráfica de los sistemas de referencia del sistema 
+ mecánico. Donde $M$ y $L$ son los sistemas de referencia del motor paso a 
+ paso y del sensor lidar.}
+\label{f:FrameSitemaMecanico}
+\end{figure}
 
 \begin{figure}[ht!]
      \begin{center}
-        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.47\textwidth]{images/lidar_ref.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.50\textwidth]{images/lidar_giro.png}}
+        \subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras2.jpg}}
+        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras3.jpg}}
+        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras.jpg}}
+        \subfigure[]{\label{fig:etiquetaD}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras1.jpg}}
     \end{center}
   \captionsetup{font=footnotesize}
-    \caption{\label{f:Rot3D}Representación gráfica de los movimientos de rotación y traslación 
-    del sistema mecánico, en (a) se muestra los sistemas de referencia del motor y del sensor 
-    lidar. En (b) se muestra el movimiento de rotación originado por el motor y el movimiento 
-    de traslación del sensor lidar, para tomar las mediciones en los tres ejes del plano cartesiano.}
+    \caption{\label{f:Rot3D}Representación gráfica de los movimientos de rotación del sistema 
+    mecánico.En (a) se muestra la posición inicial (0\grad) rotando hacia la izquierda, en (b) se 
+    muestra el sensor lidar rotado hacia el ángulo $-88$\grad~ y rotando hacia la derecha. En (c) 
+    se muestra que el sensor lidar regreso a su posición original (0\grad) y va rotar hacia la 
+    derecha. En (d) se muestra el sensor lidar en el ángulo $88$\grad~ rotando hacia la izquierda.}
 \end{figure}
 
-%\begin{figure}%[ht!]
-%	\centering \footnotesize
-%	\includegraphics[width=0.40\textwidth]{images/lidar_ref.png}~~~~~~~~~~~~
-%	\includegraphics[width=0.40\textwidth]{images/lidar_giro.png}
-%	\\ a. Sistemas de referencia ~~$\qquad\qquad\qquad$~~ b. Rotación y traslación 
-%	\captionsetup{font=footnotesize}
-%  	\caption{Representación de la rotación y traslación del sistema mecánico}
-%  	\label{f:Rot3D}
-%\end{figure}
+Para generar el mapa en tres dimensiones se debe tener en consideración los sistemas de referencia 
+de todos los componentes del sistema mecánico, en este caso el sensor lidar y el motor paso a paso
+como se muestra en la Figura \ref{f:FrameSitemaMecanico}. Este sistema genera un movimiento de rotación
+y traslación que son considerados dentro de las ecuaciones matemáticas para obtener los valores en los 
+tres ejes del plano cartesiano. Una vez que el sistema mecánico es autocalibrado accionado por el 
+switch, el sensor lidar es posicionado como muestra la Figura \ref{f:Rot3D}a, en esa posición se 
+considera que el ángulo del motor paso a paso es 0\grad. Luego el sensor lidar se comienza a rotar 
+hacia el lado derecho hasta que llega al ángulo $-88$\grad~ (ver Figura \ref{f:Rot3D}b). Una vez que
+el motor paso a paso llega al ángulo $-88$\grad este comienza a girar hacia la izquierda hasta 
+que llega al ángulo $88$\grad, como se muestran en las Figuras \ref{f:Rot3D}c y \ref{f:Rot3D}d. El 
+ángulo de apertura que tiene el motor paso a paso hace que el sensor lidar pueda tener un 
+panorama más amplio para poder tomar mediciones dentro de un ambiente.
 
-El sistema mecánico esta compuesto por dos sistemas de referencia, el primero es el sistema 
-del servomotor y el segundo el sistema del sensor lidar (ver Figura \ref{f:Rot3D}a). Este sistema
-genera dos tipos de movimiento uno de rotación y el otro de traslación los cuales son considerados
-en la generación del mapa en tres dimensiones (ver Figura \ref{f:Rot3D}b). Para construir el mapa en 
-tres dimensiones se debe considerar las distancias que mide el lidar el ángulo que rota el 
-servomotor, para esto primero se debe convertir los puntos del lidar en dos dimensiones 
-($x,y$). Las ecuaciones para la conversión son:
+El mapa tridimensional se construye con las mediciones del sensor lidar y los ángulos del motor paso
+a paso. Para esto primero se convierte los datos del sensor lidar, es decir hacer una conversión 
+de coordenadas polares a coordenadas cartesianas. Las ecuaciones utilizadas son:
 \begin{align*}
-	x &= rcos(\theta_{L}) \\
-	y &= rsen(\theta_{L})
+	x &= rcos(\theta_{L}), \\
+	y &= rsen(\theta_{L}),
 \end{align*}
-donde $r$ es la distancia medida por el sensor y $\theta_{L}$ es el ángulo que gira el sensor 
-mientras va midiendo.
+donde $r$ es la distancia medida por el sensor y $\theta_{L}$ es el ángulo de rotación del sensor 
+lidar por cada medición que realiza.
 
-Para llevar la nube de puntos al sistema de referencia del servomotor se utiliza una matriz 
-homogénea que contiene las componentes de rotación y traslación del sistema mecánico. La transformación
-homogénea esta representada como:
+Los valores del sensor lidar convertidos debe ser llevado al sistema de referencia del motor paso a 
+paso, para esto se utiliza una matriz homogénea que contiene los componentes de rotación y traslación
+de todo el sistema mecánico. La matriz de transformación homogénea es representada como:
 \begin{align*}
 	T_{L}^{M} &= R_{y}(\phi_{M}) T_{z}(d), \\
 \end{align*}
@@ -329,28 +411,31 @@ homogénea esta representada como:
 %	\tilde{p}^{M} = T_{L}^{M} \tilde{p}^{L}
 %	\label{eqn:MatrizHomogenea}
 %\end{align}
-donde $\phi_{M}$ es el ángulo que rota el servomotor y $d$ es la distancia que hay entre el sistema de 
-referencia del servomotor y el sistema de referencia del sensor lidar, como se puede ver en la 
-figura \ref{f:Rot3D} a. $T_{L}^{M}$ es la matriz de transformación homogénea del sistema mécanico. Esta 
-matriz tiene una matriz de rotación ($R_{y}(\phi_{M})$) originado por el servomotor en el eje $Y$ y una
-matriz de traslación ($T_{Z}(d)$) en el eje $Z$ originado por eje que une el servomotor con el sensor 
-lidar.La posición y orientación de la nube de puntos es representada como:
+donde $\phi_{M}$ representa al ángulo de rotación del motor paso a paso y $d$ a la distancia entre el 
+sistema de referencia del sensor lidar y el sistema de referencia del motor paso a paso, como se 
+puede ver en la Figura \ref{f:FrameSitemaMecanico}. La matriz  de transformación homogénea
+tiene una matriz de rotación, denotado por $R_{y}(\phi_{M})$, originado por la acción del 
+motor paso a paso en el eje $\mayusy$ y una matriz de traslación, denotado por $T_{Z}(d)$, en el 
+eje $\mayusz$ originado la pequeña distancia que existe entre los sistemas de referencia 
+del sistema mecánico. La posición y orientación de los valores en los tres ejes del plano
+cartesiano (nube de puntos) es representada como:
 \begin{align}
 	\tilde{p}^{L} = T_{L}^{M} \tilde{p}^{M}
 	\label{eqn:MatrizHomogenea}
 \end{align}
-donde $\tilde{p}^{L}$ es la coordenada homogénea con respecto al sistema de referencia del sensor
+donde $\tilde{p}^{L}$ representa la coordenada homogénea con respecto al sistema de referencia del sensor
 lidar, $T_{L}^{M}$ es la matriz homogénea descrita anteriormente y $\tilde{p}^{M}$ es la coordenada 
-homogénea con respecto al sistema de referencia del servomotor. La multiplicación de estas matrices
-ayuda a poder encontrar los puntos en los ejes ($X,Y,Z$) y formar la nube de puntos en el plano 
-cartesiano.
+homogénea con respecto al sistema de referencia del motor paso a paso. La multiplicación de estas matrices
+ayuda a encontrar las coordenadas en los ejes ($\mayusx,\mayusy,\mayusz$) del ambiente
+que se esta mapeando.
 
 \subsection{Prototipo Final}
 \begin{figure}%[ht!]
 	\centering \footnotesize
-	\includegraphics[width=0.40\textwidth]{images/kbkiReal3D.jpg}
+	\includegraphics[width=0.65\textwidth]{images/ProtFinal.JPG}
 	\captionsetup{font=footnotesize}
-	\caption{Esta figura muestra el prototipo utilizado donde fue }
+	\caption{Esta figura muestra el prototipo final que fue utilizado para realizar las pruebas
+	de navegación autónoma y mapeo de un ambiente en tres dimensiones. }
 	\label{fig:ProtoFinal}
 \end{figure}
 El prototipo final de este trabajo, permite que el robot pueda generar un mapa en tres dimensiones 
@@ -368,12 +453,15 @@ y también en dos dimensiones, el cual permitirá que el robot pueda localizarse
 
 \begin{figure}[ht!]
      \begin{center}
-        \subfigure[Fuerzas de atracción]{\label{fig:etiquetaB}\includegraphics[width=.49\textwidth]{images/attr_force.png}}
-        \subfigure[Fuerzas de repulsión]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/rep_force.png}}
-        \subfigure[Fuerzas de navegación]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/nav_force.png}}
+        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.49\textwidth]{images/attr_force.png}}%NO CAMBIAR
+        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/rep_force.png}}
+        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/nav_force.png}}
     \end{center}
   \captionsetup{font=footnotesize}
-    \caption{\label{f:APF}Pruebas para el algoritmo de campo potencial artificial.}
+    \caption{\label{f:APF}En esta figura se muestra las pruebas para el algoritmo de campo potencial 
+    artificial. En (a) se muestra la prueba para las fuerzas de atracción, en (b) se muestra las
+    pruebas de las fuerzas de repulsión de cada uno de los obstáculos y en (c) se muestra la fuerza
+    de navegación.}
 \end{figure}
 %\begin{figure}%[ht!]
 %  	\centering \footnotesize
@@ -484,12 +572,12 @@ descritos mediante modelos URDF.
 
 Un modelo URDF puede representar la descripción cinemática y dinámica de un robot, su 
 representación visual, y el modelo de colisión. El URDF esta conformado por lo siguiente: 
-(1) \textbf{link}, representa un solo eslabón del robot y permite especificar sus propiedades, 
-como tamaño, forma y color. (2) \textbf{joint}, esta etiqueta representa las articulaciones del 
+(i) \textbf{link}, representa un solo eslabón del robot y permite especificar sus propiedades, 
+como tamaño, forma y color. (ii) \textbf{joint}, esta etiqueta representa las articulaciones del 
 robot, se puede especificar la cinemática y dinámica de la articulación, así como establecer 
-los límites del movimiento articular y de su velocidad. (3) \textbf{robot}, esta etiqueta 
+los límites del movimiento articular y de su velocidad. (iii) \textbf{robot}, esta etiqueta 
 engloba todo el modelo del robot, dentro de esta etiqueta se define el nombre del robot, los 
-eslabones y las articulaciones del robot. (4) \textbf{gazebo}, en esta etiqueta se incluye 
+eslabones y las articulaciones del robot. (iv) \textbf{gazebo}, en esta etiqueta se incluye 
 parámetros de simulación para el simulador \textit{Gazebo}.
 
 %ROS es un framework que se usa ampliamente en rob\'otica. Lo que busca 
@@ -524,7 +612,7 @@ parámetros de simulación para el simulador \textit{Gazebo}.
 
 \begin{figure}%[ht!]
 	\centering \footnotesize
-	\includegraphics[width=0.9\textwidth]{images/estruct_auto.png}
+	\includegraphics[width=1.07\textwidth]{images/estructura_autonomia.jpg}
 	\captionsetup{font=footnotesize}
 	\caption{Arquitectura de control del sistema para la autonomía de un robot móvil}
 	\label{fig:ArqSist}
