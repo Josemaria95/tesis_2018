@@ -438,17 +438,19 @@ que se esta mapeando.
 	de navegación autónoma y mapeo de un ambiente en tres dimensiones. }
 	\label{fig:ProtoFinal}
 \end{figure}
-El prototipo final de este trabajo, permite que el robot pueda generar un mapa en tres dimensiones 
-mientras genera su propia trayectoria. La figura \ref{fig:ProtoFinal} muestra el prototipo. Utilizando
-un robot diferencial Kobuki conectado al sensor lidar se puede desplazar de forma autónoma
-dentro del entorno. El sistema mecánico descrito hace que se genere el mapa en tres dimensiones
-y también en dos dimensiones, el cual permitirá que el robot pueda localizarse dentro del ambiente.
+El prototipo final del presente trabajo de tesis se muestra en la Figura \ref{fig:ProtoFinal}, 
+este robot puede desplazarse de forma autónoma en un ambiente desconocido y a su vez 
+puede generar un mapa en tres dimensiones del lugar. El prototipo está compuesto por un robot
+móvil diferencial Kobuki, un sensor lidar y un motor paso a paso, estos se encuentran conectados
+a un microcontrolador Raspberry Pi 3. Este microcontrolador es usado para poder controlar 
+todos los componentes mencionados y poder almacenar la información de la nube de puntos que genera 
+el sistema mecánico.
 
 %\section{Movimiento del Robot y Mapeo}
 
 %\subsection{Control de Bajo Nivel}
 
-\section{Generaci\'on de Trayectoria basado en Campos Potenciales}
+\section{Generación de Trayectoria basado en Campos Potenciales}
 \label{sec:autonomia}
 
 \begin{figure}[ht!]
@@ -459,8 +461,8 @@ y también en dos dimensiones, el cual permitirá que el robot pueda localizarse
     \end{center}
   \captionsetup{font=footnotesize}
     \caption{\label{f:APF}En esta figura se muestra las pruebas para el algoritmo de campo potencial 
-    artificial. En (a) se muestra la prueba para las fuerzas de atracción, en (b) se muestra las
-    pruebas de las fuerzas de repulsión de cada uno de los obstáculos y en (c) se muestra la fuerza
+    artificial. En (a) se muestra la prueba para las fuerzas de atracción, en (b) se muestra la
+    prueba de las fuerzas de repulsión de cada uno de los obstáculos y en (c) se muestra la fuerza
     de navegación.}
 \end{figure}
 %\begin{figure}%[ht!]
@@ -480,16 +482,16 @@ y también en dos dimensiones, el cual permitirá que el robot pueda localizarse
 %  	\label{f:APF}
 %\end{figure}
 Para hacer que el robot se mueva a su objetivo final sin toparse con obstáculos, se 
-toma el siguiente enfoque. Primero, un objetivo final deseado $q_{g} =(x_{g}, y_{g}, 
-\theta_{g})$ que describe la posición y la orientación se específica en términos del 
-marco inercial. Entonces, los datos locales actuales del entorno se obtienen por medio 
-de un sensor como un lidar, que fue usado en los experimentos, pero se puede usar cualquier 
-otro sensor de profundidad. Estos datos proporcionan las posiciones de los obstáculos que 
-se encuentran en el campo de visión del robot, y se utilizan como posiciones de obstáculos 
-que definen el campo de repulsión.
+hace uso de la teoría explicada en la sección \ref{sec:Campos Potenciales}. Primero, un 
+objetivo final deseado $q_{g} =(x_{g}, y_{g}, \theta_{g})$ que describe la posición y la 
+orientación se específica en términos del marco inercial. Entonces, los datos locales 
+actuales del entorno se obtienen por medio de un sensor como un lidar, que fue usado en 
+los experimentos, pero se puede usar cualquier otro sensor de profundidad. Estos datos 
+proporcionan las posiciones de los obstáculos que se encuentran en el campo de visión del 
+robot, y se utilizan como posiciones de obstáculos que definen el campo de repulsión. 
 
-Usando el campo potencial definido por la posición deseada y los datos detectados, se toma un paso 
-en la posición actual. Este paso da un pequeño incremento en la dirección y define la 
+Usando el campo potencial definido por la posición deseada y los datos detectados, se toma un 
+paso en la posición actual. Este paso da un pequeño incremento en la dirección y define la 
 posición deseada que debe seguir el controlador polar. A medida que el robot se mueve, esta 
 posición deseada también cambia según el campo potencial, guiando el movimiento hacia la meta 
 y evitando los obstáculos. A medida que el robot se mueve, continúa escaneando y actualizando 
@@ -499,16 +501,16 @@ partes atractivas y repulsivas.
 Las fuerzas proporcionadas por el campo de potencial artificial se descomponen en 
 magnitud y dirección que conducen continuamente al robot. Para mostrar cómo funciona el 
 enfoque, se realiza una prueba en la computadora, que utiliza obstáculos 
-colocados artificialmente y una posición deseada. La figura \ref{f:APF} (a) muestra el campo 
+colocados artificialmente y una posición deseada. La Figura \ref{f:APF}a muestra el campo 
 de atracción y las fuerzas que guían hacia la posición deseada. El robot simulado se 
 encuentra inicialmente en la esquina superior izquierda $q_{0} = (2,18)$ y se mueve hacia 
 la meta $q_{goal} = (10,4)$ guiado por el campo. Los puntos blancos muestran la ruta que debe 
 seguir el robot y que luego guiará al controlador. Un campo repulsivo puro se muestra en 
-\ref{f:APF} (b), donde se agregaron tres obstáculos en diferentes posiciones del espacio de 
+la Figura \ref{f:APF}b, donde se agregaron tres obstáculos en diferentes posiciones del espacio de 
 trabajo. Cada obstáculo se proyecta como un círculo rojo debido a su gran magnitud dentro de 
 su campo potencial, donde las fuerzas apuntan hacia afuera en cada obstáculo. La fuerza de 
 navegación total compuesta por la superposición de las fuerzas de atracción y repulsión se 
-muestra en la figura \ref{f:APF} (c).
+muestra en la Figura \ref{f:APF}c.
 
 \section{SLAM basado en Filtros de Part\'iculas}
 
@@ -516,17 +518,16 @@ Los filtros de partículas es un método que fue introducido en años recientes 
 eficaz para resolver el problema de la localización y mapeo simultáneo 
 \cite{nummiaro2003adaptive}. Para este trabajo de tesis se utilizo un paquete de código 
 abierto llamado \textit{gmapping}, este paquete de \textit{ROS} (\textit{Robot Operating System}) 
-emplea una técnica llamada \textit{Rao-Blackwellized} basado en filtros de partículas 
-\cite{grisetti2007improved}.
+emplea el algoritmo SLAM basado en filtros de partículas \cite{grisetti2007improved}, la teoría
+de este algoritmo fue explicada en la sección \ref{sec:SLAM_FP}.
 
-El filtro de partículas \textit{Rao-Blackwellized} consiste en que cada partícula 
-lleva la información de un mapa del entorno. El cual se enfoca en calcular la 
-probabilidad del mapa no solo utilizando la odometría del robot, sino también incluye las 
-mediciones que hace un sensor, en este caso un sensor lidar que se encuentra encima del 
-robot. Estas informaciones enviadas al algoritmo hace que la incertidumbre sobre la 
-posición y orientación del robot disminuya. 
+El SLAM basado en filtros de partículas consiste en que cada partícula lleva la información de 
+un mapa del entorno. El cual se enfoca en calcular la probabilidad del mapa no solo utilizando 
+la odometría del robot, sino también incluye las mediciones que hace un sensor, en este caso un 
+sensor lidar que se encuentra encima del robot. Estas informaciones enviadas al algoritmo hace 
+que la incertidumbre sobre la posición y orientación del robot disminuya. 
 
-Uno de los principales problemas de la técnica \textit{Rao-Blackwellized} es la cantidad 
+Uno de los principales problemas de la técnica SLAM basado en filtros de partículas es la cantidad 
 de partículas requeridas para construir un mapa preciso. Este efecto es conocido como el 
 problema del agotamiento de partículas. Por tal motivo el paquete \textit{gmapping} propone 
 dos pasos para solucionar este problema. El primero consiste en calcular la probabilidad 
@@ -540,29 +541,29 @@ cada vez que es necesario, manteniendo una cantidad razonable de partículas. Co
 el paquete \textit{gmapping} reduce el problema del agotamiento de partículas.
 
 
-\section{Implementaci\'on del sistema}
+%\section{Implementaci\'on del sistema}
 
-La metodología propuesta fue probada en un robot móvil Kobuki real, que es un robot de 
-accionamiento diferencial, y un \textit{RPlidar} conectado a él. La interfaz entre ambos elementos 
-se realizó utilizando un \textit{Raspberry Pi3}, con \textit{ROS} previamente instalado.
-El algoritmo fue implementado en el lenguaje \textit{Python}, usando la librería 
-\textit{rospy}. Usando este sistema operativo, también es posible transmitir en línea los 
-datos adquiridos a una computadora externa. 
+%La metodología propuesta fue probada en un robot móvil Kobuki real, que es un robot de 
+%accionamiento diferencial, y un \textit{RPlidar} conectado a él. La interfaz entre ambos elementos 
+%se realizó utilizando un \textit{Raspberry Pi3}, con \textit{ROS} previamente instalado.
+%El algoritmo fue implementado en el lenguaje \textit{Python}, usando la librería 
+%\textit{rospy}. Usando este sistema operativo, también es posible transmitir en línea los 
+%datos adquiridos a una computadora externa. 
 
 \subsection{Sistema Operativo del Robot (ROS)}
-ROS es un framework que se usa ampliamente en rob\'otica. Lo que busca este sistema 
+ROS es un framework que se usa ampliamente en robótica. Lo que busca este sistema 
 operativo de código abierto es hacer una parte del software que pueda funcionar en 
 otros robots con solo pequeños cambios en el código. Lo que se obtiene con esta idea 
 es la capacidad de crear funcionalidades que se puedan compartir y usar en otros robots, por 
 lo que ya no se necesita volver a reinventar la rueda.
 
-Muchas instituciones de investigaci\'on han comenzado a desarrollarse en 
-ROS, agregando hardware y compartiendo su c\'odigo. Los sensores y actuadores 
-utilizados en la rob\'otica tambi\'en se han adaptado para su uso en ROS. Gracias 
-a esto, las empresas est\'an creando sensores m\'as baratos y m\'as potentes. Arduino 
-es un buen ejemplo de esto, ya que al usar una placa electr\'onica barata puede 
+Muchas instituciones de investigación han comenzado a desarrollarse en 
+ROS, agregando hardware y compartiendo su código. Los sensores y actuadores 
+utilizados en la robótica también se han adaptado para su uso en ROS. Gracias 
+a esto, las empresas están creando sensores más baratos y más potentes. Arduino 
+es un buen ejemplo de esto, ya que al usar una placa electrónica barata puede 
 agregar una gran cantidad de sensores como codificadores, sensores de luz, 
-temperatura, y as\'i sucesivamente \cite{rosIntroduction}.
+temperatura, y así sucesivamente \cite{rosIntroduction}.
 
 ROS provee paquetes que pueden ser utilizados para construir modelos 3D y comunicarse 
 con estos modelos. El formato URDF (\textit{Unified Robot Description Format}) permite 
@@ -608,44 +609,94 @@ parámetros de simulación para el simulador \textit{Gazebo}.
 %procesos y la gesti\'on de paquetes. %Esta tesis es desarollada con librer\'ias 
 %de ROS.
 
-\subsection{Arquitectura del Sistema de Autonomía del Robot Móvil}
+\subsection{Estructura del Sistema de Autonomía del Robot Móvil}
 
 \begin{figure}%[ht!]
 	\centering \footnotesize
 	\includegraphics[width=1.07\textwidth]{images/estructura_autonomia.jpg}
 	\captionsetup{font=footnotesize}
 	\caption{Arquitectura de control del sistema para la autonomía de un robot móvil}
-	\label{fig:ArqSist}
+	\label{fig:AutoSist}
 \end{figure}
- 
-Para que el robot se localicé dentro de un ambiente desconocido, se utiliza el bloque del SLAM. 
-Este algoritmo tiene como entradas los datos del sensor lidar y de la odometría del robot 
-($x_{medido},y_{medido},\theta_{medido}$). El SLAM con los datos mencionados utilza filtros de 
-partículas y puede corregir la posición del robot dentro del ambiente desconocido. El 
-bloque de SLAM tiene como salidas el mapa en dos dimensiones del lugar y la localización del robot 
-corregido ($x_{corregido},y_{corregido},\theta_{corregido}$). El mapa en dos dimensiones permite
-visualizar el entorno, en tiempo real, que se esta explorando.
 
-El bloque del campo potencial más control polar es la representación del algoritmo utilizado
-para la generación de trayectoria. Este algoritmo tiene como entradas los datos del sensor 
-lidar, la localización corregida del robot y la posición deseada. El algoritmo trabaja de forma 
-iterativa, tomando en consideración los obstáculos y la posición deseada. Para la exlporación del 
-robot dentro del ambiente desconocido, se toma posiciones deseadas de forma aleatoria que son
-entradas del algoritmo y a través de los campos potenciales el robot puede llegar hacia la posición 
-deseada. En el caso de que el robot mientras se va moviendo el sensor lidar detecte un obstáculo, 
-este enviará las posiciones del obstáculo y el algoritmo evitará que el robot se choque y a su vez
-pide una nueva posición deseada para que pueda crear una nueva trayectoria y seguir explorando el 
-ambiente. El controlador polar es utilizado para que el robot pueda moverse de forma suave en las 
-curvas que se forman al generar su propia trayectoria.
+\begin{figure}[ht!]
+     \begin{center}
+        \subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.452\textwidth]{images/exploration1.jpg}}
+        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.45\textwidth]{images/exploration2.jpg}}
+        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/exploration3.jpg}}
+        \subfigure[]{\label{fig:etiquetaD}\includegraphics[width=.45\textwidth]{images/exploration4.jpg}}
+    \end{center}
+  \captionsetup{font=footnotesize}
+    \caption{\label{f:SistemaAutonomo} En esta figura se muestra de forma gráfica las etapas del 
+    sistema de autonomía del robot móvil. En (a) se muestra la etapa inicial que es el sensado de 
+    las distancias, en (b) se muestra la evasión de obstáculos del robot móvil, en (c) se muestra
+    las posiciones aleatorias por donde el robot tuvo que generar su trayectoria y en (d) se muestra
+    como el robot ya no sabe por donde avanzar y regresa a su posición inicial.}
+\end{figure}
 
-Finalmente, el algoritmo de la generación de trayectoria tiene como salida la velocidad lineal y 
-velocidad angular que debe tener el robot para desplazarse dentro del ambiente que esta explorando. Todo 
-el sistema de navegación autónoma para el robot móvil se hace de forma iterativa hasta que el robot 
-termine de mapear todo el ambiente, una vez culminado el robot regresa hacia su posición inicial. El 
-sistema de navegación se puede ver en la figura \ref{fig:ArqSist}.
+La estructura del sistema de navegación autónoma del robot móvil diferencial se muestra en la
+Figura \ref{fig:AutoSist}. Para que el robot móvil pueda localizarse dentro de un entorno 
+desconocido, se utiliza el primer bloque que es el SLAM. Este algoritmo tiene como entradas 
+los datos del sensor lidar y la odometría del robot ($x_{medido}, y_{medido}, \theta_{medido}$). El
+algoritmo SLAM, como se menciono anteriormente, trabaja con filtros de partículas que ayudan 
+a corregir la posición del robot dentro del ambiente que se va a desplazar. El SLAM tiene 
+dos salidas, una es el mapa en dos dimensiones del lugar y la segunda salida es la localización
+corregida del robot en el ambiente ($x_{corregido}, y_{corregido}, \theta_{corregido}$). El mapa
+generado por el SLAM se da en tiempo real, lo cual permite que el robot pueda saber que lugares se
+encuentra explorando.
+
+%Para que el robot se localicé dentro de un ambiente desconocido, se utiliza el bloque del SLAM. 
+%Este algoritmo tiene como entradas los datos del sensor lidar y de la odometría del robot 
+%($x_{medido},y_{medido},\theta_{medido}$). El SLAM con los datos mencionados utilza filtros de 
+%partículas y puede corregir la posición del robot dentro del ambiente desconocido. El 
+%bloque de SLAM tiene como salidas el mapa en dos dimensiones del lugar y la localización del robot 
+%corregido ($x_{corregido},y_{corregido},\theta_{corregido}$). El mapa en dos dimensiones permite
+%visualizar el entorno, en tiempo real, que se esta explorando.
+
+El segundo bloque de la estructura consiste en la etapa de exploración, este algoritmo tiene 
+como entradas la localización del robot y el mapa en dos dimensiones dadas por el algoritmo
+SLAM. Con la información de la localización del robot y el mapa en dos dimensiones la etapa 
+comienza a generar posiciones deseadas de forma aleatoria dentro del ambiente, teniendo en 
+consideración los obstáculos que se encuentran dentro de ella. 
+
+El tercer bloque consiste en la navegación del robot móvil, esta navegación es realizada 
+junto a los campos potenciales y el control de posición y orientación del robot móvil es 
+utilizando el controlador polar. Estas teorías fueron explicadas en la sección 
+\ref{sec:Campos Potenciales} y la sección \ref{sec:ControlPolar} respectivamente. Estas 
+metodologías son empleadas para que el robot pueda generar su propia trayectoria evitando
+los obstáculos y a su vez pueda tener un movimiento suave controlando su posición y 
+orientación dentro del plano cartesiano. Este bloque necesita de la posición de los obstáculos
+en el ambiente y de la posición deseada aleatoria, para que el robot, junto a los campos
+potenciales pueda generar su propia trayectoria gracias a las fuerzas de atracción y 
+de repulsión. Asimismo, el controlador polar ayuda a que el robot móvil pueda llegar exactamente
+a la posición deseada dada de forma aleatoria. Finalmente, esta etapa tiene como salidas 
+a la velocidad lineal y velocidad angular. Estas velocidades ingresan al robot móvil diferencial
+haciendo que este se desplace dentro del ambiente que se esta explorando. El robot móvil como
+salida tiene los valores de la odometría, el cual ingresa a la etapa del SLAM haciendo que 
+esta estructura sea de forma iterativa.
 
 
-\subsection{Arquitectura del Sistema de Mapeo en Tres Dimensiones}
+%El bloque del campo potencial más control polar es la representación del algoritmo utilizado
+%para la generación de trayectoria. Este algoritmo tiene como entradas los datos del sensor 
+%lidar, la localización corregida del robot y la posición deseada. El algoritmo trabaja de forma 
+%iterativa, tomando en consideración los obstáculos y la posición deseada. Para la exlporación del 
+%robot dentro del ambiente desconocido, se toma posiciones deseadas de forma aleatoria que son
+%entradas del algoritmo y a través de los campos potenciales el robot puede llegar hacia la posición 
+%deseada. En el caso de que el robot mientras se va moviendo el sensor lidar detecte un obstáculo, 
+%este enviará las posiciones del obstáculo y el algoritmo evitará que el robot se choque y a su vez
+%pide una nueva posición deseada para que pueda crear una nueva trayectoria y seguir explorando el 
+%ambiente. El controlador polar es utilizado para que el robot pueda moverse de forma suave en las 
+%curvas que se forman al generar su propia trayectoria.
+
+%Finalmente, el algoritmo de la generación de trayectoria tiene como salida la velocidad lineal y 
+%velocidad angular que debe tener el robot para desplazarse dentro del ambiente que esta explorando. Todo 
+%el sistema de navegación autónoma para el robot móvil se hace de forma iterativa hasta que el robot 
+%termine de mapear todo el ambiente, una vez culminado el robot regresa hacia su posición inicial. El 
+%sistema de navegación se puede ver en la figura \ref{fig:ArqSist}.
+
+
+\section{Estructura del Sistema de Mapeo en Tres Dimensiones}
+%\subsection{Estructura del Sistema de Mapeo en Tres Dimensiones}
 
 \begin{figure}%[ht!]
 	\centering \footnotesize
