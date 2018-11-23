@@ -299,7 +299,7 @@ los objetos que se encuentran dentro de un ambiente.
      \begin{center}
         \subfigure[]{\label{fig:lidar3Da}\includegraphics[width=.45\textwidth]{images/lidar_3d.png}}
         \subfigure[]{\label{fig:lidar3Db}\includegraphics[width=.45\textwidth]{images/lidar_wKbki.png}}
-        \subfigure[]{\label{fig:lidar3Dc}\includegraphics[width=.55\textwidth]{images/LIDAR_SIST.JPG}}
+        \subfigure[]{\label{fig:lidar3Dc}\includegraphics[width=.70\textwidth]{images/LIDAR_SIST.JPG}}
     \end{center}
   \captionsetup{font=footnotesize}
     \caption{\label{f:lidar3D}Diseño del sistema mecánico, desarrollado en un programa CAD. En (a) se 
@@ -513,7 +513,7 @@ navegación total compuesta por la superposición de las fuerzas de atracción y
 muestra en la Figura \ref{f:APF}c.
 
 \section{SLAM basado en Filtros de Part\'iculas}
-
+\label{sec:GMAPPING}
 Los filtros de partículas es un método que fue introducido en años recientes como un medio 
 eficaz para resolver el problema de la localización y mapeo simultáneo 
 \cite{nummiaro2003adaptive}. Para este trabajo de tesis se utilizo un paquete de código 
@@ -540,7 +540,15 @@ entorno. El segundo paso consiste en un remuestreo adaptativo el cual permite un
 cada vez que es necesario, manteniendo una cantidad razonable de partículas. Con este paso 
 el paquete \textit{gmapping} reduce el problema del agotamiento de partículas.
 
-
+Este algoritmo muestra el mapa, en dos dimensiones, del entorno a mapear. El mapa obtenido
+tiene colores establecidos que identifican cada zona del lugar que se esta mapeando. Como 
+se mencionó en la sección \ref{sec:MapRed}, el mapa originado por el SLAM tiene tres zonas
+cada una con color característico. Estas zonas son: (i) Zona desconocida está representado 
+por una área de color verde oscuro, esta zona muestra al robot que lugares aún le falta 
+explorar. (ii) Zona explorada está representado por una área de color gris, esta zona 
+muestra al robot que lugares del entorno ya ha explorado. Finalmente, (iii) zona de 
+obstáculos está representado por un área de color negro, esta zona muestra al robot la 
+posición de los obstáculos que se encuentran dentro del ambiente que se esta explorando.
 %\section{Implementaci\'on del sistema}
 
 %La metodología propuesta fue probada en un robot móvil Kobuki real, que es un robot de 
@@ -613,7 +621,7 @@ parámetros de simulación para el simulador \textit{Gazebo}.
 
 \begin{figure}%[ht!]
 	\centering \footnotesize
-	\includegraphics[width=1.07\textwidth]{images/estructura_autonomia.jpg}
+	\includegraphics[width=0.98\textwidth]{images/estructura_autonomia.jpg}
 	\captionsetup{font=footnotesize}
 	\caption{Arquitectura de control del sistema para la autonomía de un robot móvil}
 	\label{fig:AutoSist}
@@ -667,14 +675,41 @@ metodologías son empleadas para que el robot pueda generar su propia trayectori
 los obstáculos y a su vez pueda tener un movimiento suave controlando su posición y 
 orientación dentro del plano cartesiano. Este bloque necesita de la posición de los obstáculos
 en el ambiente y de la posición deseada aleatoria, para que el robot, junto a los campos
-potenciales pueda generar su propia trayectoria gracias a las fuerzas de atracción y 
-de repulsión. Asimismo, el controlador polar ayuda a que el robot móvil pueda llegar exactamente
-a la posición deseada dada de forma aleatoria. Finalmente, esta etapa tiene como salidas 
-a la velocidad lineal y velocidad angular. Estas velocidades ingresan al robot móvil diferencial
-haciendo que este se desplace dentro del ambiente que se esta explorando. El robot móvil como
-salida tiene los valores de la odometría, el cual ingresa a la etapa del SLAM haciendo que 
-esta estructura sea de forma iterativa.
+potenciales pueda generar su propia trayectoria gracias a las fuerzas de atracción y de 
+repulsión. Asimismo, el controlador polar ayuda a que el robot móvil pueda llegar exactamente
+a la posición deseada dada de forma aleatoria. Finalmente, esta etapa tiene como salidas a la 
+velocidad lineal y velocidad angular. Estas velocidades ingresan al robot móvil diferencial
+haciendo que este se desplace dentro del ambiente donde se está explorando. El robot móvil 
+como salida tiene los valores de la odometría, el cual ingresa a la etapa del SLAM haciendo que 
+esta estructura se repita de forma iterativa.
 
+La interacción autónoma del robot móvil dentro de un ambiente desconocido se puede ver en la 
+Figura \ref{f:SistemaAutonomo}. En la Figura \ref{f:SistemaAutonomo}(a) se muestra la 
+etapa inicial de la exploración del robot móvil, donde el robot móvil esta representado por 
+el círculo de color negro y la figura geométrica de color rojo, representa las luces láser 
+que emite el sensor lidar para realizar las mediciones. En esta etapa el sensor lidar comienza a 
+tomar las primeras mediciones del ambiente desconocido, con esta información se comienza a 
+construir el mapa en dos dimensiones del lugar. La Figura \ref{f:SistemaAutonomo}(b) se muestra 
+el mapa originado por el SLAM, el cual tiene los colores característicos que representa
+las zonas mencionadas en la sección \ref{sec:GMAPPING}. En esta figura se puede ver como el robot
+móvil se desplaza dentro del ambiente. Cuando el robot recibe la información del mapa en dos 
+dimensiones del algoritmo SLAM sabe que debe desplazarse por las zonas de color gris, en ese 
+instante comienza a generar posiciones de forma aleatoria desplazándose hacia la izquierda. Este 
+desplazamiento es originado por los campos potenciales explicado en la sección 
+\ref{sec:Campos Potenciales}. Cuando el robot móvil se encuentra muy próximo a un obstáculo, en 
+este caso una pared, los campos potenciales de repulsión evitan que el robot pueda chocarse contra
+la pared u objeto. Estas fuerzas de repulsión están representados por flechas de color azul y la 
+trayectoria del robot está representado por líneas de color verde, en la Figura 
+\ref{f:SistemaAutonomo}(b). En la Figura \ref{f:SistemaAutonomo}(c) se muestra el desplazamiento 
+que va realizando el robot móvil mientras va explorando el ambiente. Como se observa el 
+desplazamiento del robot es hacia la derecha, luego hacia la izquierda esto se hace forma iterativa
+y el cambio sucede cuando el robot se encuentra con un obstáculo. El robot cuando se encuentra 
+con un obstáculo este rota en su propio eje y comienza a desplazarse alejándose del obstáculo. El robot 
+sigue explorando el ambiente, ya que el mapa SLAM sigue mostrando zonas desconocidas. Finalmente, 
+en la Figura \ref{f:SistemaAutonomo}(d) se muestra la situación cuando el robot ya no puede seguir 
+explorando debido a que a sus alrededores se encuentran obstáculos que impiden el paso hacia las zonas
+que aún falta por explorar, en este caso el robot rota en su propio eje y regresa a la posición 
+donde comenzó a explorar ($\mayusx=0,\mayusy=0$).
 
 %El bloque del campo potencial más control polar es la representación del algoritmo utilizado
 %para la generación de trayectoria. Este algoritmo tiene como entradas los datos del sensor 
@@ -705,6 +740,7 @@ esta estructura sea de forma iterativa.
 	\caption{Arquitectura del sistema de mapeo en 3D con un robot móvil}
 	\label{fig:Sist3D}
 \end{figure}
+
 
 En esta parte del trabajo de tesis se muestra la estructura del sistema para realizar el
 mapa en tres dimensiones. La estructura se muestra en la figura \ref{fig:Sist3D}. Este 
