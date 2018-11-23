@@ -623,7 +623,7 @@ parámetros de simulación para el simulador \textit{Gazebo}.
 	\centering \footnotesize
 	\includegraphics[width=0.98\textwidth]{images/estructura_autonomia.jpg}
 	\captionsetup{font=footnotesize}
-	\caption{Arquitectura de control del sistema para la autonomía de un robot móvil}
+	\caption{Estructura del sistema para realizar la exploración del robot móvil diferencial, de forma autónoma.}
 	\label{fig:AutoSist}
 \end{figure}
 
@@ -737,40 +737,84 @@ donde comenzó a explorar ($\mayusx=0,\mayusy=0$).
 	\centering \footnotesize
 	\includegraphics[width=0.9\textwidth]{images/estructura_3d.png}
 	\captionsetup{font=footnotesize}
-	\caption{Arquitectura del sistema de mapeo en 3D con un robot móvil}
+	\caption{Estructura del sistema para la construcción del mapa en tres dimensiones, mientras el robot móvil
+	se va desplazando.}
 	\label{fig:Sist3D}
 \end{figure}
 
+En esta sección se explica de forma detallada las etapas por la cual esta conformada la estructura
+del sistema para generar el mapa en tres dimensiones del ambiente. En la Figura \ref{fig:Sist3D} se 
+muestra la estructura que genera los valores dentro de los tres ejes del plano cartesiano, mientras
+el robot va explorando un ambiente.
 
-En esta parte del trabajo de tesis se muestra la estructura del sistema para realizar el
-mapa en tres dimensiones. La estructura se muestra en la figura \ref{fig:Sist3D}. Este 
-proceso comienza con las medidas que genera el sensor lidar, estas mediciones tienen
-que ser convertidas en posiciones dentro de las coordenadas cartesianas en dos dimensiones
-($X_{L}, Y_{L}$). La conversión a coordenadas polares permite conocer las posiciones de los 
-obstáculos dentro de un ambiente y asimismo conocer las dimensiones del entorno que se esta 
-explorando.
+El proceso comienza con la toma de mediciones de parte del sensor lidar, las mediciones que son 
+obtenidas en tiempo real se encuentran en el formato de coordenadas polares ($r,\theta$). Estas 
+medidas deben ser convertidas a coordenadas cartesianas, para encontrar las posiciones de los
+objetos dentro del plano cartesiano bidimensional ($\mayusx_{L}, \mayusy_{L}$) y además conocer
+las dimensiones que tiene el ambiente que se esta explorando.
 
-Para obtener la nube de puntos, se necesita los ángulos de rotación del servomotor. El 
-servomotor hace rotar el sistema mecánico descrito y explicado en la sección 
-\ref{sec:SistP3D}. El sistema mecánico implementado tiene un movimiento de rotación y otro 
-de traslación. El sistema de referencia del sensor lidar se toma como el 
-sistema de referencia del servomotor. Por tal motivo se utiliza una matriz de transformación 
-homogénea, la cual esta compuesta por una matriz de rotación en el eje $Y_{S}$ del servomotor 
-y una matriz de traslación con un desplazamiento en el eje $Z_{S}$ del servomotor. El
-servomotor hace que el sensor lidar tenga un ángulo de abertura de 30\grad~ que permite
-hacer mediciones en el eje $Z$. El resultado de la multiplicación de las posiciones 
-($X_{L}, Y_{L}$) del sensor lidar con la matriz de transformación homogénea es
-una nube de puntos ($X_{M}, Y_{M}, Z_{M}$) del mapa del entorno.
 
-El robot explora el entorno y a su vez va realizando el mapa en tres dimensiones de las zonas
-exploradas. El mapa debe tener correlación con la trayectoria que realiza el movimiento del 
-robot, para esto se debe sumar los valores de la odometría del robot móvil. La odometría del 
-robot es la estimación de la posición y orientación del robot mientras este se encuentra 
-navegando dentro de un ambiente. La odometría esta compuesta por tres valores ($X_{R}, Y_{R}, 
-\theta_{R}$). Para que el mapa pueda tener las posiciones con mayor precisión se suma los 
-valores de ($X_{R}, Y_{R}$) del robot a la nube de puntos del mapa tridimensional. Otra
-consideración en la construcción del mapa es la rotación del robot móvil al momento de 
-realizar giros en su propio eje $Z_{R}$. Para este caso se utiliza el valor del ángulo 
-de rotación ($\theta_{R}$) en una matriz de rotación del eje $Z$. Finalmente la nueva nube 
-de puntos multiplicado con la matriz de rotación en el eje $Z_{R}$ del robot, genera el mapa 
-en tres dimensiones de la zona explorada.
+%En esta parte del trabajo de tesis se muestra la estructura del sistema para realizar el
+%mapa en tres dimensiones. La estructura se muestra en la figura \ref{fig:Sist3D}. Este 
+%proceso comienza con las medidas que genera el sensor lidar, estas mediciones tienen
+%que ser convertidas en posiciones dentro de las coordenadas cartesianas en dos dimensiones
+%($X_{L}, Y_{L}$). La conversión a coordenadas polares permite conocer las posiciones de los 
+%obstáculos dentro de un ambiente y asimismo conocer las dimensiones del entorno que se esta 
+%explorando.
+La segunda etapa de este proceso es hallar los valores de los ejes del plano cartesiano 
+tridimensional, a partir de las transformaciones homogéneas. Para generar estos 
+valores se necesita obtener los ángulos de rotación del motor paso a paso. Las matrices
+de transformación homogénea y el principio de funcionamiento del sistema mecánico fueron
+explicados en la sección \ref{sec:SistP3D}. Este sistema mecánico cuenta con dos sistemas
+de referencia, uno es el sistema de referencia del sensor lidar y el segundo es el sistema
+de referencia del motor paso a paso. Asimismo, el sistema mecánico genera movimientos de 
+rotación y traslación; por ende, se utiliza transformaciones homogéneas ya que esto 
+está compuesto por una matriz de rotación en el eje $\mayusy_{M}$ del motor paso a paso y
+una matriz de traslación con un desplazamiento en el eje $\mayusz_{M}$ de dicho motor. La potencia
+y la resolución angular del motor paso a paso permite que el sensor lidar tenga un ángulo de 
+abertura de 176\grad~ el cual permite al sensor tener una amplia proyección en el eje $Z$ para
+tomar mediciones. El resultado de las transformaciones homogéneas es una nube de puntos del
+entorno explorado ($\mayusx, \mayusy, \mayusz$).
+
+%Para obtener la nube de puntos, se necesita los ángulos de rotación del servomotor. El 
+%servomotor hace rotar el sistema mecánico descrito y explicado en la sección 
+%\ref{sec:SistP3D}. El sistema mecánico implementado tiene un movimiento de rotación y otro 
+%de traslación. El sistema de referencia del sensor lidar se toma como el 
+%sistema de referencia del servomotor. Por tal motivo se utiliza una matriz de transformación 
+%homogénea, la cual esta compuesta por una matriz de rotación en el eje $Y_{S}$ del servomotor 
+%y una matriz de traslación con un desplazamiento en el eje $Z_{S}$ del servomotor. El
+%servomotor hace que el sensor lidar tenga un ángulo de abertura de 30\grad~ que permite
+%hacer mediciones en el eje $Z$. El resultado de la multiplicación de las posiciones 
+%($X_{L}, Y_{L}$) del sensor lidar con la matriz de transformación homogénea es
+%una nube de puntos ($X_{M}, Y_{M}, Z_{M}$) del mapa del entorno.
+
+Finalmente, la última etapa del sistema para generar el mapa en tres dimensiones es 
+hacer que el mapa tenga correlación con el desplazamiento del robot dentro del 
+ambiente. Para encontrar dicha correlación se debe obtener los valores de la odometría
+del robot y estos deben ser sumados las posiciones del plano cartesiano tridimensional 
+obtenido de las transformaciones homogéneas. La odometría del robot móvil diferencial 
+es la estimación de la posición y orientación de este mientras se encuentra explorando 
+el ambiente. La odometría del robot esta compuesta por tres valores 
+($\mayusx_{R}, \mayusy_{R}, \theta_{R}$), estos valores son sumados a la nube de puntos
+($\mayusx, \mayusy, \mayusz$). Cuando el robot realiza rotaciones en su propio eje ($\mayusz_{R}$) 
+para el cambio de dirección en su trayectoria, esto debe ser considerado en la generación 
+de la nube de puntos. Para este caso se utiliza el valor del ángulo de rotación del
+robot móvil, obtenido de la odometría ($\theta_{R}$), dentro de una matriz de rotación del 
+eje $\mayusz$. Esta matriz de rotación se multiplica con la nube de puntos obtenida 
+anteriormente y el resultado de esto es el mapa en tres dimensiones del ambiente real 
+explorado.
+
+
+
+%El robot explora el entorno y a su vez va realizando el mapa en tres dimensiones de las zonas
+%exploradas. El mapa debe tener correlación con la trayectoria que realiza el movimiento del 
+%robot, para esto se debe sumar los valores de la odometría del robot móvil. La odometría del 
+%robot es la estimación de la posición y orientación del robot mientras este se encuentra 
+%navegando dentro de un ambiente. La odometría esta compuesta por tres valores ($X_{R}, Y_{R}, 
+%\theta_{R}$). Para que el mapa pueda tener las posiciones con mayor precisión se suma los 
+%valores de ($X_{R}, Y_{R}$) del robot a la nube de puntos del mapa tridimensional. Otra
+%consideración en la construcción del mapa es la rotación del robot móvil al momento de 
+%realizar giros en su propio eje $Z_{R}$. Para este caso se utiliza el valor del ángulo 
+%de rotación ($\theta_{R}$) en una matriz de rotación del eje $Z$. Finalmente la nueva nube 
+%de puntos multiplicado con la matriz de rotación en el eje $Z_{R}$ del robot, genera el mapa 
+%en tres dimensiones de la zona explorada.
