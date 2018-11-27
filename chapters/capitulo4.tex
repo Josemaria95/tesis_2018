@@ -1,20 +1,48 @@
 \chapter{Resultados}
-%\section{Resultados en Simulaci\'on}
+En este capítulo se mostrará los resultados que se fueron obteniendo al realizar las 
+diferentes pruebas con el sensor lidar y el robot móvil diferencial. Estas pruebas 
+fueron realizadas de forma independiente cada componente y también se realizó pruebas
+juntando los componentes como un solo sistema. Asimismo, se explicará de forma detallada
+las pruebas que se realizaron y los resultados que se obtuvieron de cada prueba.
+
+Para obtener estos resultados se realizó pruebas dentro de ambientes reales, pero también 
+se realizó pruebas dentro de Gazebo. Gazebo es un simulador que trabaja en conjunto con 
+ROS y permite poder probar algoritmos de forma rápida, diseñar robots y entrenar algoritmos 
+de inteligencia artificial en diferentes escenarios.
 \section {Resultados del Controlador Polar}
+%\begin{figure}[ht!]
+%     \begin{center}
+%        \subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.45\textwidth]{images/tvsxy_tesis.png}}
+%        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.45\textwidth]{images/tvsv_tesis.png}}
+%        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/tvstheta_tesis.png}}
+%        \subfigure[]{\label{fig:etiquetaD}\includegraphics[width=.45\textwidth]{images/tvsomega_tesis.png}}
+%    \end{center}
+%  \captionsetup{font=footnotesize}
+%    \caption{\label{f:PolarControl}Evolución temporal de las variables de estado usando el 
+%    controlador polar para lograr una posición deseada dada por $x = 3, y = 3, 
+%    \theta = 90$. En (a) se muestra la evolución temporal en la posición del eje x, en (b) 
+%    se muestra la evolución de la velocidad lineal, en (c) se muestra la evolución de la
+%    orientación y en (d) se muestra la evolución de la velocidad angular.}
+%\end{figure}
+
 \begin{figure}[ht!]
-     \begin{center}
-        \subfigure[Evolución en la posición (x)]{\label{fig:etiquetaA}\includegraphics
-        [width=.45\textwidth]{images/tvsxy_tesis.png}}
-        \subfigure[Evolución de la velocidad lineal]{\label{fig:etiquetaB}\includegraphics
-        [width=.45\textwidth]{images/tvsv_tesis.png}}
-        \subfigure[Evolución de la orientación]{\label{fig:etiquetaC}\includegraphics
-        [width=.45\textwidth]{images/tvstheta_tesis.png}}
-        \subfigure[Evolución de la velocidad angular]{\label{fig:etiquetaD}\includegraphics
-        [width=.45\textwidth]{images/tvsomega_tesis.png}}
-    \end{center}
-  \captionsetup{font=footnotesize}
-    \caption{\label{f:PolarControl}Evolución temporal de las variables de estado usando el controlador polar para lograr una posición deseada dada por $x = 3, y = 3, \theta = 90$}
+  \begin{tabular}{cc}
+  %\centering
+    \includegraphics[width=.47\textwidth]{images/tvsxy_tesis.eps}&
+    \includegraphics[width=.47\textwidth]{images/tvsv_tesis.eps}\\
+    (a)&(b)\\
+    \includegraphics[width=.47\textwidth]{images/tvstheta_tesis.eps}&
+    \includegraphics[width=.47\textwidth]{images/tvsomega_tesis.eps}\\
+    (c)&(d)
+  \end{tabular}
+  \caption{Evolución temporal de las variables de estado usando el controlador polar para 
+  lograr una posición deseada dada por $x = 3, y = 3, \theta = 90$. En (a) se muestra la 
+  evolución temporal en la posición del eje x, en (b) se muestra la evolución de la 
+  velocidad lineal, en (c) se muestra la evolución de la orientación y en (d) se muestra 
+  la evolución de la velocidad angular.}
+  \label{f:PolarControl}
 \end{figure}
+
 
 %\begin{figure}%[ht!]
 %  \centering \footnotesize
@@ -31,32 +59,41 @@ Para probar el controlador polar, se usó una simulación dinámica en Gazebo co
 Kobuki sin obstáculos, y las variables de estado que incluyen velocidad, posición y 
 orientación se obtuvieron en línea a partir de la odometría simulada. Usando la información 
 de esta odometría, el controlador se aplicó en línea. Para estas pruebas, la posición deseada
-es $(x = 3, y = 3)$ y la orientación deseada $\theta = 90^{\circ}$. La figura 
-\ref{f:PolarControl} (a) muestra la evolución temporal de la posición ($x$) donde 
+es $(x = 3, y = 3)$ y la orientación deseada $\theta = 90^{\circ}$. La Figura 
+\ref{f:PolarControl}a muestra la evolución temporal de la posición ($x$) donde 
 se logra una convergencia a la posición deseada en menos de 20 segundos. Esto se debe a 
 la distancia hacia el obstáculo. Diferentes distancias conducen a diferentes tiempos de 
 convergencia, y la tasa de convergencia también se puede modificar cambiando las 
 ganancias en \ref{eqn:w} para la velocidad angular, y en \ref{eqn:v} para la velocidad 
-lineal. Las otras subfiguras en la figura \ref{f:PolarControl} muestran la evolución 
+lineal. Las otras subfiguras en la Figura \ref{f:PolarControl} muestran la evolución 
 temporal de la velocidad lineal en $x$, la orientación y la velocidad angular. Para la 
 orientación, hay un sobreimpulso que se debe a la excesiva dependencia del controlador 
-en la posición en lugar de la orientación.
+en la posición en lugar de la orientación (ver Figura \ref{f:PolarControl}c).
 %\section{An\'alisis del mapa obtenido}
 %\section{Resultados en un ambiente real}
 \section{Resultados del Sistema de Navegación}
-\begin{figure}[ht!]
-     \begin{center}
-        \subfigure[Fuerzas de atracción aplicado al robot móvil]{\label{fig:etiquetaA}\includegraphics
-        [width=.49\textwidth]{images/attr_kbki.png}}
-        \subfigure[Fuerzas de repulsión aplicado al robot móvil]{\label{fig:etiquetaB}\includegraphics
-        [width=.49\textwidth]{images/rep_kbki.png}}
-        \subfigure[Fuerzas de navegación aplicado al robot móvil]{\label{fig:etiquetaC}\includegraphics
-        [width=.49\textwidth]{images/nav_kbki.png}}
-    \end{center}
-  \captionsetup{font=footnotesize}
-    \caption{\label{f:kbki_APF}Navegación autónoma implementada en el robot diferencial Kobuki.}
-\end{figure}
-
+\begin{figure}%[ht!]
+  \centering
+  \begin{tabular}{cc}
+      %\subfigure[Fuerzas de atracción aplicado al robot móvil]{\label{fig:etiquetaA}\includegraphics
+      %[width=.49\textwidth]{images/attr_kbki.eps}}
+     \includegraphics[width=0.51\linewidth]{images/attr_kbki.eps}&
+      %\subfigure[Fuerzas de repulsión aplicado al robot móvil]{\label{fig:etiquetaB}\includegraphics
+      %[width=.49\textwidth]{images/rep_kbki.eps}}
+     \includegraphics[width=0.51\linewidth]{images/rep_kbki.eps}\\
+    (a) & (b)\\
+    \multicolumn{2}{c}{\includegraphics[width=0.52\linewidth]{images/nav_kbki.eps}}\\
+      %\subfigure[Fuerzas de navegación aplicado al robot móvil]{\label{fig:etiquetaC}\includegraphics
+      %[width=.49\textwidth]{images/nav_kbki.eps}}
+    \multicolumn{2}{c}{(c)}
+  \end{tabular}
+ 
+  \caption{Navegación autónoma implementada en el robot diferencial Kobuki. En (a) se muestra
+  las fuerzas de atracción que llevan al Kobuki a la posición deseada, en (b) se muestra las 
+  fuerzas de repulsión que evitan que el robot diferencial se choque con los obstáculos y en 
+  (c) se muestra las fuerzas de navegación que genera la trayectoria del robot.}
+  \label{f:kbki_APF}
+ \end{figure}
 %\begin{figure}%[ht!]
 %  \centering \footnotesize
 %  \includegraphics[width=0.61\textwidth]{images/attr_kbki.png}
@@ -70,14 +107,14 @@ La metodología propuesta se implementó como un algoritmo iterativo en el robot
 Como se se describe en la sección \ref{sec:autonomia}, el algoritmo toma iterativamente 
 posiciones deseadas  donde a través del campo potencial artificial y el controlador 
 polar impulsan al robot a través de las posiciones requeridas. Se expuso al robot 
-a diferentes obstáculos cuyas posiciones fueron conocidas a priori. La figura 
-\ref{f:kbki_APF} (a) muestra las fuerzas de atracción para cada posición (puntos rojos) en 
+a diferentes obstáculos cuyas posiciones fueron conocidas a priori. La Figura 
+\ref{f:kbki_APF}a muestra las fuerzas de atracción para cada posición (puntos rojos) en 
 las que el algoritmo se itera en el entorno de dos dimensiones dentro del movimiento del 
 robot. Para cada posición, el campo de potencial atractivo que se puede ver con la dirección 
-de las flechas. La figura \ref{f:kbki_APF} (b) se compone de las fuerzas de repulsión basadas en 
+de las flechas. La Figura \ref{f:kbki_APF}b se compone de las fuerzas de repulsión basadas en 
 los obstáculos, que se muestran como marcadores verdes. Para cada obstáculo, la magnitud de 
 las fuerzas aumenta cuando el robot está más cerca y su dirección señala los obstáculos, permitiendo 
-que el robot los evite. La figura \ref{f:kbki_APF} (c) muestra la superposición de ambas fuerzas 
+que el robot los evite. La Figura \ref{f:kbki_APF}c muestra la superposición de ambas fuerzas 
 con los obstáculos reales. Cada fuerza proporciona una posición deseada intermedia para el 
 robot, que constituye la posición deseada continuamente actualizada para el controlador 
 polar. Aunque las fuerzas cercanas a los obstáculos tienen un alto índice de cambio, la 
@@ -89,22 +126,35 @@ características no holonómicas del robot.
   \centering \footnotesize
   \includegraphics[width=0.80\textwidth]{images/kobuki_201.jpg}
   \captionsetup{font=footnotesize}
-  \caption{Navegación autónoma del Kobuki montado un sensor lidar y dos cajas
-  como obstáculos}
+  \caption{Navegación autónoma del robot diferencial Kobuki, montado con un sensor lidar y dos cajas
+  como obstáculos.}
 \end{figure}
 
-\begin{figure}[ht!]
-     \begin{center}
-        \subfigure[Fuerzas de atracción aplicado al robot móvil]{\label{fig:etiquetaA}\includegraphics
-        [width=.69\textwidth]{images/fattr_lidar_s.png}}
-        \subfigure[Fuerzas de repulsión aplicado al robot móvil]{\label{fig:etiquetaB}\includegraphics
-        [width=.69\textwidth]{images/frep_lidar_s.png}}
-        \subfigure[Fuerzas de navegación aplicado al robot móvil]{\label{fig:etiquetaC}\includegraphics
-        [width=.69\textwidth]{images/fnav_lidar_s.png}}
-    \end{center}
+%\begin{figure}[ht!]
+%     \begin{center}
+%        \subfigure[Fuerzas de atracción aplicado al robot móvil]{\label{fig:etiquetaA}\includegraphics
+%        [width=.69\textwidth]{images/fattr_lidar_s.eps}}
+%        \subfigure[Fuerzas de repulsión aplicado al robot móvil]{\label{fig:etiquetaB}\includegraphics
+%        [width=.69\textwidth]{images/frep_lidar_s.png}}
+%        \subfigure[Fuerzas de navegación aplicado al robot móvil]{\label{fig:etiquetaC}\includegraphics
+%        [width=.69\textwidth]{images/fnav_lidar_s.png}}
+%    \end{center}
+\begin{figure}
+  \centering
+    \begin{tabular}{c}
+      \multicolumn{1}{c}{\includegraphics[width=.80\textwidth]{images/fattr_lidar_s.eps}}\\
+      \multicolumn{1}{c}{(a)}\\
+      \multicolumn{1}{c}{\includegraphics[width=.80\textwidth]{images/frep_lidar_s.eps}}\\
+      \multicolumn{1}{c}{(b)}\\
+      \multicolumn{1}{c}{\includegraphics[width=.80\textwidth]{images/fnav_lidar_s.eps}}\\
+      \multicolumn{1}{c}{(c)}
+    \end{tabular}
   \captionsetup{font=footnotesize}
-    \caption{\label{f:kbki_autonomo}Campos atractivos y repulsivos, y la trayectoria que el robot real sigue 
-  usando datos en línea provenientes del sensor lidar montado en la parte superior.}
+    \caption{\label{f:kbki_autonomo}Campos atractivos y repulsivos, y la trayectoria que el 
+    robot real sigue usando datos en línea provenientes del sensor lidar montado en la parte 
+    superior. En (a) se muestra las fuerzas de atracción, en (b) las fuerzas de repulsión y 
+    las posiciones de los obsáculos, finalmente en (c) se muestra las fuerzas de navegación 
+    generando la trayectoria.}
 \end{figure}
 
 %\begin{figure}%[ht!]
@@ -129,14 +179,14 @@ que es la entrada al algoritmo principal. Para que el kobuki pueda moverse dentr
 mapa generado por el lidar, el marco de referencia del robot se tomó como el marco del 
 lidar. Entonces, el algoritmo de navegación autónomo usa las coordenadas del obstáculo 
 para generar su propia trayectoria evitando obstáculos. Para toda la prueba, se colocaron 
-dos cajas en el espacio de trabajo, como se ve en la figura \ref{f:kbki_autonomo} (a). La 
-posición del objetivo era ($x = 4, y = 0$). La figura \ref{f:kbki_autonomo} (b) muestra 
+dos cajas en el espacio de trabajo, como se ve en la Figura \ref{f:kbki_autonomo}a. La 
+posición del objetivo era ($x = 4, y = 0$). La Figura \ref{f:kbki_autonomo}b muestra 
 la trayectoria del robot en azul y las flechas que indican la fuerza que lleva al robot a la 
-posición deseada. La figura \ref{f:kbki_autonomo} (c) muestra el mapa completo, donde los 
+posición deseada. La Figura \ref{f:kbki_autonomo}c muestra el mapa completo, donde los 
 puntos verdes representan el entorno, detectados por el lidar, donde se mueve el robot. Como 
 se observa, estas flechas apuntan hacia afuera del obstáculo, proporcionando autonomía al 
-robot mientras intenta alcanzar la posición deseada. Finalmente en la figura 
-\ref{f:kbki_autonomo} (d) se muestra toda la fuerza de navegación que impulsa el movimiento 
+robot mientras intenta alcanzar la posición deseada. Finalmente en la Figura 
+\ref{f:kbki_autonomo}d se muestra toda la fuerza de navegación que impulsa el movimiento 
 del robot móvil.
 
 \section{Resultado de la autonomía del robot junto al SLAM}
@@ -144,25 +194,35 @@ del robot móvil.
   \centering \footnotesize
   \includegraphics[width=0.80\textwidth]{images/gazebo_map.png}
   \captionsetup{font=footnotesize}
-  \caption{Mapa en Gazebo}
+  \caption{En esta imagen se muestra al robot diferencial Kobuki en medio de unas cajas. Esta 
+  prueba se realizó utilizando el simulador Gazebo.}
   \label{fig:Gazebo_simu}
 \end{figure}
 Para probar la autonomía del robot junto con el algoritmo SLAM, se uso un simulador dinámico 
 en Gazebo con el robot Kobuki con obstáculos. Los obstáculos fueron colocados de tal manera
-que pueda representar la entrada de un túnel. Esto se muestra en la figura 
+que pueda representar la entrada de un túnel. Esto se muestra en la Figura 
 \ref{fig:Gazebo_simu}. El túnel tiene un ancho de 4 metros y un largo de 3 metros por donde 
 el robot se va a desplazar, estimar la posición de los obstáculos y construir el mapa en dos 
 dimensiones.
 
-\begin{figure}[ht!]
-     \begin{center}
-        \subfigure[Fuerzas de atracción aplicado al robot móvil en tiempo real]{\label{fig:etiquetaA}\includegraphics
-        [width=.69\textwidth]{images/fattr_slam.png}}
-        \subfigure[Fuerzas de repulsión aplicado al robot móvil en tiempo real]{\label{fig:etiquetaB}\includegraphics
-        [width=.69\textwidth]{images/frep_slam.png}}
-        \subfigure[Fuerzas de navegación aplicado al robot móvil en tiempo real]{\label{fig:etiquetaC}\includegraphics
-        [width=.69\textwidth]{images/fnav_slam.png}}
-    \end{center}
+\begin{figure}%[ht!]
+     %\begin{center}
+     %   \subfigure[Fuerzas de atracción aplicado al robot móvil en tiempo real]{\label{fig:etiquetaA}\includegraphics
+     %   [width=.69\textwidth]{images/fattr_slam.png}}
+     %   \subfigure[Fuerzas de repulsión aplicado al robot móvil en tiempo real]{\label{fig:etiquetaB}\includegraphics
+     %   [width=.69\textwidth]{images/frep_slam.png}}
+     %   \subfigure[Fuerzas de navegación aplicado al robot móvil en tiempo real]{\label{fig:etiquetaC}\includegraphics
+     %   [width=.69\textwidth]{images/fnav_slam.png}}
+    %\end{center}
+    \centering
+    \begin{tabular}{c}
+      \multicolumn{1}{c}{\includegraphics[width=.77\textwidth]{images/fattr_slam.eps}}\\
+      \multicolumn{1}{c}{(a)}\\
+      \multicolumn{1}{c}{\includegraphics[width=.77\textwidth]{images/frep_slam.eps}}\\
+      \multicolumn{1}{c}{(b)}\\
+      \multicolumn{1}{c}{\includegraphics[width=.77\textwidth]{images/fnav_slam.eps}}\\
+      \multicolumn{1}{c}{(c)}
+    \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{fig:Kbki_slam}Campos atractivos y repulsivos, y la trayectoria que el robot real sigue 
     usando datos en línea provenientes del sensor lidar montado en la parte superior del Kobuki.}
@@ -197,14 +257,14 @@ Para  realizar que el robot se pueda desplazar de forma autónoma dentro del amb
 obtiene las posiciones del mapa ($X_{M}, Y_{M}$), los cuales son enviados al algoritmo 
 de campos potenciales como obstáculos para que el robot pueda generar su propia 
 trayectoria. Para realizar esta prueba se elige una posición deseado en el mapa. La 
-posición deseada es $(x = 5, y = 5)$. En la figura \ref{fig:Kbki_slam} (a) se muestra 
+posición deseada es $(x = 5, y = 5)$. En la Figura \ref{fig:Kbki_slam}a se muestra 
 la trayectoria del robot (puntos azules) que se va desplazando hacia la posición 
 deseada. Además se puede ver que las flechas de color negro tienen una dirección, esto
 indica la orientación necesaria que debe tener el robot para que llegue hacia la meta, 
 asimismo el tamaño de las flechas indican la velocidad a la que debe ir el robot para 
 que llegue al punto deseado. 
 
-En la figura \ref{fig:Kbki_slam} (b) se muestra los obstáculos (puntos verdes), se 
+En la Figura \ref{fig:Kbki_slam}b se muestra los obstáculos (puntos verdes), se 
 aprecia con mayor claridad y uniformidad las posiciones de los obstáculos. Esto se debe 
 a que el algoritmo muestrea la cantidad de mediciones que hace el sensor lidar y añade 
 la odometría del robot, permitiendo estimar con mayor precisión las posiciones de los 
@@ -216,7 +276,7 @@ genera fuerzas de repulsión para que el robot evite los obstáculos. Se muestra
 acumulación de puntos en diferentes partes de la trayectoria, y a su vez se nota una 
 mayor concentración de fuerzas de repulsión en dichas partes, esto se debe a la interacción 
 del movimiento del robot para no chocarse con los obstáculos y generar una nueva trayectoria 
-hacia el punto deseado. Finalmente, en la figura \ref{fig:Kbki_slam} (c) se muestra las sumas 
+hacia el punto deseado. Finalmente, en la Figura \ref{fig:Kbki_slam}c se muestra las sumas 
 de las fuerzas de atracción y las fuerzas de repulsión que hacen que el robot pueda ir a la 
 posición deseada y a su vez evite los obstáculos del lugar.
 
@@ -228,7 +288,7 @@ posición deseada y a su vez evite los obstáculos del lugar.
   \label{fig:SLAM_2D}
 \end{figure}
 
-La figura \ref{fig:SLAM_2D} muestra el mapa generado por el paquete \textit{gmapping}. Como 
+La Figura \ref{fig:SLAM_2D} muestra el mapa generado por el paquete \textit{gmapping}. Como 
 se puede ver en la imagen, el mapa esta compuesto por tres colores diferentes. Cada color 
 de la imagen tiene un significado. El color verdoso significa un lugar desconocido, esto 
 quiere decir los lugares por donde el robot móvil no ha explorado o navegado. El color 
@@ -268,17 +328,31 @@ Pi3, el cual se encarga de enviar los datos de forma remota hacia una computador
 datos son almacenados para ser procesadas posteriormente.
 
 \begin{figure}[ht!]
-     \begin{center}
-        \subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.32\textwidth]{images/caja3D_1.png}}
-        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.32\textwidth]{images/caja3D_2.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_3.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_4.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_5.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_6.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_7.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_8.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_9.png}}
-    \end{center}
+     %\begin{center}
+     \begin{tabular}{ccc}
+        %\subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.32\textwidth]{images/caja3D_1.png}}
+        \includegraphics[width=.32\textwidth]{images/caja3D_1.png}&
+        %\subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.32\textwidth]{images/caja3D_2.png}}
+        \includegraphics[width=.32\textwidth]{images/caja3D_2.png}&
+        %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_3.png}}
+        \includegraphics[width=.32\textwidth]{images/caja3D_3.png}\\
+        (a)&(b)&(c)\\
+        %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_4.png}}
+        \includegraphics[width=.32\textwidth]{images/caja3D_4.png}&
+        %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_5.png}}
+        \includegraphics[width=.32\textwidth]{images/caja3D_5.png}&
+        %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_6.png}}
+        \includegraphics[width=.32\textwidth]{images/caja3D_6.png}\\
+        (d)&(e)&(f)\\
+        %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_7.png}}
+        \includegraphics[width=.32\textwidth]{images/caja3D_7.png}&
+        %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_8.png}}
+        \includegraphics[width=.32\textwidth]{images/caja3D_8.png}&
+        %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_9.png}}
+        \includegraphics[width=.32\textwidth]{images/caja3D_9.png}\\
+        (g)&(h)&(i)
+    %\end{center}
+    \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{fig:Caja3D}Mapa en tres dimensiones de una caja. El crecimiento del mapa tridimensional 
     va en sentido horario.}

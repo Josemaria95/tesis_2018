@@ -170,7 +170,7 @@ uso de las librerías que existe dentro de los paquetes de desarrollo del robot 
 	\centering \footnotesize
  	{\includegraphics[width=0.60\linewidth]{images/rplidar.JPG}}
  	\captionsetup{font=footnotesize}
- 	\caption{Sensor lidar RPLIDAR A2 \cite{sensorLidar}.}
+ 	\caption[Sensor lidar RPLIDAR A2.]{Sensor lidar RPLIDAR A2 \cite{sensorLidar}.}
  	\label{f:lidar}
 \end{figure}
 
@@ -226,7 +226,7 @@ En la Tabla \ref{tbl:medicion} se muestra el rendimiento de la medición del
 sensor RPLidar A2 \cite{Slamtec}. En esta tabla se considera varias pruebas 
 por cada una de las variables. Las variables más importantes son: (i) 
 \textbf{Rango de distancia}, el sensor tiene un rango de medición entre $0.15 
-mts$ y $6 mts$, los valores menores a $0.15 mts$ y mayores a $6 mts$ son 
+m$ y $6 m$, los valores menores a $0.15 m$ y mayores a $6 m$ son 
 considerados como valores no existentes. (ii) \textbf{Resolución de la 
 distancia}, el sensor tiene un error menor a 0.5 $mm$ en sus mediciones, esto 
 permite construir un mapa con las dimensiones reales del entorno. (iii) 
@@ -295,12 +295,21 @@ los objetos que se encuentran dentro de un ambiente.
 
 \subsection{Sistema de Percepción Tridimensional}
 \label{sec:SistP3D}
-\begin{figure}[ht!]
-     \begin{center}
-        \subfigure[]{\label{fig:lidar3Da}\includegraphics[width=.45\textwidth]{images/lidar_3d.png}}
-        \subfigure[]{\label{fig:lidar3Db}\includegraphics[width=.45\textwidth]{images/lidar_wKbki.png}}
-        \subfigure[]{\label{fig:lidar3Dc}\includegraphics[width=.70\textwidth]{images/LIDAR_SIST.JPG}}
-    \end{center}
+%\begin{figure}[ht!]
+%     \begin{center}
+%        \subfigure[]{\label{fig:lidar3Da}\includegraphics[width=.45\textwidth]{images/lidar_3d.png}}
+%        \subfigure[]{\label{fig:lidar3Db}\includegraphics[width=.45\textwidth]{images/lidar_wKbki.png}}
+%        \subfigure[]{\label{fig:lidar3Dc}\includegraphics[width=.70\textwidth]{images/LIDAR_SIST.JPG}}
+%    \end{center}
+\begin{figure}%[ht!]
+  \centering
+  \begin{tabular}{cc}
+     \includegraphics[width=0.45\linewidth]{images/lidar_3d.png}&
+     \includegraphics[width=0.45\linewidth]{images/lidar_wKbki.png}\\
+    (a) & (b)\\
+    \multicolumn{2}{c}{\includegraphics[width=0.70\linewidth]{images/LIDAR_SIST.JPG}}\\
+    \multicolumn{2}{c}{(c)}
+  \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{f:lidar3D}Diseño del sistema mecánico, desarrollado en un programa CAD. En (a) se 
     muestra el diseño en CAD del sistema mecánico, en (b) se muestra la forma en que va ser colocado 
@@ -363,13 +372,22 @@ tomar medidas en los tres ejes del plano cartesiano $(\mayusx,\mayusy,\mayusz)$.
 \label{f:FrameSitemaMecanico}
 \end{figure}
 
-\begin{figure}[ht!]
-     \begin{center}
-        \subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras2.jpg}}
-        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras3.jpg}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras.jpg}}
-        \subfigure[]{\label{fig:etiquetaD}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras1.jpg}}
-    \end{center}
+\begin{figure}%[ht!]
+     %\begin{center}
+     \centering
+     \begin{tabular}{cc}
+        %\subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras2.jpg}}
+        \includegraphics[width=.40\textwidth]{images/lidar_rot_tras2.jpg}&
+        %\subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras3.jpg}}
+        \includegraphics[width=.40\textwidth]{images/lidar_rot_tras3.jpg}\\
+        (a)&(b)\\
+        %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras.jpg}}
+        \includegraphics[width=.40\textwidth]{images/lidar_rot_tras.jpg}&
+        %\subfigure[]{\label{fig:etiquetaD}\includegraphics[width=.35\textwidth]{images/lidar_rot_tras1.jpg}}
+        \includegraphics[width=.40\textwidth]{images/lidar_rot_tras1.jpg}\\
+        (c)&(d)
+    %\end{center}
+    \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{f:Rot3D}Representación gráfica de los movimientos de rotación del sistema 
     mecánico.En (a) se muestra la posición inicial (0\grad) rotando hacia la izquierda, en (b) se 
@@ -453,12 +471,21 @@ el sistema mecánico.
 \section{Generación de Trayectoria basado en Campos Potenciales}
 \label{sec:autonomia}
 
-\begin{figure}[ht!]
-     \begin{center}
-        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.49\textwidth]{images/attr_force.png}}%NO CAMBIAR
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/rep_force.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/nav_force.png}}
-    \end{center}
+%\begin{figure}[ht!]
+%     \begin{center}
+%        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.49\textwidth]{images/attr_force.png}}%NO CAMBIAR
+%        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/rep_force.png}}
+%        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/nav_force.png}}
+%    \end{center}
+\begin{figure}%[ht!]
+  \centering
+  \begin{tabular}{cc}
+     \includegraphics[width=0.45\linewidth]{images/attr_force.png}&
+     \includegraphics[width=0.45\linewidth]{images/rep_force.png}\\
+    (a) & (b)\\
+    \multicolumn{2}{c}{\includegraphics[width=0.50\linewidth]{images/nav_force.png}}\\
+    \multicolumn{2}{c}{(c)}
+  \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{f:APF}En esta figura se muestra las pruebas para el algoritmo de campo potencial 
     artificial. En (a) se muestra la prueba para las fuerzas de atracción, en (b) se muestra la
@@ -559,35 +586,61 @@ posición de los obstáculos que se encuentran dentro del ambiente que se esta e
 %datos adquiridos a una computadora externa. 
 
 \subsection{Sistema Operativo del Robot (ROS)}
-ROS es un framework que se usa ampliamente en robótica. Lo que busca este sistema 
-operativo de código abierto es hacer una parte del software que pueda funcionar en 
-otros robots con solo pequeños cambios en el código. Lo que se obtiene con esta idea 
-es la capacidad de crear funcionalidades que se puedan compartir y usar en otros robots, por 
-lo que ya no se necesita volver a reinventar la rueda.
+ROS es un entorno de trabajo de código abierto. Este sistema operativo 
+tiene una amplia variedad de herramientas, librerías y paquetes que busca 
+la creación de software complejo para tener robots robustos con un comportamiento 
+variado. La finalidad de este sistema operativo es crear un compendio universal de 
+software para que los nuevos desarrolladores no tengan que volver a hacer algoritmos 
+que ya se encuentran desarrollados.
 
-Muchas instituciones de investigación han comenzado a desarrollarse en 
-ROS, agregando hardware y compartiendo su código. Los sensores y actuadores 
-utilizados en la robótica también se han adaptado para su uso en ROS. Gracias 
-a esto, las empresas están creando sensores más baratos y más potentes. Arduino 
-es un buen ejemplo de esto, ya que al usar una placa electrónica barata puede 
-agregar una gran cantidad de sensores como codificadores, sensores de luz, 
-temperatura, y así sucesivamente \cite{rosIntroduction}.
+El conjunto de herramientas y librerías que son proporcionadas por ROS, permite 
+lograr una comunicación entre programas. Esto quiere decir que se puede comunicar 
+entre sí diferentes programas de un mismo sistema, ya sea en el mismo computador 
+o en varios computadores, todos enfocados para conseguir un objetivo común. 
+Asimismo, los paquetes de ROS son algoritmos que son implementados con 
+frecuencia en la robótica. Por la facilidad de comunicación y gestión de mensajes 
+dentro del sistema operativo, este se ha convertido en la plataforma de muchas de 
+las empresas dedicadas a la robótica. Finalmente, debido al diseño 
+de comunicación para los mensajes dentro de ROS, este sistema operativo permite 
+simular sensores y actuadores de forma independiente y a su vez de forma 
+sistemática de manera iterativa.
 
-ROS provee paquetes que pueden ser utilizados para construir modelos 3D y comunicarse 
-con estos modelos. El formato URDF (\textit{Unified Robot Description Format}) permite 
-definir modelos de robots así como los sensores y el ambiente de trabajo. Sin embargo, solo 
-aquellos robots que tienen eslabones rígidos conectados mediante articulaciones pueden ser 
-descritos mediante modelos URDF.
+La estructura del sistema operativo del robot esta conformado por: 
+(i) \textbf{tópicos}, son canales de información entre los nodos donde los nodos 
+pueden publicar o suscribirse a un tópico. (ii) \textbf{paquete}, puede contener un 
+nodo, una librería, conjunto de datos. (iii) \textbf{nodos}, es un proceso que 
+comparte información entre ellos para crear ejecuciones complejas. 
+(iv) \textbf{pila}, es un conjunto de nodos que juntos proporcionan alguna 
+funcionalidad.
+%ROS es un framework que se usa ampliamente en robótica. Lo que busca este sistema 
+%operativo de código abierto es hacer una parte del software que pueda funcionar en 
+%otros robots con solo pequeños cambios en el código. Lo que se obtiene con esta idea 
+%es la capacidad de crear funcionalidades que se puedan compartir y usar en otros robots, por 
+%lo que ya no se necesita volver a reinventar la rueda.
 
-Un modelo URDF puede representar la descripción cinemática y dinámica de un robot, su 
-representación visual, y el modelo de colisión. El URDF esta conformado por lo siguiente: 
-(i) \textbf{link}, representa un solo eslabón del robot y permite especificar sus propiedades, 
-como tamaño, forma y color. (ii) \textbf{joint}, esta etiqueta representa las articulaciones del 
-robot, se puede especificar la cinemática y dinámica de la articulación, así como establecer 
-los límites del movimiento articular y de su velocidad. (iii) \textbf{robot}, esta etiqueta 
-engloba todo el modelo del robot, dentro de esta etiqueta se define el nombre del robot, los 
-eslabones y las articulaciones del robot. (iv) \textbf{gazebo}, en esta etiqueta se incluye 
-parámetros de simulación para el simulador \textit{Gazebo}.
+%Actualmente, muchas instituciones de investigación han comenzado a desarrollarse en 
+%ROS, agregando hardware y compartiendo su código. Los sensores y actuadores 
+%utilizados en la robótica también se han adaptado para su uso en ROS. Gracias 
+%a esto, las empresas están creando sensores más baratos y más potentes. Arduino 
+%es un buen ejemplo de esto, ya que al usar una placa electrónica barata puede 
+%agregar una gran cantidad de sensores como codificadores, sensores de luz, 
+%temperatura, y así sucesivamente \cite{rosIntroduction}.
+
+%ROS provee paquetes que pueden ser utilizados para construir modelos 3D y comunicarse 
+%con estos modelos. El formato URDF (\textit{Unified Robot Description Format}) permite 
+%definir modelos de robots así como los sensores y el ambiente de trabajo. Sin embargo, solo 
+%aquellos robots que tienen eslabones rígidos conectados mediante articulaciones pueden ser 
+%descritos mediante modelos URDF.
+
+%Un modelo URDF puede representar la descripción cinemática y dinámica de un robot, su 
+%representación visual, y el modelo de colisión. El URDF esta conformado por lo siguiente: 
+%(i) \textbf{link}, representa un solo eslabón del robot y permite especificar sus propiedades, 
+%como tamaño, forma y color. (ii) \textbf{joint}, esta etiqueta representa las articulaciones del 
+%robot, se puede especificar la cinemática y dinámica de la articulación, así como establecer 
+%los límites del movimiento articular y de su velocidad. (iii) \textbf{robot}, esta etiqueta 
+%engloba todo el modelo del robot, dentro de esta etiqueta se define el nombre del robot, los 
+%eslabones y las articulaciones del robot. (iv) \textbf{gazebo}, en esta etiqueta se incluye 
+%parámetros de simulación para el simulador \textit{Gazebo}.
 
 %ROS es un framework que se usa ampliamente en rob\'otica. Lo que busca 
 %este sistema operativo de código abierto es hacer una pieza de software 
@@ -628,12 +681,21 @@ parámetros de simulación para el simulador \textit{Gazebo}.
 \end{figure}
 
 \begin{figure}[ht!]
-     \begin{center}
-        \subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.452\textwidth]{images/exploration1.jpg}}
-        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.45\textwidth]{images/exploration2.jpg}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/exploration3.jpg}}
-        \subfigure[]{\label{fig:etiquetaD}\includegraphics[width=.45\textwidth]{images/exploration4.jpg}}
-    \end{center}
+     %\begin{center}
+     \begin{tabular}{cc}
+     \centering
+        %\subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.452\textwidth]{images/exploration1.jpg}}
+        \includegraphics[width=.45\textwidth]{images/exploration1.jpg}&
+        %\subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.45\textwidth]{images/exploration2.jpg}}
+        \includegraphics[width=.45\textwidth]{images/exploration2.jpg}\\
+        (a)&(b)\\
+        %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.49\textwidth]{images/exploration3.jpg}}
+        \includegraphics[width=.49\textwidth]{images/exploration3.jpg}&
+        %\subfigure[]{\label{fig:etiquetaD}\includegraphics[width=.45\textwidth]{images/exploration4.jpg}}
+        \includegraphics[width=.45\textwidth]{images/exploration4.jpg}\\
+        (c)&(d)
+    %\end{center}
+    \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{f:SistemaAutonomo} En esta figura se muestra de forma gráfica las etapas del 
     sistema de autonomía del robot móvil. En (a) se muestra la etapa inicial que es el sensado de 

@@ -14,7 +14,7 @@ fructífera de innovación local. Actualmente el país sudamericano con mayor in
 en minería es el país de Chile, este país ha iniciado la robótica en su país hace 
 unos 15 años \cite{Carmona2014}.
 
-Los beneficios potenciales de los robots en la minería subterránea son abundantes,debido 
+Los beneficios potenciales de los robots en la minería subterránea son abundantes, debido 
 a que estas zonas son entornos de trabajo extenuante y potencialmente peligroso para 
 los seres humanos. Por tal motivo, dándole un mayor grado de autonomía a los robots, estos 
 se convierten en buenos ayudantes para los mineros o incluso pueden sustituir el personal 
@@ -43,7 +43,9 @@ método es respaldado por trabajos anteriores. En Perú se desarrolló un robot 
 llamado \textit{QHUBOT}, este robot utiliza la técnica FastSLAM para la detección de puntos
 de referencia y hacer que el robot sepa los lugares por donde pueda desplazarse 
 \cite{Mauricio2015}. Esta técnica también fue utilizada para la exploración de minas 
-abandonadas en los países de Europa \cite{Thrun2004}.
+abandonadas en los países de Europa.
+%Esta técnica también fue utilizada para la exploración de minas abandonadas en los países 
+%de Europa \cite{Thrun2004}.
 
 %El robot utilizará la técnica SLAM para su desplazamiento. Anteriores trabajos 
 %respaldan en que este método es la más adecuada para la autonomía del robot, así como es 
@@ -91,15 +93,24 @@ controlado por medio de un control remoto (radiofrecuencia).
 
 
 \section{Control de Robots Móviles}
-\begin{figure}[ht!]
-     \begin{center}
-        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.40\textwidth]{images/omnidirecional.jpg}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.50\textwidth]{images/RM_noHolonomic.jpg}}
-    \end{center}
+\begin{figure}%[ht!]
+     %\begin{center}
+      \begin{tabular}{cc}
+        %\subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.40\textwidth]{images/omnidirecional.jpg}}
+        \includegraphics[width=.40\textwidth]{images/omnidirecional.jpg}&
+        %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.50\textwidth]{images/RM_noHolonomic.jpg}}
+        \includegraphics[width=.50\textwidth]{images/RM_noHolonomic.jpg}\\
+        (a)&(b)
+    %\end{center}
+    \end{tabular}
   \captionsetup{font=footnotesize}
-    \caption{\label{f:sLocomocion}Representación gráfica de los sistemas holonómicos en la robótica
-    móvil, donde en (a) se muestra el robot móvil omnidireccional \cite{Omniwheel2018} y en (b) se 
-    muestra el robot móvil diferencial \cite{NoHolonomic2018}.}
+    \caption[Representación gráfica de los sistemas holonómicos en la robótica
+    móvil, donde en (a) se muestra el robot móvil omnidireccional y en (b) se 
+    muestra el robot móvil diferencial.]{Representación gráfica de los sistemas 
+    holonómicos en la robótica móvil, donde en (a) se muestra el robot móvil 
+    omnidireccional \cite{Omniwheel2018} y en (b) se muestra el robot móvil 
+    diferencial \cite{NoHolonomic2018}.}
+    \label{f:sLocomocion}
 \end{figure}
 %\begin{figure}%[ht!]
 %  \centering \footnotesize
@@ -137,15 +148,15 @@ no tiene ninguna restricción en la posición y la orientación, con respecto a 
 velocidad. El robot se puede mover instantáneamente en cualquier dirección 
 del espacio, sin necesidad de rotar previamente. La mayoría de estos robots 
 móviles son omnidireccionales, como se puede ver en la Figura 
-\ref{f:sLocomocion}(a). En cambio un robot no-holonomico tiene una restricción 
+\ref{f:sLocomocion}a. En cambio un robot no-holonomico tiene una restricción 
 en su velocidad, no existe una trayectoria que dependa solamente de la posición y 
 orientación. Por ende, este robot no se puede mover instantáneamente en cada 
-dirección del espacio. Este tipo de robot se puede apreciar en la 
-Figura \ref{f:sLocomocion}(b).
+dirección del espacio. La mayoría de los robots no-holonómicos son los robots 
+móviles diferenciales como el que se puede apreciar en la Figura \ref{f:sLocomocion}b.
 
 \subsection{Control Cinemático PID}
 
-Un controlador PID (Proporcional, Integral, Derivativa) es un mecanismo de control 
+Un controlador Proporcional, Integral, Derivativa (PID) es un mecanismo de control 
 por realimentación. Este calcula la desviación o error entre un valor medido y 
 un valor deseado. Este algoritmo de control consta de tres parámetros distintos: el 
 proporcional, el integral y el derivativo. El valor proporcional depende del error 
@@ -166,21 +177,24 @@ aplicación el controlador en cuestión puede trabajar como P, PI, PD o PID.
 \label{sec:ControlPolar}
 \begin{figure}%[h]
 \centering \footnotesize
- {\includegraphics[width=0.60\linewidth]{images/control_polar.png}}
+ {\includegraphics[width=0.70\linewidth]{images/control_polar.eps}}
  \captionsetup{font=footnotesize}
- \caption{Configuración para el control polar donde se muestran la posición del 
- objetivo y los parámetros específicos \cite{siegwart2011introduction}.}
+ \caption[Configuración para el control polar donde se muestran la posición del 
+ objetivo y los parámetros específicos(ver texto para
+ más detalle).]{Configuración para el control polar donde se muestran la posición del 
+ objetivo y los parámetros específicos \cite{siegwart2011introduction} (ver texto para
+ más detalle).}
 \label{f:controlPolar}
 \end{figure}
 
 Una forma alternativa de obtener un control suave de posición y orientación 
 para un robot es a través de una ley lineal de control por realimentación 
 de estados basada en coordenadas polares \cite{chwa2004sliding}. Como se muestra 
-en la Figura ~\ref{f:controlPolar},las coordenadas polares asociadas con el robot 
+en la Figura \ref{f:controlPolar}, las coordenadas polares asociadas con el robot 
 son:
 \begin{align*}
-\rho &= \sqrt[]{(x_{d} - x)^2 + (y_{d} - y)^2} \\
-\alpha &= \text{atan2}(y_{d} - y, x_{d} - x) - \theta \\
+\rho &= \sqrt[]{(x_{d} - x)^2 + (y_{d} - y)^2}, \\
+\alpha &= \text{atan2}(y_{d} - y, x_{d} - x) - \theta, \\
 \beta &= -\text{atan2}(y_{d} - y, x_{d} - x) + \theta_{d},
 \end{align*}
 donde $\rho$ representa la distancia desde el robot a la posición deseada, $\alpha$
@@ -191,7 +205,7 @@ define las velocidades lineales y angulares para lograr la posición y orientaci
 es 
 \begin{align}
 \label{eqn:v}
-v &= k_{\rho}\rho \\
+v &= k_{\rho}\rho, \\
 \label{eqn:w}
 \omega &= k_{\alpha}\alpha + k_{\beta}\beta,
 \end{align}
@@ -229,9 +243,9 @@ Dentro de los métodos de planificación de movimiento, se utiliza con
 frecuencia el término espacio libre. Un espacio libre ($C_{free}$) es el 
 conjunto de configuraciones que evita la colisión con obstáculos. Calcular 
 la forma del espacio libre es difícil, sin embargo, es mucho más sencillo 
-probar si una configuración determinada se encuentra dentro de $C_{free}$. Los 
-métodos para la navegación del robot móvil pueden clasificarse como:
-
+probar si una configuración determinada se encuentra dentro de $C_{free}$. El 
+método de navegación que se utilizará en este trabajo de tesis, son los 
+campos potenciales.
 
 \subsection{Campos Potenciales}
 \label{sec:Campos Potenciales}
@@ -372,40 +386,59 @@ robot se encuentren dentro de la línea de visión de al menos un nodo
 en el mapa de visibilidad. 
 
 El gráfico de visibilidad estándar se define en un espacio de 
-configuración poligonal bidimensional (ver Figura \ref{f:mapPolygonal}). Los 
-nodos $v_{i}$ del gráfico de visibilidad incluyen la ubicación de 
-inicio, la ubicación del objetivo y todos los vértices de los obstáculos 
-del espacio de configuración. Los bordes del gráfico $e_{ij}$ son 
-segmentos de línea recta que conectan dos nodos de línea de vista $v_{i}$ 
-y $v_{j}$.
-
-\begin{figure}%[h]
-\centering \footnotesize
+configuración poligonal bidimensional (ver Figura \ref{f:mapPolygonal}a). Los 
+nodos del gráfico de visibilidad incluyen la ubicación de inicio, la ubicación 
+del objetivo y todos los vértices de los obstáculos del espacio de 
+configuración. Los bordes del gráfico  son segmentos de línea recta que 
+conectan dos nodos.
+%\begin{figure}%[h]
+%\centering \footnotesize
  %{\includegraphics[width=0.60\linewidth]{images/map_polygonal.png}}
- {\includegraphics[width=0.70\linewidth]{images/espacio_configuracion.eps}}
- \captionsetup{font=footnotesize}
- \caption{Espacio de configuración con un punto de inicio y otro punto 
- de llegada a la posición deseada.}
-\label{f:mapPolygonal}
-\end{figure}
+% {\includegraphics[width=0.70\linewidth]{images/espacio_configuracion.eps}}
+% \captionsetup{font=footnotesize}
+% \caption{Espacio de configuración con un punto de inicio y otro punto 
+% de llegada a la posición deseada.}
+%\label{f:mapPolygonal}
+%\end{figure}
 
-\begin{figure}%[h]
-\centering \footnotesize
+%\begin{figure}%[h]
+%\centering \footnotesize
  %{\includegraphics[width=0.60\linewidth]{images/shortPath_visibilityGraph.png}}
- {\includegraphics[width=0.70\linewidth]{images/espacio_configuracion2.jpg}}
- \captionsetup{font=footnotesize}
- \caption{Los obstáculos son representado por sólidos polígonos. Las 
- líneas continuas delinean los bordes de la visibilidad gráfica para 
- los tres obstáculos y las líneas entrecortadas representan el camino 
- más corto entre el punto de inicio y el punto de meta.}
-\label{f:shortVG}
+% {\includegraphics[width=0.70\linewidth]{images/espacio_configuracion2.jpg}}
+% \captionsetup{font=footnotesize}
+% \caption{Los obstáculos son representado por sólidos polígonos. Las 
+% líneas continuas delinean los bordes de la visibilidad gráfica para 
+% los tres obstáculos y las líneas entrecortadas representan el camino 
+% más corto entre el punto de inicio y el punto de meta.}
+%\label{f:shortVG}
+%\end{figure}
+
+\begin{figure}%[ht!]
+     %\begin{center}
+      \begin{tabular}{cc}
+        %\subfigure[]{\label{fig:lidar3Da}\includegraphics[width=.49\textwidth]{images/espacio_configuracion.eps}}
+        \includegraphics[width=.49\textwidth]{images/espacio_configuracion.eps}&
+        %\subfigure[]{\label{fig:lidar3Db}\includegraphics[width=.49\textwidth]{images/espacio_configuracion2.jpg}}
+        \includegraphics[width=.49\textwidth]{images/espacio_configuracion2.jpg}\\
+        (a)&(b)
+        %\subfigure[]{\label{fig:lidar3Dc}\includegraphics[width=.70\textwidth]{images/LIDAR_SIST.JPG}}
+    %\end{center}
+    \end{tabular}
+  \captionsetup{font=footnotesize}
+    \caption{\label{f:mapPolygonal}Representación gŕafica de un espacio de configuración. En (a) 
+    se muestra el espacio de configuración con un punto de inicio y otro punto de llegada a la 
+    posición deseada y en (b) se puede ver el mismo espacio de configuración donde los sólidos 
+    geométricos representan los obstáculos. Las líneas continuas delinean los bordes de la 
+    visibilidad gráfica para los tres obstáculos y las líneas entrecortadas representan el camino 
+    más corto entre el punto de inicio y el punto de meta.}
 \end{figure}
 
-A partir de la Figura \ref{f:mapPolygonal} se considera la inclusión de 
+
+A partir de la Figura \ref{f:mapPolygonal}a se considera la inclusión de 
 los nodos y bordes en el espacio libre y que los bordes de los obstáculos 
 poligonales también sirven como bordes en el gráfico de 
 visibilidad. Utilizando distancia euclidiana se puede buscar la ruta más 
-corta como se aprecia en la Figura \ref{f:shortVG}.
+corta como se aprecia en la Figura \ref{f:mapPolygonal}b.
 
 \subsection{Movimiento Basado en Muestreo Aleatorio}
 

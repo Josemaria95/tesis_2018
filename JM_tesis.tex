@@ -55,8 +55,34 @@
 \tableofcontents
 %\listoftables
 \listoffigures
-\resumen
+\resumen{
 
+Debido al problema descrito en la sección anterior, este trabajo de tesis se centra 
+en el desarrollo e implementación de un sistema de localización y mapeo en tres 
+dimensiones basado en sensado láser para la exploración autónoma de un robot móvil.
+
+El robot móvil utiliza técnicas de SLAM (\textit{Simultaneous Localization and Mapping}) 
+para realizar un mapa en dos dimensiones dentro del túnel subterráneo y asimismo, estimar
+la posición del robot móvil dentro del ambiente mencionado. Se implementó un sistema de 
+navegación basado en campos potenciales. Este algoritmo permite al robot generar su 
+propia trayectoria, evitando colisionar con las paredes u obstáculos en el ambiente 
+donde comenzará a explorar. Se toma la información del sensor lidar (\textit{Light
+Detection and Ranging}) para generar el mapa en dos dimensiones.
+
+Se elige el sensor lidar ya que emite impulsos r\'apidos de luz l\'aser hasta 
+4000 impulsos por segundo, sobre una superficie. Este instrumento mide la 
+cantidad de tiempo necesario para que cada pulso pueda recuperarse, y a partir 
+de esto calcula la distancia entre el objeto y el instrumento con una alta 
+precisi\'on. Como utiliza luz l\'aser, el sensor no necesita de iluminaci\'on 
+externa para realizar las mediciones, lo cual es perfecto para ambientes
+donde no hay una buena iluminaci\'on. 
+
+Finalmente, para construir el mapa en tres dimensiones se diseñó un sistema 
+mecánico que permite rotar el sensor láser haciendo que este pueda tomar 
+medidas a diferentes alturas con su respectivo ángulo de inclinación. Los datos
+obtenidos son enviados a una matriz heterógenea, el cual nos genera los valores
+en los ejes $(\X,\y,\z)$. El mapa tridimensional obtenido se puede visualizar en un 
+software de fácil interacción.}
 
 \addtocontents{toc}{\vspace{1.5em}}
 
@@ -69,8 +95,8 @@
 \input{chapters/capitulo1}
 \input{chapters/capitulo2}
 \input{chapters/capitulo3}
-%\input{chapters/capitulo4}
-%\input{chapters/conclusiones}
+\input{chapters/capitulo4}
+\input{chapters/conclusiones}
 %\input{chapters/recomendaciones}
 
 %% ============================================================================
