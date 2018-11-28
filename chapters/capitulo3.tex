@@ -336,7 +336,7 @@ desplazando. Por tal motivo, se realizó un diseño mecánico que es accionado p
 paso a paso. Este diseño está compuesto por una base que soporta al sensor lidar, asimismo, 
 esta base tiene un eje en la parte inferior. Un extremo del eje de la base se encuentra 
 acoplado al eje del motor paso a paso, mientras que el otro extremo se encuentra unida 
-a un rodamiento que permite que la rotación del motor se realicé con el mínimo rozamiento. Este
+a un rodamiento que permite que la rotación del motor se realice con el mínimo rozamiento. Este
 sistema mecánico fue diseñado con el software mecánico \textit{Inventor}, como se muestra
 en la Figura \ref{f:lidar3D}a.
 
@@ -409,9 +409,28 @@ que llega al ángulo $88$\grad, como se muestran en las Figuras \ref{f:Rot3D}c y
 ángulo de apertura que tiene el motor paso a paso hace que el sensor lidar pueda tener un 
 panorama más amplio para poder tomar mediciones dentro de un ambiente.
 
+\begin{figure}%[ht!]
+	\centering
+	\begin{tabular}{c}
+		\multicolumn{1}{c}{\includegraphics[width=.7\textwidth]{images/lidarpolar.png}}\\
+      	\multicolumn{1}{c}{(a)}\\
+      	\multicolumn{1}{c}{\includegraphics[width=.75\textwidth]{images/lidarXY.png}}\\
+      	%\multicolumn{1}{c}{(b)}\\
+      	%\multicolumn{1}{c}{\includegraphics[width=.80\textwidth]{images/fnav_lidar_s.eps}}\\
+      	\multicolumn{1}{c}{(b)}
+	\end{tabular}
+	\captionsetup{font=footnotesize}
+    \caption{\label{f:lidarPlot}En esta imagen se muestra las mediciones obtenidas del sensor 
+    RPLidar A2, dentro de un cuarto. En (a) se muestra los datos del sensor lidar dentro de las 
+    coordenadas polares y en (b) se muestra la conversión de los datos del sensor lidar a 
+    coordenadas cartesianas.}
+\end{figure}
+
 El mapa tridimensional se construye con las mediciones del sensor lidar y los ángulos del motor paso
 a paso. Para esto primero se convierte los datos del sensor lidar, es decir hacer una conversión 
-de coordenadas polares a coordenadas cartesianas. Las ecuaciones utilizadas son:
+de coordenadas polares a coordenadas cartesianas. En la Figura \ref{f:lidarPlot}a se muestra las 
+coordenadas polares obtenidas del sensor RPLidar A2 y en la Figura \ref{f:lidarPlot}b se puede ver la 
+conversión a coordenadas cartesianas. Las ecuaciones utilizadas son:
 \begin{align*}
 	x &= rcos(\theta_{L}), \\
 	y &= rsen(\theta_{L}),
@@ -452,8 +471,8 @@ que se esta mapeando.
 	\centering \footnotesize
 	\includegraphics[width=0.65\textwidth]{images/ProtFinal.JPG}
 	\captionsetup{font=footnotesize}
-	\caption{Esta figura muestra el prototipo final que fue utilizado para realizar las pruebas
-	de navegación autónoma y mapeo de un ambiente en tres dimensiones. }
+	\caption{Esta figura muestra a \textit{muqi}, el prototipo final, que fue utilizado para 
+	realizar las pruebas de exploración autónoma y mapeo de un ambiente en tres dimensiones. }
 	\label{fig:ProtoFinal}
 \end{figure}
 El prototipo final del presente trabajo de tesis se muestra en la Figura \ref{fig:ProtoFinal}, 
@@ -611,7 +630,15 @@ pueden publicar o suscribirse a un tópico. (ii) \textbf{paquete}, puede contene
 nodo, una librería, conjunto de datos. (iii) \textbf{nodos}, es un proceso que 
 comparte información entre ellos para crear ejecuciones complejas. 
 (iv) \textbf{pila}, es un conjunto de nodos que juntos proporcionan alguna 
-funcionalidad.
+funcionalidad. Además ROS tiene un visualizador llamado Rviz.
+
+Rviz es un herramienta de visualización en tres dimensiones, que dispone 
+ROS. Esta herramienta posibilita que cualquier plataforma robótica pueda ser 
+representada en una imagen 3D, respondiendo en tiempo real a los experimentos que se 
+hace en el mundo real. Además, esta herramienta se puede usar para mostrar lecturas 
+de sensores, datos recibidos por la visión estereoscópica o visualizar el algoritmo 
+SLAM evitando obstáculos, etc. Esta herramienta dispone de muchas opciones de 
+configuración.
 %ROS es un framework que se usa ampliamente en robótica. Lo que busca este sistema 
 %operativo de código abierto es hacer una parte del software que pueda funcionar en 
 %otros robots con solo pequeños cambios en el código. Lo que se obtiene con esta idea 
@@ -671,7 +698,7 @@ funcionalidad.
 %de ROS.
 
 \subsection{Estructura del Sistema de Autonomía del Robot Móvil}
-
+\label{sec:NavegacionAutonoma}
 \begin{figure}%[ht!]
 	\centering \footnotesize
 	\includegraphics[width=0.98\textwidth]{images/estructura_autonomia.jpg}
