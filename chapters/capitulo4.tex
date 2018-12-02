@@ -363,64 +363,89 @@ que pueda llegar a la posición deseada mientras evitaba los obstáculos en su c
 %robot pueda reconocer con exactitud los lugares que ha explorado, los obstáculos y los lugares 
 %que aún le falta por recorrer.
 
-\section{Resultado del mapa en tres dimensiones}
-En esta sección se explicará las pruebas que se realizaron para poder validar el mapa en 
-tres dimensiones con el sistema mecánico propuesto. Se realizarón pruebas de validación 
-del algoritmo para la construcción del mapa en 3D dentro de una caja cerrada y dentro de 
-un pasadizo cerrado. Las pruebas consistieron en dejar el sistema mecánico de manera 
-estática y empezar a realizar mediciones mientras el lidar giraba en 360\grad~ y el 
-servomotor rotaba en un ángulo de abertura de $\pm$ 15\grad~.
+\section{Resultados del mapeo en tres dimensiones con el sistema mecánico}
 
-\subsection{Mapa en tres dimensiones de una caja}
+Dentro de esta sección se explica las pruebas que fueron realizadas para la construcción
+tridimensional de un ambiente real. Se utilizó el sistema mecánico que fue construido 
+(ver Figura \ref{f:lidar3D}c) y explicado en la sección \ref{sec:SistP3D}. Las pruebas 
+realizadas fue unicamente con el sistema mecánico de forma estática y no montado al robot 
+diferencial. Estas pruebas sirvieron para validar el algoritmo de construcción 
+en tres dimensiones.
+
+%En esta sección se explicará las pruebas que se realizaron para poder validar el mapa en 
+%tres dimensiones con el sistema mecánico propuesto. Se realizarón pruebas de validación 
+%del algoritmo para la construcción del mapa en 3D dentro de una caja cerrada y dentro de 
+%un pasadizo cerrado. Las pruebas consistieron en dejar el sistema mecánico de manera 
+%estática y empezar a realizar mediciones mientras el lidar giraba en 360\grad~ y el 
+%servomotor rotaba en un ángulo de abertura de $\pm$ 15\grad~.
+
+\subsection{Construcción tridimensional de una caja}
 \label{sec:MapaCaja}
 \begin{figure}
   \centering \footnotesize
-  \includegraphics[width=0.70\textwidth]{images/caja_lidar3D.png}
+  %\includegraphics[width=0.70\textwidth]{images/caja_lidar3D.png}
+  \includegraphics[width=0.70\textwidth]{images/cajalidar3d.eps}
   \captionsetup{font=footnotesize}
-  \caption{Dimensiones de la caja real donde se realizó las pruebas.}
+  \caption{Dimensiones de la caja donde se realizó las mediciones de forma interna, para
+  generar la construcción en tres dimensiones.}
   \label{fig:dim_cajaReal}
 \end{figure}
 
-Para realizar la primera prueba, se utilizó una caja real en el cual fue colocado 
-el sistema mecánico del sensor lidar para realizar las mediciones. En la Figura 
-\ref{fig:dim_cajaReal} se muestra las dimensiones de la caja donde se hizo las 
-pruebas. Como primer paso se coloco el sistema mecánico en el centro de la caja, esto
-ayuda a conocer las posiciones de las paredes de la caja en el plano cartesiano. Una 
-vez colocado el sensor, fue dejado por 40 segundos para que realicé las mediciones del 
-ambiente. El sensor lidar y el servomotor fueron controlados a través de un Raspberry 
-Pi3. La información enviada por el sensor y el servomotor son recibidos por el Raspberry 
-Pi3, el cual se encarga de enviar los datos de forma remota hacia una computadora. Estos 
-datos son almacenados para ser procesadas posteriormente.
+En esta prueba se utilizó una caja real con las dimensiones mostradas en 
+la Figura \ref{fig:dim_cajaReal}. Para poder realizar esta prueba se tuvo que
+colocar el sistema mecánico dentro de la caja, haciendo que el sensor lidar 
+se posicione en el centro de la caja como se muestra en la Figura 
+\ref{fig:dim_cajaReal}. Una vez colocado el sistema mecánico dentro de la caja, se 
+tomo mediciones durante 40 segundos. El sistema mecánico es controlado por
+medio de un Raspberry Pi3, donde el microcontrolador recibe la información 
+de los componentes del sistema mecánico y envía estos datos hacia una computadora
+de forma remota. Los datos recibidos son almacenados para el procesamiento posterior.
+
+%Para realizar la primera prueba, se utilizó una caja real en el cual fue colocado 
+%el sistema mecánico del sensor lidar para realizar las mediciones. En la Figura 
+%\ref{fig:dim_cajaReal} se muestra las dimensiones de la caja donde se hizo las 
+%pruebas. Como primer paso se coloco el sistema mecánico en el centro de la caja, esto
+%ayuda a conocer las posiciones de las paredes de la caja en el plano cartesiano. Una 
+%vez colocado el sensor, fue dejado por 40 segundos para que realicé las mediciones del 
+%ambiente. El sensor lidar y el servomotor fueron controlados a través de un Raspberry 
+%Pi3. La información enviada por el sensor y el servomotor son recibidos por el Raspberry 
+%Pi3, el cual se encarga de enviar los datos de forma remota hacia una computadora. Estos 
+%datos son almacenados para ser procesadas posteriormente.
 
 \begin{figure}[ht!]
      %\begin{center}
-     \begin{tabular}{ccc}
+     \centering
+     \begin{tabular}{cc}
         %\subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.32\textwidth]{images/caja3D_1.png}}
-        \includegraphics[width=.32\textwidth]{images/caja3D_1.png}&
+        \includegraphics[width=.50\textwidth]{images/1.jpg}&
         %\subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.32\textwidth]{images/caja3D_2.png}}
-        \includegraphics[width=.32\textwidth]{images/caja3D_2.png}&
+        \includegraphics[width=.50\textwidth]{images/2.jpg}\\
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_3.png}}
-        \includegraphics[width=.32\textwidth]{images/caja3D_3.png}\\
-        (a)&(b)&(c)\\
+        \includegraphics[width=.50\textwidth]{images/3.jpg}&
+        %(a)&(b)&(c)\\
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_4.png}}
-        \includegraphics[width=.32\textwidth]{images/caja3D_4.png}&
+        \includegraphics[width=.50\textwidth]{images/4.jpg}\\
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_5.png}}
-        \includegraphics[width=.32\textwidth]{images/caja3D_5.png}&
+        \includegraphics[width=.50\textwidth]{images/5.jpg}&
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_6.png}}
-        \includegraphics[width=.32\textwidth]{images/caja3D_6.png}\\
-        (d)&(e)&(f)\\
+        \includegraphics[width=.50\textwidth]{images/6.jpg}\\
+        %(d)&(e)&(f)\\
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_7.png}}
-        \includegraphics[width=.32\textwidth]{images/caja3D_7.png}&
+       % \includegraphics[width=.33\textwidth]{images/7.jpg}&
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_8.png}}
-        \includegraphics[width=.32\textwidth]{images/caja3D_8.png}&
+       % \includegraphics[width=.33\textwidth]{images/8.jpg}&
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_9.png}}
-        \includegraphics[width=.32\textwidth]{images/caja3D_9.png}\\
-        (g)&(h)&(i)
+       % \includegraphics[width=.33\textwidth]{images/9.jpg}\\
+        %(g)&(h)&(i)
+       % \includegraphics[width=.33\textwidth]{images/10.jpg}&
+       % \includegraphics[width=.33\textwidth]{images/11.jpg}&
+       % \includegraphics[width=.33\textwidth]{images/12.jpg}\\
     %\end{center}
     \end{tabular}
   \captionsetup{font=footnotesize}
-    \caption{\label{fig:Caja3D}Mapa en tres dimensiones de una caja. El crecimiento del mapa tridimensional 
-    va en sentido horario.}
+    \caption{\label{fig:Caja3D}Construcción del sólido geométrico, a partir de 
+    las mediciones del sensor lidar. El crecimiento del sólido tridimensional 
+    rota en sentido horario.}
 \end{figure}
 
 %\begin{figure}
@@ -440,38 +465,41 @@ datos son almacenados para ser procesadas posteriormente.
 %  \label{fig:Caja3D}
 %\end{figure}
 
-En las anteriores secciones se mencionó el proceso para la construcción del mapa en 
-tres dimensiones con los datos del sensor lidar y del servomotor. En la figura 
-\ref{fig:Caja3D} se muestran los resultados obtenidos. El crecimiento de la caja va en
-aumento de izquierda a derecha donde se puede apreciar las paredes de la caja y la forma
-de rectángulo que tiene. De la figura \ref{fig:Caja3D} se puede notar que dos paredes de 
-la caja tienen forma de dos triángulos unidos por un vértice, esto es debido al movimiento 
-de traslación del sistema mecánico. En el capítulo anterior se explico sobre le movimiento 
-de rotación y traslación que tiene el sistema mecánico (figura \ref{f:Rot3D} (b)) para la 
-construcción del mapa tridimensional. El servomotor genera un movimiento de traslación al 
-sensor lidar, por tal motivo hace que el lidar tenga puntos ciegos al momento de rotar 
-sobre el ángulo de abertura ($\pm$ 15\grad~) que forma el eje del servomotor. Asimismo,
-se puede observar que existe una pequeña inclinación en las paredes del modelo 
-tridimensional generado pero sin mucha consideración.
+En la sección \ref{sec:Sistema3D} se explicó de forma detallada los pasos que 
+se debe seguir para construir un sólido tridimensional de un ambiente real, 
+usando el sensor lidar y el motor paso a paso. Las mediciones realizadas fueron 
+dibujados usando el lenguaje \textit{python}, gracias a este lenguaje se obtuvo 
+el sólido mostrado en la Figura \ref{fig:Caja3D}, donde la imagen va rotando en 
+sentido horario. Esta figura muestra un prisma rectangular, donde las caras del 
+sólido se encuentran planas y las líneas de las aristas son continuas. Asimismo, 
+se puede observar que existen líneas que se entrelazan entre algunas aristas de 
+sólido, esto se debe al algoritmo que permite gráficar la nube de puntos en un 
+sólido geométrico.
 
-\begin{figure}
-  \centering \footnotesize
-  \includegraphics[width=0.60\textwidth]{images/lados_caja.png}
-  \captionsetup{font=footnotesize}
-  \caption{Nombre de las paredes de la caja.}
-  \label{fig:paredCaja}
-\end{figure}
+El diseño mecánico del sistema, permite al sensor lidar tomar mediciones en cada 
+rincon de la caja. Por ende, se puede notar que la caja presenta muy pocas 
+imperfecciones. El sólido gráficado, a simple vista, tiene las mismas dimensiones 
+de la caja real. Para estimar el error que existe en las posiciones, en el 
+plano cartesiano, de la nube de puntos con respecto a la caja se colocó el sistema 
+dentro de la caja, haciendo que el sensor lidar se posicione lo más cercano al 
+centro de la caja. Con la nueva posición del sensor lidar se puede corroborar si 
+la nube de puntos originado se encuentra en la misma posición en la que 
+se encuentran cada una de las paredes de la caja.
 
-\begin{figure}[ht!]
-     \begin{center}
-        \subfigure[Distribución normal del lado izquierdo de la caja real]{\label{fig:hist_Izq}\includegraphics
-        [width=.75\textwidth]{images/hist_izquierda_caja.png}}
-        \subfigure[Distribución normal del lado derecho de la caja real]{\label{fig:hist_Dere}\includegraphics
-        [width=.75\textwidth]{images/hist_derecha_caja.png}}
-    \end{center}
+\begin{figure}%[ht!]
+    \centering
+    \begin{tabular}{c}
+      \includegraphics[width=.70\textwidth]{images/ErrRegionIZQX.eps}\\
+      (a)\\
+      \includegraphics[width=.70\textwidth]{images/ErrRegionDERX.eps}\\
+      (b)
+    \end{tabular}
   \captionsetup{font=footnotesize}
-    \caption{\label{}Distribución de las mediciones con respecto a la posición (x) de las 
-    paredes derecha e izquierda de la caja real.}
+    \caption{\label{f:EstadisticaX}Histogramas de la cantidad de muestras con 
+    respecto a la posición en el eje $\mayusx$ del sólido geométrico. En (a) se 
+    muestra el histograma de la pared izquierda del sólido con una posición de 
+    $\mayusx = -0.44~m$ y en (b) se muestra el histograma de la pared derecha con una
+    posición de $\mayusx = 0.44~m$. }
 \end{figure}
 
 %\begin{figure}
@@ -490,32 +518,72 @@ tridimensional generado pero sin mucha consideración.
 %  \label{fig:hist_Dere}
 %\end{figure}
 
-Después de haber obtenido el modelo en tres dimensiones, de la caja real, se midió 
-el error en la posición las paredes de la caja con respecto a la posición de la nube 
-de puntos obtenido. Para hacer esto se colocó un nombre a cada pared, como se muestra en 
-la figura \ref{fig:paredCaja}, para poder diferenciar cada lado. Como se mencionó 
-anteriormente, para realizar esta prueba el sistema mecánico tuvo que ser colocado en 
-el centro de la caja. El lado izquierdo de la caja tiene una posición de ($X_{c} = 
--0.34$), ya que el largo de la caja es de 68 cm (figura \ref{fig:dim_cajaReal}). En 
-la figura \ref{fig:hist_Izq} se muestra el histograma del lado izquierdo de la caja, 
-donde se aprecia una distribución normal. Las barras dentro de la gráfica significa la
-cantidad de mediciones con respecto a las posiciones en el eje de la caja ($X_{c}$). De los 
-datos obtenidos de la nube de puntos, del lado izquierdo de la caja, se obtuvo un 
-promedio $\bar{u} = -0.339$ y una desviación estándar de $\sigma = 0.007$. El lado 
-derecho de la caja tiene una posición de $(X_{c} = 0.34)$; en la figura \ref{fig:hist_Dere} 
-se muestra una distribución normal con una concentración de mediciones en la posición del 
-lado derecho. Asimismo,se tiene un promedio $\bar{u} = 0.338$ y una desviación estándar 
-de $\sigma = 0.011$.  
+Para poder diferenciar cada pared de la caja se toma como referencia la posición 
+del sensor lidar. Cuando el sensor lidar comienza a funcionar la posición donde
+se encuentre es considerado como ($x = 0~m, y = 0~m$), entonces como el sensor
+se encuentra en el centro de la caja las posiciones de cada pared serán las 
+siguientes: En el eje $\mayusx$ las posiciones de cada pared son $\mayusx = -0.44~m$ 
+y $\mayusx = 0.44~m$. En el eje $\mayusy$ las posiciones de cada pared son 
+$\mayusy = -0.255~m$ y $\mayusy = 0.255~m$. Estas posiciones estan acorde a la medida
+de los lados de la caja, estas medidas estan expresadas en metros como unidad 
+de longitud. En la Figura \ref{f:EstadisticaX} se muestran los histogramas de 
+la cantidad de datos con respecto a las posiciones en el eje $\mayusx$.
+
+Primero se analiza los resultados de la sección izquierda del eje $\mayusx$, donde 
+la posición de la pared de la caja es $\mayusx = -0.44~m$. En la Figura 
+\ref{f:EstadisticaX}a se observa que la mayor cantidad de muestras se acumulan en 
+la posición correcta de la pared de la caja. Además en esta pared de la caja se 
+tiene un promedio de $\bar{u} = -0.439~m$, el cual indica que la mayor cantidad de 
+mediciones se encuentran acumulados dentro de esa posición. La desviación estándar 
+es de $\sigma = 0.008~m$, donde se puede ver que las mediciones tienen una dispersión 
+bastante pequeña con respecto al promedio de estos. Asimismo, estos datos tienen un 
+error absoluto de $E_{absoluto} = 0.184~m$ y un error relativo de $E_{relativo} = 
+0.215\%$. El valor de los errores son bastante pequeños.
+
+Los resultados de la sección derecha del eje $\mayusx$, donde la posición de la
+pared de la caja es $\mayusx = 0.44~m$. En la Figura \ref{f:EstadisticaX}b se observa 
+el histograma de esta pared de la caja. Donde se tiene un promedio de $\bar{u} = 0.445~m$ 
+y una desviación estándar de $\sigma = 0.011~m$, a partir de estos resultados se puede 
+inferir que la concentración de mediciones tiene un ligero corrimiento con respecto a 
+la posición correcta de la pared de la caja. Asimismo, el error absoluto es 
+$E_{absoluto} = 0.190~m$ y un error relativo de $E_{relativo} = 1.221\%$. En este caso
+el valor de los errores aumento un poco comparado a los valores anteriores, pero aun 
+sigue siendo los valores bastante pequeños.
+
+
+%Después de haber obtenido el modelo en tres dimensiones, de la caja real, se midió 
+%el error en la posición las paredes de la caja con respecto a la posición de la nube 
+%de puntos obtenido. Para hacer esto se colocó un nombre a cada pared, como se muestra en 
+%la Figura \ref{fig:paredCaja}, para poder diferenciar cada lado. Como se mencionó 
+%anteriormente, para realizar esta prueba el sistema mecánico tuvo que ser colocado en 
+%el centro de la caja. El lado izquierdo de la caja tiene una posición de ($X_{c} = 
+%-0.34$), ya que el largo de la caja es de 68 cm (ver Figura \ref{fig:dim_cajaReal}). En 
+%la figura \ref{fig:hist_Izq} se muestra el histograma del lado izquierdo de la caja, 
+%donde se aprecia una distribución normal. Las barras dentro de la gráfica significa la
+%cantidad de mediciones con respecto a las posiciones en el eje de la caja ($X_{c}$). De los 
+%datos obtenidos de la nube de puntos, del lado izquierdo de la caja, se obtuvo un 
+%promedio $\bar{u} = -0.339$ y una desviación estándar de $\sigma = 0.007$. El lado 
+%derecho de la caja tiene una posición de $(X_{c} = 0.34)$; en la Figura \ref{fig:hist_Dere} 
+%se muestra una distribución normal con una concentración de mediciones en la posición del 
+%lado derecho. Asimismo,se tiene un promedio $\bar{u} = 0.338$ y una desviación estándar 
+%de $\sigma = 0.011$.  
 
 \begin{figure}[ht!]
-     \begin{center}
-        \subfigure[Distribución normal del lado frontal de la caja real]{\label{fig:hist_Front}\includegraphics
-        [width=.60\textwidth]{images/hist_frontal_caja.png}}
-        \subfigure[Distribución normal del lado posterior de la caja real]{\label{fig:hist_Post}\includegraphics
-        [width=.60\textwidth]{images/hist_posterior_caja.png}}
-    \end{center}
+     %\begin{center}
+     %   \subfigure[Distribución normal del lado frontal de la caja real]{\label{fig:hist_Front}\includegraphics
+     %   [width=.60\textwidth]{images/hist_frontal_caja.png}}
+     %   \subfigure[Distribución normal del lado posterior de la caja real]{\label{fig:hist_Post}\includegraphics
+     %   [width=.60\textwidth]{images/hist_posterior_caja.png}}
+    %\end{center}
+    \centering
+    \begin{tabular}{c}
+      \includegraphics[width=.70\textwidth]{images/ErrRegionIZQY.eps}\\
+      (a)\\
+      \includegraphics[width=.70\textwidth]{images/ErrRegionDERY.eps}\\
+      (b)
+   \end{tabular}
   \captionsetup{font=footnotesize}
-    \caption{\label{}Distribución de las mediciones con respecto a la posición (y) de las 
+    \caption{\label{f:EstadisticaY}Distribución de las mediciones con respecto a la posición (y) de las 
     paredes frontal y posterior de la caja real.}
 \end{figure}
 
@@ -535,37 +603,65 @@ de $\sigma = 0.011$.
 %  \label{fig:hist_Post}
 %\end{figure}
 
-Para el lado frontal y el lado posterior, también se realizó la medición del error de la
-posición de la caja con respecto a la posición de la nube de puntos. El lado frontal de la
-caja tiene una posición de $(Y_{c} = 0.26)$, ya que el ancho de la caja tiene una longitud
-de 52 cm (figura \ref{fig:dim_cajaReal}). En la figura \ref{fig:hist_Front} se muestra una 
-distribución normal con la mayor concentración de mediciones en los valores muy cercanos al 
-0.26 en la posición en el eje de la caja $(Y_{c})$. Asimismo, se obtuvo un promedio de $\bar{u} 
-= 0.256$ y una desviación estándar de $\sigma = 0.006$. El lado posterior de la caja tiene 
-una posición de $(Y_{c} = -0.26)$; en la figura \ref{fig:hist_Post} se muestra una distribución
-normal con la mayor cantidad de mediciones cerca al valor de -0.26. Se obtuvo un promedio de 
-$\bar{u} = -0.26$ y una desviación estándar de $\sigma = 0.007$.
+Los resultados para la sección izquierda del eje $\mayusy$, donde la pared de 
+la caja tiene como posición $\mayusy = -0.255~m$. En la Figura \ref{f:EstadisticaY}a 
+se muestra el histograma para esta pared de la caja a lo largo del eje 
+$\mayusy$. Donde tiene un promedio de $\bar{u} = -0.253~m$ y una desviación 
+estándar de $\sigma = 0.003~m$. Además el error absoluto es de $E_{absoluto} = 0.001~m$ 
+y el error relativo es de $E_{relativo} = 0.52\%$. Esta pared del sólido geométrico 
+se encuentra bastante cerca a la posición real y tiene un error bastante pequeño. Para 
+la sección derecha del eje $\mayusy$, donde se tiene una posición de la caja en 
+$\mayusy = 0.255~m$. En la Figura \ref{f:EstadisticaY}b se muestra el histograma, donde
+se tiene un promedio de $\bar{u} = 0.248~m$, una desviación estándar de $\sigma = 0.003~m$, 
+un error absoluto de $E_{absoluto} = 0.006~m$ y un error relativo de $E_{relativo} = 
+2.638\%$. Estos valores obtenidos muestran que esta pared del sólido geométrico tiene un 
+error bastante grande con respecto a los resultados anteriores. Pero de acuerdo a las 
+dimensiones de la caja es un error bastante aceptable ya que las diferencias son muy 
+pequeñas.
 
-\subsection{Mapa en tres dimensiones de un pasadizo}
+Los histogramas mostrados en la Figura \ref{f:EstadisticaX} y Figura \ref{f:EstadisticaY}
+tienden a tener la forma de una distribución normal, ya que presenta una forma acampanada
+y tiende a ser simétrico con respecto a la mediana, que viene a ser la posición correcta 
+de las paredes de la caja. La forma que tiene es debido al teorema de límite central, ya 
+que el tamaño de sus muestras es lo suficientemente grande que hace que la distribución 
+de las medias sigan aproximadamente a una distribución normal.
+
+\subsection{Pruebas del mapa tridimensional en el pasadizo de un edificio}
 \begin{figure}
   \centering \footnotesize
   \includegraphics[width=0.80\textwidth]{images/esan_lidar.PNG}
   \captionsetup{font=footnotesize}
-  \caption{Pasadizo de un centro de estudio}
+  \caption{Pasadizo dentro de un edificio, donde se colocó el sistema mecánico para 
+  realizar el mapa tridimensional del lugar.}
   \label{fig:pasadizoEsan}
 \end{figure}
 
-Se realizo la segunda prueba dentro de un pasadizo, como se muestra en la figura 
-\ref{fig:pasadizoEsan}. En esta figura se resalta la zona donde se realizó las pruebas 
-con unas líneas rojas.Para esta prueba se coloco el sistema mecánico en el medio del 
-rectángulo que forman las columnas del pasadizo, una vez colocado el sensor lidar con 
-el servomotor se empezó a realizar las mediciones dentro del entorno por 70 segundos. Los 
-datos del motor y del sensor fueron almacenados de forma remota en una computadora. 
+La segunda prueba se realizó en el pasadizo dentro de un edificio. En esta prueba 
+se utilizó solamente el sistema mecánico, el cual fue colocado en la posición que 
+se observa en la Figura \ref{fig:pasadizoEsan}. Las dimensiones también son 
+mostradas en la figura mencionada. Las mediciones se realizaron en el espacio 
+que enmarca las líneas rojas dentro de la figura, estas pruebas fueron realizadas
+por 70 segundos. Los datos del sistema mecánico fueron enviados de forma remota hacia 
+la computadora, por medio del microcontrolador Raspberry Pi3.
 
-Los resultados obtenidos del mapa tridimensional se muestra en la figura \ref{fig:pasadizo3D}, 
+
+%Se realizo la segunda prueba dentro de un pasadizo, como se muestra en la Figura 
+%\ref{fig:pasadizoEsan}. En esta figura se resalta la zona donde se realizó las pruebas 
+%con unas líneas rojas. Para esta prueba se coloco el sistema mecánico en el medio del 
+%rectángulo que forman las columnas del pasadizo, una vez colocado el sensor lidar con 
+%el servomotor se empezó a realizar las mediciones dentro del entorno por 70 segundos. Los 
+%datos del motor y del sensor fueron almacenados de forma remota en una computadora. 
+
+El mapa tridimensional es mostrado en la Figura \ref{fig:pasadizo3D}, en esta figura se 
+muestra el mismo mapa en diferentes rotaciones en sentido horario, donde se puede 
+observar las paredes y las columnas del pasadizo. La estructura del ambiente es simétrico, 
+ya que en sus paredes y columnas existe una proporcionalidad a lo largo de todo el pasadizo.
+El mapa en tres dimensiones se muestra  
+
+Los resultados obtenidos del mapa tridimensional se muestra en la Figura \ref{fig:pasadizo3D}, 
 donde el crecimiento del mapa va en sentido horario. Las figuras muestran las paredes y las 
 columnas del pasadizo, debido a que el sensor lidar tiene un alcance máximo de 8 metros la 
-figura muestra otras zonas del pasadizo fuera de la sección mostrada en la figura 
+figura muestra otras zonas del pasadizo fuera de la sección mostrada en la Figura 
 \ref{fig:pasadizoEsan}. La estructura del pasadizo tiene una simetría con respecto a las 
 paredes, ya que se puede ver que las columnas están posicionadas en el mismo lugar en 
 ambos lados. Esto también se puede apreciar en el mapa 3D del pasadizo. En la nube de puntos 
@@ -575,17 +671,28 @@ inclinación. Esto es debido al rango mínimo permitido que tiene el sensor lida
 el sensor lidar al mapear un lugar con dimensiones más grandes obtiene un mejor resultado en 
 sus mediciones.
 
-\begin{figure}[ht!]
-     \begin{center}
-        \subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.47\textwidth]{images/pasadizo_8.png}}
-        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.47\textwidth]{images/pasadizo_7.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_6.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_5.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_4.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_3.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_2.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_1.png}}
-    \end{center}
+\begin{figure}%[ht!]
+     %\begin{center}
+     %   \subfigure[]{\label{fig:etiquetaA}\includegraphics[width=.47\textwidth]{images/pasadizo_8.png}}
+     %   \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.47\textwidth]{images/pasadizo_7.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_6.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_5.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_4.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_3.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_2.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.47\textwidth]{images/pasadizo_1.png}}
+    %\end{center}
+    \centering
+    \begin{tabular}{cc}
+      \includegraphics[width=.52\textwidth]{images/pasadizo_8.png}&
+      \includegraphics[width=.52\textwidth]{images/pasadizo_7.png}\\
+      \includegraphics[width=.52\textwidth]{images/pasadizo_6.png}&
+      \includegraphics[width=.52\textwidth]{images/pasadizo_5.png}\\
+      \includegraphics[width=.52\textwidth]{images/pasadizo_4.png}&
+      \includegraphics[width=.52\textwidth]{images/pasadizo_3.png}\\
+      \includegraphics[width=.52\textwidth]{images/pasadizo_2.png}&
+      \includegraphics[width=.52\textwidth]{images/pasadizo_1.png}\\
+    \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{fig:pasadizo3D}Mapa en tres dimensiones de un pasadizo. El crecimiento del mapa 
     tridimensional del pasadizo va en sentido horario.}
@@ -609,27 +716,48 @@ sus mediciones.
 
 \section{Resultado del mapa 3D mientras el robot se mueve}
 \begin{figure}
-  \centering \footnotesize
-  \includegraphics[width=0.80\textwidth]{images/prueba_cajas.JPG}
+  \begin{tabular}{cc}
+    \centering \footnotesize
+  %\includegraphics[width=0.80\textwidth]{images/prueba_cajas.JPG}
+    \includegraphics[width=0.50\textwidth]{images/KobukiSotano1.png}&
+    \includegraphics[width=0.50\textwidth]{images/KobukiSotano2.png}\\
+    (a)&(b)\\
+    \includegraphics[width=0.50\textwidth]{images/KobukiSotano3.png}&
+    \includegraphics[width=0.50\textwidth]{images/KobukiSotano4.png}\\
+    (c)&(d)\\
+    %\multicolumn{2}{c}{\includegraphics[width=0.50\linewidth]{images/KobukiSotano5.JPG}}\\
+    %\multicolumn{2}{c}{(e)}
+    \includegraphics[width=0.50\textwidth]{images/KobukiSotano5.png}&
+    \includegraphics[width=0.50\textwidth]{images/KobukiSotano6.JPG}\\
+    (e)&(f)
+  \end{tabular}
   \captionsetup{font=footnotesize}
-  \caption{Túnel construido por cajas de cartón, para probar el algoritmo
-  de mapeo tridimensional mientras el robot se mueve.}
+  \caption{Túnel construido por cajas de cartón, para probar el algoritmo de mapeo 
+          tridimensional mientras el robot se mueve.}
   \label{fig:tunel201}
 \end{figure}
 En esta sección se explica los resultados que se obtuvo al realizar el mapa en tres
 dimensiones mientras el robot Kobuki se desplaza sobre un entorno. Para esta prueba se utilizó 
-como prototipo de túnel dos cajas unidas, el cual se muestra en la figura \ref{fig:tunel201}. 
+como prototipo de túnel dos cajas unidas, el cual se muestra en la Figura \ref{fig:tunel201}. 
 El túnel prototipo tiene 194 cm de largo, la entrada del túnel tiene un ancho de 69 cm y en la 
 mitad de este tiene un ancho de 92 cm.
 
-\begin{figure}[ht!]
-     \begin{center}
-        \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.22\textwidth]{images/3DMOV_2.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_3.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_6.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_7.png}}
-        \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_8.png}}
-    \end{center}
+\begin{figure}%[ht!]
+     %\begin{center}
+     %   \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.22\textwidth]{images/3DMOV_2.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_3.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_6.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_7.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_8.png}}
+    %\end{center}
+    \centering
+    \begin{tabular}{cc}
+      \includegraphics[width=0.70\textwidth]{images/3DSotano1.png}\\
+      \includegraphics[width=0.70\textwidth]{images/holi.png}\\
+      \includegraphics[width=0.70\textwidth]{images/3DSotano3.png}\\
+      \multicolumn{2}{c}{\includegraphics[width=0.70\linewidth]{images/3DSotano4.png}}\\
+      %\includegraphics[width=0.50\textwidth]{images/3DSotano4.png}\\
+    \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{fig:tunel2013D}Mapa en tres dimensiones de una caja. El crecimiento de la caja es de sentido horario.}
 \end{figure} 
@@ -666,7 +794,8 @@ realiza una vuelta y la velocidad a la que el servomotor hace que rote el sistem
 
 \begin{figure}
   \centering \footnotesize
-  \includegraphics[width=0.70\textwidth]{images/slam2d.png}
+  %\includegraphics[width=0.70\textwidth]{images/slam2d.png}
+  \includegraphics[width=0.90\textwidth]{images/2DSotanoSLAM.png}
   \captionsetup{font=footnotesize}
   \caption{Mapa en dos dimensiones del túnel prototipo construido.}
   \label{fig:SLAM201}
@@ -692,7 +821,7 @@ encuentran los obstáculos. Cuando el robot se encuentre en una situación como 
 donde los obstáculos impiden que pueda seguir avanzando, en ese momento el robot simplemente regresa 
 por la trayectoria que genero llegando a la posición donde inicio.
  
-
+\begin{comment}
 \section{Resultado del movimiento aleatorio del robot con SLAM}
 
 En esta sección se explicará sobre la exploración del robot móvil dentro de un ambiente 
@@ -746,3 +875,4 @@ figura se puede ver una trayectoria desuniforme debido a las posiciones aleatori
 aleatorios tienen un incremento controlado para hacer que el robot tenga un avance continuo. Una
 vez que el robot tenga todo el ambiente mapeado y no encuentre un lugar por donde navegar debido
 a los obstáculos, el robot regresa a su posición inicial.
+\end{comment}

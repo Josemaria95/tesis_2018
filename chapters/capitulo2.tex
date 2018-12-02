@@ -264,7 +264,7 @@ donde $U_{att}(q)$ es el campo potencial de atracción y $U_{rep}(q)$ es el camp
 potencial de repulsión. La definición de cada campo potencial será definido 
 acontinuación.
 
-\paragraph{Campo Potencial Atractivo:}
+\paragraph{Campo Potencial Atractivo.}
 %\subsubsection{Campo Potencial Atractivo}
 Este campo conduce al robot hacia la posición de la meta, suponiendo que hay una 
 pelota determinada alrededor de este objetivo \cite{koren1991potential}. Es 
@@ -287,7 +287,7 @@ campo vectorial que siempre apunta a la posición deseada como:
 \nabla U_{att}(q)=\zeta(q-q_{goal}).
 \end{align}
 
-\paragraph{Campo Potencial Repulsivo:}
+\paragraph{Campo Potencial Repulsivo.}
 %\subsubsection{Campo Potencial Repulsivo}
 Un potencial repulsivo mantiene al robot alejado de los obstáculos 
 \cite{koren1991potential}. La fuerza de la fuerza de repulsión depende de la 
@@ -332,8 +332,10 @@ las carreteras, lo que le permite ir del inicio hasta la meta. El robot
 primero encuentra una ruta libre de colisiones en el mapa, atravesando este 
 hasta que se encuentra muy cerca de la meta. En este proceso, el robot va 
 construyendo toda la trayectoria que debe seguir para llegar al punto 
-deseado. Se explicará sobre el Mapa de Visibilidad Gráfica el cual es 
-un método de \textit{roadmap}.
+deseado. A continuación se realizará un breve resumen de un algoritmo que 
+se basa en el método de \textit{roadmap} llamado mapa de visibilidad gr\'afica.
+%Se explicará sobre el Mapa de Visibilidad Gráfica el cual es 
+%un método de \textit{roadmap}.
 
 %\subsubsection{Espacio De Configuraci\'on}
 
@@ -354,7 +356,7 @@ un método de \textit{roadmap}.
 %probar si una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
 
 %\subsubsection{Mapa de Visibilidad Gráfica} %(\textit{Visibility Graph})}
-\paragraph{Mapa de Visibilidad Gr\'afica (\textit{Visibility Graph}):}
+\paragraph{Mapa de Visibilidad Gr\'afica.} %(\textit{Visibility Graph}):}
 
 El planeamiento del camino del robot en situaciones prácticas, es preferible 
 encontrar no solo un camino sino un buen camino. El buen camino depende del 
@@ -456,7 +458,7 @@ explicar por el hecho de que no se requiere ninguna representación
 explícita del espacio de configuración libre. En esta sección se 
 explicará los métodos Mapa de Ruta Probabilístico, Árbol Aleatorio de 
 Exploración Rápida y Movimiento basado en Mapa de Red.
-%\subsubsection{Mapa de Ruta Probabil\'istico (\textit{Probabilistic Roadmap})}
+%\subsubsection{Mapa de Ruta Probabil\'istico} %(\textit{Probabilistic Roadmap})}
 \paragraph{Mapa de Ruta Probabilístico:} %(\textit{Probabilistic Roadmap})}
 
 La planificaci\'on del mapa de ruta probabil\'istico (PRM) es una de las 
@@ -710,7 +712,7 @@ estado. En lugar de representar la distribuci\'on mediante una forma param\'etri
 filtros de part\'iculas representan una distribuci\'on por un conjunto de muestras 
 extra\'idas de esta distribuci\'on. Tal representaci\'on es aproximada, pero 
 no es param\'etrica, por lo tanto se puede representar un espacio de distribuciones 
-mucho m\'as amplio que los gaussianos.
+mucho m\'as amplio que los gaussianos \cite{calle2014navegacion}.
 
 
 \subsection{Filtros de Informaci\'on}

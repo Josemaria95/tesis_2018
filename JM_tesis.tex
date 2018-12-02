@@ -54,35 +54,47 @@
 
 \tableofcontents
 %\listoftables
-%\listoffigures
+\listoffigures
 \resumen{
 
-Debido al problema descrito en la sección anterior, este trabajo de tesis se centra 
-en el desarrollo e implementación de un sistema de localización y mapeo en tres 
-dimensiones basado en sensado láser para la exploración autónoma de un robot móvil.
+Actualmente, dentro de la minería subterránea, los topógrafos para realizar las 
+mediciones de los túneles subterráneos y hacer una representación gráfica en 
+tres dimensiones del ambiente se están demorando entre 2 a 3 días. Esta demora
+genera ineficiencia dentro del proceso de extracción del mineral ya que no
+se tiene la información a tiempo real. Por ende, este trabajo de tesis 
+se centra en el desarrollo e implementación de un sistema de localización y 
+mapeo en tres dimensiones basado en sensado láser para la exploración autónoma 
+de un robot móvil.
 
-El robot móvil utiliza técnicas de SLAM (\textit{Simultaneous Localization and Mapping}) 
-para realizar un mapa en dos dimensiones dentro del túnel subterráneo y asimismo, estimar
-la posición del robot móvil dentro del ambiente mencionado. Se implementó un sistema de 
-navegación basado en campos potenciales. Este algoritmo permite al robot generar su 
-propia trayectoria, evitando colisionar con las paredes u obstáculos en el ambiente 
-donde comenzará a explorar. Se toma la información del sensor lidar (\textit{Light
-Detection and Ranging}) para generar el mapa en dos dimensiones.
+El robot móvil utiliza técnicas de SLAM (\textit{Simultaneous Localization and 
+Mapping}) para realizar un mapa en dos dimensiones dentro del túnel subterráneo 
+y asimismo, estimar la posición del robot móvil dentro del ambiente mencionado. Se 
+implementó un sistema de navegación basado en campos potenciales. Este algoritmo 
+permite al robot generar su propia trayectoria, evitando colisionar con las 
+paredes u obstáculos en el ambiente donde comenzará a explorar. Se toma la 
+información del sensor lidar (\textit{Light Detection and Ranging}) para generar 
+el mapa en dos dimensiones.
 
-Se elige el sensor lidar ya que emite impulsos r\'apidos de luz l\'aser hasta 
-4000 impulsos por segundo, sobre una superficie. Este instrumento mide la 
-cantidad de tiempo necesario para que cada pulso pueda recuperarse, y a partir 
-de esto calcula la distancia entre el objeto y el instrumento con una alta 
-precisi\'on. Como utiliza luz l\'aser, el sensor no necesita de iluminaci\'on 
-externa para realizar las mediciones, lo cual es perfecto para ambientes
-donde no hay una buena iluminaci\'on. 
-
-Finalmente, para construir el mapa en tres dimensiones se diseñó un sistema 
-mecánico que permite rotar el sensor láser haciendo que este pueda tomar 
-medidas a diferentes alturas con su respectivo ángulo de inclinación. Los datos
-obtenidos son enviados a una matriz heterógenea, el cual nos genera los valores
-en los ejes $(\X,\y,\z)$. El mapa tridimensional obtenido se puede visualizar en un 
+Se elige el sensor lidar ya que emite impulsos rápidos de luz láser hasta 
+4000 impulsos por segundo, sobre una superficie. Para construir el mapa en 
+tres dimensiones se diseñó un sistema mecánico que permite rotar el sensor láser
+haciendo que este pueda tomar medidas a diferentes alturas con su respectivo 
+ángulo de inclinación. Se utiliza las transformaciones homogéneas, para convertir
+los datos obtenidos a valores en los tres ejes del plano cartesiano $(\mayusx, 
+\mayusy, \mayusz)$. El mapa tridimensional obtenido se puede visualizar en un 
 software de fácil interacción.}
+
+%Se elige el sensor lidar ya que emite impulsos r\'apidos de luz l\'aser hasta 
+%4000 impulsos por segundo, sobre una superficie. Este instrumento mide la 
+%cantidad de tiempo necesario para que cada pulso pueda recuperarse, y a partir 
+%de esto calcula la distancia entre el objeto y el instrumento con una alta 
+%precisi\'on. Como utiliza luz l\'aser, el sensor no necesita de iluminaci\'on 
+%externa para realizar las mediciones, lo cual es perfecto para ambientes
+%donde no hay una buena iluminaci\'on. 
+
+%Finalmente, para construir el mapa en tres dimensiones se diseñó un sistema 
+%mecánico que permite rotar el sensor láser haciendo que este pueda tomar 
+%medidas a diferentes alturas con su respectivo ángulo de inclinación. 
 
 \addtocontents{toc}{\vspace{1.5em}}
 
@@ -96,7 +108,7 @@ software de fácil interacción.}
 \input{chapters/capitulo2}
 \input{chapters/capitulo3}
 \input{chapters/capitulo4}
-%\input{chapters/conclusiones}
+\input{chapters/conclusiones}
 %\input{chapters/recomendaciones}
 
 %% ============================================================================

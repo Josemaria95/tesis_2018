@@ -76,13 +76,22 @@ Debido al problema descrito en la sección anterior, este trabajo de tesis se ce
 en el desarrollo e implementación de un sistema de localización y mapeo en tres 
 dimensiones basado en sensado láser para la exploración autónoma de un robot móvil.
 
-El robot móvil utiliza técnicas de SLAM (\textit{Simultaneous Localization and Mapping}) 
-para realizar un mapa en dos dimensiones dentro del túnel subterráneo y asimismo, estimar
-la posición del robot móvil dentro del ambiente mencionado. Se implementó un sistema de 
-navegación basado en campos potenciales. Este algoritmo permite al robot generar su 
-propia trayectoria, evitando colisionar con las paredes u obstáculos en el ambiente 
-donde comenzará a explorar. Se toma la información del sensor lidar (\textit{Light
-Detection and Ranging}) para generar el mapa en dos dimensiones.
+Este sistema busca ofrecer una alternativa tecnológica de medición y la construcción 
+tridimensional de un túnel subterráneo mediante el uso de un sensor láser. Además esta
+construcción se realiza mientras un robot móvil va explorando el ambiente.El 
+desarrollo de este sistema beneficia a las personas que se encuentran involucradas 
+dentro del proceso de extracción del mineral, debido a que este sistema reduce el tiempo 
+que se demora un topógrafo en realizar estas acciones. Asimismo, este sistema evita que 
+el topógrafo este expuesto a riesgos dentro de la minería subterránea. Al evitar accidentes
+se reduce costos, ya que el daño sería de forma directa hacia el robot y no hacia una
+persona.
+%El robot móvil utiliza técnicas de SLAM (\textit{Simultaneous Localization and Mapping}) 
+%para realizar un mapa en dos dimensiones dentro del túnel subterráneo y asimismo, estimar
+%la posición del robot móvil dentro del ambiente mencionado. Se implementó un sistema de 
+%navegación basado en campos potenciales. Este algoritmo permite al robot generar su 
+%propia trayectoria, evitando colisionar con las paredes u obstáculos en el ambiente 
+%donde comenzará a explorar. Se toma la información del sensor lidar (\textit{Light
+%Detection and Ranging}) para generar el mapa en dos dimensiones.
 %Debido al problema descrito anteriormente, la propuesta de este trabajo de tesis 
 %se centra en desarrollar un algoritmo de autonomía para la navegaci\'on de un robot 
 %m\'ovil dentro del socav\'on subterr\'aneo. Donde se elige un sensor l\'aser el 
@@ -98,20 +107,20 @@ Detection and Ranging}) para generar el mapa en dos dimensiones.
 %desplazar. Se tomar\'a la informaci\'on del sensor LIDAR (\textit{Light 
 %Detection and Ranging}) para generar el mapa topogr\'afico en dos dimensiones.
 
-Se elige el sensor lidar ya que emite impulsos r\'apidos de luz l\'aser hasta 
-4000 impulsos por segundo, sobre una superficie. Este instrumento mide la 
-cantidad de tiempo necesario para que cada pulso pueda recuperarse, y a partir 
-de esto calcula la distancia entre el objeto y el instrumento con una alta 
-precisi\'on. Como utiliza luz l\'aser, el sensor no necesita de iluminaci\'on 
-externa para realizar las mediciones, lo cual es perfecto para ambientes
-donde no hay una buena iluminaci\'on. 
+%Se elige el sensor lidar ya que emite impulsos r\'apidos de luz l\'aser hasta 
+%4000 impulsos por segundo, sobre una superficie. Este instrumento mide la 
+%cantidad de tiempo necesario para que cada pulso pueda recuperarse, y a partir 
+%de esto calcula la distancia entre el objeto y el instrumento con una alta 
+%precisi\'on. Como utiliza luz l\'aser, el sensor no necesita de iluminaci\'on 
+%externa para realizar las mediciones, lo cual es perfecto para ambientes
+%donde no hay una buena iluminaci\'on. 
 
-Finalmente, para construir el mapa en tres dimensiones se diseñó un sistema 
-mecánico que permite rotar el sensor láser haciendo que este pueda tomar 
-medidas a diferentes alturas con su respectivo ángulo de inclinación. Los datos
-obtenidos son enviados a una matriz heterógenea, el cual nos genera los valores
-en los ejes $(\X,\y,\z)$. El mapa tridimensional obtenido se puede visualizar en un 
-software de fácil interacción.
+%Finalmente, para construir el mapa en tres dimensiones se diseñó un sistema 
+%mecánico que permite rotar el sensor láser haciendo que este pueda tomar 
+%medidas a diferentes alturas con su respectivo ángulo de inclinación. Los datos
+%obtenidos son enviados a una matriz heterógenea, el cual nos genera los valores
+%en los ejes $(\X,\y,\z)$. El mapa tridimensional obtenido se puede visualizar en un 
+%software de fácil interacción.
 
 %Para realizar el mapa en tres dimensiones, se diseñar\'a un sistema mec\'anico 
 %que permitir\'a que el sensor l\'aser pueda tomar mediciones en diferentes 
@@ -170,5 +179,5 @@ de trayectoria y  los algoritmos SLAM que existen. En el capítulo 3 se describi
 metodología que se hizó para el control de movimiento, la generación de trayectoria y 
 la construcción del mapa tridimensional. En el capítulo 4 se describirá y explicará 
 con detalle los resultados obtenidos. Se realizó pruebas en simulación y en un ambiente 
-real asemejándose a la estructura de un túnel subterráneo. Finalmente, se describé las 
+real asemejándose a la estructura de un túnel subterráneo. Finalmente, se describe las 
 conclusiones de la presente tesis.

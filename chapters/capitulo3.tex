@@ -396,25 +396,26 @@ tomar medidas en los tres ejes del plano cartesiano $(\mayusx,\mayusy,\mayusz)$.
     derecha. En (d) se muestra el sensor lidar en el ángulo $88$\grad~ rotando hacia la izquierda.}
 \end{figure}
 
-Para generar el mapa en tres dimensiones se debe tener en consideración los sistemas de referencia 
-de todos los componentes del sistema mecánico, en este caso el sensor lidar y el motor paso a paso
-como se muestra en la Figura \ref{f:FrameSitemaMecanico}. Este sistema genera un movimiento de rotación
-y traslación que son considerados dentro de las ecuaciones matemáticas para obtener los valores en los 
-tres ejes del plano cartesiano. Una vez que el sistema mecánico es autocalibrado accionado por el 
-switch, el sensor lidar es posicionado como muestra la Figura \ref{f:Rot3D}a, en esa posición se 
-considera que el ángulo del motor paso a paso es 0\grad. Luego el sensor lidar se comienza a rotar 
-hacia el lado derecho hasta que llega al ángulo $-88$\grad~ (ver Figura \ref{f:Rot3D}b). Una vez que
-el motor paso a paso llega al ángulo $-88$\grad este comienza a girar hacia la izquierda hasta 
-que llega al ángulo $88$\grad, como se muestran en las Figuras \ref{f:Rot3D}c y \ref{f:Rot3D}d. El 
-ángulo de apertura que tiene el motor paso a paso hace que el sensor lidar pueda tener un 
-panorama más amplio para poder tomar mediciones dentro de un ambiente.
+Para generar el mapa en tres dimensiones se debe tener en consideración los sistemas de 
+referencia de todos los componentes del sistema mecánico, en este caso el sensor lidar y el 
+motor paso a paso como se muestra en la Figura \ref{f:FrameSitemaMecanico}. Este sistema 
+genera un movimiento de rotación y traslación que son considerados dentro de las ecuaciones 
+matemáticas para obtener los valores en los tres ejes del plano cartesiano. Una vez que el 
+sistema mecánico es autocalibrado accionado por el switch, el sensor lidar es posicionado 
+como muestra la Figura \ref{f:Rot3D}a, en esa posición se considera que el ángulo del 
+motor paso a paso es 0\grad. Luego el sensor lidar se comienza a rotar hacia el lado 
+derecho hasta que llega al ángulo $-88$\grad~ (ver Figura \ref{f:Rot3D}b). Una vez que
+el motor paso a paso llega al ángulo $-88$\grad este comienza a girar hacia la izquierda 
+hasta que llega al ángulo $88$\grad, como se muestran en las Figuras \ref{f:Rot3D}c y 
+\ref{f:Rot3D}d. El ángulo de apertura que tiene el motor paso a paso hace que el sensor 
+lidar pueda tener un panorama más amplio para poder tomar mediciones dentro de un ambiente.
 
 \begin{figure}%[ht!]
 	\centering
 	\begin{tabular}{c}
-		\multicolumn{1}{c}{\includegraphics[width=.7\textwidth]{images/lidarpolar.png}}\\
+		\multicolumn{1}{c}{\includegraphics[width=.65\textwidth]{images/polarLidar.eps}}\\
       	\multicolumn{1}{c}{(a)}\\
-      	\multicolumn{1}{c}{\includegraphics[width=.75\textwidth]{images/lidarXY.png}}\\
+      	\multicolumn{1}{c}{\includegraphics[width=1.\textwidth]{images/2dLidar.eps}}\\
       	%\multicolumn{1}{c}{(b)}\\
       	%\multicolumn{1}{c}{\includegraphics[width=.80\textwidth]{images/fnav_lidar_s.eps}}\\
       	\multicolumn{1}{c}{(b)}
@@ -426,11 +427,13 @@ panorama más amplio para poder tomar mediciones dentro de un ambiente.
     coordenadas cartesianas.}
 \end{figure}
 
-El mapa tridimensional se construye con las mediciones del sensor lidar y los ángulos del motor paso
-a paso. Para esto primero se convierte los datos del sensor lidar, es decir hacer una conversión 
-de coordenadas polares a coordenadas cartesianas. En la Figura \ref{f:lidarPlot}a se muestra las 
-coordenadas polares obtenidas del sensor RPLidar A2 y en la Figura \ref{f:lidarPlot}b se puede ver la 
-conversión a coordenadas cartesianas. Las ecuaciones utilizadas son:
+El mapa tridimensional se construye con las mediciones del sensor lidar y los ángulos del motor 
+paso a paso. Para esto primero se convierte los datos del sensor lidar, es decir hacer una 
+conversión de coordenadas polares a coordenadas cartesianas. En la Figura \ref{f:lidarPlot}a 
+se muestra las coordenadas polares obtenidas del sensor RPLidar A2 y en la Figura 
+\ref{f:lidarPlot}b se puede ver la conversión a coordenadas cartesianas. Las mediciones 
+mostradas en la Figura \ref{f:lidarPlot} fueron realizadas dentro de un cuarto, esto sirve para 
+explicar la diferencia entre las coordenadas.Las ecuaciones utilizadas son:
 \begin{align*}
 	x &= rcos(\theta_{L}), \\
 	y &= rsen(\theta_{L}),
@@ -821,6 +824,7 @@ donde comenzó a explorar ($\mayusx=0,\mayusy=0$).
 
 \section{Estructura del Sistema de Mapeo en Tres Dimensiones}
 %\subsection{Estructura del Sistema de Mapeo en Tres Dimensiones}
+\label{sec:Sistema3D}
 
 \begin{figure}%[ht!]
 	\centering \footnotesize
