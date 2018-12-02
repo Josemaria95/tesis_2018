@@ -626,7 +626,7 @@ de las paredes de la caja. La forma que tiene es debido al teorema de límite ce
 que el tamaño de sus muestras es lo suficientemente grande que hace que la distribución 
 de las medias sigan aproximadamente a una distribución normal.
 
-\subsection{Pruebas del mapa tridimensional en el pasadizo de un edificio}
+\subsection{Pruebas del mapa tridimensional en el pasadizo dentro de un edificio}
 \begin{figure}
   \centering \footnotesize
   \includegraphics[width=0.80\textwidth]{images/esan_lidar.PNG}
@@ -636,13 +636,21 @@ de las medias sigan aproximadamente a una distribución normal.
   \label{fig:pasadizoEsan}
 \end{figure}
 
-La segunda prueba se realizó en el pasadizo dentro de un edificio. En esta prueba 
-se utilizó solamente el sistema mecánico, el cual fue colocado en la posición que 
-se observa en la Figura \ref{fig:pasadizoEsan}. Las dimensiones también son 
-mostradas en la figura mencionada. Las mediciones se realizaron en el espacio 
-que enmarca las líneas rojas dentro de la figura, estas pruebas fueron realizadas
-por 70 segundos. Los datos del sistema mecánico fueron enviados de forma remota hacia 
-la computadora, por medio del microcontrolador Raspberry Pi3.
+Se colocó el sistema mecánico en el pasadizo de un edificio, para obtener un mapa
+tridimensional del ambiente. El sistema mecánico se colocó en la posición que se
+muestra en la Figura \ref{fig:pasadizoEsan}. Se trato de colocar todo el sistema, de
+forma estática, al centro del marco de color rojo que se observa en la figura. Además, 
+en esta figura se puede ver las dimensiones que tiene esa zona a mapear. El experimento
+duró 70 segundos, donde los datos del sensor lidar y del motor fueron enviados de forma
+remota hacia la computadora por medio del microcontrolador Raspberry Pi3.
+
+%La segunda prueba se realizó en el pasadizo dentro de un edificio. En esta prueba 
+%se utilizó solamente el sistema mecánico, el cual fue colocado en la posición que 
+%se observa en la Figura \ref{fig:pasadizoEsan}. Las dimensiones también son 
+%mostradas en la figura mencionada. Las mediciones se realizaron en el espacio 
+%que enmarca las líneas rojas dentro de la figura, estas pruebas fueron realizadas
+%por 70 segundos. Los datos del sistema mecánico fueron enviados de forma remota hacia 
+%la computadora, por medio del microcontrolador Raspberry Pi3.
 
 
 %Se realizo la segunda prueba dentro de un pasadizo, como se muestra en la Figura 
@@ -652,24 +660,32 @@ la computadora, por medio del microcontrolador Raspberry Pi3.
 %el servomotor se empezó a realizar las mediciones dentro del entorno por 70 segundos. Los 
 %datos del motor y del sensor fueron almacenados de forma remota en una computadora. 
 
-El mapa tridimensional es mostrado en la Figura \ref{fig:pasadizo3D}, en esta figura se 
-muestra el mismo mapa en diferentes rotaciones en sentido horario, donde se puede 
-observar las paredes y las columnas del pasadizo. La estructura del ambiente es simétrico, 
-ya que en sus paredes y columnas existe una proporcionalidad a lo largo de todo el pasadizo.
-El mapa en tres dimensiones se muestra  
+El mapa tridimensional es mostrado en la Figura \ref{fig:pasadizo3D}, en esta 
+figura se muestra el mismo mapa en diferentes rotaciones en sentido horario, 
+donde se puede observar las paredes y las columnas del pasadizo. La estructura 
+del ambiente es simétrico, ya que en sus paredes y columnas existe una 
+proporcionalidad a lo largo de todo el pasadizo. Esta prueba se realizó con 
+un sistema mecánico anterior, este sistema estaba compuesto con un sensor lidar 
+y servomotor. Este sistema permitía al sensor lidar tener un ángulo de apertura 
+que iba de $-15$~\grad a $15$~\grad. En la Figura \ref{fig:pasadizo3D} se
+puede observar que no se muestra el techo del pasadizo, esto es por el alcance en 
+la toma de medidas en el eje $\mayusz$. Si esta experiencia se hubiese realizado 
+junto al robot móvil, el mapa en tres dimensiones del pasadizo se huebiese mostrado
+con más detalles ya que el desplazamiento del sistema mecánico hace que el sensor
+lidar tome mayores medidas y se tenga una mayor cantidad de información.
 
-Los resultados obtenidos del mapa tridimensional se muestra en la Figura \ref{fig:pasadizo3D}, 
-donde el crecimiento del mapa va en sentido horario. Las figuras muestran las paredes y las 
-columnas del pasadizo, debido a que el sensor lidar tiene un alcance máximo de 8 metros la 
-figura muestra otras zonas del pasadizo fuera de la sección mostrada en la Figura 
-\ref{fig:pasadizoEsan}. La estructura del pasadizo tiene una simetría con respecto a las 
-paredes, ya que se puede ver que las columnas están posicionadas en el mismo lugar en 
-ambos lados. Esto también se puede apreciar en el mapa 3D del pasadizo. En la nube de puntos 
-obtenido en la prueba anterior, se notó una pequeña inclinación en las paredes de la caja 
-pero en el caso de esta nube de puntos se nota las paredes bastante rectas sin ninguna 
-inclinación. Esto es debido al rango mínimo permitido que tiene el sensor lidar (15 cm), 
-el sensor lidar al mapear un lugar con dimensiones más grandes obtiene un mejor resultado en 
-sus mediciones.
+%Los resultados obtenidos del mapa tridimensional se muestra en la Figura \ref{fig:pasadizo3D}, 
+%donde el crecimiento del mapa va en sentido horario. Las figuras muestran las paredes y las 
+%columnas del pasadizo, debido a que el sensor lidar tiene un alcance máximo de 8 metros la 
+%figura muestra otras zonas del pasadizo fuera de la sección mostrada en la Figura 
+%\ref{fig:pasadizoEsan}. La estructura del pasadizo tiene una simetría con respecto a las 
+%paredes, ya que se puede ver que las columnas están posicionadas en el mismo lugar en 
+%ambos lados. Esto también se puede apreciar en el mapa 3D del pasadizo. En la nube de puntos 
+%obtenido en la prueba anterior, se notó una pequeña inclinación en las paredes de la caja 
+%pero en el caso de esta nube de puntos se nota las paredes bastante rectas sin ninguna 
+%inclinación. Esto es debido al rango mínimo permitido que tiene el sensor lidar (15 cm), 
+%el sensor lidar al mapear un lugar con dimensiones más grandes obtiene un mejor resultado en 
+%sus mediciones.
 
 \begin{figure}%[ht!]
      %\begin{center}
@@ -694,25 +710,9 @@ sus mediciones.
       \includegraphics[width=.52\textwidth]{images/pasadizo_1.png}\\
     \end{tabular}
   \captionsetup{font=footnotesize}
-    \caption{\label{fig:pasadizo3D}Mapa en tres dimensiones de un pasadizo. El crecimiento del mapa 
-    tridimensional del pasadizo va en sentido horario.}
+    \caption{\label{fig:pasadizo3D}Mapa en tres dimensiones de un pasadizo. El mapa
+    va rotando en sentido horario.}
 \end{figure}
-
-%\begin{figure}
-%  \centering \footnotesize
-%  \includegraphics[width=0.49\textwidth]{images/pasadizo_8.png}
-%  \includegraphics[width=0.49\textwidth]{images/pasadizo_7.png}
-%  \includegraphics[width=0.49\textwidth]{images/pasadizo_6.png}
-%  \includegraphics[width=0.49\textwidth]{images/pasadizo_5.png}
-%  \includegraphics[width=0.49\textwidth]{images/pasadizo_4.png}
-%  \includegraphics[width=0.49\textwidth]{images/pasadizo_3.png}
-%  \includegraphics[width=0.49\textwidth]{images/pasadizo_2.png}
-%  \includegraphics[width=0.49\textwidth]{images/pasadizo_1.png}
-%  \captionsetup{font=footnotesize}
-%  \caption{Mapa en tres dimensiones de un pasadizo. El crecimiento del mapa tridimensional 
-%  pasadizo va en sentido horario.}
-%  \label{fig:pasadizo3D}
-%\end{figure}
 
 \section{Resultado del mapa 3D mientras el robot se mueve}
 \begin{figure}
@@ -732,8 +732,7 @@ sus mediciones.
     (e)&(f)
   \end{tabular}
   \captionsetup{font=footnotesize}
-  \caption{Túnel construido por cajas de cartón, para probar el algoritmo de mapeo 
-          tridimensional mientras el robot se mueve.}
+  \caption{Exploración autónoma de \textit{muqi} dentro de un ambiente cerrado. En (a) se }
   \label{fig:tunel201}
 \end{figure}
 En esta sección se explica los resultados que se obtuvo al realizar el mapa en tres
