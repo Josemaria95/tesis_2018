@@ -384,7 +384,8 @@ en tres dimensiones.
 \begin{figure}
   \centering \footnotesize
   %\includegraphics[width=0.70\textwidth]{images/caja_lidar3D.png}
-  \includegraphics[width=0.70\textwidth]{images/cajalidar3d.eps}
+  %\includegraphics[width=0.70\textwidth]{images/cajalidar3d.eps}
+  \includegraphics[width=0.70\textwidth]{images/3DLidar.eps}
   \captionsetup{font=footnotesize}
   \caption{Dimensiones de la caja donde se realizó las mediciones de forma interna, para
   generar la construcción en tres dimensiones.}
@@ -710,11 +711,37 @@ lidar tome mayores medidas y se tenga una mayor cantidad de información.
       \includegraphics[width=.52\textwidth]{images/pasadizo_1.png}\\
     \end{tabular}
   \captionsetup{font=footnotesize}
-    \caption{\label{fig:pasadizo3D}Mapa en tres dimensiones de un pasadizo. El mapa
-    va rotando en sentido horario.}
+    \caption{\label{fig:pasadizo3D}Mapa en tres dimensiones de un pasadizo. El 
+    mapa va rotando en sentido horario.}
 \end{figure}
 
 \section{Resultado del mapa 3D mientras el robot se mueve}
+
+\begin{figure}
+  \centering \footnotesize
+  \includegraphics[width=1.0\textwidth]{images/medidas_mapa.jpg}
+  \captionsetup{font=footnotesize}
+  \caption{Dimensiones del sótano donde se hizo las pruebas de exploración con 
+  el robot \textit{muqi}.}
+  \label{fig:DimensionesSotano}
+\end{figure}
+
+En esta sección se explicará los resultados que fueron obtenidos en la exploración 
+del robot \textit{muqi}, como un sistema total. Estas pruebas fueron realizadas en
+el sótano de la Universidad de Ingeniería y Tecnología (UTEC). El sótano esta 
+compuesto por dos ambientes de diferentes tamaños unido por un pasadizo, como se 
+muestra en la Figura \ref{fig:DimensionesSotano}. El reto de \textit{muqi} es poder 
+explorar un ambiente y luego ingresar por el pasadizo hacia el segundo ambiente, una 
+vez que llegue a una posición donde no pueda seguir explorando el robot regresa a la 
+posición donde comenzó.
+
+
+%En esta sección se explica los resultados que se obtuvo al realizar el mapa en tres
+%dimensiones mientras el robot Kobuki se desplaza sobre un entorno. Para esta prueba 
+%se utilizó como prototipo de túnel dos cajas unidas, el cual se muestra en la Figura
+%\ref{fig:exploracionMuqi}. El túnel prototipo tiene 194 cm de largo, la entrada del 
+%túnel tiene un ancho de 69 cm y en la mitad de este tiene un ancho de 92 cm.
+
 \begin{figure}
   \begin{tabular}{cc}
     \centering \footnotesize
@@ -742,31 +769,7 @@ lidar tome mayores medidas y se tenga una mayor cantidad de información.
   posición inicial.}
   \label{fig:exploracionMuqi}
 \end{figure}
-En esta sección se explica los resultados que se obtuvo al realizar el mapa en tres
-dimensiones mientras el robot Kobuki se desplaza sobre un entorno. Para esta prueba se utilizó 
-como prototipo de túnel dos cajas unidas, el cual se muestra en la Figura \ref{fig:exploracionMuqi}. 
-El túnel prototipo tiene 194 cm de largo, la entrada del túnel tiene un ancho de 69 cm y en la 
-mitad de este tiene un ancho de 92 cm.
 
-\begin{figure}%[ht!]
-     %\begin{center}
-     %   \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.22\textwidth]{images/3DMOV_2.png}}
-     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_3.png}}
-     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_6.png}}
-     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_7.png}}
-     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_8.png}}
-    %\end{center}
-    \centering
-    \begin{tabular}{cc}
-      \includegraphics[width=0.70\textwidth]{images/3DSotano1.png}\\
-      \includegraphics[width=0.70\textwidth]{images/holi.png}\\
-      \includegraphics[width=0.70\textwidth]{images/3DSotano3.png}\\
-      \multicolumn{2}{c}{\includegraphics[width=0.70\linewidth]{images/3DSotano4.png}}\\
-      %\includegraphics[width=0.50\textwidth]{images/3DSotano4.png}\\
-    \end{tabular}
-  \captionsetup{font=footnotesize}
-    \caption{\label{fig:tunel2013D}Mapa en tres dimensiones de una caja. El crecimiento de la caja es de sentido horario.}
-\end{figure} 
 
 %\begin{figure}
 %  \centering \footnotesize
@@ -782,6 +785,50 @@ mitad de este tiene un ancho de 92 cm.
 %  \caption{Mapa en tres dimensiones de una caja. El crecimiento de la caja es de sentido horario.}
 %  \label{fig:tunel2013D}
 %\end{figure}
+
+Los ambientes que \textit{muqi} comenzó a explorar se muestra en la Figura 
+\ref{fig:exploracionMuqi}. El robot comienza a explorar en la Figura 
+\ref{fig:exploracionMuqi}a una vez que empieza a tomar mediciones con el sensor 
+lidar, este empieza a generar el mapa en dos dimensiones. Con la información
+dada por el algoritmo SLAM, \textit{muqi} comienza a generar posiciones aleatorias 
+dentro del ambiente y comienza a explorar. Como se muestra en la Figura 
+\ref{fig:exploracionMuqi}b. En la Figura \ref{fig:exploracionMuqi}c se muestra el 
+punto exacto cuando \textit{muqi} llega a la entrada del pasadizo para explorar 
+dentro de el hacia el otro ambiente. En la Figura \ref{fig:exploracionMuqi}d se 
+muestra el instante en que el robot comienza a navegar dentro del pasadizo explorando 
+el ambiente. En la Figura \ref{fig:exploracionMuqi}e se puede ver como el robot ingreso 
+hacia el otro ambiente y sigue explorando y mapeando en dos y tres dimensiones al 
+mismo tiempo. El movimiento del robot va de izquierda a derecha en movimientos de 
+zigzag. Cuando encuentra un obstáculo por delante, \textit{muqi} se detiene gira y 
+comienza a explorar hacia el otro extremo. En la Figura \ref{fig:exploracionMuqi}f 
+se puede observar que \textit{muqi} ya no puede seguir explorando debido a que en 
+su camino se encuentran las tres paredes que impiden la exploración, en este 
+instante el robot comienza a regresar a su posición inicial ($x = 0, y = 0$).
+
+El robot \textit{muqi} fue controlado por medio del microcontrolador Raspberry Pi3, el 
+cual fue controlado por medio de una computadora. El envío de la información fue en 
+tiempo real de forma remota. El robot debe realizar la construcción de los mapas en 
+dos dimensiones y tres dimensiones del ambiente, para hacer esto \textit{muqi} debe 
+controlar los ángulos del motor paso a paso. Cuando el motor paso a paso marca el 
+ángulo 0~\grad, el sensor lidar se encuentra de forma horizontal (ver Figura \ref{f:Rot3D}a) 
+y en esa posición envía las mediciones dentro del tópico \textbf{scan} hacia el 
+algoritmo de \textit{gmapping} (SLAM). Este envío de información es en tiempo real, ya 
+que el robot necesita conocer el ambiente de forma detallada y lo más preciso posible. 
+Para las mediciones en los tres ejes del plano cartesiano ($\mayusx, \mayusy, \mayusz$), 
+la información obtenida no se comparte en tiempo real debido a la cantidad de mediciones 
+en el tiempo de exploración, es mejor hacer que estos valores sean almacenados dentro 
+de la memoria SD de la raspberry Pi3 y luego esta información sea procesada.
+
+\begin{figure}
+  \centering \footnotesize
+  %\includegraphics[width=0.70\textwidth]{images/slam2d.png}
+  \includegraphics[width=0.90\textwidth]{images/2DSotanoSLAM.png}
+  \captionsetup{font=footnotesize}
+  \caption{Mapa generado por el algoritmo SLAM. Este mapa se construyo mientras
+  \textit{muqi} iba explorando el sótano.}
+  \label{fig:slamSotano}
+\end{figure}
+
 El Kobuki, el sensor lidar y el servomotor fueron controlados desde una Raspberry Pi3. Todo 
 el sistema fue ejecutado por medio de una computadora y la información fue recibida en tiempo 
 real de forma remota. La prueba consistió en hacer que el robot se pueda desplazar en línea 
@@ -798,14 +845,27 @@ a una velocidad de $0.01 m/s$ para tener una mejor resolución del mapa en tres 
 velocidad del robot depende de la cantidad de mediciones que hace el sensor lidar mientras 
 realiza una vuelta y la velocidad a la que el servomotor hace que rote el sistema mecánico.
 
-\begin{figure}
-  \centering \footnotesize
-  %\includegraphics[width=0.70\textwidth]{images/slam2d.png}
-  \includegraphics[width=0.90\textwidth]{images/2DSotanoSLAM.png}
+\begin{figure}%[ht!]
+     %\begin{center}
+     %   \subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.22\textwidth]{images/3DMOV_2.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_3.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_6.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_7.png}}
+     %   \subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.45\textwidth]{images/3DMOV_8.png}}
+    %\end{center}
+    \centering
+    \begin{tabular}{cc}
+      \includegraphics[width=0.70\textwidth]{images/3DSotano1.png}\\
+      \includegraphics[width=0.70\textwidth]{images/3DSotano2.png}\\
+      \includegraphics[width=0.70\textwidth]{images/3DSotano3.png}\\
+      \includegraphics[width=0.70\textwidth]{images/3DSotano4.png}\\
+    \end{tabular}
   \captionsetup{font=footnotesize}
-  \caption{Mapa en dos dimensiones del túnel prototipo construido.}
-  \label{fig:SLAM201}
-\end{figure}
+    \caption{\label{fig:tunel2013D}Mapa en tres dimensiones de una caja. El 
+    crecimiento de la caja es de sentido horario.}
+\end{figure} 
+
+
 
 El robot móvil mientras construye el mapa en tres dimensiones, tiene como información una nube 
 de puntos lo cual no es brinda la información suficiente para conocer los obstáculos o 
