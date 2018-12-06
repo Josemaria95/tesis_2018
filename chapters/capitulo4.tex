@@ -3,10 +3,9 @@ En el presente capítulo se muestra los resultados que fueron obtenidos al reali
 las diferentes pruebas con el sensor RPLidar A2 y el robot móvil Kobuki. Las pruebas
 fueron realizadas de manera independiente para cada componente y también se hizo pruebas 
 con el sistema en conjunto del robot explorador \textit{muqui}. Estas pruebas fueron 
-realizadas dentro de ambientes reales y asimismo, se realizó dentro del simulador 
-Gazebo. Este simulador trabaja en conjunto con ROS y permite poder diseñar robots y 
+realizadas dentro de ambientes reales y también utilizando el simulador Gazebo. Este simulador trabaja en conjunto con ROS y permite poder diseñar robots y 
 probar algoritmos de forma rápida en diferentes escenarios. Finalmente, se explicará
-con detalles cada una de las pruebas y resultados que se realizaron.
+con detalle cada una de las pruebas y resultados que se realizaron.
 
 %En este capítulo se mostrará los resultados que se fueron obteniendo al realizar las 
 %diferentes pruebas con el sensor lidar y el robot móvil diferencial. Estas pruebas 
@@ -119,9 +118,9 @@ polar impulsan al robot a través de las posiciones requeridas. Se expuso al rob
 a diferentes obstáculos cuyas posiciones fueron conocidas a priori. La Figura 
 \ref{f:kbki_APF}a muestra las fuerzas de atracción para cada posición (puntos rojos) en 
 las que el algoritmo se itera en el entorno de dos dimensiones dentro del movimiento del 
-robot. Para cada posición, el campo de potencial atractivo que se puede ver con la dirección 
+robot. Para cada posición, el campo de potencial atractivo se puede ver con la dirección 
 de las flechas. La Figura \ref{f:kbki_APF}b se compone de las fuerzas de repulsión basadas en 
-los obstáculos, que se muestran como marcadores verdes. Para cada obstáculo, la magnitud de 
+los obstáculos que se muestran como marcadores verdes. Para cada obstáculo, la magnitud de 
 las fuerzas aumenta cuando el robot está más cerca y su dirección señala los obstáculos, permitiendo 
 que el robot los evite. La Figura \ref{f:kbki_APF}c muestra la superposición de ambas fuerzas 
 con los obstáculos reales. Cada fuerza proporciona una posición deseada intermedia para el 
@@ -130,13 +129,14 @@ polar. Aunque las fuerzas cercanas a los obstáculos tienen un alto índice de c
 trayectoria es suave. Esto demuestra la efectividad del controlador polar a pesar de las 
 características no holonómicas del robot.
 
-\section{Resultados de la Navegación Autónoma con el Lidar en dos dimensiones}
+\section{Resultados de la Navegación Autónoma con el Lídar en dos dimensiones}
 \begin{figure}%[ht!]
   \centering \footnotesize
   \includegraphics[width=0.80\textwidth]{images/kobuki_201.jpg}
   \captionsetup{font=footnotesize}
-  \caption{Navegación autónoma del robot diferencial Kobuki, montado con un sensor lidar y dos cajas
+  \caption{Navegación autónoma del robot diferencial Kobuki, montado con un sensor lídar y dos cajas
   como obstáculos.}
+  \label{fig:Kobuki201}
 \end{figure}
 
 %\begin{figure}[ht!]
@@ -160,7 +160,7 @@ características no holonómicas del robot.
     \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{f:kbki_autonomo}Campos atractivos y repulsivos, y la trayectoria que el 
-    robot real sigue usando datos en línea provenientes del sensor lidar montado en la parte 
+    robot real sigue usando datos en línea provenientes del sensor lídar montado en la parte 
     superior. En (a) se muestra las fuerzas de atracción, en (b) las fuerzas de repulsión y 
     las posiciones de los obsáculos, finalmente en (c) se muestra las fuerzas de navegación 
     generando la trayectoria.}
@@ -177,25 +177,25 @@ características no holonómicas del robot.
 %  \label{f:kbki_autonomo}
 %\end{figure}
 
-Para probar la autonomía del robot móvil en un entorno real, se usa un sensor lidar 
-(RPLidar A2) que se colocó sobre el robot Kobuki. Se usa el sensor lidar para poder 
+Para probar la autonomía del robot móvil en un entorno real, se usa un sensor lídar 
+(RPLidar A2) que se colocó sobre el robot Kobuki. Se usa el sensor lídar para poder 
 hacer una actualización continua de las posiciones de los obstáculos a medida que el 
 robot se mueve. El robot usa tópicos creados en ROS para obtener la información del 
 sensor que se compone del rango y la orientación de cada punto medido, a medida que 
-el lidar gira. La información del lidar se tuvo que convertir a coordenadas cartesianas 
+el lídar gira. La información del lídar se tuvo que convertir a coordenadas cartesianas 
 para conocer las posiciones cartesianas de los obstáculos dentro del espacio de trabajo, 
 que es la entrada al algoritmo principal. Para que el kobuki pueda moverse dentro del 
-mapa generado por el lidar, el marco de referencia del robot se tomó como el marco del 
-lidar. Entonces, el algoritmo de navegación autónomo usa las coordenadas del obstáculo 
+mapa generado por el lídar, el marco de referencia del robot se tomó como el marco del 
+lídar. Entonces, el algoritmo de navegación autónomo usa las coordenadas del obstáculo 
 para generar su propia trayectoria evitando obstáculos. Para toda la prueba, se colocaron 
-dos cajas en el espacio de trabajo, como se ve en la Figura \ref{f:kbki_autonomo}a. La 
-posición del objetivo era ($x = 4, y = 0$). La Figura \ref{f:kbki_autonomo}b muestra 
+dos cajas en el espacio de trabajo, como se ve en la Figura \ref{fig:Kobuki201}. La 
+posición del objetivo era ($x = 4, y = 0$). La Figura \ref{f:kbki_autonomo}a muestra 
 la trayectoria del robot en azul y las flechas que indican la fuerza que lleva al robot a la 
-posición deseada. La Figura \ref{f:kbki_autonomo}c muestra el mapa completo, donde los 
-puntos verdes representan el entorno, detectados por el lidar, donde se mueve el robot. Como 
+posición deseada. La Figura \ref{f:kbki_autonomo}b muestra el mapa completo, donde los 
+puntos verdes representan el entorno, detectados por el lídar, donde se mueve el robot. Como 
 se observa, estas flechas apuntan hacia afuera del obstáculo, proporcionando autonomía al 
 robot mientras intenta alcanzar la posición deseada. Finalmente en la Figura 
-\ref{f:kbki_autonomo}d se muestra toda la fuerza de navegación que impulsa el movimiento 
+\ref{f:kbki_autonomo}c se muestra toda la fuerza de navegación que impulsa el movimiento 
 del robot móvil.
 
 \section{Resultado de la Navegación Autónoma usando SLAM en dos dimensiones}
@@ -256,14 +256,14 @@ y construir el mapa en dos dimensiones.
 
 Como se mencionó en la sección \ref{sec:GMAPPING}, para realizar esta prueba se utilizó
 el paquete de SLAM llamado \textit{gmapping}, dado por ROS. Este paquete permite crear 
-un mapa en dos dimensiones a partir de los datos del sensor lidar y la odometría del 
+un mapa en dos dimensiones a partir de los datos del sensor lídar y la odometría del 
 robot móvil. Cuando se ejecuta el paquete de SLAM empieza a crear tópicos por donde se
-envían los datos de la odometría del robot y los datos del lidar. Con la información 
+envían los datos de la odometría del robot y los datos del lídar. Con la información 
 recibida por el nodo del \textit{gmapping} este publica las dimensiones del entorno, dentro
 de un tópico, hacia el robot Kobuki. Para que el robot móvil se pueda desplazar con respecto
 a las dimensiones del mapa recibido por el SLAM, su marco de referencia debe ser remplazada
-por el marco de referencia del sensor lidar. La precisión del mapa originado por el SLAM es 
-buena, debido a que el algoritmo reduce la cantidad de mediciones que envía el sensor lidar
+por el marco de referencia del sensor lídar. La precisión del mapa originado por el SLAM es 
+buena, debido a que el algoritmo reduce la cantidad de mediciones que envía el sensor lídar
 haciendo que el mapa sea uniforme y los obstáculos se encuentren en la posición correcta
 dentro del mapa.
 
@@ -279,7 +279,7 @@ dentro del mapa.
 %dentro del mapa. 
 Para el desplazamiento autónomo del robot, dentro del escenario creado, se utilizó las 
 etapas de localización y mapeo (SLAM), campo potencial más controlador polar que fueron 
-explicados en la sección \ref{sec:NavegacionAutonoma}. Como primer paso el sensor lidar 
+explicados en la sección \ref{sec:NavegacionAutonoma}. Como primer paso el sensor lídar 
 permite localizar las posiciones de todos los obstáculos dentro del ambiente, estas 
 posiciones son enviados al algoritmo de campos potenciales para así generar la 
 trayectoria. Para realizar esta prueba se elige como posición deseada el punto 
@@ -306,7 +306,7 @@ posición deseada.
 En la Figura \ref{fig:Kbki_slam}b los puntos verdes representan a los obstáculos dentro
 del escenario, como se puede observar los puntos son uniformes y alineados. El algoritmo
 SLAM del paquete de \textit{gmapping} se encarga de reducir la cantidad de mediciones del
-sensor lidar, luego añade los datos de la odometría haciendo que la estimación de las 
+sensor lídar, luego añade los datos de la odometría haciendo que la estimación de las 
 posiciones de los objetos dentro del ambiente sea de forma clara y precisa. En esta figura
 también se puede observar las flechas del campo de repulsión, donde cada flecha tiene una
 dirección hacia afuera en cada obstáculo. El tamaño de las flechas va en acorde con la 
@@ -394,9 +394,12 @@ en tres dimensiones.
 
 En esta prueba se utilizó una caja real con las dimensiones mostradas en 
 la Figura \ref{fig:dim_cajaReal}. Para poder realizar esta prueba se tuvo que
-colocar el sistema mecánico dentro de la caja, haciendo que el sensor lidar 
+colocar el sistema mecánico dentro de la caja, haciendo que el sensor lídar 
 se posicione en el centro de la caja como se muestra en la Figura 
-\ref{fig:dim_cajaReal}. Una vez colocado el sistema mecánico dentro de la caja, se 
+\ref{fig:dim_cajaReal}, además en esta figura se muestra un sistema de referencia por 
+encima del sensor lídar, este eje hace referencia a la posición ($x = 0, y = 0$) 
+de la caja. Este sistema de referencia ayuda a conocer las posiciones de las paredes de 
+la caja. Una vez colocado el sistema mecánico dentro de la caja, se 
 tomo mediciones durante 40 segundos. El sistema mecánico es controlado por
 medio de un Raspberry Pi3, donde el microcontrolador recibe la información 
 de los componentes del sistema mecánico y envía estos datos hacia una computadora
@@ -421,15 +424,18 @@ de forma remota. Los datos recibidos son almacenados para el procesamiento poste
         \includegraphics[width=.50\textwidth]{images/1.jpg}&
         %\subfigure[]{\label{fig:etiquetaB}\includegraphics[width=.32\textwidth]{images/caja3D_2.png}}
         \includegraphics[width=.50\textwidth]{images/2.jpg}\\
+        (a)&(b)\\
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_3.png}}
         \includegraphics[width=.50\textwidth]{images/3.jpg}&
         %(a)&(b)&(c)\\
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_4.png}}
         \includegraphics[width=.50\textwidth]{images/4.jpg}\\
+        (c)&(d)\\
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_5.png}}
         \includegraphics[width=.50\textwidth]{images/5.jpg}&
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_6.png}}
         \includegraphics[width=.50\textwidth]{images/6.jpg}\\
+        (e)&(f)
         %(d)&(e)&(f)\\
         %\subfigure[]{\label{fig:etiquetaC}\includegraphics[width=.32\textwidth]{images/caja3D_7.png}}
        % \includegraphics[width=.33\textwidth]{images/7.jpg}&
@@ -445,7 +451,7 @@ de forma remota. Los datos recibidos son almacenados para el procesamiento poste
     \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{fig:Caja3D}Construcción del sólido geométrico, a partir de 
-    las mediciones del sensor lidar. El crecimiento del sólido tridimensional 
+    las mediciones del sensor lídar. El crecimiento del sólido tridimensional 
     rota en sentido horario.}
 \end{figure}
 
@@ -468,7 +474,7 @@ de forma remota. Los datos recibidos son almacenados para el procesamiento poste
 
 En la sección \ref{sec:Sistema3D} se explicó de forma detallada los pasos que 
 se debe seguir para construir un sólido tridimensional de un ambiente real, 
-usando el sensor lidar y el motor paso a paso. Las mediciones realizadas fueron 
+usando el sensor lídar y el motor paso a paso. Las mediciones realizadas fueron 
 dibujados usando el lenguaje \textit{python}, gracias a este lenguaje se obtuvo 
 el sólido mostrado en la Figura \ref{fig:Caja3D}, donde la imagen va rotando en 
 sentido horario. Esta figura muestra un prisma rectangular, donde las caras del 
@@ -477,13 +483,13 @@ se puede observar que existen líneas que se entrelazan entre algunas aristas de
 sólido, esto se debe al algoritmo que permite gráficar la nube de puntos en un 
 sólido geométrico.
 
-El diseño mecánico del sistema, permite al sensor lidar tomar mediciones en cada 
+El diseño mecánico del sistema, permite al sensor lídar tomar mediciones en cada 
 rincon de la caja. Por ende, se puede notar que la caja presenta muy pocas 
 imperfecciones. El sólido gráficado, a simple vista, tiene las mismas dimensiones 
 de la caja real. Para estimar el error que existe en las posiciones, en el 
 plano cartesiano, de la nube de puntos con respecto a la caja se colocó el sistema 
-dentro de la caja, haciendo que el sensor lidar se posicione lo más cercano al 
-centro de la caja. Con la nueva posición del sensor lidar se puede corroborar si 
+dentro de la caja, haciendo que el sensor lídar se posicione lo más cercano al 
+centro de la caja. Con la nueva posición del sensor lídar se puede corroborar si 
 la nube de puntos originado se encuentra en la misma posición en la que 
 se encuentran cada una de las paredes de la caja.
 
@@ -520,8 +526,8 @@ se encuentran cada una de las paredes de la caja.
 %\end{figure}
 
 Para poder diferenciar cada pared de la caja se toma como referencia la posición 
-del sensor lidar. Cuando el sensor lidar comienza a funcionar la posición donde
-se encuentre es considerado como ($x = 0~m, y = 0~m$), entonces como el sensor
+del sensor lídar. Cuando el sensor lídar comienza a funcionar la posición donde
+se encuentre es considerado como ($x = 0~m, y = 0~m$), como el sensor
 se encuentra en el centro de la caja las posiciones de cada pared serán las 
 siguientes: En el eje $\mayusx$ las posiciones de cada pared son $\mayusx = -0.44~m$ 
 y $\mayusx = 0.44~m$. En el eje $\mayusy$ las posiciones de cada pared son 
@@ -642,7 +648,7 @@ tridimensional del ambiente. El sistema mecánico se colocó en la posición que
 muestra en la Figura \ref{fig:pasadizoEsan}. Se trato de colocar todo el sistema, de
 forma estática, al centro del marco de color rojo que se observa en la figura. Además, 
 en esta figura se puede ver las dimensiones que tiene esa zona a mapear. El experimento
-duró 70 segundos, donde los datos del sensor lidar y del motor fueron enviados de forma
+duró 70 segundos, donde los datos del sensor lídar y del motor fueron enviados de forma
 remota hacia la computadora por medio del microcontrolador Raspberry Pi3.
 
 %La segunda prueba se realizó en el pasadizo dentro de un edificio. En esta prueba 
@@ -666,14 +672,14 @@ figura se muestra el mismo mapa en diferentes rotaciones en sentido horario,
 donde se puede observar las paredes y las columnas del pasadizo. La estructura 
 del ambiente es simétrico, ya que en sus paredes y columnas existe una 
 proporcionalidad a lo largo de todo el pasadizo. Esta prueba se realizó con 
-un sistema mecánico anterior, este sistema estaba compuesto con un sensor lidar 
-y servomotor. Este sistema permitía al sensor lidar tener un ángulo de apertura 
+un sistema mecánico anterior, este sistema estaba compuesto con un sensor lídar 
+y servomotor. Este sistema permitía al sensor lídar tener un ángulo de apertura 
 que iba de $-15$~\grad a $15$~\grad. En la Figura \ref{fig:pasadizo3D} se
 puede observar que no se muestra el techo del pasadizo, esto es por el alcance en 
 la toma de medidas en el eje $\mayusz$. Si esta experiencia se hubiese realizado 
 junto al robot móvil, el mapa en tres dimensiones del pasadizo se huebiese mostrado
 con más detalles ya que el desplazamiento del sistema mecánico hace que el sensor
-lidar tome mayores medidas y se tenga una mayor cantidad de información.
+lídar tome mayores medidas y se tenga una mayor cantidad de información.
 
 %Los resultados obtenidos del mapa tridimensional se muestra en la Figura \ref{fig:pasadizo3D}, 
 %donde el crecimiento del mapa va en sentido horario. Las figuras muestran las paredes y las 
@@ -703,12 +709,16 @@ lidar tome mayores medidas y se tenga una mayor cantidad de información.
     \begin{tabular}{cc}
       \includegraphics[width=.52\textwidth]{images/pasadizo_8.png}&
       \includegraphics[width=.52\textwidth]{images/pasadizo_7.png}\\
+      (a)&(b)\\
       \includegraphics[width=.52\textwidth]{images/pasadizo_6.png}&
       \includegraphics[width=.52\textwidth]{images/pasadizo_5.png}\\
+      (c)&(d)\\
       \includegraphics[width=.52\textwidth]{images/pasadizo_4.png}&
       \includegraphics[width=.52\textwidth]{images/pasadizo_3.png}\\
+      (e)&(f)\\
       \includegraphics[width=.52\textwidth]{images/pasadizo_2.png}&
       \includegraphics[width=.52\textwidth]{images/pasadizo_1.png}\\
+      (g)&(h)
     \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{fig:pasadizo3D}Mapa en tres dimensiones de un pasadizo. El 
@@ -789,7 +799,7 @@ posición donde comenzó.
 Los ambientes que \textit{muqi} comenzó a explorar se muestra en la Figura 
 \ref{fig:exploracionMuqi}. El robot comienza a explorar en la Figura 
 \ref{fig:exploracionMuqi}a una vez que empieza a tomar mediciones con el sensor 
-lidar, este empieza a generar el mapa en dos dimensiones. Con la información
+lídar, este empieza a generar el mapa en dos dimensiones. Con la información
 dada por el algoritmo SLAM, \textit{muqi} comienza a generar posiciones aleatorias 
 dentro del ambiente y comienza a explorar. Como se muestra en la Figura 
 \ref{fig:exploracionMuqi}b. En la Figura \ref{fig:exploracionMuqi}c se muestra el 
@@ -810,40 +820,87 @@ cual fue controlado por medio de una computadora. El envío de la información f
 tiempo real de forma remota. El robot debe realizar la construcción de los mapas en 
 dos dimensiones y tres dimensiones del ambiente, para hacer esto \textit{muqi} debe 
 controlar los ángulos del motor paso a paso. Cuando el motor paso a paso marca el 
-ángulo 0~\grad, el sensor lidar se encuentra de forma horizontal (ver Figura \ref{f:Rot3D}a) 
+ángulo 0~\grad, el sensor lídar se encuentra de forma horizontal (ver Figura \ref{f:Rot3D}a) 
 y en esa posición envía las mediciones dentro del tópico \textit{scan} hacia el 
 algoritmo de \textit{gmapping} (SLAM). Este envío de información es en tiempo real, ya 
 que el robot necesita conocer el ambiente de forma detallada y lo más preciso posible. 
-Para las mediciones en los tres ejes del plano cartesiano ($\mayusx, \mayusy, \mayusz$), 
-la información obtenida no se comparte en tiempo real debido a la cantidad de mediciones 
-en el tiempo de exploración, es mejor hacer que estos valores sean almacenados dentro 
-de la memoria SD de la raspberry Pi3 y luego esta información sea procesada.
+Los datos de las mediciones para la construcción del sólido tridimensional, no se envía
+esta información en tiempo real debido a la cantidad de mediciones que se esta tomando por 
+cada vez que gira el sensor lídar. Estos datos son almacenados en la memoria SD del 
+microcontrolador Raspberry Pi3, para luego poder procesarlo y hacerlo visible.
 
 \begin{figure}
   \centering \footnotesize
   %\includegraphics[width=0.70\textwidth]{images/slam2d.png}
   \includegraphics[width=0.90\textwidth]{images/2DSotanoSLAM.png}
   \captionsetup{font=footnotesize}
-  \caption{Mapa generado por el algoritmo SLAM. Este mapa se construyo mientras
-  \textit{muqi} iba explorando el sótano.}
+  \caption{Mapa generado por el algoritmo SLAM. Este mapa se construyo mientras el
+  \textit{muqi} va explorando el sótano.}
   \label{fig:slamSotano}
 \end{figure}
 
-El Kobuki, el sensor lidar y el servomotor fueron controlados desde una Raspberry Pi3. Todo 
-el sistema fue ejecutado por medio de una computadora y la información fue recibida en tiempo 
-real de forma remota. La prueba consistió en hacer que el robot se pueda desplazar en línea 
-recta hasta que encuentre un obstáculo que no le permita seguir moviéndose, una vez sucedido 
-esto el robot regresa a su posición inicial. Los resultados obtenidos se muestran en la figura
-\ref{fig:tunel2013D},como se aprecia el mapa tiene la forma del túnel con los anchos correspondientes 
-para cada caja. En la sección \ref{sec:MapaCaja} se describió y explicó el motivo por el cual dos 
-de las paredes del modelo tridimensional de la caja tiene la forma de dos triángulos pegados en 
-un vértice. En este mapa se puede ver que las paredes laterales tienen una suave forma ondeada 
-y es debido a lo explicado anteriormente, mientras el robot avanza se van formando triángulos 
-en las paredes y los puntos ciegos que tiene el sistema mecánico se van rellenando de puntos 
-mientras el robot se desplaza. La prueba duro 120 segundos donde el robot tuvo que desplazarse 
-a una velocidad de $0.01 m/s$ para tener una mejor resolución del mapa en tres dimensiones. La 
-velocidad del robot depende de la cantidad de mediciones que hace el sensor lidar mientras 
-realiza una vuelta y la velocidad a la que el servomotor hace que rote el sistema mecánico.
+La exploración de \textit{muqi}, por todo el sótano, fue de 5 minutos donde el robot se
+desplazo a diferentes velocidades. Las velocidades del robot fueron cambiantes de acuerdo 
+a las situaciones que el robot se encontraba, es decir si el robot navega por un espacio 
+sin obstáculos se comienza a mover a una velocidad de $0.3 m/s$ y cuando el robot 
+se encuentra con un obstáculo, este comienza a disminuir la velocidad y comienza a
+desplazarse a $0.05 m/s$. Para realizar esta prueba se tuvo que multiplicar una constante 
+a la velocidad lineal y velocidad angular para disminuir sus valores, debido a que mientras 
+el robot navega a bajas velocidades el sistema mecánico puede realizar mayores mediciones 
+del ambiente, obteniendo una mejor resolución del sólido geométrico en tres dimensiones. 
+Para que el robot \textit{muqi} pueda explorar el ambiente utiliza la información del mapa 
+que da el algoritmo SLAM. El mapa bidimensional se muestra en la Figura \ref{fig:slamSotano}. 
+La construcción del mapa del SLAM fue en tiempo real y esto se pudo visualizar usando la 
+herramienta Rviz. El mapa tiene la forma del mapa que se mostró en la Figura 
+\ref{fig:DimensionesSotano}. Se puede observar en el mapa los dos ambientes unidos por un 
+pasadizo, donde las líneas negras representa las paredes del lugar y la zona gris representa 
+el área explorada por el robot \textit{muqi}. Además, se puede ver que existe zonas 
+desconocidas (color verde oscuro) pero que no pueden ser exploradas por los obstáculos que 
+impiden el paso.
+
+
+
+%El Kobuki, el sensor lidar y el servomotor fueron controlados desde una Raspberry Pi3. Todo 
+%el sistema fue ejecutado por medio de una computadora y la información fue recibida en tiempo 
+%real de forma remota. La prueba consistió en hacer que el robot se pueda desplazar en línea 
+%recta hasta que encuentre un obstáculo que no le permita seguir moviéndose, una vez sucedido 
+%esto el robot regresa a su posición inicial. Los resultados obtenidos se muestran en la figura
+%\ref{fig:tunel2013D},como se aprecia el mapa tiene la forma del túnel con los anchos correspondientes 
+%para cada caja. En la sección \ref{sec:MapaCaja} se describió y explicó el motivo por el cual dos 
+%de las paredes del modelo tridimensional de la caja tiene la forma de dos triángulos pegados en 
+%un vértice. En este mapa se puede ver que las paredes laterales tienen una suave forma ondeada 
+%y es debido a lo explicado anteriormente, mientras el robot avanza se van formando triángulos 
+%en las paredes y los puntos ciegos que tiene el sistema mecánico se van rellenando de puntos 
+%mientras el robot se desplaza. La prueba duro 120 segundos donde el robot tuvo que desplazarse 
+%a una velocidad de $0.01 m/s$ para tener una mejor resolución del mapa en tres dimensiones. La 
+%velocidad del robot depende de la cantidad de mediciones que hace el sensor lidar mientras 
+%realiza una vuelta y la velocidad a la que el servomotor hace que rote el sistema mecánico.
+
+Los resultados del sólido tridimensional obtenido después de la exploración del robot
+\textit{muqi}, se muestra en la Figura \ref{fig:Sotano3D}. Donde se puede observar dos 
+ambientes que están unidos por medio de un pasadizo, además se puede ver que las paredes 
+son totalmente planas sin ninguna deformación. Se puede apreciar las puertas que tiene 
+el ambiente y además el techo del sótano. El techo no es uniforme debido a que en ese 
+lugar el techo tiene unas vigas transversales y también hay muchas canaletas de cables 
+y tuberías de agua que atraviesan todo el techo de ese lugar. La resolución de este 
+sólido geométrico se logró disminuyendo la velocidad del sensor lídar y la velocidad 
+del robot kobuki, ya que con esta reducción se pudo reducir la cantidad de vibración 
+de todo el sistema. Los datos obtenidos por el sistema de sensado son procesados en 
+CloudCompare. CloudCompare es un software de código abierto, que permite realizar 
+procesamiento a la nube de puntos utilizando diferentes tipos de algoritmos.
+
+\begin{figure}
+  \centering
+  \begin{tabular}{c}
+    %\includegraphics[width=0.95\textwidth]{images/medidas_mapa.jpg}\\
+    %(a)\\
+    \includegraphics[width=0.95\textwidth]{images/2d_pointcloud.eps}\\
+    %(b)
+  \end{tabular}
+  \captionsetup{font=footnotesize}
+    \caption{\label{fig:Medida3DSotano}Resultado de las mediciones obtenidas, en 
+    el sótano, por el sensor lídar en la exploración del robot \textit{muqi}.}
+\end{figure}
 
 \begin{figure}%[ht!]
      %\begin{center}
@@ -855,37 +912,52 @@ realiza una vuelta y la velocidad a la que el servomotor hace que rote el sistem
     %\end{center}
     \centering
     \begin{tabular}{cc}
-      \includegraphics[width=0.70\textwidth]{images/3DSotano1.png}\\
-      \includegraphics[width=0.70\textwidth]{images/3DSotano2.png}\\
-      \includegraphics[width=0.70\textwidth]{images/3DSotano3.png}\\
-      \includegraphics[width=0.70\textwidth]{images/3DSotano4.png}\\
+      \includegraphics[width=0.60\textwidth]{images/3DSotano1.png}\\
+      (a)\\
+      \includegraphics[width=0.60\textwidth]{images/3DSotano2.png}\\
+      (b)\\
+      \includegraphics[width=0.60\textwidth]{images/3DSotano3.png}\\
+      (c)\\
+      \includegraphics[width=0.60\textwidth]{images/3DSotano4.png}\\
+      (d)
     \end{tabular}
   \captionsetup{font=footnotesize}
-    \caption{\label{fig:tunel2013D}Mapa en tres dimensiones de una caja. El 
-    crecimiento de la caja es de sentido horario.}
+    \caption{\label{fig:Sotano3D}Mapa en tres dimensiones del ambiente
+    explorado con el robot \textit{muqi}. En esta imagen se muestra 
+    diferentes vistas del sólido geométrico.}
 \end{figure} 
 
+Para analizar el error entre las dimensiones reales del sótano con respecto al mapa 
+obtenido, se extrajo un plano en dos dimensiones del sólido geométrico y se midió sus 
+lados. Esto se muestra en la Figura \ref{fig:Sotano3D}. En la figura se puede observar
+que tiene la misma forma de la Figura \ref{fig:DimensionesSotano}, este mapa tiene un 
+error absoluto de $4 cm$ y un error relativo de $0.455 \%$. Estos errores son bastante 
+pequeño y se origina debido a las vibraciones que genera el sensor lídar al momento de 
+rotar, además las vibraciones que genera el motor paso a paso y también las vibraciones 
+que origina el robot Kobuki. La suma de todas estas vibraciones, hace que el sensor 
+lídar tenga una mayor dispersión de puntos en sus medidas con respecto a una posición
+dentro de un ambiente. 
 
 
-El robot móvil mientras construye el mapa en tres dimensiones, tiene como información una nube 
-de puntos lo cual no es brinda la información suficiente para conocer los obstáculos o 
-dimensiones dentro de un entorno desconocido. Por tal motivo, el algoritmo implementado permite 
-que el robot móvil mientras va explorando y asu vez construyendo el mapa en tres dimensiones 
-pueda conocer las posiciones precisas de los obstáculos que se encuentran en el ambiente y así 
-poder generar su propia trayectoria.
+%El robot móvil mientras construye el mapa en tres dimensiones, tiene como información una nube 
+%de puntos lo cual no es brinda la información suficiente para conocer los obstáculos o 
+%dimensiones dentro de un entorno desconocido. Por tal motivo, el algoritmo implementado permite 
+%que el robot móvil mientras va explorando y asu vez construyendo el mapa en tres dimensiones 
+%pueda conocer las posiciones precisas de los obstáculos que se encuentran en el ambiente y así 
+%poder generar su propia trayectoria.
 
-Para generar el mapa en dos dimensiones se hizó lo siguiente, cuando el servomotor llega al ángulo
-0\grad~ en ese instante de tiempo se envía los valores de las mediciones que hace el sensor lidar.El
-envió de los datos se hace a través de un tópico creado hacia el paquete de ROS, \textit{gmapping}, 
-con el cual se puede construir un mapa en dos dimensiones bastante preciso. El procesamiento del 
-mapa en dos dimensiones es en una computadora que se conecta al controlador Raspberry Pi3 de forma 
-remota y recibe los datos del sensor lidar. En la figura \ref{fig:SLAM201} se muestra el mapa en 
-dos dimensiones del túnel prototipo. Este mapa preciso brinda la suficiente información al robot  
-móvil para que pueda conocer el entorno que esta explorando. Como se puede ver en la imagen, el 
-mapa indica al robot móvil que zonas le falta explorar, que zonas ha explorado y donde se 
-encuentran los obstáculos. Cuando el robot se encuentre en una situación como la imagen mostrada, 
-donde los obstáculos impiden que pueda seguir avanzando, en ese momento el robot simplemente regresa 
-por la trayectoria que genero llegando a la posición donde inicio.
+%Para generar el mapa en dos dimensiones se hizo lo siguiente, cuando el servomotor llega al ángulo
+%0\grad~ en ese instante de tiempo se envía los valores de las mediciones que hace el sensor lidar.El
+%envió de los datos se hace a través de un tópico creado hacia el paquete de ROS, \textit{gmapping}, 
+%con el cual se puede construir un mapa en dos dimensiones bastante preciso. El procesamiento del 
+%mapa en dos dimensiones es en una computadora que se conecta al controlador Raspberry Pi3 de forma 
+%remota y recibe los datos del sensor lidar. En la figura \ref{fig:SLAM201} se muestra el mapa en 
+%dos dimensiones del túnel prototipo. Este mapa preciso brinda la suficiente información al robot  
+%móvil para que pueda conocer el entorno que esta explorando. Como se puede ver en la imagen, el 
+%mapa indica al robot móvil que zonas le falta explorar, que zonas ha explorado y donde se 
+%encuentran los obstáculos. Cuando el robot se encuentre en una situación como la imagen mostrada, 
+%donde los obstáculos impiden que pueda seguir avanzando, en ese momento el robot simplemente regresa 
+%por la trayectoria que genero llegando a la posición donde inicio.
  
 \begin{comment}
 \section{Resultado del movimiento aleatorio del robot con SLAM}
