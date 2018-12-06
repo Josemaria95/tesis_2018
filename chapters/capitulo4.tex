@@ -134,8 +134,8 @@ características no holonómicas del robot.
   \centering \footnotesize
   \includegraphics[width=0.80\textwidth]{images/kobuki_201.jpg}
   \captionsetup{font=footnotesize}
-  \caption{Navegación autónoma del robot diferencial Kobuki, montado con un sensor lídar y dos cajas
-  como obstáculos.}
+  \caption{Navegación autónoma del robot diferencial Kobuki, montado con un 
+  sensor lídar y dos cajas como obstáculos.}
   \label{fig:Kobuki201}
 \end{figure}
 
@@ -318,9 +318,10 @@ y evitar las colisiones.
 Finalmente, en la Figura \ref{fig:Kbki_slam}c se muestra las sumas de fuerzas de atracción y
 repulsión. La suma de estas fuerzas generan la trayectoria que debe realizar el robot
 para llegar a la posición deseada, evitando los obstáculos. En esta figura se puede observar
-que en algunas regiones de la trayectoria se nota una concentración de fuerzas de navegación. Esto se debe a la interacción de su movimiento autónomo, ya que el robot va retrocediendo para
-evitar el choque originado por el campo de repulsión y a su vez se encuentra atraído hacia 
-la posición deseada originado por el campo de atracción.
+que en algunas regiones de la trayectoria se nota una concentración de fuerzas de 
+navegación. Esto se debe a la interacción de su movimiento autónomo, ya que el robot va 
+retrocediendo para evitar el choque originado por el campo de repulsión y a su vez se 
+encuentra atraído hacia la posición deseada originado por el campo de atracción.
 
 %En la Figura \ref{fig:Kbki_slam}b se muestra los obstáculos (puntos verdes), se 
 %aprecia con mayor claridad y uniformidad las posiciones de los obstáculos. Esto se debe 
@@ -450,8 +451,8 @@ de forma remota. Los datos recibidos son almacenados para el procesamiento poste
     \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{fig:Caja3D}Construcción del sólido geométrico, a partir de 
-    las mediciones del sensor lídar. El crecimiento del sólido tridimensional 
-    rota en sentido horario.}
+    las mediciones del sensor lídar. Desde las figuras (a) hasta (f) el sólido 
+    tridimensional rota en torno a su eje en sentido horario.}
 \end{figure}
 
 %\begin{figure}
@@ -504,8 +505,8 @@ se encuentran cada una de las paredes de la caja.
     \caption{\label{f:EstadisticaX}Histogramas de la cantidad de muestras con 
     respecto a la posición en el eje $\mayusx$ del sólido geométrico. En (a) se 
     muestra el histograma de la pared izquierda del sólido con una posición de 
-    $\mayusx = -0.44~m$ y en (b) se muestra el histograma de la pared derecha con una
-    posición de $\mayusx = 0.44~m$. }
+    $\mayusx = -0.44~m$ y en (b) se muestra el histograma de la pared derecha 
+    con una posición de $\mayusx = 0.44~m$. }
 \end{figure}
 
 %\begin{figure}
@@ -612,18 +613,19 @@ los valores son aún bastante pequeños.
 %\end{figure}
 
 Los resultados para la sección izquierda del eje $\mayusy$, donde la pared de 
-la caja tiene como posición $\mayusy = -0.255~m$, que fueron obtenido será analizada a continuación. En la Figura \ref{f:EstadisticaY}a 
-se muestra el histograma para esta pared de la caja a lo largo del eje 
-$\mayusy$, donde tiene un promedio de $\bar{u} = -0.253~m$ y una desviación 
-estándar de $\sigma = 0.003~m$. Además el error absoluto es de $E_{absoluto} = 0.001~m$ 
-y el error relativo es de $E_{relativo} = 0.52\%$. Esta pared del sólido geométrico 
-se encuentra bastante cerca a la posición real y tiene un error bastante pequeño. Para 
-la sección derecha del eje $\mayusy$, donde se tiene una posición de la caja en 
-$\mayusy = 0.255~m$. En la Figura \ref{f:EstadisticaY}b se muestra el histograma, donde
-se tiene un promedio de $\bar{u} = 0.248~m$, una desviación estándar de $\sigma = 0.003~m$, 
-un error absoluto de $E_{absoluto} = 0.006~m$ y un error relativo de $E_{relativo} = 
-2.638\%$. Estos valores obtenidos muestran que esta pared del sólido geométrico tiene un 
-error bastante grande con respecto a los resultados anteriores. Pero de acuerdo a las 
+la caja tiene como posición $\mayusy = -0.255~m$, que fueron obtenido será analizada 
+a continuación. En la Figura \ref{f:EstadisticaY}a se muestra el histograma para esta 
+pared de la caja a lo largo del eje $\mayusy$, donde tiene un promedio de 
+$\bar{u} = -0.253~m$ y una desviación estándar de $\sigma = 0.003~m$. Además el error 
+absoluto es de $E_{absoluto} = 0.001~m$ y el error relativo es de 
+$E_{relativo} = 0.52\%$. Esta pared del sólido geométrico se encuentra bastante cerca 
+a la posición real y tiene un error bastante pequeño. Para la sección derecha del eje 
+$\mayusy$, donde se tiene una posición de la caja en $\mayusy = 0.255~m$. En la 
+Figura \ref{f:EstadisticaY}b se muestra el histograma, donde se tiene un promedio 
+de $\bar{u} = 0.248~m$, una desviación estándar de $\sigma = 0.003~m$, un error absoluto 
+de $E_{absoluto} = 0.006~m$ y un error relativo de $E_{relativo} = 2.638\%$. Estos 
+valores obtenidos muestran que esta pared del sólido geométrico tiene un error 
+bastante grande con respecto a los resultados anteriores. Pero de acuerdo a las 
 dimensiones de la caja es un error bastante aceptable ya que las diferencias son muy 
 pequeñas.
 
@@ -722,8 +724,9 @@ lídar tome mayores medidas y se tenga una mayor cantidad de información.
       (g)&(h)
     \end{tabular}
   \captionsetup{font=footnotesize}
-    \caption{\label{fig:pasadizo3D}Mapa en tres dimensiones de un pasadizo. El 
-    mapa va rotando en sentido horario.}
+    \caption{\label{fig:pasadizo3D}Mapa en tres dimensiones de un pasadizo. Desde 
+    las figuras (a) hasta (h) el mapa tridimensional rota en sentido horario con respecto
+    a su eje.}
 \end{figure}
 
 \section{Resultado del mapa 3D mientras el robot se mueve}
@@ -925,7 +928,9 @@ procesamiento a la nube de puntos utilizando diferentes tipos de algoritmos.
   \captionsetup{font=footnotesize}
     \caption{\label{fig:Sotano3D}Mapa en tres dimensiones del ambiente
     explorado con el robot \textit{muqi}. En esta imagen se muestra 
-    diferentes vistas del sólido geométrico.}
+    diferentes vistas del sólido geométrico, en (a) se muestra la vista 
+    posterior; en (b) la vista superior; en (c) la vista frontal derecha y 
+    en (d) la vista frontal izquierda.}
 \end{figure} 
 
 Para analizar el error entre las dimensiones reales del sótano con respecto al mapa 
