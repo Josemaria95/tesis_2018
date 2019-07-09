@@ -3,7 +3,7 @@ En el presente capítulo se muestra los resultados que fueron obtenidos al reali
 las diferentes pruebas con el sensor RPLidar A2 y el robot móvil Kobuki. Las pruebas
 fueron realizadas de manera independiente para cada componente y también se hizo pruebas 
 con el sistema en conjunto del robot explorador \textit{muqi}. Estas pruebas fueron 
-realizadas dentro de ambientes reales y también utilizando el simulador Gazebo. Este simulador trabaja en conjunto con ROS y permite poder diseñar robots y 
+realizadas utilizando el simulador Gazebo y también dentro de ambientes reales. Este simulador trabaja en conjunto con ROS y permite poder diseñar robots y 
 probar algoritmos de forma rápida en diferentes escenarios. Finalmente, se explicará
 con detalle cada una de las pruebas y resultados que se realizaron.
 
@@ -36,15 +36,21 @@ con detalle cada una de las pruebas y resultados que se realizaron.
 \begin{figure}[ht!]
   \begin{tabular}{cc}
   %\centering
-    \includegraphics[width=.47\textwidth]{images/tvsxy_tesis.eps}&
-    \includegraphics[width=.47\textwidth]{images/tvsv_tesis.eps}\\
+    %\includegraphics[width=.47\textwidth]{images/tvsxy_tesis.eps}&
+    %\includegraphics[width=.47\textwidth]{images/tvsv_tesis.eps}\\
+    %(a)&(b)\\
+    %\includegraphics[width=.47\textwidth]{images/tvstheta_tesis.eps}&
+    %\includegraphics[width=.47\textwidth]{images/tvsomega_tesis.eps}\\
+    %(c)&(d)
+    \includegraphics[width=.47\textwidth]{images/PosicionEnX_tesis.PNG}&
+    \includegraphics[width=.47\textwidth]{images/velocidadEnX_tesis.PNG}\\
     (a)&(b)\\
-    \includegraphics[width=.47\textwidth]{images/tvstheta_tesis.eps}&
-    \includegraphics[width=.47\textwidth]{images/tvsomega_tesis.eps}\\
+    \includegraphics[width=.47\textwidth]{images/orientacion_tesis.PNG}&
+    \includegraphics[width=.47\textwidth]{images/velocidadAngular_tesis.PNG}\\
     (c)&(d)
   \end{tabular}
   \caption{Evolución temporal de las variables de estado usando el controlador polar para 
-  lograr una posición deseada dada por $x = 3, y = 3, \theta = 90$. En (a) se muestra la 
+  lograr una posición deseada dada por $x = 3 m, y = 3 m, \theta = 90$. En (a) se muestra la 
   evolución temporal en la posición del eje x, en (b) se muestra la evolución de la 
   velocidad lineal, en (c) se muestra la evolución de la orientación y en (d) se muestra 
   la evolución de la velocidad angular.}
@@ -67,7 +73,7 @@ Para probar el controlador polar, se usó una simulación dinámica en Gazebo co
 Kobuki sin obstáculos, y las variables de estado que incluyen velocidad, posición y 
 orientación se obtuvieron en línea a partir de la odometría simulada. Usando la información 
 de esta odometría, el controlador se aplicó en línea. Para estas pruebas, la posición deseada
-es $(x = 3, y = 3)$ y la orientación deseada $\theta = 90^{\circ}$. La Figura 
+es $(x = 3 m, y = 3 m)$ y la orientación deseada $\theta = 90^{\circ}$. La Figura 
 \ref{f:PolarControl}a muestra la evolución temporal de la posición ($x$) donde 
 se logra una convergencia a la posición deseada en menos de 20 segundos. Esto se debe a 
 la distancia hacia el obstáculo. Diferentes distancias conducen a diferentes tiempos de 
@@ -112,10 +118,10 @@ en la posición en lugar de la orientación (ver Figura \ref{f:PolarControl}c).
 %  \label{f:kbki_APF}
 %\end{figure}
 La metodología propuesta se implementó como un algoritmo iterativo en el robot Kobuki. 
-Como se se describe en la sección \ref{sec:autonomia}, el algoritmo toma iterativamente 
+Como se describe en la sección \ref{sec:autonomia}, el algoritmo toma iterativamente 
 posiciones deseadas  donde a través del campo potencial artificial y el controlador 
 polar impulsan al robot a través de las posiciones requeridas. Se expuso al robot 
-a diferentes obstáculos cuyas posiciones fueron conocidas a priori. La Figura 
+a diferentes obstáculos cuyas posiciones fueron conocidas a priori. La Figura \ref{f:kbki_APF} muestra un ejemplo de aplicación del sistema de navegación. La Figura 
 \ref{f:kbki_APF}a muestra las fuerzas de atracción para cada posición (puntos rojos) en 
 las que el algoritmo se itera en el entorno de dos dimensiones dentro del movimiento del 
 robot. Para cada posición, el campo de potencial atractivo se puede ver con la dirección 
@@ -126,7 +132,7 @@ que el robot los evite. La Figura \ref{f:kbki_APF}c muestra la superposición de
 con los obstáculos reales. Cada fuerza proporciona una posición deseada intermedia para el 
 robot, que constituye la posición deseada continuamente actualizada para el controlador 
 polar. Aunque las fuerzas cercanas a los obstáculos tienen un alto índice de cambio, la 
-trayectoria es suave. Esto demuestra la efectividad del controlador polar a pesar de las 
+trayectoria es suave. Esto demuestra la efectividad del sistema de navegación a pesar de las 
 características no holonómicas del robot.
 
 \section{Resultados de la Navegación Autónoma con el Lídar en dos dimensiones}
@@ -181,22 +187,31 @@ Para probar la autonomía del robot móvil en un entorno real, se usa un sensor 
 (RPLidar A2) que se colocó sobre el robot Kobuki. Se usa el sensor lídar para poder 
 hacer una actualización continua de las posiciones de los obstáculos a medida que el 
 robot se mueve. El robot usa tópicos creados en ROS para obtener la información del 
-sensor que se compone del rango y la orientación de cada punto medido, a medida que 
-el lídar gira. La información del lídar se tuvo que convertir a coordenadas cartesianas 
-para conocer las posiciones cartesianas de los obstáculos dentro del espacio de trabajo, 
-que es la entrada al algoritmo principal. Para que el kobuki pueda moverse dentro del 
-mapa generado por el lídar, el marco de referencia del robot se tomó como el marco del 
-lídar. Entonces, el algoritmo de navegación autónomo usa las coordenadas del obstáculo 
-para generar su propia trayectoria evitando obstáculos. Para toda la prueba, se colocaron 
-dos cajas en el espacio de trabajo, como se ve en la Figura \ref{fig:Kobuki201}. La 
-posición del objetivo era ($x = 4, y = 0$). La Figura \ref{f:kbki_autonomo}a muestra 
-la trayectoria del robot en azul y las flechas que indican la fuerza que lleva al robot a la 
-posición deseada. La Figura \ref{f:kbki_autonomo}b muestra el mapa completo, donde los 
-puntos verdes representan el entorno, detectados por el lídar, donde se mueve el robot. Como 
-se observa, estas flechas apuntan hacia afuera del obstáculo, proporcionando autonomía al 
-robot mientras intenta alcanzar la posición deseada. Finalmente en la Figura 
-\ref{f:kbki_autonomo}c se muestra toda la fuerza de navegación que impulsa el movimiento 
-del robot móvil.
+sensor, la cual se compone en rango y orientación por cada punto medido, a medida que 
+el sensor lídar gira. La información del lídar se tuvo que convertir a coordenadas 
+cartesianas para conocer las posiciones de cada obstáculo dentro del 
+espacio de trabajo. Estas posiciones van como entrada hacia el algoritmo principal. 
+El robot Kobuki puede desplazarse dentro del mapa generado por el lídar, para que esto
+ocurra se tuvo que considerar el marco de referencia del robot como el marco de 
+referencia del sensor lídar. Entonces, el algoritmo de navegación autónomo usa 
+las coordenadas del entorno detectados mediante el sensor lídar y así genera su propia 
+trayectoria evitando los obstáculos del entorno. Para una prueba, se colocaron dos 
+cajas en el espacio de trabajo, como se ve en la Figura \ref{fig:Kobuki201}. La posición 
+del objetivo era ($x = 4 m, y = 0 m$) y la posición donde inició el robot fue 
+($x = 0 m, y = 0 m$). La Figura \ref{f:kbki_autonomo}a muestra la trayectoria del robot 
+en azul y las flechas indican la fuerza de atracción que llevan al robot hacia la 
+posición deseada. La Figura \ref{f:kbki_autonomo}b muestra el mapa completo, donde 
+los puntos verdes representan el entorno y los obstáculos del entorno, detectados por 
+el lídar, donde se mueve el robot. En este caso los obstáculos del entorno son las 
+dos cajas mostradas en la Figura \ref{fig:Kobuki201} y que se muestran muy cercanas 
+a la trayectoria formada por el robot en la Figura \ref{f:kbki_autonomo}b. Como se 
+observa, estas flechas apuntan hacia afuera del obstáculo, proporcionando autonomía 
+al robot mientras intenta alcanzar la posición deseada. Estas flechas representan 
+a las fuerzas de repulsión, que evitan la colisión entre el robot y los obstáculos 
+del entorno. Finalmente en la Figura \ref{f:kbki_autonomo}c se muestra toda la 
+fuerza de navegación que impulsa el movimiento del robot móvil, asimismo esta fuerza 
+genera la trayectoria representada por los puntos de color azul. La forma de la trayectoria
+es debido a las dos cajas que se encuentran entre la posición inicial y la posición final.
 
 \section{Resultado de la Navegación Autónoma usando SLAM en dos dimensiones}
 \begin{figure}%[ht!]
@@ -257,7 +272,7 @@ y construir el mapa en dos dimensiones.
 Como se mencionó en la sección \ref{sec:GMAPPING}, para realizar esta prueba se utilizó
 el paquete de SLAM llamado \textit{gmapping}, dado por ROS. Este paquete permite crear 
 un mapa en dos dimensiones a partir de los datos del sensor lídar y la odometría del 
-robot móvil. Cuando se ejecuta el paquete de SLAM empieza a crear tópicos por donde se
+robot móvil. Cuando se ejecuta el paquete de SLAM, empieza a crear tópicos por donde se
 envían los datos de la odometría del robot y los datos del lídar. Con la información 
 recibida por el nodo del \textit{gmapping}, éste publica las dimensiones del entorno, dentro
 de un tópico, hacia el robot Kobuki. Para que el robot móvil se pueda desplazar con respecto
@@ -278,19 +293,21 @@ dentro del mapa.
 %obtenido es bastante uniforme y preciso con respecto a las posiciones de los obstáculos 
 %dentro del mapa. 
 Para el desplazamiento autónomo del robot, dentro del escenario creado, se utilizó las 
-etapas de localización y mapeo (SLAM), campo potencial más controlador polar que fueron 
+etapas de localización y mapeo (SLAM), y campo potencial más controlador polar que fueron 
 explicados en la sección \ref{sec:NavegacionAutonoma}. Como primer paso el sensor lídar 
 permite localizar las posiciones de todos los obstáculos dentro del ambiente. Estas 
 posiciones son enviadas al algoritmo de campos potenciales para así generar la 
 trayectoria. Para realizar esta prueba se elige como posición deseada el punto 
-$(x = 5, y = 5)$. En la Figura \ref{fig:Kbki_slam}a se puede denotar los puntos de color 
-azul que representan a la trayectoria por el cual el robot Kobuki se ha desplazado. La 
-trayectoria va desde la posición $(x = 0, y = 0)$ donde comenzó el robot hasta la posición
+$(x = 5 m, y = 5 m)$. En la Figura \ref{fig:Kbki_slam}a se puede denotar los puntos de color 
+azul que representan la trayectoria por la cual el robot Kobuki se ha desplazado. La 
+trayectoria va desde la posición $(x = 0 m, y = 0 m)$ donde comenzó el robot hasta la posición
 deseada que está representada por un triángulo invertido de color rojo. También se puede 
 ver que hay flechas de color negro que tienen diferentes tamaños y diferentes direcciones.
 El tamaño de la flecha indica la velocidad lineal a la que el robot debe desplazarse y 
 la dirección indica la orientación necesaria para que el robot pueda llegar a la 
-posición deseada.
+posición deseada. El tamaño de las flechas depende de la posición de los obstáculos y 
+de la posición que se quiere llegar con respecto a la posición del robot que se va desplazando
+cada intervalo de tiempo.
 
 %Para  realizar que el robot se pueda desplazar de forma autónoma dentro del ambiente,se 
 %obtiene las posiciones del mapa ($X_{M}, Y_{M}$), los cuales son enviados al algoritmo 
@@ -304,15 +321,15 @@ posición deseada.
 %que llegue al punto deseado. 
 
 En la Figura \ref{fig:Kbki_slam}b los puntos verdes representan a los obstáculos dentro
-del escenario, como se puede observar los puntos son uniformes y alineados. El algoritmo
-SLAM del paquete de \textit{gmapping} se encarga de reducir la cantidad de mediciones del
+del escenario; como se puede observar los puntos son uniformes y alineados. El algoritmo
+SLAM del paquete de \textit{gmapping} sé encarga de reducir la cantidad de mediciones del
 sensor lídar, luego añade los datos de la odometría haciendo que la estimación de las 
 posiciones de los objetos dentro del ambiente sea de forma clara y precisa. En esta figura
 también se puede observar las flechas del campo de repulsión, donde cada flecha tiene una
 dirección hacia afuera en cada obstáculo. El tamaño de las flechas va acorde con la 
 trayectoria del robot Kobuki, esto quiere decir que mientras el robot se encuentre más
 cerca al obstáculo el tamaño de la flecha será más grande y por ende la fuerza de 
-repulsión será mayor. Estas fuerzas ayudan a que el robot pueda evadir los obstáculos
+repulsión será mayor. Éstas fuerzas ayudan a que el robot pueda evadir los obstáculos
 y evitar las colisiones. 
 
 Finalmente, en la Figura \ref{fig:Kbki_slam}c se muestra las sumas de fuerzas de atracción y
@@ -350,7 +367,9 @@ encuentra atraído hacia la posición deseada originado por el campo de atracci�
 
 La Figura \ref{fig:SLAM_2D} muestra el mapa generado por el paquete \textit{gmapping}. Como 
 se puede ver en la imagen, el mapa está compuesto por tres colores diferentes. Estos
-colores fueron descritos en la sección \ref{sec:GMAPPING}. Este mapa ayuda al robot
+colores quieren dar a mostrar el espacio libre por donde el robot puede desplazarse, 
+también muestra los obstáculos dentro del entorno y el espacio que falta explorar y 
+fueron descritos en la sección \ref{sec:GMAPPING}. Este mapa ayuda al robot
 a tener una información precisa del lugar donde se encuentra navegando. El robot pudo
 generar su propia trayectoria con la información brindada por el algoritmo SLAM haciendo
 que pueda llegar a la posición deseada mientras evitaba los obstáculos en su camino.
@@ -393,17 +412,27 @@ en tres dimensiones.
 \end{figure}
 
 En esta prueba se utilizó una caja real con las dimensiones mostradas en 
-la Figura \ref{fig:dim_cajaReal}. Para poder realizar esta prueba se tuvo que
+la Figura \ref{fig:dim_cajaReal}. Esta prueba se realizó con la finalidad 
+de probar el algoritmo de construcción tridimensional, ya que se tiene un 
+espacio vacío por dentro y se conoce la forma del objeto. Se eligió una 
+caja ya que se puede obtener sus dimensiones utilizando una simple cinta 
+métrica y además es bastante factible poder estimar el punto medio de 
+la caja, para colocar el sistema mecánico. Esta prueba es importante ya 
+que nos brinda una perspectiva del funcionamiento del algoritmo y 
+asimismo permite obtener el error que existe en las mediciones de las 
+caras laterales de la caja. Para poder realizar esta prueba se tuvo que
 colocar el sistema mecánico dentro de la caja, haciendo que el sensor lídar 
 se posicione en el centro de la caja como se muestra en la Figura 
-\ref{fig:dim_cajaReal}. Además en esta figura se muestra un sistema de referencia por 
-encima del sensor lídar, el cual hace referencia a la posición ($x = 0, y = 0$) 
-de la caja. Este sistema de referencia ayuda a conocer las posiciones de las paredes de 
-la caja. Una vez colocado el sistema mecánico dentro de la caja, se 
-tomó mediciones durante 40 segundos. El sistema mecánico es controlado por
-medio de un Raspberry Pi3, donde el microcontrolador recibe la información 
-de los componentes del sistema mecánico y envía estos datos hacia una computadora
-de forma remota. Los datos recibidos son almacenados para el procesamiento posterior.
+\ref{fig:dim_cajaReal}. Además en esta figura se muestra un sistema de 
+referencia por encima del sensor lídar, el cual hace referencia a la 
+posición ($x = 0 m, y = 0 m$) de la caja. Este sistema de referencia ayuda 
+a conocer las posiciones de las paredes laterales de esta. Una vez 
+colocado el sistema mecánico dentro de la caja, se tomó mediciones 
+durante 40 segundos. El sistema mecánico es controlado por medio de un 
+Raspberry Pi3, donde el microcontrolador recibe la información de los 
+componentes del sistema mecánico y envía estos datos hacia una computadora
+de forma remota. Los datos recibidos son almacenados para el procesamiento 
+posterior.
 
 %Para realizar la primera prueba, se utilizó una caja real en el cual fue colocado 
 %el sistema mecánico del sensor lidar para realizar las mediciones. En la Figura 
@@ -451,8 +480,9 @@ de forma remota. Los datos recibidos son almacenados para el procesamiento poste
     \end{tabular}
   \captionsetup{font=footnotesize}
     \caption{\label{fig:Caja3D}Construcción del sólido geométrico, a partir de 
-    las mediciones del sensor lídar. Desde las figuras (a) hasta (f) el sólido 
-    tridimensional rota en torno a su eje en sentido horario.}
+    las mediciones del sensor lídar. Desde las figuras (a) hasta (f) se nota 
+    el sólido tridimensional en torno a su eje en sentido horario para una 
+    mejor visualización.}
 \end{figure}
 
 %\begin{figure}
@@ -475,7 +505,7 @@ de forma remota. Los datos recibidos son almacenados para el procesamiento poste
 En la sección \ref{sec:Sistema3D} se explicó de forma detallada los pasos que 
 se debe seguir para construir un sólido tridimensional en un ambiente real, 
 usando el sensor lídar y el motor paso a paso. Las mediciones realizadas fueron 
-dibujadas usando \textit{python}, y se obtuvo
+dibujadas usando \textit{Python}, y se obtuvo
 el sólido mostrado en la Figura \ref{fig:Caja3D}, donde la imagen va rotando en 
 sentido horario. Esta figura muestra un prisma rectangular, donde las caras del 
 sólido se encuentran planas y las líneas de las aristas son continuas. Asimismo, 
@@ -484,7 +514,7 @@ sólido. Esto se debe al algoritmo que permite gráficar la nube de puntos en un
 sólido geométrico.
 
 El diseño mecánico del sistema, permite al sensor lídar tomar mediciones en cada 
-rincon de la caja. Por ende, se puede notar que la caja presenta muy pocas 
+rincón de la caja. Por ende, se puede notar que la caja presenta muy pocas 
 imperfecciones. El sólido gráficado, a simple vista, tiene las mismas dimensiones 
 de la caja real. Para estimar el error que existe en las posiciones, en el 
 plano cartesiano, de la nube de puntos con respecto a la caja se colocó el sistema 
@@ -937,7 +967,7 @@ Para analizar el error entre las dimensiones reales del sótano con respecto al 
 obtenido, se extrajo un plano en dos dimensiones del sólido geométrico y se midió sus 
 lados. Esto se muestra en la Figura \ref{fig:Sotano3D}. En la figura se puede observar
 que tiene la misma forma de la Figura \ref{fig:DimensionesSotano}, este mapa tiene un 
-error absoluto de $4 cm$ y un error relativo de $0.455 \%$. Estos errores son bastante 
+error absoluto de $5 cm$ y un error relativo de $0.455 \%$. Estos errores son bastante 
 pequeño y se origina debido a las vibraciones que genera el sensor lídar al momento de 
 rotar, además las vibraciones que genera el motor paso a paso y también las vibraciones 
 que origina el robot Kobuki. La suma de todas estas vibraciones, hace que el sensor 

@@ -3,9 +3,9 @@
 En este primer capítulo se presenta una introducción a este trabajo de 
 tesis. En la primera sección se comienza explicando la problemática existente 
 en las empresas mineras, que trabajan con túneles subterráneos, y se termina 
-explicando la motivación para desarrollar este trabajo. En las siguientes secciones se explican la propuesta de solución seguido de los alcanes 
-y limitaciones, de esta tesis. Finalmente, se termina el capítulo con una descripción 
-general de este documento.
+explicando la motivación para desarrollar este trabajo. En las siguientes secciones se explican 
+la propuesta de solución seguido de los alcances y limitaciones de esta tesis. Finalmente, se termina 
+el capítulo con una descripción de la organización general de este documento.
 
 \section{Problemática}
 
@@ -23,14 +23,14 @@ máquinas que construyen túneles subterráneos por donde se va a extraer los mi
 La construcción de túneles subterráneos es de gran importancia para la minería subterránea, 
 debido a que por medio de esta construcción se extrae los minerales de la veta mineralizada 
 \cite{EtapaTunelSubterraneo}. Estas construcciones son de diversos tamaños en las diferentes 
-unidades mineras del Perú, que dependen del tamaño de las máquinas que van a ingresar para la 
+unidades mineras del Perú, y dependen del tamaño de las máquinas que van a ingresar para la 
 extracción del mineral. Durante el proceso de construcción pueden ocurrir diferentes accidentes 
 (desprendimiento de rocas, emisión de gases, etc.) que ponen en peligro la vida de los 
 trabajadores \cite{GasesMinero}. Para evitar los riesgos dentro de la minería subterránea, se 
 necesita supervisar la zona de construcción y a su vez obtener una representación geométrica 
 visual de toda la excavación \cite{SeguridadMinera}. Los especialistas encargados de la supervisión 
 y la generación visual de un mapa topográfico del ambiente, dentro de la minería subterránea, son 
-el topógrafo y el geomecánico. Este trabajo de tesis se enfoca en las principales funciones del 
+el topógrafo y el geomecánico. Este trabajo de tesis se inspira en las principales funciones del 
 topógrafo dentro de la mina. 
 
 %La motivación de esta tesis se centra en hacer más eficiente la labor del topógrafo. 
@@ -79,10 +79,12 @@ tridimensional de un túnel subterráneo mediante el uso de un sensor láser. Ad
 construcción se realiza mientras un robot móvil va explorando el ambiente. El 
 desarrollo de este sistema beneficia a las personas que se encuentran involucradas 
 dentro del proceso de extracción del mineral, debido a que el sistema reduce el tiempo 
-que se demora un topógrafo en realizar el mapa tridimensional. Asimismo, este sistema 
+que se demora un topógrafo en realizar el mapa tridimensional. Además, el sistema permite
+tener un mejor seguimiento a la producción de mineral al permitir conocer los volúmenes
+de mineral que se extrae cada período de tiempo durante un día. Asimismo, este sistema 
 evita que el topógrafo se exponga a riesgos dentro de la minería subterránea. Al evitar 
-estos tipos de accidentes se reduce costos y el daño sería de forma directa hacia el 
-robot y no hacia una persona.
+estos tipos de accidentes se reduce costos y en caso de ocurrir algún imprevisto
+grave, el daño sería de forma directa hacia el robot y no hacia una persona.
 %El robot móvil utiliza técnicas de SLAM (\textit{Simultaneous Localization and Mapping}) 
 %para realizar un mapa en dos dimensiones dentro del túnel subterráneo y asimismo, estimar
 %la posición del robot móvil dentro del ambiente mencionado. Se implementó un sistema de 
@@ -131,7 +133,7 @@ robot y no hacia una persona.
 \section{Alcances y limitaciones}
 
 La motivación, como se mencionó antes, es hacer más eficiente la labor del topógrafo 
-dentro de un túnel subterráneo. Este proyecto de tesis es un prueba de concepto, para 
+dentro de un túnel subterráneo. Este proyecto de tesis es un prueba de concepto para 
 demostrar que el sistema desarrollado funciona para explorar un ambiente desconocido y 
 a su vez generar un mapa en tres dimensiones del lugar.
 
@@ -145,7 +147,7 @@ de exploración para un robot móvil.
 %en un robot móvil aéreo, se debe considerar una altura constante de vuelo y un vuelo 
 %estable, sin cambios bruscos.
 
-Finalmente, el sistema de exploración se implementó en un robot móvil diferencial el 
+Finalmente, el sistema de exploración se implementó en un robot móvil diferencial, el 
 cual debe de desplazarse dentro de una superficie plana. Se utilizó un sensor lídar, con
 un rango máximo de medición de 6 metros. El prototipo en conjunto es capaz de realizar 
 mediciones dentro de un ambiente que no exceda los 12 metros de diámetro.
@@ -169,13 +171,13 @@ mediciones dentro de un ambiente que no exceda los 12 metros de diámetro.
 
 \section{Organizaci\'on de la tesis}
 
-El documento está organizado en 4 capítulos los cuales serán explicados en esta
+El documento está organizado en 4 capítulos, los cuales serán explicados en esta
 sección. En el capítulo 1 se presenta la problemática a resolver, la justificación y 
 el alcance del presente trabajo de tesis. En el capítulo 2 se explica los algoritmos 
 que se usan actualmente para el control de movimiento del robot móvil, la generación 
-de trayectoria y  los algoritmos SLAM que existen. En el capítulo 3 se describe la 
-metodología que se hizó para el control de movimiento, la generación de trayectoria y 
-la construcción del mapa tridimensional. En el capítulo 4 se muestra y explicará 
-con detalle los resultados obtenidos. Se realizaron pruebas en simulación y en un ambiente 
-real asemejándose a la estructura de un túnel subterráneo. Finalmente, se describe las 
-conclusiones de la presente tesis.
+de trayectoria y  los algoritmos SLAM (Simultaneous Localization And Mapping) que 
+existen. En el capítulo 3 se describe la metodología que se hizo para el control de 
+movimiento, la generación de trayectoria y la construcción del mapa tridimensional. En 
+el capítulo 4 se muestra y explica con detalle los resultados obtenidos. Se 
+realizaron pruebas en simulación y en un ambiente real asemejándose a la estructura de 
+un túnel subterráneo. Finalmente, se describe las conclusiones de la presente tesis.

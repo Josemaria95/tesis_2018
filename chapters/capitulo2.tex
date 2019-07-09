@@ -2,21 +2,21 @@
 El presente capítulo muestra los trabajos de robótica que han sido aplicados en 
 la minería subterránea, en los últimos diez años. Luego se presenta métodos
 que existen para la navegación autónoma de un robot móvil. Para lograr esto se muestra
-los controladores de los robots móviles más utilizados en la actualidad. Asimismo, también
+los controladores de robots móviles más utilizados en la actualidad. Asimismo, también
 se presenta algoritmos recientes desarrollados para la generación de trayectoria de 
-los robots móviles. Finalmente, se describe los tipos de algoritmos SLAM que existen para 
+robots móviles. Finalmente, se describe los tipos de algoritmos SLAM que existen para 
 construir un mapa en dos dimensiones de un ambiente desconocido.
 
 \section{Rob\'otica en Miner\'ia}
 La minería actual ha llevado a que las compañías mineras busquen la eficiencia 
 incorporando la robótica a sus procesos, generando, adicionalmente, una fuente 
 fructífera de innovación local. Actualmente el país sudamericano con mayor inversión 
-en minería es el país de Chile, el cual ha iniciado la robótica en su país hace 
+en minería es Chile, el cual ha iniciado la incorporación de la robótica en este rubro hace 
 unos 15 años \cite{Carmona2014}.
 
 Los beneficios potenciales de los robots en la minería subterránea son abundantes, debido 
 a que estas zonas son entornos de trabajo extenuantes y potencialmente peligrosos para 
-los seres humanos. Por tal motivo, dándole un mayor grado de autonomía a los robots, éstos 
+los seres humanos. Por tal motivo, dándole un mayor grado de autonomía a los robots, estos 
 se convierten en buenos ayudantes para los mineros o incluso pueden sustituir al personal 
 que se despliega en los socavones \cite{Carmona2014}. Hace 20 años se empezó a realizar 
 investigaciones sobre autonomía en la minería subterránea utilizando una máquina de carga 
@@ -24,11 +24,11 @@ con sensores láser y de ultrasonido que transportaba los minerales por las mina
 subterráneas \cite{Scheding1999}. 
 
 En los últimos años se ha ido desarrollando prototipos de robots móviles para 
-realizar inspección, dentro de los túneles subterráneos. En el año 2003 \textit{Grounhog}
+realizar inspección dentro de los túneles subterráneos. En el año 2003 \textit{Grounhog}
 fue el primer robot que exploró la mina de Florencia (\textit{New Eagle}) 
 \cite{Thrun2004}, empleando sensores láser y una cámara de video. Asimismo en Alemania se 
 creó un robot móvil llamado \textit{Alexander} el cual exploró la mina de oro 
-\textit{Reiche Zeche} en Freiberg \cite{Grehl2015}. En el año 2014 se realizó la primera 
+\textit{Reiche Zeche} en Freiburg \cite{Grehl2015}. En el año 2014 se realizó la primera 
 generación de modelos geométricos en tres dimensiones. Para este trabajo de investigación 
 se utilizó una camioneta equipada de sensores láser y un microprocesador. Este prototipo 
 fue implementado y probado dentro de una mina \cite{Zlot2014}.
@@ -53,12 +53,13 @@ abandonadas en los países de Europa.
 
 Recientemente, se ha comenzado a realizar trabajos de investigación con drones. Los drones 
 son robots móviles aéreos que pueden ser adaptados a diferentes aplicaciones. Se utiliza 
-el algoritmo SLAM para que los drones puedan navegar dentro de un ambiente, pero la navegación
-de estos robots presentan problemas al momento de implementar los algoritmos. Por tal motivo,
-se utiliza algoritmos de seguimiento de líneas basados en la visión \cite{Verschoor2013}. El
-algoritmo basado en la visión se emplea en diferentes ambientes, donde el drone es capaz de 
+el algoritmo SLAM para que los drones puedan navegar dentro de un ambiente interno, pero la navegación
+de estos robots presentan problemas al momento de implementar los algoritmos, debido a la cantidad 
+de sensores que se están utilizando. Por tal motivo, se utiliza algoritmos de seguimiento de líneas 
+basados en visión \cite{Verschoor2013}. El algoritmo basado en visión se emplea en diferentes 
+ambientes, donde el drone es capaz de 
 poder detectar puntos definidos por medio de la cámara. Esta metodología se utiliza para
-las zonas de rescate \cite{Skoda2015}. Donde la finalidad es enviar el drone a la
+las zonas de rescate \cite{Skoda2015}, donde la finalidad es enviar el drone a la
 zona de accidente y que pueda generar un mapa tridimensional. El mapa es generado por la unión de
 varias imágenes dadas por una cámara RGBD (\textit{RGB y profundidad de imagen}). También existe
 un trabajo donde combinan los métodos de procesamientos de imágenes con SLAM \cite{Heukels2015}.
@@ -105,21 +106,20 @@ controlado por medio de un control remoto (radiofrecuencia).
 %  \caption{Sistemas holonómicos} 
 %  \label{f:sLocomocion}
 %\end{figure}
-La generación de movimiento del robot móvil necesita de un control cinemático 
+La generación de movimiento para un robot móvil necesita de un control cinemático 
 adecuado. El objetivo de un controlador cinemático es seguir una trayectoria descrita 
 por su posición o perfil de velocidad como una función del tiempo. Esto se hace 
 a menudo dividiendo la trayectoria en segmentos de movimiento de forma claramente 
 definida, por ejemplo, líneas rectas y segmentos de un círculo.
 
 Un enfoque más apropiado en el control de movimiento de un robot móvil es usar 
-un controlador de realimentación de estado real. Con un controlador de este tipo, 
+un controlador de realimentación de estados. Con un controlador de este tipo, 
 la tarea de planificación de ruta del robot se reduce a establecer posiciones 
 intermedias situadas en la ruta solicitada. Con este fin, primero debe calcularse 
 el modelo cinemático que relaciona la velocidad de las ruedas con la velocidad 
 lineal y angular del robot en su propio marco de referencia. Luego, se debe utilizar las 
 leyes de control que permiten un suave movimiento en la trayectoria del robot. Esta
-sección se enfoca en la explicación de los controladores de movimiento de 
-los robots móviles que existen actualmente.
+sección se enfoca en los controladores de movimiento de robots móviles que existen actualmente.
 
 \begin{figure}%[ht!]
      %\begin{center}
@@ -140,17 +140,20 @@ los robots móviles que existen actualmente.
     diferencial \cite{NoHolonomic2018}.}
     \label{f:sLocomocion}
 \end{figure}
-Para el control de movimiento de los robots móviles, se debe tener en consideración 
-la clasificación de estos a través de la locomoción de sus ruedas. Así, se dividen en dos: (i) robot holonómico y (ii) robot no-holonómico. El robot holonómico 
+Para el control de movimiento de robots móviles, se debe tener en consideración 
+la clasificación de estos a través de las restricciones a la locomoción que imponen 
+sus ruedas. Esta clasificación divide a los robots en dos tipos: (i) robot holonómico 
+y (ii) robot no-holonómico. El robot holonómico 
 no tiene ninguna restricción en la posición y la orientación, con respecto a la 
 velocidad. El robot se puede mover instantáneamente en cualquier dirección 
-del espacio, sin necesidad de rotar previamente. La mayoría de estos robots 
-móviles son omnidireccionales, como se puede ver en la Figura 
+del espacio, sin necesidad de rotar previamente. Estos robots 
+móviles son omnidireccionales, y algunos ejemplos se pueden ver en la Figura 
 \ref{f:sLocomocion}a. En cambio un robot no-holonomico tiene una restricción 
-en su velocidad, no existe una trayectoria que dependa solamente de la posición y 
-orientación. Por ende, este robot no se puede mover instantáneamente en cada 
-dirección del espacio. La mayoría de los robots no-holonómicos son los robots 
-móviles diferenciales como el que se puede apreciar en la Figura \ref{f:sLocomocion}b.
+en su velocidad, y por tanto no existe una trayectoria que dependa solamente de la 
+posición y orientación. Por ende, este robot no se puede mover instantáneamente en cada 
+dirección del espacio. Los robots no-holonómicos no son omnidireccionales. Un ejemplo de 
+este tipo de robots son los robots diferenciales y como el que se puede apreciar en 
+la Figura \ref{f:sLocomocion}b.
 
 \subsection{Control Cinemático PID}
 
@@ -161,14 +164,14 @@ proporcional, el integral y el derivativo. El valor proporcional depende del err
 actual. El integral depende de los errores pasados y el derivativo es una predicción 
 de los errores futuros. La suma de estas tres acciones es usada para ajustar al 
 proceso por medio de un elemento de control. Este algoritmo es ampliamente 
-difundido en el mundo industrial, cuya forma más conocida es:
+difundido en el mundo industrial, y su forma más conocida es:
 \begin{align*}
 %\label{eqn:pid}
 u(t) = K_c e(t) + \frac{K_c}{T_i} \int e(t)dt + K_c T_d \frac{de(t)}{dt} = P(t) + I(t) + D(t),
 \end{align*}
 donde $K_c$ es la ganancia proporcional, $T_i$ es el tiempo integral, $T_d$ es 
 el tiempo derivativo y $e(t)$ es el error entre la posición actual y la posición 
-deseada del robot. Este algoritmo posee muchas variaciones, dependiendo de la 
+deseada del robot. Este algoritmo posee muchas variaciones, y dependiendo de la 
 aplicación el controlador en cuestión puede trabajar como P, PI, PD o PID.
 
 \subsection{Control Cinem\'atico Polar}
@@ -196,7 +199,8 @@ son:
 \beta &= -\text{atan2}(y_{d} - y, x_{d} - x) + \theta_{d},
 \end{align*}
 donde $\rho$ representa la distancia desde el robot a la posición deseada, $\alpha$
-y $\beta$ son ángulos que se utilizan para el error de orientación. La posición y 
+y $\beta$ son ángulos que se utilizan para el error de orientación y \textit{atan2} es
+la función tangente inversa que retorna el ángulo en uno de los cuatro cuadrantes. La posición y 
 orientación actual del robot es $\x=(x,y,\theta)$, y su posición y orientación deseada 
 es $(x_{d},y_{d},\theta_{d})$. En base a estas variables polares, la ley de control que 
 define las velocidades lineales y angulares para lograr la posición y orientación deseada 
@@ -228,28 +232,30 @@ necesidad y requisito común para casi todos los robots móviles. %Esta secci\'o
 %m\'etodos que son empleados en la navegaci\'on aut\'onoma.
 
 Un problema en la planificación de movimiento es producir un movimiento 
-continuo que conecta un punto de inicio y un punto de meta, mientras se evita 
+continuo que conecte un punto de inicio y un punto de meta, mientras se evita 
 la colisión con obstáculos conocidos. La trayectoria que el robot describe 
 se representa en un espacio de configuración. Una configuración describe 
-la posición del robot, y el espacio de configuración ($C$) es el conjunto 
-de todas las posibles configuraciones. Por ejemplo, si el robot tiene 
-un único punto en un espacio de dos dimensiones, el espacio de trabajo, entonces 
+la posición y orientación del robot, y el espacio de configuración ($C$) es el conjunto 
+de todas las posibles configuraciones. Por ejemplo, si el robot se considera como 
+un único punto en un espacio de dos dimensiones, su espacio de trabajo, entonces 
 el espacio de configuración es un plano y la configuración se representa 
 como $(x,y)$.
 
 Dentro de los métodos de planificación de movimiento, se utiliza con 
-frecuencia el término espacio libre. Un espacio libre ($C_{free}$) es el 
+frecuencia el término espacio libre. El espacio libre ($C_{free}$) es el 
 conjunto de configuraciones que evita la colisión con obstáculos. Calcular 
-la forma del espacio libre es difícil, sin embargo, es mucho más sencillo 
+la forma del espacio libre es difícil; sin embargo, es mucho más sencillo 
 probar si una configuración determinada se encuentra dentro de $C_{free}$. En 
 las siguientes secciones se explica los métodos de navegación basados 
 en campos potenciales, movimientos basados en mapas topológicos y 
 movimiento basado en muestreo aleatorio.
 
-\subsection{Navegación Basado en Campos Potenciales}
+\subsection{Navegación Basada en Campos Potenciales}
 \label{sec:Campos Potenciales}
-Los principales métodos de planificación de movimiento descomposición de celdas, diagramas de voronoi y planificación basada en muestreo y campos 
-potenciales. La función potencial más simple es el potencial atractivo y repulsivo \cite{koren1991potential}. La intuición detrás de los campos potenciales es 
+Los principales métodos de planificación de movimiento son descomposición de 
+celdas, diagramas de voronoi y planificación basada en muestreo y campos 
+potenciales. La función potencial más simple es el potencial atractivo y repulsivo 
+\cite{khatib1985real}. La intuición detrás de los campos potenciales es 
 directa: el objetivo atrae al robot mientras los obstáculos lo repelen. La suma 
 de estos efectos atrae al robot hacia la meta mientras lo desvía de los 
 obstáculos. La función potencial se puede construir como la suma de potenciales 
@@ -262,42 +268,42 @@ U(q) = U_{att}(q) + U_{rep}(q),
 donde $U_{att}(q)$ es el campo potencial de atracción y $U_{rep}(q)$ es el campo
 potencial de repulsión. Los tipos de campo potenciales son atractivo y repulsivo.
 
-%\paragraph{Campo Potencial Atractivo.}
-\subsubsection{Campo Potencial Atractivo}
+\paragraph{Campo Potencial Atractivo.}
+%\subsubsection{Campo Potencial Atractivo}
 Este campo conduce al robot hacia la posición de la meta, suponiendo que existe una 
 sección circular  alrededor de este objetivo \cite{koren1991potential}. Es decir, 
 cualquier posición dentro de esta sección circular se considerará que satisface el 
 objetivo del algoritmo de planificación. Considere una energía potencial escalar 
 que depende de la distancia entre la posición actual del robot $\q=(x,y)$ y su 
-posición objetivo $\q_{goal} = (x_{goal}, y_{goal})$
+posición objetivo $\q_{goal} = (x_{goal}, y_{goal})$ dada por
 %$\text{qgoal}=(\text{xgoal},\text{ygoal})$
 \begin{align}
 \label{eqn:pot_attr}
-U_{att}(q) = \frac{1}{2}\zeta d^{2} (q,q_{goal}),
+U_{att}(\q) = \frac{1}{2}\zeta d^{2} (\q,\q_{goal}),
 \end{align}
-donde $d(a,b)$ es una medida métrica entre dos puntos, y $\zeta$ es un 
+donde $d(a,b)$ es una medida de la métrica entre dos puntos, y $\zeta$ es un 
 parámetro de ajuste que escala el efecto del potencial atractivo. En este 
 caso, usamos la distancia euclidiana como una métrica ya que proporciona 
 buenos resultados experimentales. El gradiente de este campo proporciona un 
 campo vectorial que siempre apunta a la posición deseada como:
 \begin{align}
 \label{eqn:gradient_att}
-\nabla U_{att}(q)=\zeta(q-q_{goal}).
+\nabla U_{att}(\q)=\zeta(\q-\q_{goal}).
 \end{align}
 
 %\paragraph{Campo Potencial Repulsivo.}
 \subsubsection{Campo Potencial Repulsivo}
 Un potencial repulsivo mantiene al robot alejado de los obstáculos 
-\cite{koren1991potential}. La fuerza de la fuerza de repulsión depende de la 
-proximidad del robot al obstáculo. Cuanto más cerca esté el robot de un 
-obstáculo, más fuerte será la fuerza de repulsión. Por lo tanto, el 
+\cite{koren1991potential}. La intensidad de la fuerza de repulsión depende de la 
+proximidad del robot al obstáculo cuanto más cerca esté el robot de un 
+obstáculo, más intensa será la fuerza de repulsión. Por lo tanto, el 
 potencial repulsivo generalmente se define en términos de distancia al 
-obstáculo más cercano $D(q)$ como 
+obstáculo más cercano $D(\q)$ como 
 \begin{equation}
-U_{rep}(q) =
+U_{rep}(\q) =
 \begin{cases}
-	\frac{1}{2}\eta(\frac{1}{D(q)} - \frac{1}{Q*})^2, & D(q)\leq Q^* \\
-	0, & D(q) > Q^*
+	\frac{1}{2}\eta(\frac{1}{D(q)} - \frac{1}{Q*})^2, & D(\q)\leq Q^* \\
+	0, & D(\q) > Q^*
 \end{cases}
 \label{eq:pot_rep}
 \end{equation}
@@ -305,28 +311,28 @@ donde $Q^* \in \mathbb R$ es una constante que le permite al robot ignorar
 los obst\'aculos que est\'an lo suficientemente lejos de \'el, y $\eta$ es 
 una ganancia en el gradiente de repulsi\'on. El gradiente es 
 \begin{equation}
-\nabla U_{rep}(q) =
+\nabla U_{rep}(\q) =
 \begin{cases}
 	\eta(\frac{1}{Q^*} - \frac{1}{D})\frac{1}{D^2} \nabla D, & D \leq Q^* \\
 	0, & D > Q^*
 \end{cases}
 \label{eqn:gradient_rep}
 \end{equation}
-donde la dependencia de $D$ en $q$ ha sido omitida para mayor claridad. Los 
+donde la dependencia de $D$ en $\q$ ha sido omitida para mayor claridad. Los 
 escalares utilizados para este campo generalmente se determinan por ensayo 
 y error \cite{choset2005principles}.
 
 \subsection{Movimiento Basados en Mapas Topológicos} %(\textit{Roadmap})}
 Otra forma de planificación de movimiento se basa en mapas topológicos o 
-roadmaps. Un \textit{roadmap} es una clase de mapa topológico que representa el 
+\textit{roadmaps}. Un \textit{roadmap} es una clase de mapa topológico que representa el 
 espacio libre en entornos donde los nodos y bordes tienen un significado 
 físico \cite{choset2005RoadMap}. Un nodo de \textit{roadmap} corresponde a una 
 ubicación específica y un borde corresponde a una ruta entre ubicaciones 
-vecinas. La forma en que el robot pueda explorar un entorno desconocido es 
-por medio de los datos del sensor que le permitirá construir un mapa de ruta.
+vecinas. La forma en que el robot puede explorar un entorno desconocido es 
+por medio de los datos del sensor que le permitirán construir un mapa de ruta.
 
 Los robots usan \textit{roadmaps} de la misma manera que las personas usan 
-las carreteras, lo que le permite ir del inicio hasta la meta. El robot 
+las carreteras, lo que les permite ir del inicio hasta la meta. El robot 
 primero encuentra una ruta libre de colisiones en el mapa, atravesando éste 
 hasta que se encuentra muy cerca de la meta. En este proceso, el robot va 
 construyendo toda la trayectoria que debe seguir para llegar al punto 
@@ -353,8 +359,8 @@ se basa en el método de \textit{roadmap} llamado mapa de visibilidad gr\'afica.
 %la forma del espacio libre es dif\'icil, sin embargo, es mucho m\'as sencillo 
 %probar si una configuraci\'on determinada se encuentra dentro de $C_{free}$. 
 
-\subsubsection{Mapa de Visibilidad Gráfica} %(\textit{Visibility Graph})}
-%\paragraph{Mapa de Visibilidad Gr\'afica.} %(\textit{Visibility Graph}):}
+%\subsubsection{Mapa de Visibilidad Gráfica} %(\textit{Visibility Graph})}
+\paragraph{Mapa de Visibilidad Gr\'afica.} %(\textit{Visibility Graph}):}
 
 Para el planeamiento del camino del robot en situaciones prácticas, es preferible 
 encontrar no solo un camino sino un buen camino. El buen camino depende del 
@@ -380,7 +386,7 @@ En la geometría computacional y la planificación del movimiento del
 robot, un mapa de visibilidad es un mapa de ubicaciones intervisibles, 
 generalmente para un conjunto de puntos y obstáculos en un plano 
 euclideano \cite{wikiVisibilityGraph}. Las características que definen 
-un mapa de visibilidad son sus nodos que comparten un borde si se encuentran 
+un mapa de visibilidad son que sus nodos que compartan un borde si se encuentran 
 a la vista el uno del otro, y que todos los puntos en el espacio libre del 
 robot se encuentren dentro de la línea de visión de al menos un nodo 
 en el mapa de visibilidad. 
@@ -442,7 +448,7 @@ corta como se aprecia en la Figura \ref{f:mapPolygonal}b.
 
 \subsection{Movimiento Basado en Muestreo Aleatorio}
 
-Las planificación de movimientos basados en muestreo, como los métodos 
+Las planificación de movimiento basada en muestreo, como los métodos 
 de mapa de ruta probabilísta (\textit{Probabilistic Roadmap}) o aquellos 
 basados en los árboles aleatorios de exploración rápida 
 (\textit{Rapidly Exploring Random Trees}) dan buenos resultados 
@@ -457,35 +463,34 @@ explícita del espacio de configuración libre. En esta sección se
 explica los métodos Mapa de Ruta Probabilístico, Árbol Aleatorio de 
 Exploración Rápida y Movimiento basado en Mapa de Red.
 
-\subsubsection{Mapa de Ruta Probabil\'istico} %(\textit{Probabilistic Roadmap})}
-%\paragraph{Mapa de Ruta Probabilístico.} %(\textit{Probabilistic Roadmap})}
+%\subsubsection{Mapa de Ruta Probabil\'istico} %(\textit{Probabilistic Roadmap})}
+\paragraph{Mapa de Ruta Probabilístico.} %(\textit{Probabilistic Roadmap})}
 
-La planificaci\'on del mapa de ruta probabil\'istico (PRM) es una de las 
-alternativas para la planificaci\'on de las rutas frente a los  
+La planificaci\'on del mapa de ruta probabil\'istico (Probabilistic Roadmap - PRM) es 
+una de las alternativas para la planificaci\'on de las rutas frente a los  
 obst\'aculos, donde las posiciones no se conocen con certeza. El PRM es una 
 t\'ecnica popular para la planificaci\'on de caminos en espacios de alta 
 dimensi\'on \cite{guibas1999probabilistic}. Este algoritmo es aplicable 
 en muchas situaciones, incluida la planificaci\'on del movimiento del 
-robot y la planificaci\'on de las rutas de las personas. Las PRM generan 
+robot y la planificaci\'on de las rutas de las personas. Un PRM genera 
 un gr\'afico aleatorio con v\'ertices que representan las posiciones del 
-robot y los bordes representan el movimiento desde una posici\'on a otra 
+robot y con bordes que representan el movimiento desde una posici\'on hasta otra 
 posici\'on. Seguido a esto se busca, en este gr\'afico, una ruta desde el 
 punto de inicio hacia el objetivo. El \'exito de este algoritmo se debe 
 a que reducen la b\'usqueda de gr\'aficos. Sin embargo, la mayor\'ia de 
-los enfoques de PRM se basan en la suposici\'on de que el planificador 
+los enfoques de PRM se basan en la suposici\'on que el planificador 
 conoce las ubicaciones de todos los obst\'aculos en el entorno antes de 
-construir el gr\'afico del \textit{roadmap} o trazar una ruta. El enfoque 
-es que el robot inicialmente no sabe dónde est\'an ubicados los obst\'aculos.
+construir el gr\'afico del \textit{roadmap} o trazar una ruta.
 
-El algoritmo comienza con muestrear valores aleatorios para el robot 
-móvil para que éste pueda crear posiciones dentro de un ambiente (espacio
+El algoritmo comienza con muestrear valores aleatorios de la configuración del 
+robot móvil para que éste pueda crear posiciones dentro de un ambiente (espacio
 de configuración). El planificador de PRM es capaz de explorar todo el 
 espacio de configuración. No todas las configuraciones en el espacio serán
 utilizables debido a los obstáculos que existen, por lo que el espacio
 dimensional se divide conceptualmente en dos áreas llamadas $C_{free}$ y
 $C_{obst}$ para configuraciones libres y obstruidas, respectivamente. En la
 fase de preprocesamiento se empieza a construir un gráfico PRM usando el 
-algoritmo de muestreo que genera aleatoramiente configuraciones para el
+algoritmo de muestreo que genera configuraciones para el
 robot y luego valida las posiciones generadas. Lo más simple y común que 
 se hace es rechazar todas las posiciones que se cruzan con $C_{obst}$.
 
@@ -518,15 +523,14 @@ se hace es rechazar todas las posiciones que se cruzan con $C_{obst}$.
 %los obst\'aculos que permitir\'a determinar qu\'e bordes est\'an 
 %libres de obst\'aculos.
 
-\subsubsection{\'Arbol Aleatorio de Exploraci\'on R\'apida}
-%\paragraph{Árbol Aleatorio de Exploración Rápida.} %(\textit{Rapidly Exploring Random Trees})}
-Un árbol aleatorio de exploración rápida (RRT) es un algoritmo que está 
-diseñado para buscar de manera eficiente espacios no convexos de gran 
+%\subsubsection{\'Arbol Aleatorio de Exploraci\'on R\'apida}
+\paragraph{Árbol Aleatorio de Exploración Rápida.} %(\textit{Rapidly Exploring Random Trees})}
+Un árbol aleatorio de exploración rápida (Rapidly Exploring Random Trees - RRT) es un 
+algoritmo que está diseñado para buscar de manera eficiente espacios no convexos de gran 
 dimensión \cite{bry2011rapidly}. Los RRT se construyen de forma incremental 
 de una manera que reduce rápidamente la distancia esperada de un punto elegido 
 al azar. Los RRT son particularmente adecuados para problemas de planificación 
-de ruta que involucran obstáculos y restricciones diferenciales (no holonómicas 
-o kinodinámicas).
+de ruta que involucran obstáculos y restricciones diferenciales (no holonómicas).
 
 Un RRT hace crecer un árbol enraizado en la configuración inicial utilizando 
 muestras aleatorias del espacio de búsqueda. A medida que se extrae cada 
@@ -539,8 +543,8 @@ región de Voronoi. Como las regiones más grandes de Voronoi pertenecen a los
 estados en la frontera de la búsqueda, esto significa que el árbol se expande 
 preferentemente hacia grandes áreas no buscadas. 
 
-\subsubsection{Movimiento basado en Mapa de Red}
-%\paragraph{Movimiento basado en Mapa de Red.} %(\textit{GridMap})}
+%\subsubsection{Movimiento basado en Mapa de Red}
+\paragraph{Movimiento basado en Mapa de Red.} %(\textit{GridMap})}
 \label{sec:MapRed}
 La navegación basada en mapas de red es bastante natural para las personas 
 porque usar un mapa es la forma más conveniente de describir un entorno. Sin 
@@ -577,7 +581,7 @@ se encuentra.
 \section{Localizaci\'on}
 La navegaci\'on es una de las tareas con mayor exigencia para un robot 
 móvil. Para realizar una buena navegaci\'on se necesita de cuatro componentes 
-b\'asicos los cuales son: (i) percepci\'on, el robot debe extraer e interpretar 
+b\'asicos, los cuales son: (i) percepci\'on, el robot debe extraer e interpretar 
 los datos de sus sensores para estimar su entorno; (ii) localizaci\'on, el robot 
 debe determinar su posici\'on en el entorno; (iii) cognici\'on, el robot debe tener 
 la capacidad de decidir c\'omo actuar para lograr su objetivo; y (iv) control de 
@@ -592,9 +596,9 @@ relación con el mapa del entorno \cite{dellaert1999monte}. Cuando un robot
 se mueve en un entorno conocido y comienza en una ubicación conocida, se puede 
 estimar su posición local por medio de la odometría. Pero esta estimación de la 
 posición del robot con el tiempo comienza a volverse menos confiable debido a las 
-incertidumbre, por ende el robot no tiene una posición absoluta establecida. Con el 
+incertidumbres, por ende el robot no tiene una posición absoluta establecida. Con el 
 fin de reducir la incertidumbre, el robot tiene que recuperar su posición absoluta 
-localizándose en relación con el mapa. Para ello, el robot debe tener sensores que 
+localizándose en relación al mapa. Para ello, el robot debe tener sensores que 
 le permitan hacer observaciones del entorno y relacionar estas observaciones con un 
 mapa del mundo real. En esta sección se explica sobre las metodologías de localización.
 
@@ -619,43 +623,46 @@ v_{t} \\
 Un modelo probabilístico de medición describe la relación entre la posición 
 del mundo real y la lectura del sensor (\textit{observación}). Basándose en la 
 estimación de la posición del mundo real, se genera un \textit{belief} sobre 
-las posibles mediciones. Un \textit{belief} es el conocimiento del robot sobre el 
-entorno. El ruido en las mediciones del sensor se modela explícitamente, inherente 
-a la incertidumbre de los sensores del robot. Para expresar el proceso de 
-generación de mediciones, se requiere una especificación del entorno. Un mapa 
-($m$) del entorno es una lista de objetos y ubicaciones:
+las posibles mediciones. Un \textit{belief} es una distribución probabilística que 
+representa el conocimiento del robot sobre el entorno. El ruido en las mediciones 
+del sensor se modela explícitamente, y es inherente a la incertidumbre de los sensores 
+del robot. Para expresar el proceso de generación de mediciones, se requiere una 
+especificación del entorno. Un mapa ($m$) del entorno es una lista de objetos y 
+ubicaciones:
 \begin{align}
 m =\{m_{1}, m_{2}, \ldots, m_{N}\},
 \end{align}
-donde $N$ es el total de n\'umeros de objetos en el ambiente. Los mapas suelen 
+donde $N$ es el total de n\'umeros de objetos en el ambiente y $m$
+representa la posición del objeto $i$. Los mapas suelen 
 ser mapas basados en caracter\'isticas o mapas basados en la ubicaci\'on. Los 
 mapas basados en ubicación son volumétricos y ofrecen una etiqueta para cualquier 
 ubicación y los mapas basados en características son más populares debido a que 
 la representación hace más fácil ajustar la posición de los objetos.
 
 \subsection{Filtros de Kalman}
-El filtro de Kalman (KF) se basa en la suposición de que el sistema es lineal y tanto 
+El filtro de Kalman (KF) se basa en la suposición que el sistema es lineal y tanto 
 el modelo de movimiento como el modelo de medición se ven afectados por el ruido 
 gaussiano \cite{jetto1999development}. El \textit{belief} en el tiempo $t$ está 
 representado por una distribución gaussiana multivariable definida por su media 
 ($\mu_{t}$) y la covarianza ($\Sigma_{t}$).
 
-Un modelo de transici\'on de estado es definido como:
+Un modelo de transici\'on de estado, bajo la premisa que el sistema sigue el modelo de 
+Markov, es definido como:
 \begin{align}
 \label{eqn:transicion_estado}
 p(x_{t}\mid x_{0:t-1}, z_{1:t-1}, u_{1:t}) = p(x_{t}\mid x_{t-1}, u_{t}),
 \end{align}
 donde $p(x_{t}\mid x_{t-1}, u_{t})$ es llamada probabilidad de transición de estado 
 y especifica cómo evoluciona el estado del entorno a lo largo del tiempo en función 
-del control del robot $u_{t}$. Donde $x_{0:t-1}$ comprende todos los estados desde 
+del control del robot $u_{t}$. Además $x_{0:t-1}$ comprende todos los estados desde 
 $0$ hasta $t_1$. 
 
-Un modelo de medici\'on del sensor es definido como:
+Un modelo de medici\'on del sensor usando la suposición de Markov, es definido como:
 \begin{align}
 \label{eqn:modelo_medicion}
 p(z_{t}\mid x_{0:t}, z_{1:t-1}, u_{1:t}) = p (z_{t}\mid x_{t}),
 \end{align}
-donde $p(z_{t}\mid x_{t})$ is llamado probabilidad de medición y especifica cómo se 
+donde $p(z_{t}\mid x_{t})$ es llamado probabilidad de medición y especifica cómo se 
 generan las mediciones a partir del estado del ambiente $x_{t}$.
 
 El filtro de Kalman asume que el sistema es lineal: la transición de estado 
@@ -678,8 +685,8 @@ K_{t} &= &\overline{\Sigma}_{t}C_{t}^{T}(C_{t}\overline{\Sigma}_{t}C_{t}^{T} + Q
 \end{equation*}
 
 En estas etapas (a) es la estimación de la media a-priori, (b) estimación de la 
-covarianza a priori, (c) Ganancia de Kalman, (d) actualización estimación de 
-estado (a posteriori) y (e) actualización estimación de la covarianza (a posteriori).
+covarianza a priori, (c) Ganancia de Kalman, (d) actualización de la estimación de 
+estado (a posteriori) y (e) actualización de la estimación de la covarianza (a posteriori).
 
 %Cuando se realiza una medici\'onn, se hace una predicci\'on de un \textit{belief} 
 %($bel(x_{t})$),\\ basado en el \textit{belief} anterior $bel(x_{t-1})$, tambi\'en 
@@ -697,7 +704,8 @@ estado (a posteriori) y (e) actualización estimación de la covarianza (a poste
 El filtro de Kalman estándar requiere un sistema lineal, que no es suficiente para 
 describir muchos problemas de la vida real. Por lo tanto, se han propuesto 
 variaciones del algoritmo original que pueden hacer frente a diferentes niveles de 
-no-linealidad. Estas variaciones se aproximan a los modelos de movimiento y medición 
+no-linealidad: como filtro de Kalman extendido, filtro de Kalman unscented, entre otros.
+Estas variaciones se aproximan a los modelos de movimiento y medición 
 de forma que tiendan a ser lineales.
 
 
@@ -720,7 +728,7 @@ mucho m\'as amplio que los gaussianos \cite{calle2014navegacion}.
 El filtro de informaci\'on (IF) representa el \textit{belief} por medio de un 
 gaussiano. Por lo tanto, el filtro de informaci\'on est\'andar est\'a sujeto a las 
 mismas suposiciones subyacentes al filtro de Kalman \cite{thrun2005multi}. La 
-diferencia entre el KF y el IF surge de la forma que se representa el \textit{belief} 
+diferencia entre el KF y el IF surge de la forma en que se representa el \textit{belief} 
 gaussiano. Mientras que en la familia de algoritmos de filtro de Kalman los 
 gaussianos est\'an representados por sus momentos (media, covarianza), en los 
 filtros de informaci\'on los gaussianos utilizan su representaci\'on can\'onica la cual
@@ -732,22 +740,23 @@ can\'onicas y de momentos a menudo se consideran duales entre s\'i, y as\'i son 
 IF y el KF.
 
 \section{Mapeo y Localizaci\'on Simult\'anea (\textit{SLAM})}
-Un problema mucho m\'as dif\'icil de la localizaci\'on es cuando no se conoce el 
+Un problema mucho m\'as dif\'icil que la localizaci\'on es cuando no se conoce el 
 mapa del ambiente. En este caso, la informaci\'on del sensor del robot se utiliza 
 para recuperar la trayectoria del robot y construir un mapa del entorno. Este problema 
-se llama mapeo y localizaci\'on simult\'anea (\textit{SLAM}) \cite{Thrun2005}. Una 
-soluci\'on a este problema har\'ia que un robot sea totalmente aut\'onomo. \textit{SLAM} 
-es un problema dif\'icil porque tanto el camino estimado como el mapa construido son 
-afectados por el ruido. Ambos se vuelven cada vez m\'as inexactos durante el viaje. Sin 
-embargo, cuando se revisa un lugar que ha sido mapeado, se puede reducir la 
-incertidumbre. Este proceso se denomina cierre de bucle. Adem\'as, se puede optimizar 
-el mapa despu\'es de que se detecta un evento de cierre de bucle. En esta secci\'on se 
-explica los m\'etodos de \textit{SLAM} m\'as utilizados actualmente.
+se llama mapeo y localizaci\'on simult\'aneos (\textit{SLAM}) \cite{Thrun2005}. Una 
+soluci\'on a este problema brindaría capacidades para que un robot sea totalmente 
+aut\'onomo. \textit{SLAM} es un problema dif\'icil porque tanto el camino estimado 
+como el mapa construido son afectados por el ruido. Ambos se vuelven cada vez m\'as 
+inexactos durante el viaje. Sin embargo, cuando se revisa un lugar que ha sido 
+mapeado, se puede reducir la incertidumbre. Este proceso se denomina cierre de 
+bucle. Adem\'as, se puede optimizar el mapa despu\'es de que se detecta un evento 
+de cierre de bucle. En esta secci\'on se explica los m\'etodos de \textit{SLAM} 
+más utilizados actualmente.
 
 \subsection{SLAM basado en Filtro Extendido de Kalman}
 El \textit{SLAM} basado en el filtro extendido de kalman (EKF-SLAM) es el algoritmo 
 m\'as antiguo y el m\'as influyente. El filtro extendido de kalman (EKF), es la versión 
-no lineal del filtro de kalman aplicados a sistemas gausianos no lineales \cite{Thrun2005}.
+no lineal del filtro de kalman aplicada a sistemas gausianos no lineales \cite{Thrun2005}.
 El algoritmo \textit{EKF-SLAM} aplica el filtro extendido de kalman al \textit{SLAM} 
 usando la asociaci\'on de datos de m\'axima verosimilitud. Al hacerlo, este algoritmo
 est\'a sujeto a una serie de aproximaciones y suposiciones limitantes:
@@ -755,20 +764,20 @@ est\'a sujeto a una serie de aproximaciones y suposiciones limitantes:
 	\item[•] \textit{\textbf{Mapas basados en funciones:}} Los mapas, en el \textit{EKF}, se 
   componen de puntos de referencia. Por razones de computaci\'on, el n\'umero de puntos de 
   referencia es generalmente peque\~no (por ejemplo, m\'as peque\~no que 1000). Adem\'as, el 
-  enfoque de \textit{EKF} tiende a funcionar bien cuanto menos ambiguos son los hitos. Por 
-  esta raz\'on, \textit{EKF-SLAM} requiere una ingenier\'ia significativa de los detectores 
-  de funciones, a veces utilizando balizas artificiales o puntos de referencia como 
-  caracter\'isticas.
+  enfoque de \textit{EKF} tiende a funcionar bien cuanto menos ambiguos sean los puntos
+  de referencia. Por esta raz\'on, \textit{EKF-SLAM} requiere una ingenier\'ia significativa 
+  de los detectores de funciones, a veces utilizando balizas artificiales o puntos de 
+  referencia como caracter\'isticas.
 	\item[•] \textit{\textbf{Ruido Gaussiano:}} Como cualquier algoritmo \textit{EKF}, 
   \textit{EKF-SLAM} hace una suposici\'on de ruido Gaussiano para el movimiento del robot y 
   la percepci\'on. La cantidad de incertidumbre en la parte de la predicci\'on debe ser 
   relativamente peque\~na, ya que de lo contrario la linealizaci\'on en \textit{EKF} tiende 
   a introducir errores intolerables.
 	\item[•] \textit{\textbf{Mediciones positivas:}} El algoritmo \textit{EKF-SLAM}, al igual 
-	que el localizador \textit{EKF}, solo puede procesar avistamientos positivos de hitos. No
-	puede procesar informaci\'on negativa que surge de la ausencia de puntos de referencia en 
-	las mediciones de un sensor. Esta es una consecuencia directa de la representaci\'on
-	de \textit{belief} gaussiano.
+	que el localizador \textit{EKF}, solo puede procesar avistamientos positivos de puntos 
+  de referencia. No puede procesar informaci\'on negativa que surge de la ausencia de puntos 
+  de referencia en las mediciones de un sensor. Esta es una consecuencia directa de la 
+  representaci\'on de \textit{belief} gaussiano.
 \end{itemize}
 
 \subsection{SLAM basado en Filtros de Partículas}

@@ -11,8 +11,8 @@ autónoma. Asimismo, también se ha desarrollado un sistema mecánico accionado
 por un motor paso a paso, el cual permite que el robot mientras se va desplazando
 dentro de un entorno pueda tomar mediciones en los tres ejes del plano
 cartesiano y así obtener una representación gráfica del lugar en tres 
-dimensiones. Estos sitemas pueden ser implementados desde una computadora en 
-tiempo real (\textit{online}) o también puede ser implementado por medio de 
+dimensiones. Estos sistemas pueden ser implementados desde una computadora en 
+tiempo real (\textit{online}) o también pueden ser implementados por medio de 
 un microcontrolador (\textit{onboard}). En este capítulo se explicará, con 
 detalles, los métodos que fueron implementados para realizar el presente trabajo.
 
@@ -27,8 +27,9 @@ detalles, los métodos que fueron implementados para realizar el presente trabaj
 %microcontrolador (\textit{onboard}). En este cap\'itulo se explicar\'a, con detalles, 
 %los m\'etodos que fueron implementados en este trabajo.
 
-\section{Ejemplo de Aplicación}
-En esta sección se describe sobre los componentes que fueron utilizados para construir
+%\section{Ejemplo de Aplicación}
+\section{Sistema Desarrollado}
+En esta sección se describe los componentes que fueron utilizados para construir
 el prototipo funcional. Estos componentes se utilizan para la navegación 
 autónoma del robot móvil, para construir el mapa en dos dimensiones y para tomar medidas 
 en los tres ejes del plano cartesiano. Para la navegación se utilizó un robot móvil 
@@ -77,11 +78,11 @@ diferencial terrestre, y un sensor lídar para las mediciones del entorno.
 \centering \footnotesize
 {\includegraphics[width=0.40\linewidth]{images/kinematic_model.png}}
 \captionsetup{font=footnotesize}
-\caption{Representación gráfica de un robot móvil diferencial. Donde 
+\caption{Representación gráfica de un robot móvil diferencial, donde 
 $b$ es la distancia de su centro de masa hacia sus ruedas, el radio de cada 
-rueda es representado por $r$. Finalmente $\dot{\varphi_{l}}$ y 
+rueda es representado por $r$, y $\dot{\varphi_{l}}$ y 
 $\dot{\varphi_{r}}$ son las velocidades de la rueda derecha y rueda izquierda 
-correspondientemente.}
+respectivamente.}
 \label{fig:RMkinematic}
 \end{figure}
 La realización del modelo cinemático, del robot móvil diferencial, debe 
@@ -109,7 +110,9 @@ ruedas y la distancia entre cada una de ellas. El radio de las ruedas es represe
 con la variable $r$ y la distancia entre ruedas es representada como $2b$. Otro punto 
 a considerar es que el robot tiene dos ruedas convencionales fijas y el sistema de
 referencia de este se encuentra en medio de las ruedas traseras, como se puede ver en 
-la Figura \ref{fig:RMkinematic}.
+la Figura \ref{fig:RMkinematic}. Además la Figura \ref{fig:RMkinematic} muestra una 
+rueda delantera. Esta rueda no presenta un mecanismo de control ya que su función es
+ser un apoyo del robot móvil, para su desplazamiento.
 
 %El modelo cinemático del robot necesita conocer las dimensiones del robot. Las 
 %medidas que se necesitan son la distancia entre las ruedas y el radio de las 
@@ -124,7 +127,7 @@ cinemática directa del robot móvil. En este caso, la cinemática directa consi
 v &= \frac{r}{2}(\dot{\varphi_{r}} + \dot{\varphi_{l}}), \\
 \omega &= \frac{r}{2b}(\dot{\varphi_{r}} + \dot{\varphi_{l}}),
 \end{align*}
-donde $v$ es la velocidad lineal y $\omega$ es la velocidad angular. Estas 
+donde $v$ es la velocidad lineal y $\omega$ es la velocidad angular del robot. Estas 
 dos variables de velocidad se pueden hallar a través de las velocidades
 de cada una de las ruedas y las dimensiones del robot. Por otro lado, la cinemática 
 inversa, como su mismo nombre lo menciona, es todo lo contrario a la
@@ -147,11 +150,12 @@ velocidad angular del robot móvil.
 
 Finalmente, para este trabajo de tesis se utilizó un robot móvil no-holonómico llamado 
 Kobuki (ver Figura \ref{fig:kobuki}), el cual es fabricado por Yujin Robotics. Este robot 
-trabaja con una velocidad de translación de 70 $cm/s$ y una velocidad de rotación de 180 
-$grados/s$. Tiene una posibilidad de carga de hasta 5 $kg$ y un tiempo de operación de 3 
-horas \cite{aboutKobuki}. En este robot se implementó las ecuaciones de la cinemática 
-directa teniendo en consideración sus propias dimensiones y asimismo, haciendo
-uso de las librerías que existen dentro de los paquetes de desarrollo del mismo robot Kobuki.
+trabaja con una velocidad máxima de translación de 70 $cm/s$ y una velocidad máxima de 
+rotación de 180 $grados/s$. Tiene una posibilidad de carga de hasta 5 $kg$ y un tiempo 
+de operación de 3 horas \cite{aboutKobuki}. En este robot se implementó las ecuaciones 
+de la cinemática directa teniendo en consideración sus propias dimensiones y 
+asimismo, haciendo uso de las librerías que existen dentro de los paquetes de desarrollo 
+del mismo robot Kobuki.
 %Para calcular la cinem\'atica del robot m\'ovil se debe usar las restricciones 
 %de las ruedas convencionales. Las restricciones de cada rueda fija son:
 %\begin{equation*}
@@ -219,7 +223,7 @@ protocolo UART.
 	Fecuencia de muestreo & Hz & 2000 & 4000 & 4100 \\ \hline
 	Frecuencia de escaneo & Hz & 5 & 10 & 15 \\ \hline
 \end{tabular}
-	\caption{Pruebas de Medici\'on del sensor RPLidar A2.}
+	\caption{Especificaciones de Medición del sensor RPLidar A2.}
 	\label{tbl:medicion}
 \end{center}
 \end{table}
@@ -249,7 +253,7 @@ por lo tanto el sensor toma 360 mediciones por cada rotación.
 	\centering \footnotesize
 	\includegraphics[width=0.40\linewidth]{images/frame_laser.png}
 	\captionsetup{font=footnotesize}
-	\caption{En esta figura el punto verde representa el sistema de referencia 
+	\caption{En esta figura el punto verde representa el origen del sistema de referencia 
 	del sensor RPLidar A2, donde el eje $\mayusx$ va en el mismo sentido del cable 
 	de datos del sensor lídar.}
 	%\caption{Sistema de referencia del sensor RPLidar A2.}
@@ -263,10 +267,10 @@ obtiene las mediciones del sensor. Para la construcción del mapa en dos dimensi
 debe considerar el sistema de referencia del sensor lídar. En la Figura \ref{fig:FrameLidar} 
 se muestra que el cable de comunicación indica la dirección y posición del eje $\mayusx$, y al 
 lado derecho se muestra la dirección y posición del eje $\mayusy$. Teniendo en cuenta la 
-posición del sistema de referencia del sensor lídar, se puede comenzar a tomar los datos de 
-las mediciones que va realizando. El sensor lídar envía como datos la distancia de la medición y 
-el ángulo donde se tomo la medición. Estos datos obtenidos son tomados como coordenadas 
-polares, las cuales son convertidos a coordenadas cartesianas. De esta forma estimamos las 
+posición del sistema de referencia del sensor lídar, se puede tomar los datos de 
+las mediciones que se va realizando. El sensor lídar envía como datos la distancia de la medición y 
+el ángulo donde se tomó la medición. Estos datos obtenidos son tomados como coordenadas 
+polares, las cuales son convertidas a coordenadas cartesianas. De esta forma estimamos las 
 posiciones de los objetos que se encuentran dentro de un ambiente.
 
 %Para construir el mapa en dos dimensiones se tiene que tomar en 
@@ -289,7 +293,7 @@ posiciones de los objetos que se encuentran dentro de un ambiente.
 	Negro & GND & Potencia & 0V & 0V & 0V \\ \hline
 	Azul & MOTOCTL & Entrada & 0V & 3.3V & 5V \\ \hline
 \end{tabular}
-	\caption{Interfaz de comunicación del sensor RPLidar A2.}
+	\caption{Especificaciones eléctricas del sensor RPLidar A2.}
 	\label{tbl:comunicacion}
 \end{center}
 \end{table}
@@ -341,12 +345,13 @@ acoplado al eje del motor paso a paso, mientras que el otro extremo se encuentra
 a un rodamiento que permite que la rotación del motor se realice con el mínimo 
 rozamiento. Este sistema mecánico fue diseñado con el software mecánico 
 \textit{Inventor}, y la Figura \ref{f:lidar3D}a muestra el diseño realizado en 
-este programa.
+este programa. En la Figura \ref{f:lidar3D}b se puede ver la posición en la que estará
+colocado el sistema mecánico en el robot móvil.
 
 El sistema mecánico final fue manufacturado, en aluminio, con las características mencionadas
 anteriormente agregando un switch de autocalibración. Como se puede ver en la Figura 
 \ref{f:lidar3D}c, el switch se encuentra en la parte inferior del eje de la base. La idea 
-principal de este sistema de autocalibración es decirle al motor paso a paso en qué posición 
+principal de este sistema de autocalibración es indicarle al motor paso a paso en qué posición 
 debe considerar el ángulo 0\grad. Una vez que este switch es accionado, el sensor lídar se 
 coloca en la posición que se muestra en la Figura \ref{f:FrameSitemaMecanico}. A partir de esta 
 posición el sistema mecánico hace que el sensor lídar rote hacia atrás y hacia adelante teniendo 
@@ -371,7 +376,7 @@ tomar medidas en los tres ejes del plano cartesiano $(\mayusx,\mayusy,\mayusz)$.
  \captionsetup{font=footnotesize}
  \caption{Representación gráfica de los sistemas de referencia del sistema 
  mecánico, donde $M$ y $L$ son los sistemas de referencia del motor paso a 
- paso y del sensor lídar.}
+ paso y del sensor lídar, respectivamente.}
 \label{f:FrameSitemaMecanico}
 \end{figure}
 
@@ -402,13 +407,13 @@ tomar medidas en los tres ejes del plano cartesiano $(\mayusx,\mayusy,\mayusz)$.
 Para generar el mapa en tres dimensiones se debe tener en consideración los sistemas de 
 referencia de todos los componentes del sistema mecánico, en este caso el sensor lídar y el 
 motor paso a paso como se muestra en la Figura \ref{f:FrameSitemaMecanico}. Este sistema 
-genera un movimiento de rotación y traslación que son considerados dentro de las ecuaciones 
+genera un movimiento de rotación que es considerado dentro de las ecuaciones 
 matemáticas para obtener los valores en los tres ejes del plano cartesiano. Una vez que el 
 sistema mecánico es autocalibrado accionado por el switch, el sensor lídar es posicionado 
 como muestra la Figura \ref{f:Rot3D}a; en esa posición se considera que el ángulo del 
 motor paso a paso es 0\grad. Luego el sensor lídar  comienza a rotar hacia el lado 
-derecho hasta que llega al ángulo $-88$\grad~ (ver Figura \ref{f:Rot3D}b). Una vez que
-el motor paso a paso llega al ángulo $-88$\grad, éste comienza a girar hacia la izquierda 
+izquierdo hasta que llega al ángulo $-88$\grad~ (ver Figura \ref{f:Rot3D}b). Una vez que
+el motor paso a paso llega al ángulo $-88$\grad, éste comienza a girar hacia la derecha 
 hasta que llega al ángulo $88$\grad, como se muestran en las Figuras \ref{f:Rot3D}c y 
 \ref{f:Rot3D}d. El ángulo de apertura que tiene el motor paso a paso hace que el sensor 
 lídar pueda tener un panorama más amplio para poder tomar mediciones dentro de un ambiente.
@@ -425,21 +430,21 @@ lídar pueda tener un panorama más amplio para poder tomar mediciones dentro de
 	\end{tabular}
 	\captionsetup{font=footnotesize}
     \caption{\label{f:lidarPlot}En esta imagen se muestra las mediciones obtenidas del sensor 
-    RPLidar A2, dentro de un cuarto. En (a) se muestra los datos del sensor lídar utilizando 
-    coordenadas polares en los ejes, y en (b) se muestra la conversión de los datos del 
-    sensor lídar a coordenadas cartesianas.}
+    RPLidar A2, dentro de un ambiente cerrado con forma rectangular. En (a) se muestra los 
+    datos del sensor lídar utilizando coordenadas polares en los ejes, y en (b) se muestra 
+    la conversión de los datos del sensor lídar a coordenadas cartesianas.}
 \end{figure}
 
 El mapa tridimensional se construye con las mediciones del sensor lídar y los ángulos del motor 
 paso a paso. Para esto, primero se convierte los datos del sensor lídar; es decir, se hace una 
 conversión de coordenadas polares a coordenadas cartesianas. En la Figura \ref{f:lidarPlot}a 
-se muestra las coordenadas polares obtenidas del sensor RPLidar A2 y en la Figura 
+se muestra un ejemplo de coordenadas polares obtenidas del sensor RPLidar A2 y en la Figura 
 \ref{f:lidarPlot}b se puede ver la conversión a coordenadas cartesianas. En esta figura se 
 puede ver que la parte inferior izquierda y la parte inferior derecha tienen esa forma 
 debido a la presencia de obstáculos dentro del ambiente. Las mediciones 
-mostradas en la Figura~\ref{f:lidarPlot} fueron realizadas dentro de un cuarto; esto sirve 
-para explicar la diferencia entre las coordenadas. Las ecuaciones utilizadas para convertir 
-las coordenadas son:
+mostradas en la Figura~\ref{f:lidarPlot} fueron realizadas dentro de un ambiente cerrado con 
+forma rectangular; esto sirve para explicar la diferencia entre las coordenadas. Las ecuaciones 
+utilizadas para convertir las coordenadas son:
 \begin{align*}
 	x &= rcos(\theta_{L}), \\
 	y &= rsen(\theta_{L}),
@@ -517,7 +522,7 @@ contado en las leyendas de la sierra sur.
     \multicolumn{2}{c}{(c)}
   \end{tabular}
   \captionsetup{font=footnotesize}
-    \caption{\label{f:APF}En esta figura se muestran las pruebas para el algoritmo de campo potencial 
+    \caption{\label{f:APF}En esta figura se muestra una simulación del algoritmo de campo potencial 
     artificial. En (a) se muestra la prueba para las fuerzas de atracción, en (b) se muestra la
     prueba de las fuerzas de repulsión de cada uno de los obstáculos y en (c) se muestra la fuerza
     de navegación.}
@@ -557,17 +562,17 @@ partes atractivas y repulsivas.
 
 Las fuerzas proporcionadas por el campo de potencial artificial se descomponen en 
 magnitud y dirección que conducen continuamente al robot. Para mostrar cómo funciona el 
-enfoque, se realiza una prueba en la computadora, que utiliza obstáculos 
+enfoque, se realiza una simulación, que utiliza obstáculos 
 colocados artificialmente y una posición deseada. La Figura \ref{f:APF}a muestra el campo 
 de atracción y las fuerzas que guían hacia la posición deseada. El robot simulado se 
 encuentra inicialmente en la esquina superior izquierda $q_{0} = (2,18)$ y se mueve hacia 
-la meta $q_{goal} = (10,4)$ guiado por el campo potencial. Los puntos blancos muestran la 
-ruta que debe seguir el robot y que luego guiará al controlador. Un campo repulsivo puro 
-se muestra en la Figura \ref{f:APF}b, donde se agregaron tres obstáculos en diferentes 
-posiciones del espacio de trabajo. Cada obstáculo se proyecta como un círculo rojo debido 
-a su gran magnitud dentro de su campo potencial, donde las fuerzas apuntan hacia afuera 
-en cada obstáculo. La fuerza de navegación total compuesta por la superposición de las 
-fuerzas de atracción y repulsión se muestra en la Figura \ref{f:APF}c.
+la meta $q_{goal} = (10,4)$ guiado por el campo potencial (no se considera orientación). Los 
+puntos blancos muestran la ruta que debe seguir el robot y que luego guiará al 
+controlador. Un campo repulsivo puro se muestra en la Figura \ref{f:APF}b, donde se 
+agregaron tres obstáculos en diferentes posiciones del espacio de trabajo. Cada obstáculo 
+se proyecta como un círculo rojo debido a su gran magnitud dentro de su campo potencial, donde 
+las fuerzas apuntan hacia afuera en cada obstáculo. La fuerza de navegación total compuesta 
+por la superposición de las fuerzas de atracción y repulsión se muestra en la Figura \ref{f:APF}c.
 
 \section{SLAM basado en Filtros de Part\'iculas}
 \label{sec:GMAPPING}
@@ -584,7 +589,7 @@ la odometría del robot, sino también incluye las mediciones que hace un sensor
 sensor lídar que se encuentra encima del robot. Estas informaciones enviadas al algoritmo hacen 
 que la incertidumbre sobre la posición y orientación del robot disminuya. 
 
-Uno de los principales problemas de la técnica SLAM basado en filtros de partículas es la 
+Uno de los principales problemas de la técnica SLAM basada en filtros de partículas es la 
 cantidad de partículas requeridas para construir un mapa preciso. Este efecto es conocido 
 como el problema del agotamiento de partículas. Por tal motivo el paquete \textit{gmapping} 
 propone dos pasos para solucionar este problema. El primero consiste en calcular la probabilidad 
@@ -616,11 +621,12 @@ del ambiente que se está explorando.
 %datos adquiridos a una computadora externa. 
 
 \subsection{Sistema Operativo del Robot (ROS)}
-ROS es un entorno de trabajo de código abierto. Este sistema tiene una amplia variedad de herramientas, librerías y paquetes que busca 
-la creación de software complejo para tener robots robustos con un comportamiento 
-variado. La finalidad de ROS es crear un compendio universal de 
-software para que los nuevos desarrolladores no tengan que volver a hacer algoritmos 
-que ya se encuentran desarrollados, además de brindar modularidad al sistema de un robot.
+ROS es una colección de entornos de trabajo para el desarrollo de software de 
+robots. Este sistema tiene una amplia variedad de herramientas, librerías y paquetes 
+que buscan la creación de software complejo para tener robots robustos con un 
+comportamiento variado. La finalidad de ROS es crear un compendio universal de software 
+para que los nuevos desarrolladores no tengan que volver a hacer algoritmos que ya 
+se encuentran desarrollados, además de brindar modularidad al sistema de un robot.
 
 El conjunto de herramientas y librerías que son proporcionadas por ROS, permiten 
 lograr una comunicación entre programas. Esto quiere decir que se puede comunicar 
@@ -638,13 +644,13 @@ La estructura de ROS está conformada por:
 (i) \textbf{tópicos}, que son canales de comunicación a través de los cuales diversos 
 nodos pueden comunicarse mediante publicación o suscripción; (ii) \textbf{paquetes}, que 
 puede contener un nodo, una librería o un conjunto de datos; (iii) \textbf{nodos}, que 
-son procesos que intercambian información para crear tareas complejas; (iv) \textbf{pila}, 
-que es un conjunto de nodos con alguna funcionalidad específica. Además ROS tiene un 
+son procesos que intercambian información para crear tareas complejas; (iv) \textbf{stack}, 
+que es un conjunto de paquetes con alguna funcionalidad específica. Además ROS tiene un 
 visualizador llamado Rviz.
 
 Rviz es un herramienta de visualización en tres dimensiones, que es parte nativa de 
 ROS. Esta herramienta posibilita que cualquier plataforma robótica pueda ser 
-representada en una imagen 3D, respondiendo en tiempo real a los experimentos que se 
+representada en un modelo 3D, respondiendo en tiempo real a los experimentos que se 
 hace en el mundo real. Además, esta herramienta se puede usar para mostrar lecturas 
 de sensores, datos recibidos por la visión estereoscópica o visualizar el algoritmo 
 SLAM evitando obstáculos, etc. Esta herramienta dispone de muchas opciones de 
@@ -711,7 +717,7 @@ configuración.
 \label{sec:NavegacionAutonoma}
 \begin{figure}%[ht!]
 	\centering \footnotesize
-	\includegraphics[width=0.98\textwidth]{images/estructura_autonomia.jpg}
+	\includegraphics[width=0.98\textwidth]{images/estructura_autonomia_1.png}
 	\captionsetup{font=footnotesize}
 	\caption{Estructura del sistema para realizar la exploración del robot móvil diferencial, de forma autónoma.}
 	\label{fig:AutoSist}
@@ -743,29 +749,32 @@ comienza a generar posiciones deseadas de forma aleatoria dentro del ambiente, t
 consideración los obstáculos que se encuentran dentro de ella. 
 
 El tercer bloque consiste en la navegación del robot móvil. Esta navegación es realizada 
-junto a los campos potenciales, considerando que el control de posición y orientación del robot móvil se realiza utilizando el controlador polar. Estos conceptos fueron explicados en la sección 
-\ref{sec:Campos Potenciales} y la sección \ref{sec:ControlPolar} respectivamente. Los métodos mencionados son empleados para que el robot pueda generar su propia trayectoria evitando
-los obstáculos, y a su vez pueda tener un movimiento suave controlando su posición y 
-orientación dentro del plano cartesiano. Este bloque necesita de la posición de los obstáculos
-en el ambiente y de la posición deseada aleatoria, para que el robot, junto a los campos
-potenciales pueda generar su propia trayectoria gracias a las fuerzas de atracción y de 
-repulsión. Asimismo, el controlador polar ayuda a que el robot móvil pueda llegar exactamente
-a la posición deseada dada de forma aleatoria. Finalmente, esta etapa tiene como salidas a la 
-velocidad lineal y a la velocidad angular. Estas velocidades ingresan al robot móvil diferencial
-haciendo que éste se desplace dentro del ambiente donde se está explorando. El robot móvil 
-como salida tiene los valores de la odometría, los cuales ingresan a la etapa del SLAM haciendo que 
-esta estructura se repita de forma iterativa.
+junto a los campos potenciales, considerando que el control de posición y orientación del 
+robot móvil se realiza utilizando el controlador polar. Estos conceptos fueron explicados 
+en la sección \ref{sec:Campos Potenciales} y la sección \ref{sec:ControlPolar} 
+respectivamente. Los métodos mencionados son empleados para que el robot pueda generar su 
+propia trayectoria evitando los obstáculos, y a su vez pueda tener un movimiento suave 
+controlando su posición y orientación dentro del plano cartesiano. Este bloque necesita 
+de la posición de los obstáculos en el ambiente y de la posición deseada aleatoria, para 
+que el robot, junto a los campos potenciales pueda generar su propia trayectoria gracias 
+a las fuerzas de atracción y de repulsión. Asimismo, el controlador polar permite que el 
+robot móvil pueda llegar exactamente a la posición deseada dada de forma 
+aleatoria. Finalmente, esta etapa tiene como salidas a la velocidad lineal y a la velocidad 
+angular. Estas velocidades ingresan al robot móvil diferencial haciendo que éste se desplace 
+dentro del ambiente donde se está explorando. El robot móvil como salida tiene los valores 
+de la odometría, los cuales ingresan a la etapa del SLAM haciendo que esta estructura se 
+repita de forma iterativa.
 
 La interacción autónoma del robot móvil dentro de un ambiente desconocido se puede ver en la 
-Figura \ref{f:SistemaAutonomo} esta Figura, se muestra la 
-etapa inicial de la exploración del robot móvil, donde el robot móvil esta representado por 
-el círculo de color negro y la figura geométrica de color rojo representa las luces láser 
-que emite el sensor lídar para realizar las mediciones. En esta etapa el sensor lídar comienza a 
-tomar las primeras mediciones del ambiente desconocido, y con esta información se comienza a 
-construir el mapa en dos dimensiones del lugar. La Figura \ref{f:SistemaAutonomo}(b) se muestra 
-el mapa originado por el SLAM, el cual tiene los colores característicos que representan
-las zonas mencionadas en la sección \ref{sec:GMAPPING}. En esta figura se puede ver cómo el robot
-móvil se desplaza dentro del ambiente. Cuando el robot recibe la información del mapa en dos 
+Figura \ref{f:SistemaAutonomo}. En esta Figura se muestra la etapa inicial de la exploración 
+del robot móvil, donde el robot móvil está representado por el círculo de color negro y la 
+figura geométrica de color rojo representa las luces láser que emite el sensor lídar para 
+realizar las mediciones. En esta etapa el sensor lídar comienza a tomar las primeras mediciones 
+del ambiente desconocido, y con esta información se comienza a construir el mapa en dos 
+dimensiones del lugar. La Figura \ref{f:SistemaAutonomo}(b) muestra el mapa originado por 
+el SLAM, el cual tiene los colores característicos que representan las zonas mencionadas en 
+la sección \ref{sec:GMAPPING}. En esta figura se puede ver cómo el robot móvil se desplaza 
+dentro del ambiente. Cuando el robot recibe la información del mapa en dos 
 dimensiones del algoritmo SLAM sabe que debe desplazarse por las zonas de color gris. En ese 
 instante comienza a generar posiciones de forma aleatoria desplazándose hacia la izquierda. Este 
 desplazamiento es originado por los campos potenciales explicado en la sección 
@@ -834,7 +843,7 @@ donde comenzó a explorar ($\mayusx=0,\mayusy=0$).
 
 \begin{figure}%[ht!]
 	\centering \footnotesize
-	\includegraphics[width=0.9\textwidth]{images/estructura_3d.png}
+	\includegraphics[width=0.9\textwidth]{images/estructura_3D_1.png}
 	\captionsetup{font=footnotesize}
 	\caption{Estructura del sistema para la construcción del mapa en tres dimensiones, mientras 
 	el robot móvil se va desplazando.}
@@ -861,13 +870,13 @@ las dimensiones que tiene el ambiente que se está explorando.
 %obstáculos dentro de un ambiente y asimismo conocer las dimensiones del entorno que se esta 
 %explorando.
 La segunda etapa de este proceso consiste en hallar los valores de los ejes del plano cartesiano 
-tridimensional, a partir de las transformaciones homogéneas. Para generar estos 
+tridimensional, a partir de transformaciones homogéneas. Para generar estos 
 valores se necesita obtener los ángulos de rotación del motor paso a paso. Las matrices
 de transformación homogénea y el principio de funcionamiento del sistema mecánico fueron
 explicados en la sección \ref{sec:SistP3D}. Este sistema mecánico cuenta con dos sistemas
 de referencia, uno es el sistema de referencia del sensor lídar y el segundo es el sistema
-de referencia del motor paso a paso. Asimismo, el sistema mecánico genera movimientos de 
-rotación y traslación; por ende, se utiliza transformaciones homogéneas ya que esto 
+de referencia del motor paso a paso. Asimismo, el sistema mecánico genera movimiento de 
+rotación y un efecto de traslación; por ende, se utiliza transformaciones homogéneas ya que esto 
 está compuesto por una matriz de rotación en el eje $\mayusy_{M}$ del motor paso a paso y
 una matriz de traslación con un desplazamiento en el eje $\mayusz_{M}$ de dicho motor. La potencia
 y la resolución angular del motor paso a paso permiten que el sensor lídar tenga un ángulo de 
@@ -890,7 +899,7 @@ entorno explorado ($\mayusx, \mayusy, \mayusz$).
 Finalmente, la última etapa del sistema para generar el mapa en tres dimensiones consiste en 
 hacer que el mapa tenga correlación con el desplazamiento del robot dentro del 
 ambiente. Para encontrar dicha correlación se debe obtener los valores de la odometría
-del robot y estos valores deben ser sumados las posiciones del plano cartesiano tridimensional 
+del robot y estos valores deben ser sumados a las posiciones del plano cartesiano tridimensional 
 obtenido de las transformaciones homogéneas. La odometría del robot móvil diferencial 
 es la estimación de la posición y orientación de éste mientras se encuentra explorando 
 el ambiente. La odometría del robot esta compuesta por tres valores 
@@ -900,8 +909,8 @@ para el cambio de dirección en su trayectoria, esto debe ser considerado en la 
 de la nube de puntos. Para este caso se utiliza el valor del ángulo de rotación del
 robot móvil, obtenido de la odometría ($\theta_{R}$), dentro de una matriz de rotación del 
 eje $\mayusz$. Esta matriz de rotación se multiplica con la nube de puntos obtenida 
-anteriormente y el resultado es el mapa en tres dimensiones del ambiente real 
-explorado.
+anteriormente y el resultado es el mapa local en tres dimensiones del ambiente real 
+explorado en ese instante.
 
 
 
