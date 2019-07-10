@@ -570,7 +570,7 @@ Primero se analiza los resultados de la sección izquierda del eje $\mayusx$, do
 la posición de la pared de la caja es $\mayusx = -0.44~m$. En la Figura 
 \ref{f:EstadisticaX}a se observa que la mayor cantidad de muestras se acumulan en 
 la posición correcta de la pared de la caja. Además en esta pared de la caja se 
-tiene un promedio de $\bar{u} = -0.439~m$, el cual indica que la mayor cantidad de 
+tiene un promedio de $\bar{x} = -0.439~m$, el cual indica que la mayor cantidad de 
 mediciones se encuentran acumuladas dentro de esa posición. La desviación estándar 
 es de $\sigma = 0.008~m$, donde se puede ver que las mediciones tienen una dispersión 
 bastante pequeña con respecto al promedio de éstas. Asimismo, estos datos tienen un 
@@ -579,9 +579,9 @@ error absoluto de $E_{absoluto} = 0.184~m$ y un error relativo de $E_{relativo} 
 aplicación propuesta de exploración y mapeo.
 
 Los resultados de la sección derecha del eje $\mayusx$, donde la posición de la
-pared de la caja es $\mayusx = 0.44~m$, que fueron obstenido será analizada a 
+pared de la caja es $\mayusx = 0.44~m$, que fueron obtenidos serán analizados a 
 continuación. En la Figura \ref{f:EstadisticaX}b se observa el histograma de esta 
-pared de la caja, donde se tiene un promedio de $\bar{u} = 0.445~m$ y una desviación 
+pared de la caja, donde se tiene un promedio de $\bar{x} = 0.445~m$ y una desviación 
 estándar de $\sigma = 0.011~m$. A partir de estos resultados se puede inferir que 
 la concentración de mediciones tiene un ligero corrimiento con respecto a la 
 posición correcta de la pared de la caja. Asimismo, el error absoluto es 
@@ -643,20 +643,20 @@ los valores son aún bastante pequeños.
 %\end{figure}
 
 Los resultados para la sección izquierda del eje $\mayusy$, donde la pared de 
-la caja tiene como posición $\mayusy = -0.255~m$, que fueron obtenido será analizada 
+la caja tiene como posición $\mayusy = -0.255~m$, serán analizados 
 a continuación. En la Figura \ref{f:EstadisticaY}a se muestra el histograma para esta 
-pared de la caja a lo largo del eje $\mayusy$, donde tiene un promedio de 
-$\bar{u} = -0.253~m$ y una desviación estándar de $\sigma = 0.003~m$. Además el error 
+cara de la caja a lo largo del eje $\mayusy$, donde se tiene un promedio de 
+$\bar{y} = -0.253~m$ y una desviación estándar de $\sigma = 0.003~m$. Además el error 
 absoluto es de $E_{absoluto} = 0.001~m$ y el error relativo es de 
 $E_{relativo} = 0.52\%$. Esta pared del sólido geométrico se encuentra bastante cerca 
-a la posición real y tiene un error bastante pequeño. Para la sección derecha del eje 
-$\mayusy$, donde se tiene una posición de la caja en $\mayusy = 0.255~m$. En la 
-Figura \ref{f:EstadisticaY}b se muestra el histograma, donde se tiene un promedio 
-de $\bar{u} = 0.248~m$, una desviación estándar de $\sigma = 0.003~m$, un error absoluto 
+a la posición real y tiene un error bastante pequeño. Para la cara derecha de la caja 
+en el eje $\mayusy$, la cual su posición es $\mayusy = 0.255~m$ también será analizado. 
+En la Figura \ref{f:EstadisticaY}b se muestra el histograma, donde se tiene un promedio 
+de $\bar{y} = 0.248~m$, una desviación estándar de $\sigma = 0.003~m$, un error absoluto 
 de $E_{absoluto} = 0.006~m$ y un error relativo de $E_{relativo} = 2.638\%$. Estos 
 valores obtenidos muestran que esta pared del sólido geométrico tiene un error 
-bastante grande con respecto a los resultados anteriores. Pero de acuerdo a las 
-dimensiones de la caja es un error bastante aceptable ya que las diferencias son muy 
+bastante grande con respecto a los resultados anteriores, pero de acuerdo a las 
+dimensiones de la caja, es un error bastante aceptable ya que las diferencias son muy 
 pequeñas.
 
 Los histogramas mostrados en la Figura \ref{f:EstadisticaX} y Figura \ref{f:EstadisticaY}
@@ -756,7 +756,7 @@ lídar tome mayores medidas y se tenga una mayor cantidad de información.
   \captionsetup{font=footnotesize}
     \caption{\label{fig:pasadizo3D}Mapa en tres dimensiones de un pasadizo. Desde 
     las figuras (a) hasta (h) el mapa tridimensional rota en sentido horario con respecto
-    a su eje.}
+    a su eje vertical.}
 \end{figure}
 
 \section{Resultado del mapa 3D mientras el robot se mueve}
@@ -832,7 +832,7 @@ posición donde comenzó.
 
 Los ambientes que \textit{muqi} comenzó a explorar se muestran en la Figura 
 \ref{fig:exploracionMuqi}. El robot comienza a explorar en la Figura 
-\ref{fig:exploracionMuqi}a una vez que empieza a tomar mediciones con el sensor 
+\ref{fig:exploracionMuqi}a; una vez que empieza a tomar mediciones con el sensor 
 lídar, éste empieza a generar el mapa en dos dimensiones. Con la información
 dada por el algoritmo SLAM, \textit{muqi} comienza a generar posiciones aleatorias 
 dentro del ambiente y comienza a explorar. Como se muestra en la Figura 
@@ -847,41 +847,44 @@ zigzag. Cuando encuentra un obstáculo por delante, \textit{muqi} se detiene gir
 comienza a explorar hacia el otro extremo. En la Figura \ref{fig:exploracionMuqi}f 
 se puede observar que \textit{muqi} ya no puede seguir explorando debido a que en 
 su camino se encuentran las tres paredes que impiden la exploración, en este 
-instante el robot comienza a regresar a su posición inicial ($x = 0, y = 0$).
+instante el robot comienza a regresar a su posición inicial ($x = 0 m, y = 0 m$).
 
 El robot \textit{muqi} fue controlado por medio del Raspberry Pi3, el 
-cual recibe órdenes de una computadora. El envío de la información fue en 
-tiempo real de forma remota. El robot debe realizar la construcción de los mapas en 
-dos dimensiones y tres dimensiones del ambiente, para hacer esto \textit{muqi} debe 
-controlar los ángulos del motor paso a paso. Cuando el motor paso a paso marca el 
-ángulo 0~\grad, el sensor lídar se encuentra de forma horizontal (ver Figura \ref{f:Rot3D}a) 
-y en esa posición envía las mediciones dentro del tópico \textit{scan} hacia el 
-algoritmo de \textit{gmapping} (SLAM). Este envío de información es en tiempo real, ya 
-que el robot necesita conocer el ambiente de forma detallada y de la forma más precisa posible. 
-Los datos de las mediciones para la construcción del sólido tridimensional, no se envía
-esta información en tiempo real debido a la cantidad de mediciones que se esta tomando por 
-cada vez que gira el sensor lídar. Estos datos son almacenados en la memoria SD del 
-microcontrolador Raspberry Pi3, para luego poder procesarlo y hacerlo visible.
+cual recibe órdenes de una computadora vía wifi. El envío de la información fue 
+en tiempo real de forma remota. El robot debe realizar la construcción de los 
+mapas en dos dimensiones y tres dimensiones del ambiente, para hacer esto 
+\textit{muqi} debe controlar los ángulos del motor paso a paso. Cuando el motor 
+paso a paso marca el ángulo 0~\grad, el sensor lídar se encuentra de forma 
+horizontal (ver Figura \ref{f:Rot3D}a) y en esa posición envía las mediciones 
+dentro del tópico \textit{scan} hacia el algoritmo de \textit{gmapping} 
+(SLAM). Este envío de información es en tiempo real, ya que el robot necesita 
+conocer el ambiente de forma detallada y de la forma más precisa posible. Los 
+datos de las mediciones para la construcción del sólido tridimensional no, son
+enviados en tiempo real debido a la cantidad de mediciones que se esta tomando 
+por cada vez que gira el sensor lídar. Estos datos son almacenados en la memoria 
+micro SD del microcontrolador Raspberry Pi3, para luego procesarlos y hacerlos 
+visible.
 
 \begin{figure}
   \centering \footnotesize
   %\includegraphics[width=0.70\textwidth]{images/slam2d.png}
   \includegraphics[width=0.90\textwidth]{images/2DSotanoSLAM.png}
   \captionsetup{font=footnotesize}
-  \caption{Mapa generado por el algoritmo SLAM. Este mapa se construyo mientras el
+  \caption{Mapa generado por el algoritmo SLAM. Este mapa se construye mientras el
   \textit{muqi} va explorando el sótano.}
   \label{fig:slamSotano}
 \end{figure}
 
-La exploración de \textit{muqi}, por todo el sótano, fue de 5 minutos donde el robot se
-desplazó a diferentes velocidades. Las velocidades del robot fueron cambiantes de acuerdo 
-a las situaciones que el robot se encontraba, es decir si el robot navega por un espacio 
+La exploración de \textit{muqi} duró 5 minutos, donde se desplazó por todo el sótano
+a diferentes velocidades. Las velocidades del robot fue cambiante de acuerdo 
+a las situaciones que el robot encontraba; es decir, si el robot navega por un espacio 
 sin obstáculos, se comienza a mover a una velocidad de $0.3 m/s$ y cuando el robot 
-se encuentra con un obstáculo, comienza a disminuir la velocidad y comienza a
-desplazarse a $0.05 m/s$. Para realizar esta prueba se tuvo que multiplicar una constante 
-a la velocidad lineal y velocidad angular para disminuir sus valores, debido a que mientras 
-el robot navega a bajas velocidades el sistema mecánico puede realizar mayores mediciones 
-del ambiente, obteniendo una mejor resolución del sólido geométrico en tres dimensiones. 
+se encuentra con un obstáculo, comienza a disminuir la velocidad y a
+desplazarse con una velocidad de $0.05 m/s$. Para obtener las velocidades lineal y angular
+mencionadas se tuvo que multiplicar una constante a cada velocidad para disminuir 
+sus valores, debido a que mientras el robot navega a bajas velocidades el sistema 
+mecánico puede realizar mayores mediciones del ambiente, obteniendo una mejor 
+resolución del sólido geométrico en tres dimensiones. 
 Para que el robot \textit{muqi} pueda explorar el ambiente utiliza la información del mapa 
 que da el algoritmo SLAM. El mapa bidimensional se muestra en la Figura \ref{fig:slamSotano}. 
 La construcción del mapa del SLAM fue en tiempo real y esto se pudo visualizar usando la 
