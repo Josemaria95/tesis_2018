@@ -216,7 +216,8 @@ es debido a las dos cajas que se encuentran entre la posición inicial y la posi
 \section{Resultado de la Navegación Autónoma usando SLAM en dos dimensiones}
 \begin{figure}%[ht!]
   \centering \footnotesize
-  \includegraphics[width=0.80\textwidth]{images/gazebo_map.png}
+  %\includegraphics[width=0.80\textwidth]{images/gazebo_map.png}
+  \includegraphics[width=0.80\textwidth]{images/kbki_ambient.png}
   \captionsetup{font=footnotesize}
   \caption{Robot móvil Kobuki en medio de los obstáculos colocados para probar la 
   navegación autónoma utilizando el algoritmo SLAM. Esta prueba se realizó en el
@@ -503,25 +504,24 @@ posterior.
 %\end{figure}
 
 En la sección \ref{sec:Sistema3D} se explicó de forma detallada los pasos que 
-se debe seguir para construir un sólido tridimensional en un ambiente real, 
-usando el sensor lídar y el motor paso a paso. Las mediciones realizadas fueron 
-dibujadas usando \textit{Python}, y se obtuvo
-el sólido mostrado en la Figura \ref{fig:Caja3D}, donde la imagen va rotando en 
-sentido horario. Esta figura muestra un prisma rectangular, donde las caras del 
-sólido se encuentran planas y las líneas de las aristas son continuas. Asimismo, 
-se puede observar que existen líneas que se entrelazan entre algunas aristas del 
-sólido. Esto se debe al algoritmo que permite gráficar la nube de puntos en un 
-sólido geométrico.
+se debe seguir para la construcción de un sólido tridimensional dentro de un 
+ambiente real, usando el sensor lídar y el sistema mecánico. Las mediciones 
+realizadas fueron dibujadas usando \textit{Python}, y se obtuvo el sólido 
+mostrado en la Figura \ref{fig:Caja3D}. La figura muestra un prisma 
+rectangular, donde las caras del sólido son planas y las líneas de las aristas 
+son continuas. Asimismo, se puede observar que existen líneas que se entrelazan 
+entre algunas aristas del sólido, debido al algoritmo usado para gráficar 
+la nube de puntos de un sólido geométrico.
 
-El diseño mecánico del sistema, permite al sensor lídar tomar mediciones en cada 
-rincón de la caja. Por ende, se puede notar que la caja presenta muy pocas 
-imperfecciones. El sólido gráficado, a simple vista, tiene las mismas dimensiones 
-de la caja real. Para estimar el error que existe en las posiciones, en el 
-plano cartesiano, de la nube de puntos con respecto a la caja se colocó el sistema 
-dentro de la caja, haciendo que el sensor lídar se posicione lo más cercano al 
-centro de la caja. Con la nueva posición del sensor lídar se puede corroborar si 
-la nube de puntos originada se encuentra en la misma posición en la que 
-se encuentran cada una de las paredes de la caja.
+El diseño mecánico del sistema permite al sensor lídar realizar mediciones
+en cada rincón de la caja, por tal motivo se muestra pocas imperfecciones en 
+el sólido generado y a simple vista tiene las mismas dimensiones que la caja 
+real. Para estimar el error de nuestro sólido geométrico generado, se colocó 
+el sistema al centro y dentro de la caja. Esa posición se considera como 
+la posición ($x = 0~m, y = 0~m$), y así poder corroborar que tan cerca se 
+encuentran las paredes de la caja virtual a la posición de las paredes de la 
+caja real.
+
 
 \begin{figure}%[ht!]
     \centering
@@ -555,39 +555,46 @@ se encuentran cada una de las paredes de la caja.
 %  \label{fig:hist_Dere}
 %\end{figure}
 
-Para poder diferenciar cada pared de la caja se toma como referencia la posición 
-del sensor lídar. Cuando el sensor lídar comienza a funcionar, la posición donde
-se encuentre es considerada como ($x = 0~m, y = 0~m$). Como el sensor
-se encuentra en el centro de la caja, las posiciones de cada pared serán las 
-siguientes: en el eje $\mayusx$ las posiciones de cada pared son $\mayusx = -0.44~m$ 
-y $\mayusx = 0.44~m$; en el eje $\mayusy$ las posiciones de cada pared son 
-$\mayusy = -0.255~m$ y $\mayusy = 0.255~m$. Estas posiciones están acordes con la medida
-de los lados de la caja, las cuales están expresadas en metros como unidad 
-de longitud. En la Figura \ref{f:EstadisticaX} se muestran los histogramas de 
-la cantidad de datos con respecto a las posiciones en el eje $\mayusx$.
+Teniendo el sensor lídar colocado en el centro de la caja real, las posiciones
+de cada pared son las siguientes: en el eje $\mayusx$ las posiciones 
+son $\mayusx = -0.44~m$ y $\mayusx = 0.44~m$; en el eje $\mayusy$ 
+las posiciones son $\mayusy = -0.255~m$ y $\mayusy = 0.255~m$. Se obtuvo las
+posiciones de cada pared utilizando las medidas de longitud de cada pared. En 
+la Figura \ref{f:EstadisticaX} se muestran los histogramas de la cantidad de 
+datos con respecto a las posiciones en el eje $\mayusx$.
 
-Primero se analiza los resultados de la sección izquierda del eje $\mayusx$, donde 
-la posición de la pared de la caja es $\mayusx = -0.44~m$. En la Figura 
+%Para poder diferenciar cada pared de la caja se toma como referencia la posición 
+%del sensor lídar. Como el sensor se encuentra en el centro de la caja, las 
+%posiciones de cada pared serán las siguientes: en el eje $\mayusx$ las posiciones 
+%son $\mayusx = -0.44~m$ y $\mayusx = 0.44~m$; en el eje $\mayusy$ 
+%las posiciones son $\mayusy = -0.255~m$ y $\mayusy = 0.255~m$. Estas 
+%posiciones están acordes con la medida de los lados de la caja, las cuales están 
+%expresadas en metros como unidad de longitud. En la Figura \ref{f:EstadisticaX} 
+%se muestran los histogramas de la cantidad de datos con respecto a las posiciones 
+%en el eje $\mayusx$.
+
+Primero se analiza los resultados de la región izquierda del eje $\mayusx$, donde 
+la posición de la pared de la caja real es $\mayusx = -0.44~m$. En la Figura 
 \ref{f:EstadisticaX}a se observa que la mayor cantidad de muestras se acumulan en 
-la posición correcta de la pared de la caja. Además en esta pared de la caja se 
-tiene un promedio de $\bar{x} = -0.439~m$, el cual indica que la mayor cantidad de 
-mediciones se encuentran acumuladas dentro de esa posición. La desviación estándar 
-es de $\sigma = 0.008~m$, donde se puede ver que las mediciones tienen una dispersión 
-bastante pequeña con respecto al promedio de éstas. Asimismo, estos datos tienen un 
+la posición correcta de la pared real. Además se tiene un promedio de 
+$\bar{x} = -0.439~m$, el cual indica que la mayor cantidad de mediciones se 
+encuentran acumuladas dentro de esa posición. La desviación estándar 
+es de $\sigma = 0.008~m$, eso muestra una dispersión pequeña de las mediciones 
+con respecto al promedio de éstas. Asimismo, estos datos tienen un 
 error absoluto de $E_{absoluto} = 0.184~m$ y un error relativo de $E_{relativo} = 
 0.215\%$. El valor de los errores relativos es bastante pequeño y aceptable para la 
-aplicación propuesta de exploración y mapeo.
+aplicación propuesta.
 
-Los resultados de la sección derecha del eje $\mayusx$, donde la posición de la
-pared de la caja es $\mayusx = 0.44~m$, que fueron obtenidos serán analizados a 
+Los resultados de la región derecha del eje $\mayusx$, donde la posición de la
+pared de la caja real es $\mayusx = 0.44~m$, que fueron obtenidos serán analizados a 
 continuación. En la Figura \ref{f:EstadisticaX}b se observa el histograma de esta 
-pared de la caja, donde se tiene un promedio de $\bar{x} = 0.445~m$ y una desviación 
+pared, el cual tiene un promedio de $\bar{x} = 0.445~m$ y una desviación 
 estándar de $\sigma = 0.011~m$. A partir de estos resultados se puede inferir que 
-la concentración de mediciones tiene un ligero corrimiento con respecto a la 
-posición correcta de la pared de la caja. Asimismo, el error absoluto es 
+la concentración de mediciones tiene una ligera desviación con respecto a la 
+posición de la pared de la caja real. Asimismo, el error absoluto es 
 $E_{absoluto} = 0.190~m$ y el error relativo es $E_{relativo} = 1.221\%$. En este 
-caso el valor de los errores aumentó un poco comparado con los valores anteriores, pero 
-los valores son aún bastante pequeños.
+caso el valor de los errores aumentó un poco comparado con los valores 
+anteriores, pero los valores son aún bastante pequeños.
 
 
 %Después de haber obtenido el modelo en tres dimensiones, de la caja real, se midió 
@@ -643,24 +650,24 @@ los valores son aún bastante pequeños.
 %\end{figure}
 
 Los resultados para la sección izquierda del eje $\mayusy$, donde la pared de 
-la caja tiene como posición $\mayusy = -0.255~m$, serán analizados 
+la caja real tiene como posición $\mayusy = -0.255~m$, son analizados 
 a continuación. En la Figura \ref{f:EstadisticaY}a se muestra el histograma para esta 
-cara de la caja a lo largo del eje $\mayusy$, donde se tiene un promedio de 
+cara de la caja a lo largo del eje $\mayusy$, el cual tiene un promedio de 
 $\bar{y} = -0.253~m$ y una desviación estándar de $\sigma = 0.003~m$. Además el error 
-absoluto es de $E_{absoluto} = 0.001~m$ y el error relativo es de 
-$E_{relativo} = 0.52\%$. Esta pared del sólido geométrico se encuentra bastante cerca 
-a la posición real y tiene un error bastante pequeño. Para la cara derecha de la caja 
-en el eje $\mayusy$, la cual su posición es $\mayusy = 0.255~m$ también será analizado. 
-En la Figura \ref{f:EstadisticaY}b se muestra el histograma, donde se tiene un promedio 
-de $\bar{y} = 0.248~m$, una desviación estándar de $\sigma = 0.003~m$, un error absoluto 
-de $E_{absoluto} = 0.006~m$ y un error relativo de $E_{relativo} = 2.638\%$. Estos 
-valores obtenidos muestran que esta pared del sólido geométrico tiene un error 
-bastante grande con respecto a los resultados anteriores, pero de acuerdo a las 
-dimensiones de la caja, es un error bastante aceptable ya que las diferencias son muy 
-pequeñas.
+absoluto es de $E_{absoluto} = 0.001~m$ y el error relativo es de $E_{relativo} = 0.52\%$. 
+Esta pared del sólido geométrico se encuentra bastante cerca a la posición real y 
+tiene un error bastante pequeño. Para la cara derecha de la caja en el eje $\mayusy$, 
+posicionada en $\mayusy = 0.255~m$ el histograma obtenido se muestra en la 
+Figura \ref{f:EstadisticaY}b, donde se tiene un promedio de $\bar{y} = 0.248~m$, 
+una desviación estándar de $\sigma = 0.003~m$, un error absoluto de 
+$E_{absoluto} = 0.006~m$ y un error relativo de $E_{relativo} = 
+2.638\%$. Los valores obtenidos muestran que esta sección del sólido 
+geométrico tiene un error bastante aceptable con respecto a las dimensiones de la 
+caja, aún teniendo un mayor error relativo con respecto a los resultados de las
+paredes anteriores.
 
 Los histogramas mostrados en la Figura \ref{f:EstadisticaX} y Figura \ref{f:EstadisticaY}
-tienden a tener la forma de una distribución normal, ya que presenta una forma acampanada
+tienden a tener la forma de una distribución normal, por su forma acampanada
 y tiende a ser simétricos con respecto a la media, que viene a ser la posición correcta 
 de las paredes de la caja. La forma que tiene es debido al teorema de límite central, ya 
 que el tamaño de sus muestras es lo suficientemente grande y esto hace que la distribución 
@@ -776,7 +783,7 @@ el sótano de la Universidad de Ingeniería y Tecnología (UTEC). El sótano est
 compuesto por dos ambientes de diferentes tamaños unido por un pasadizo, como se 
 muestra en la Figura \ref{fig:DimensionesSotano}. El reto de \textit{muqi} es poder 
 explorar un ambiente y luego ingresar por el pasadizo hacia el segundo ambiente; una 
-vez que llegue a una posición donde no pueda seguir explorando el robot regresa a la 
+vez que llegue a una posición donde no pueda seguir explorando, el robot regresa a la 
 posición donde comenzó.
 
 
@@ -791,16 +798,24 @@ posición donde comenzó.
     \centering \footnotesize
   %\includegraphics[width=0.80\textwidth]{images/prueba_cajas.JPG}
     \includegraphics[width=0.50\textwidth]{images/KobukiSotano1.png}&
-    \includegraphics[width=0.50\textwidth]{images/KobukiSotano2.png}\\
+    %\includegraphics[width=0.50\textwidth]{images/KobukiSotano2.png}\\
+    \includegraphics[width=0.50\textwidth]{images/Slam_1.PNG}\\
     (a)&(b)\\
-    \includegraphics[width=0.50\textwidth]{images/KobukiSotano3.png}&
-    \includegraphics[width=0.50\textwidth]{images/KobukiSotano4.png}\\
+    %\includegraphics[width=0.50\textwidth]{images/KobukiSotano3.png}&
+    \includegraphics[width=0.50\textwidth]{images/KobukiSotano2.png}&
+    %\includegraphics[width=0.50\textwidth]{images/KobukiSotano4.png}\\
+    \includegraphics[width=0.50\textwidth]{images/Slam_2.PNG}\\
     (c)&(d)\\
     %\multicolumn{2}{c}{\includegraphics[width=0.50\linewidth]{images/KobukiSotano5.JPG}}\\
     %\multicolumn{2}{c}{(e)}
-    \includegraphics[width=0.50\textwidth]{images/KobukiSotano5.png}&
-    \includegraphics[width=0.507\textwidth]{images/KobukiSotano6.JPG}\\
-    (e)&(f)
+    %\includegraphics[width=0.50\textwidth]{images/KobukiSotano5.png}&
+    %\includegraphics[width=0.507\textwidth]{images/KobukiSotano6.JPG}\\
+    \includegraphics[width=0.50\textwidth]{images/KobukiSotano4.png}&
+    \includegraphics[width=0.50\textwidth]{images/Slam_3.PNG}\\
+    (e)&(f)\\
+    \includegraphics[width=0.50\textwidth]{images/KobukiSotano6.JPG}&
+    \includegraphics[width=0.50\textwidth]{images/Slam_5.PNG}\\
+    (g)&(h)
   \end{tabular}
   \captionsetup{font=footnotesize}
   \caption{Exploración autónoma de \textit{muqi} dentro de un ambiente 
@@ -835,7 +850,7 @@ Los ambientes que \textit{muqi} comenzó a explorar se muestran en la Figura
 \ref{fig:exploracionMuqi}a; una vez que empieza a tomar mediciones con el sensor 
 lídar, éste empieza a generar el mapa en dos dimensiones. Con la información
 dada por el algoritmo SLAM, \textit{muqi} comienza a generar posiciones aleatorias 
-dentro del ambiente y comienza a explorar. Como se muestra en la Figura 
+dentro del ambiente y así comienza a explorar. Como se muestra en la Figura 
 \ref{fig:exploracionMuqi}b. En la Figura \ref{fig:exploracionMuqi}c se muestra el 
 punto exacto cuando \textit{muqi} llega a la entrada del pasadizo para explorar y 
 llegar hacia el otro ambiente. En la Figura \ref{fig:exploracionMuqi}d se 
@@ -875,25 +890,25 @@ visible.
   \label{fig:slamSotano}
 \end{figure}
 
-La exploración de \textit{muqi} duró 5 minutos, donde se desplazó por todo el sótano
-a diferentes velocidades. Las velocidades del robot fue cambiante de acuerdo 
-a las situaciones que el robot encontraba; es decir, si el robot navega por un espacio 
-sin obstáculos, se comienza a mover a una velocidad de $0.3 m/s$ y cuando el robot 
-se encuentra con un obstáculo, comienza a disminuir la velocidad y a
-desplazarse con una velocidad de $0.05 m/s$. Para obtener las velocidades lineal y angular
-mencionadas se tuvo que multiplicar una constante a cada velocidad para disminuir 
-sus valores, debido a que mientras el robot navega a bajas velocidades el sistema 
-mecánico puede realizar mayores mediciones del ambiente, obteniendo una mejor 
-resolución del sólido geométrico en tres dimensiones. 
-Para que el robot \textit{muqi} pueda explorar el ambiente utiliza la información del mapa 
-que da el algoritmo SLAM. El mapa bidimensional se muestra en la Figura \ref{fig:slamSotano}. 
-La construcción del mapa del SLAM fue en tiempo real y esto se pudo visualizar usando la 
-herramienta Rviz. El mapa tiene la forma del mapa que se mostró en la Figura 
-\ref{fig:DimensionesSotano}. Se puede observar en el mapa los dos ambientes unidos por un 
-pasadizo, donde las líneas negras representa las paredes del lugar y la zona gris representa 
-el área explorada por el robot \textit{muqi}. Además, se puede ver que existe zonas 
-desconocidas (color verde oscuro) pero que no pueden ser exploradas por los obstáculos que 
-impiden el paso.
+La exploración de \textit{muqi} duró 5 minutos, donde se desplazó por todo el 
+sótano a diferentes velocidades. Las velocidades del robot fue cambiante de 
+acuerdo a las situaciones que el robot encontraba; es decir, si el robot navega 
+por un espacio sin obstáculos, se comienza a mover a una velocidad de $0.3 m/s$ 
+y cuando el robot se encuentra con un obstáculo, comienza a disminuir su velocidad 
+a $0.05 m/s$. Para obtener las velocidades lineal y angular se tuvo que multiplicar 
+una constante proporcional a cada velocidad para así disminuir sus valores. Mientras 
+el robot navega a bajas velocidades el sistema mecánico puede realizar una mayor 
+cantidad de mediciones del ambiente, obteniendo una mejor resolución del sólido 
+geométrico en tres dimensiones. El robot \textit{muqi}, para que pueda explorar 
+el ambiente, utiliza la información del mapa que genera el algoritmo SLAM. El 
+mapa bidimensional que se obtiene es mostrado en la Figura \ref{fig:slamSotano}. La 
+construcción del mapa del SLAM es en tiempo real y esto se puede visualizar 
+usando la herramienta Rviz. El mapa tiene la forma y estructura del ambiente 
+mostrado en la Figura \ref{fig:DimensionesSotano}. Además, se observa en el 
+mapa dos ambientes unidos por un pasadizo donde las líneas negras representa las 
+paredes del lugar y la zona gris representa el área explorada por el robot 
+\textit{muqi}. Además, se puede ver que existe zonas desconocidas (color verde 
+oscuro) pero que no pueden ser exploradas por los obstáculos que impiden el paso.
 
 
 
@@ -913,18 +928,19 @@ impiden el paso.
 %velocidad del robot depende de la cantidad de mediciones que hace el sensor lidar mientras 
 %realiza una vuelta y la velocidad a la que el servomotor hace que rote el sistema mecánico.
 
-Los resultados del sólido tridimensional obtenido después de la exploración del robot
-\textit{muqi}, se muestra en la Figura \ref{fig:Sotano3D}, donde se puede observar dos 
-ambientes que están unidos por medio de un pasadizo. Además, se puede ver que las paredes 
-son totalmente planas sin ninguna deformación. Se puede apreciar las puertas que tiene 
-el ambiente y además el techo del sótano. El techo no es uniforme debido a que en ese 
-lugar el techo tiene unas vigas transversales y también hay muchas canaletas de cables 
-y tuberías de agua que atraviesan todo el techo de ese lugar. La resolución de este 
-sólido geométrico se logró disminuyendo la velocidad del sensor lídar y la velocidad 
-del robot kobuki, ya que con esta reducción se pudo reducir la cantidad de vibración 
-de todo el sistema. Los datos obtenidos por el sistema de sensado son procesados en 
-\textit{CloudCompare}. \textit{CloudCompare} es un software de código abierto, que permite realizar 
-procesamiento a la nube de puntos utilizando diferentes tipos de algoritmos.
+Los resultados del sólido tridimensional obtenido luego de la exploración de 
+\textit{muqi}, se muestra en la Figura \ref{fig:Sotano3D}, donde se observa dos 
+ambientes unidos por medio de un pasadizo. Además, se puede ver que las paredes 
+son totalmente planas sin ninguna deformación. Se puede apreciar las puertas que 
+tiene el ambiente y además el techo del sótano. El techo no es uniforme debido 
+a que en ese lugar existen unas vigas transversales, canaletas de cables y 
+tuberías de agua. La resolución de este sólido geométrico se logró disminuyendo 
+la velocidad del sensor lídar de 600 RPM a 200 RPM y la velocidad del robot 
+kobuki, ya que con esta reducción se pudo reducir la cantidad de vibración 
+de todo el sistema. Los datos obtenidos por el sistema de sensado son 
+procesados en \textit{CloudCompare}. \textit{CloudCompare} es un software de 
+código abierto, que permite realizar procesamiento a la nube de puntos 
+utilizando diferentes tipos de algoritmos.
 
 \begin{figure}
   \centering
@@ -968,14 +984,14 @@ procesamiento a la nube de puntos utilizando diferentes tipos de algoritmos.
 
 Para analizar el error entre las dimensiones reales del sótano con respecto al mapa 
 obtenido, se extrajo un plano en dos dimensiones del sólido geométrico y se midió sus 
-lados. Esto se muestra en la Figura \ref{fig:Sotano3D}. En la figura se puede observar
-que tiene la misma forma de la Figura \ref{fig:DimensionesSotano}, este mapa tiene un 
-error absoluto de $5 cm$ y un error relativo de $0.455 \%$. Estos errores son bastante 
-pequeño y se origina debido a las vibraciones que genera el sensor lídar al momento de 
-rotar, además las vibraciones que genera el motor paso a paso y también las vibraciones 
-que origina el robot Kobuki. La suma de todas estas vibraciones, hace que el sensor 
-lídar tenga una mayor dispersión de puntos en sus medidas con respecto a una posición
-dentro de un ambiente. 
+lados. Esto se muestra en la Figura \ref{fig:Medida3DSotano}. En la figura se puede 
+observar que tiene la misma forma de la Figura \ref{fig:DimensionesSotano}, este mapa 
+tiene un error absoluto de $5 cm$ y un error relativo de $0.455 \%$. Estos errores son 
+bastante pequeños y se originan debido a las vibraciones que genera el sensor lídar al 
+momento de rotar, además de las vibraciones que genera el motor paso a paso y también 
+las vibraciones que origina el robot Kobuki. La suma de todas estas vibraciones, hace 
+que el sensor lídar tenga una mayor dispersión de puntos en sus medidas con respecto 
+a una posición dentro de un ambiente. 
 
 
 %El robot móvil mientras construye el mapa en tres dimensiones, tiene como información una nube 

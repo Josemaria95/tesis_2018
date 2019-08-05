@@ -40,8 +40,9 @@ Para la construcción del mapa en dos dimensiones se utiliza el algoritmo SLAM, 
 respaldado por trabajos anteriores. En Perú se desarrolló un robot móvil minero
 llamado \textit{QHUBOT}. Este robot utiliza la técnica FastSLAM para la detección de puntos
 de referencia y para hacer que el robot sepa los lugares por donde puede desplazarse 
-\cite{Mauricio2015}. Esta técnica también fue utilizada para la exploración de minas 
-abandonadas en los países de Europa.
+\cite{Mauricio2015}. Sin embargo, este robot no hace exploración ya que trabaja con un mapa 
+en dos dimensiones realizado anteriormente. Además, para realizar este robot se enfocaron
+más en la parte mecánica.
 %Esta técnica también fue utilizada para la exploración de minas abandonadas en los países 
 %de Europa \cite{Thrun2004}.
 
@@ -53,16 +54,17 @@ abandonadas en los países de Europa.
 
 Recientemente, se ha comenzado a realizar trabajos de investigación con drones. Los drones 
 son robots móviles aéreos que pueden ser adaptados a diferentes aplicaciones. Se utiliza 
-el algoritmo SLAM para que los drones puedan navegar dentro de un ambiente interno, pero la navegación
-de estos robots presentan problemas al momento de implementar los algoritmos, debido a la cantidad 
-de sensores que se están utilizando. Por tal motivo, se utiliza algoritmos de seguimiento de líneas 
-basados en visión \cite{Verschoor2013}. El algoritmo basado en visión se emplea en diferentes 
-ambientes, donde el drone es capaz de 
-poder detectar puntos definidos por medio de la cámara. Esta metodología se utiliza para
-las zonas de rescate \cite{Skoda2015}, donde la finalidad es enviar el drone a la
-zona de accidente y que pueda generar un mapa tridimensional. El mapa es generado por la unión de
-varias imágenes dadas por una cámara RGBD (\textit{RGB y profundidad de imagen}). También existe
-un trabajo donde combinan los métodos de procesamientos de imágenes con SLAM \cite{Heukels2015}.
+el algoritmo SLAM para que los drones puedan navegar dentro de un ambiente interno usando 
+cámaras, pero la navegación de estos robots han presentado dificultades al momento de implementar 
+los algoritmos por la cantidad de sensores que se están utilizando y por las imágenes
+que se obtiene mediante la cámara. Por tal motivo, se utiliza algoritmos de seguimiento de 
+líneas basados en visión \cite{Verschoor2013}. El algoritmo basado en visión se emplea en 
+diferentes ambientes, donde el drone es capaz de poder detectar puntos definidos por medio 
+de la cámara. Esta metodología se utiliza para las zonas de rescate \cite{Skoda2015}, donde 
+la finalidad es enviar el drone a la zona de accidente y que pueda generar un mapa 
+tridimensional. El mapa es generado por la unión de varias imágenes dadas por una cámara 
+RGBD (\textit{RGB y profundidad de imagen}). También existe un trabajo donde combinan 
+los métodos de procesamientos de imágenes con SLAM \cite{Heukels2015}.
 
 %Actualmente, existen trabajos de investigación en los que estudian drones con el algoritmo SLAM 
 %donde unos se orientan a resolver problemas de navegación utilizando algoritmos de seguimiento 
@@ -385,7 +387,8 @@ un mapa de visibilidad gráfica.
 En la geometría computacional y la planificación del movimiento del 
 robot, un mapa de visibilidad es un mapa de ubicaciones intervisibles, 
 generalmente para un conjunto de puntos y obstáculos en un plano 
-euclideano \cite{wikiVisibilityGraph}. Las características que definen 
+%euclideano \cite{wikiVisibilityGraph}. Las características que definen 
+euclideano. Las características que definen 
 un mapa de visibilidad son que sus nodos que compartan un borde si se encuentran 
 a la vista el uno del otro, y que todos los puntos en el espacio libre del 
 robot se encuentren dentro de la línea de visión de al menos un nodo 
